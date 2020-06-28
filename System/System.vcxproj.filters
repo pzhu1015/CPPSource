@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="DllExport.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="Runnable.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="Thread.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectoryInfo.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Encoding.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="FileAccess.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="FileInfo.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="FileMode.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="FileStream.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Date.h">
+      <Filter>DateTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Duration.h">
+      <Filter>DateTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>DateTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Timestamp.h">
+      <Filter>DateTime</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDateTime.h">
+      <Filter>DateTime</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpClient.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpListener.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTcpClient.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleTcpListener.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Dns.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="IPEndPoint.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="IPAddress.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Directory.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Thread.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadPool.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectoryInfo.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="FileInfo.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="FileStream.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleDateTime.cpp">
+      <Filter>DateTime</Filter>
+    </ClCompile>
+    <ClCompile Include="IPAddress.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="IPEndPoint.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTcpClient.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleTcpListener.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Directory.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Threading">
+      <UniqueIdentifier>{5ecaa557-42dd-428e-9444-e7a7250243b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{12ab2d7b-100a-4ead-8d0b-5d77f43c3be5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DateTime">
+      <UniqueIdentifier>{6a79569a-96ae-4f6e-9b14-a6e4654b4057}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Text">
+      <UniqueIdentifier>{47ca6772-5e0e-4c9c-9a80-5bf4f5388713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml">
+      <UniqueIdentifier>{d2436376-c04e-421b-80fd-e56344b6a8de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{c1d018ac-e40e-4a0d-8b94-25b97897106d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collections">
+      <UniqueIdentifier>{921e8e0e-c0b8-4d48-842b-d1607588f42b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net">
+      <UniqueIdentifier>{bfea9b5e-4269-457b-9800-f41577eb4ea0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
