@@ -6,9 +6,12 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/DllExport.h"
-#include "Object.h"
+#include "System/IO/FileStream.h"
 
 namespace System
 {
+	namespace IO
+	{
+
+	}
 }

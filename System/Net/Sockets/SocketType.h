@@ -6,9 +6,23 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/DllExport.h"
-#include "Object.h"
+#ifndef SYSTEM_NET_SOCKETTYPE_H
+#define SYSTEM_NET_SOCKETTYPE_H
+
+#include "System/Net/Sockets/SocketInclude.h"
 
 namespace System
 {
+	namespace Net
+	{
+		namespace Sockets
+		{
+			enum class SocketType
+			{
+				Stream = SOCK_STREAM,
+				Dgram = SOCK_DGRAM
+			};
+		}
+	}
 }
+#endif // !SYSTEM_NET_SOCKETTYPE_H

@@ -8,10 +8,10 @@
 ///////////////////////////////////////////////////////////////////
 
 #define FD_SETSIZE      4096
-#include "System/SimpleTcpListener.h"
-#include "Logger/CLogger.h"
-#include "System/Thread.h"
-#include "System/SimpleDateTime.h"
+#include "System/NET/SimpleTcpListener.h"
+#include "System/Logger/CLogger.h"
+#include "System/Threading/Thread.h"
+#include "System/DateTime/SimpleDateTime.h"
 #include <unordered_map>
 #include <mutex>
 #include <deque>

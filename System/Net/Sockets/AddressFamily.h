@@ -6,9 +6,23 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/DllExport.h"
-#include "Object.h"
+#ifndef SYSTEM_NET_ADDRESSFAMILY_H
+#define SYSTEM_NET_ADDRESSFAMILY_H
+
+#include "System/Net/Sockets/SocketInclude.h"
 
 namespace System
 {
+	namespace Net
+	{
+		namespace Sockets
+		{
+			enum class AddressFamily
+			{
+				InterNetwork = AF_INET
+			};
+		}
+	}
 }
+
+#endif // !SYSTEM_NET_ADDRESSFAMILY_H

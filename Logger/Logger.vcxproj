@@ -166,12 +166,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CLogger.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="DllExport.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CLogger.cpp" />
     <ClCompile Include="Logger.cpp" />
   </ItemGroup>
   <ItemGroup>

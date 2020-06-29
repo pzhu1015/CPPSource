@@ -18,10 +18,8 @@ namespace System
 	{
 	public:
 		Object() = default;
-		virtual ~Object() = default;
-		virtual bool Equals(const Object* object);
-		virtual int CompareTo(const Object* object);
-		virtual std::string ToString();
+		~Object() = default;
+		virtual std::string ToString() = 0;
 	};
 
 }

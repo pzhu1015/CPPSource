@@ -6,9 +6,9 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/Thread.h"
-#include "System/Runnable.h"
-#include "Logger/CLogger.h"
+#include "System/Threading/Thread.h"
+#include "System/Threading/Runnable.h"
+#include "System/Logger/CLogger.h"
 #include <iostream>
 #include <sstream>
 

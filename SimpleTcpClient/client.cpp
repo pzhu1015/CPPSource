@@ -6,9 +6,9 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/SimpleTcpClient.h"
-#include "Logger/CLogger.h"
-#include "System/Thread.h"
+#include "System/Net/SimpleTcpClient.h"
+#include "System/Logger/CLogger.h"
+#include "System/Threading/Thread.h"
 #include <vector>
 #include <unordered_map>
 

@@ -7,7 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "Logger/Logger.h"
-#include "System/FileInfo.h"
+#include "System/IO/FileInfo.h"
 
 using namespace System;
 using namespace System::Logger;

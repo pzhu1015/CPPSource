@@ -21,15 +21,9 @@
     <ClInclude Include="DllExport.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CLogger.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="CLogger.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

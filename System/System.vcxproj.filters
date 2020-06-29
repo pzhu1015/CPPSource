@@ -4,128 +4,168 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="DllExport.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="Runnable.h">
+    <ClInclude Include="IO\Directory.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\DirectoryInfo.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Encoding.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\File.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\FileAccess.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\FileInfo.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\FileMode.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\FileStream.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Threading\Runnable.h">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="Thread.h">
+    <ClInclude Include="Threading\Thread.h">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadPool.h">
+    <ClInclude Include="Threading\ThreadPool.h">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="DirectoryInfo.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="Encoding.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="File.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="FileAccess.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="FileInfo.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="FileMode.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="FileStream.h">
-      <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="Date.h">
+    <ClInclude Include="DateTime\Date.h">
       <Filter>DateTime</Filter>
     </ClInclude>
-    <ClInclude Include="Duration.h">
+    <ClInclude Include="DateTime\Duration.h">
       <Filter>DateTime</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="DateTime\SimpleDateTime.h">
       <Filter>DateTime</Filter>
     </ClInclude>
-    <ClInclude Include="Timestamp.h">
+    <ClInclude Include="DateTime\Time.h">
       <Filter>DateTime</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleDateTime.h">
+    <ClInclude Include="DateTime\Timestamp.h">
       <Filter>DateTime</Filter>
     </ClInclude>
-    <ClInclude Include="TcpClient.h">
+    <ClInclude Include="Net\Dns.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="TcpListener.h">
+    <ClInclude Include="Net\EndPoint.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleTcpClient.h">
+    <ClInclude Include="Net\IPAddress.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleTcpListener.h">
+    <ClInclude Include="Net\IPEndPoint.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="Dns.h">
+    <ClInclude Include="Net\SimpleTcpClient.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="IPEndPoint.h">
+    <ClInclude Include="Net\SimpleTcpListener.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="IPAddress.h">
+    <ClInclude Include="Net\TcpClient.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="Directory.h">
+    <ClInclude Include="Net\TcpListener.h">
+      <Filter>Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger\CLogger.h">
+      <Filter>Logger</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\AddressFamily.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\ProtocolType.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\SelectMode.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\Socket.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\SocketOptionLevel.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\SocketOptionName.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\SocketType.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\SocketInclude.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\Stream.h">
       <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\NetworkStream.h">
+      <Filter>Net\Sockets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="Thread.cpp">
+    <ClCompile Include="IO\Directory.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\DirectoryInfo.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\File.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\FileInfo.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\FileStream.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Threading\Thread.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="ThreadPool.cpp">
+    <ClCompile Include="Threading\ThreadPool.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
-    <ClCompile Include="DirectoryInfo.cpp">
-      <Filter>IO</Filter>
-    </ClCompile>
-    <ClCompile Include="File.cpp">
-      <Filter>IO</Filter>
-    </ClCompile>
-    <ClCompile Include="FileInfo.cpp">
-      <Filter>IO</Filter>
-    </ClCompile>
-    <ClCompile Include="FileStream.cpp">
-      <Filter>IO</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="DateTime\Date.cpp">
       <Filter>DateTime</Filter>
     </ClCompile>
-    <ClCompile Include="Date.cpp">
+    <ClCompile Include="DateTime\SimpleDateTime.cpp">
       <Filter>DateTime</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleDateTime.cpp">
+    <ClCompile Include="DateTime\Time.cpp">
       <Filter>DateTime</Filter>
     </ClCompile>
-    <ClCompile Include="IPAddress.cpp">
+    <ClCompile Include="Net\IPAddress.cpp">
       <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="IPEndPoint.cpp">
+    <ClCompile Include="Net\IPEndPoint.cpp">
       <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleTcpClient.cpp">
+    <ClCompile Include="Net\SimpleTcpClient.cpp">
       <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleTcpListener.cpp">
+    <ClCompile Include="Net\SimpleTcpListener.cpp">
       <Filter>Net</Filter>
     </ClCompile>
-    <ClCompile Include="Directory.cpp">
-      <Filter>IO</Filter>
+    <ClCompile Include="Logger\CLogger.cpp">
+      <Filter>Logger</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Sockets\Socket.cpp" />
+    <ClCompile Include="Net\TcpClient.cpp">
+      <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
       <UniqueIdentifier>{5ecaa557-42dd-428e-9444-e7a7250243b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="IO">
-      <UniqueIdentifier>{12ab2d7b-100a-4ead-8d0b-5d77f43c3be5}</UniqueIdentifier>
     </Filter>
     <Filter Include="DateTime">
       <UniqueIdentifier>{6a79569a-96ae-4f6e-9b14-a6e4654b4057}</UniqueIdentifier>
@@ -144,6 +184,15 @@
     </Filter>
     <Filter Include="Net">
       <UniqueIdentifier>{bfea9b5e-4269-457b-9800-f41577eb4ea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{15c5fc7f-3d54-4267-93b0-8a843537f1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logger">
+      <UniqueIdentifier>{d35f571b-b952-4f6d-a1dd-82902a73a616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Net\Sockets">
+      <UniqueIdentifier>{e07f9da8-a028-466e-8606-c77d6c8ea960}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
