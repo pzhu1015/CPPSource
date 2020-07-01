@@ -171,11 +171,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
-    <ClInclude Include="DateTime\Date.h" />
-    <ClInclude Include="DateTime\Duration.h" />
-    <ClInclude Include="DateTime\SimpleDateTime.h" />
-    <ClInclude Include="DateTime\Time.h" />
-    <ClInclude Include="DateTime\Timestamp.h" />
+    <ClInclude Include="DateTimes\Date.h" />
+    <ClInclude Include="DateTimes\Duration.h" />
+    <ClInclude Include="DateTimes\DateTime.h" />
+    <ClInclude Include="DateTimes\Time.h" />
+    <ClInclude Include="DateTimes\Timestamp.h" />
     <ClInclude Include="EventArgs.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="IDisposable.h" />
@@ -216,9 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="DateTime\Date.cpp" />
-    <ClCompile Include="DateTime\SimpleDateTime.cpp" />
-    <ClCompile Include="DateTime\Time.cpp" />
+    <ClCompile Include="DateTimes\Date.cpp" />
+    <ClCompile Include="DateTimes\DateTime.cpp" />
+    <ClCompile Include="DateTimes\Time.cpp" />
     <ClCompile Include="IO\Directory.cpp" />
     <ClCompile Include="IO\DirectoryInfo.cpp" />
     <ClCompile Include="IO\File.cpp" />

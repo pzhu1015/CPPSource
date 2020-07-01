@@ -35,21 +35,6 @@
     <ClInclude Include="Threading\ThreadPool.h">
       <Filter>Threading</Filter>
     </ClInclude>
-    <ClInclude Include="DateTime\Date.h">
-      <Filter>DateTime</Filter>
-    </ClInclude>
-    <ClInclude Include="DateTime\Duration.h">
-      <Filter>DateTime</Filter>
-    </ClInclude>
-    <ClInclude Include="DateTime\SimpleDateTime.h">
-      <Filter>DateTime</Filter>
-    </ClInclude>
-    <ClInclude Include="DateTime\Time.h">
-      <Filter>DateTime</Filter>
-    </ClInclude>
-    <ClInclude Include="DateTime\Timestamp.h">
-      <Filter>DateTime</Filter>
-    </ClInclude>
     <ClInclude Include="Net\Dns.h">
       <Filter>Net</Filter>
     </ClInclude>
@@ -128,6 +113,21 @@
     <ClInclude Include="EventHandler.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="DateTimes\Date.h">
+      <Filter>DateTimes</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTimes\Duration.h">
+      <Filter>DateTimes</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTimes\Time.h">
+      <Filter>DateTimes</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTimes\Timestamp.h">
+      <Filter>DateTimes</Filter>
+    </ClInclude>
+    <ClInclude Include="DateTimes\DateTime.h">
+      <Filter>DateTimes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -150,15 +150,6 @@
     </ClCompile>
     <ClCompile Include="Threading\ThreadPool.cpp">
       <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="DateTime\Date.cpp">
-      <Filter>DateTime</Filter>
-    </ClCompile>
-    <ClCompile Include="DateTime\SimpleDateTime.cpp">
-      <Filter>DateTime</Filter>
-    </ClCompile>
-    <ClCompile Include="DateTime\Time.cpp">
-      <Filter>DateTime</Filter>
     </ClCompile>
     <ClCompile Include="Net\IPAddress.cpp">
       <Filter>Net</Filter>
@@ -196,13 +187,19 @@
     <ClCompile Include="Net\TcpListener.cpp">
       <Filter>Net</Filter>
     </ClCompile>
+    <ClCompile Include="DateTimes\Date.cpp">
+      <Filter>DateTimes</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTimes\Time.cpp">
+      <Filter>DateTimes</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTimes\DateTime.cpp">
+      <Filter>DateTimes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
       <UniqueIdentifier>{5ecaa557-42dd-428e-9444-e7a7250243b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DateTime">
-      <UniqueIdentifier>{6a79569a-96ae-4f6e-9b14-a6e4654b4057}</UniqueIdentifier>
     </Filter>
     <Filter Include="Text">
       <UniqueIdentifier>{47ca6772-5e0e-4c9c-9a80-5bf4f5388713}</UniqueIdentifier>
@@ -230,6 +227,9 @@
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{ec560d9a-8ad7-42fd-ad55-f326df71dd91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DateTimes">
+      <UniqueIdentifier>{6a79569a-96ae-4f6e-9b14-a6e4654b4057}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

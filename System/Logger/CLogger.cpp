@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #include "SYSTEM/Logger/CLogger.h"
 #include "System/IO/Directory.h"
-#include "System/DateTime/SimpleDateTime.h"
+#include "System/DateTimes/DateTime.h"
 #include "System/Application.h"
 #include "System/Threading/Thread.h"
 
@@ -20,7 +20,7 @@
 
 using namespace System;
 using namespace System::IO;
-using namespace System::DateTime;
+using namespace System::DateTimes;
 using namespace System::Threading;
 
 namespace System
@@ -90,7 +90,7 @@ namespace System
 
 			if (m_log_name.empty())
 			{
-				m_log_name = DateTime::SimpleDateTime::GetNow().ToString("%Y%m%d%H%M%S").append(".log");
+				m_log_name = DateTime::GetNow().ToString("%Y%m%d%H%M%S").append(".log");
 			}
 
 			m_log_file_path = m_log_dir_path.append(m_log_name);
@@ -298,7 +298,7 @@ namespace System
 		{
 			std::string log_str = "";
 			log_str.append("[")
-				.append(DateTime::SimpleDateTime::GetNow().ToString("%Y-%m-%d %H:%M:%S"))
+				.append(DateTime::GetNow().ToString("%Y-%m-%d %H:%M:%S"))
 				.append(" ")
 				.append(file)
 				.append(":")

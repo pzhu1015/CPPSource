@@ -11,7 +11,7 @@
 #include "System/NET/SimpleTcpListener.h"
 #include "System/Logger/CLogger.h"
 #include "System/Threading/Thread.h"
-#include "System/DateTime/SimpleDateTime.h"
+#include "System/DateTimes/DateTime.h"
 #include <unordered_map>
 #include <mutex>
 #include <deque>
@@ -20,7 +20,7 @@
 using namespace System::Net;
 using namespace System::Threading;
 using namespace System::Logger;
-using namespace System::DateTime;
+using namespace System::DateTimes;
 class CellClient;
 class CellServer;
 struct DataHeader;
