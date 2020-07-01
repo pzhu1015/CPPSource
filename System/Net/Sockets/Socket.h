@@ -8,13 +8,16 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_NET_SOCKET_H
 #define SYSTEM_NET_SOCKET_H
+
 #include "System/DllExport.h"
+#include "System/IDisposable.h"
 #include "System/Net/Sockets/AddressFamily.h"
 #include "System/Net/Sockets/ProtocolType.h"
 #include "System/Net/Sockets/SocketType.h"
 #include "System/Net/Sockets/SelectMode.h"
 #include "System/Net/Sockets/SocketOptionLevel.h"
 #include "System/Net/Sockets/SocketOptionName.h"
+#include "System/Net/Sockets/SocketAsyncEventArgs.h"
 #include "System/Net/EndPoint.h"
 #include "System/Net/IPAddress.h"
 
@@ -24,9 +27,11 @@ namespace System
 	{
 		namespace Sockets
 		{
-			class SYSTEM_API Socket
+			class SocketAsyncEventArgs;
+			class SYSTEM_API Socket : public IDisposable
 			{
 			public:
+				Socket(SOCKET sock, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				Socket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				~Socket();
 
@@ -54,33 +59,36 @@ namespace System
 				SocketType GetSocketType() const;
 
 				Socket* Accept();
-				bool AcceptAsync();
-				void Bind(EndPoint* endpoint);
-				void Close();
-				void Close(int timeout);
-				void Connect(EndPoint* remoteEP);
-				void Connect(IPAddress* address, int port);
-				void Connect(const std::string &ip, int port);
-				bool ConnectAsync();
+				bool AcceptAsync(SocketAsyncEventArgs* e);
+				bool Bind(EndPoint* endpoint);
+				bool Close();
+				bool Close(int timeout);
+				bool Connect(EndPoint* remoteEP);
+				bool Connect(IPAddress* address, int port);
+				bool Connect(const std::string &ip, int port);
+				bool ConnectAsync(SocketAsyncEventArgs* e);
 				void Disconnect(bool reuseSocket);
-				bool DisconnectAsync();
-				void Listen(int backlog);
+				bool DisconnectAsync(SocketAsyncEventArgs* e);
+				bool Listen(int backlog);
 				bool Poll(int microSeconds, SelectMode selectMode);
 
 				//for tcp
 				int Receive(char* buffer, int length);
-				bool ReceiveAsync();
+				bool ReceiveAsync(SocketAsyncEventArgs* e);
 				int Send(char* buffer, int length);
-				bool SendAsync();
+				bool SendAsync(SocketAsyncEventArgs* e);
 
 				//for udp
 				int ReceiveFrom(char* buffer, int length, EndPoint* remoteEP);
-				bool ReceiveFromAsync();
+				bool ReceiveFromAsync(SocketAsyncEventArgs* e);
 				int SendTo(char* buffer, int length, EndPoint* remoteEP);
+				bool SendToAsync(SocketAsyncEventArgs* e);
 
-				void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char* optValue, int optLength);
+				int SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char* optValue, int optLength);
 				void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optValue);
 				void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optValue);
+
+				virtual void Dispose() override;
 
 			private:
 				bool m_blocking;

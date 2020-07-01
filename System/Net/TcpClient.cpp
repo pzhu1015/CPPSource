@@ -4,7 +4,6 @@ namespace System
 {
 	namespace Net
 	{
-
 		TcpClient::TcpClient()
 		{
 			m_client = new Socket(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
@@ -12,7 +11,8 @@ namespace System
 
 		TcpClient::TcpClient(IPEndPoint * localEP)
 		{
-			//give server bind
+			m_client = new Socket(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
+			m_client->Bind(localEP);
 		}
 
 		TcpClient::TcpClient(AddressFamily family)
@@ -119,6 +119,14 @@ namespace System
 		NetworkStream* TcpClient::GetStream()
 		{
 			return new NetworkStream();
+		}
+
+		void TcpClient::Dispose()
+		{
+			if (m_client)
+			{
+				m_client->Dispose();
+			}
 		}
 	}
 }

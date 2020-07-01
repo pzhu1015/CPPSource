@@ -176,6 +176,9 @@
     <ClInclude Include="DateTime\SimpleDateTime.h" />
     <ClInclude Include="DateTime\Time.h" />
     <ClInclude Include="DateTime\Timestamp.h" />
+    <ClInclude Include="EventArgs.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="IDisposable.h" />
     <ClInclude Include="IO\Directory.h" />
     <ClInclude Include="IO\DirectoryInfo.h" />
     <ClInclude Include="IO\Encoding.h" />
@@ -185,6 +188,7 @@
     <ClInclude Include="IO\FileMode.h" />
     <ClInclude Include="IO\FileStream.h" />
     <ClInclude Include="DllExport.h" />
+    <ClInclude Include="IO\SeekOrigin.h" />
     <ClInclude Include="IO\Stream.h" />
     <ClInclude Include="Logger\CLogger.h" />
     <ClInclude Include="Net\Dns.h" />
@@ -198,6 +202,7 @@
     <ClInclude Include="Net\Sockets\ProtocolType.h" />
     <ClInclude Include="Net\Sockets\SelectMode.h" />
     <ClInclude Include="Net\Sockets\Socket.h" />
+    <ClInclude Include="Net\Sockets\SocketAsyncEventArgs.h" />
     <ClInclude Include="Net\Sockets\SocketInclude.h" />
     <ClInclude Include="Net\Sockets\SocketOptionLevel.h" />
     <ClInclude Include="Net\Sockets\SocketOptionName.h" />
@@ -219,14 +224,17 @@
     <ClCompile Include="IO\File.cpp" />
     <ClCompile Include="IO\FileInfo.cpp" />
     <ClCompile Include="IO\FileStream.cpp" />
+    <ClCompile Include="IO\Stream.cpp" />
     <ClCompile Include="Logger\CLogger.cpp" />
     <ClCompile Include="Net\IPAddress.cpp" />
     <ClCompile Include="Net\IPEndPoint.cpp" />
     <ClCompile Include="Net\SimpleTcpClient.cpp" />
     <ClCompile Include="Net\SimpleTcpListener.cpp" />
+    <ClCompile Include="Net\Sockets\NetworkStream.cpp" />
     <ClCompile Include="Net\Sockets\Socket.cpp" />
+    <ClCompile Include="Net\Sockets\SocketAsyncEventArgs.cpp" />
     <ClCompile Include="Net\TcpClient.cpp" />
-    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Net\TcpListener.cpp" />
     <ClCompile Include="Threading\Thread.cpp" />
     <ClCompile Include="Threading\ThreadPool.cpp" />
   </ItemGroup>

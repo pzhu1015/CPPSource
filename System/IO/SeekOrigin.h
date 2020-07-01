@@ -6,23 +6,20 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_NET_SOCKETTYPE_H
-#define SYSTEM_NET_SOCKETTYPE_H
-
-#include "System/Net/Sockets/SocketInclude.h"
+#ifndef SYSTEM_IO_SEEKORIGIN_H
+#define SYSTEM_IO_SEEKORIGIN_H
 
 namespace System
 {
-	namespace Net
+	namespace IO
 	{
-		namespace Sockets
+		enum class SeekOrigin
 		{
-			enum SocketType
-			{
-				Stream = SOCK_STREAM,
-				Dgram = SOCK_DGRAM
-			};
-		}
+			Begin = 0 ,
+			Current = 1,
+			End = 2
+		};
 	}
 }
-#endif // !SYSTEM_NET_SOCKETTYPE_H
+
+#endif // !SYSTEM_IO_SEEKORIGIN_H

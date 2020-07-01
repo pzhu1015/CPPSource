@@ -43,4 +43,10 @@ namespace System
 	{
 		return std::string();
 	}
+	void Application::Exit()
+	{
+	}
+	void Application::ExitThread()
+	{
+	}
 }

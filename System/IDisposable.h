@@ -6,23 +6,16 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_NET_SOCKETTYPE_H
-#define SYSTEM_NET_SOCKETTYPE_H
-
-#include "System/Net/Sockets/SocketInclude.h"
-
+#ifndef SYSTEM_DISPOSABLE_H
+#define SYSTEM_DISPOSABLE_H
+#include "System/DllExport.h"
 namespace System
 {
-	namespace Net
+	class SYSTEM_API IDisposable
 	{
-		namespace Sockets
-		{
-			enum SocketType
-			{
-				Stream = SOCK_STREAM,
-				Dgram = SOCK_DGRAM
-			};
-		}
-	}
+	public:
+		IDisposable() = default;
+		virtual void Dispose() = 0;
+	};
 }
-#endif // !SYSTEM_NET_SOCKETTYPE_H
+#endif // !SYSTEM_DISPOSABLE_H

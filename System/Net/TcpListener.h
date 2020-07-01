@@ -9,6 +9,9 @@
 #ifndef SYSTEM_NET_TCPLISTENER_H
 #define SYSTEM_NET_TCPLISTENER_H
 #include "System/DllExport.h"
+#include "System/Net/IPEndPoint.h"
+#include "System/Net/Sockets/Socket.h"
+#include "System/Net/TcpClient.h"
 
 namespace System
 {
@@ -16,7 +19,20 @@ namespace System
 	{
 		class SYSTEM_API TcpListener
 		{
+		public:
+			TcpListener(IPEndPoint* localEp);
+			TcpListener(int port);
+			TcpListener(IPAddress* localaddr, int port);
 
+			EndPoint* GetLocalEndPoint() const;
+			Socket* GetServer() const;
+			Socket* AcceptSocket();
+			TcpClient* AcceptTcpClient();
+			void Start();
+			void Start(int backlog);
+			void Stop();
+		private:
+			Socket* m_server;
 		};
 	}
 }

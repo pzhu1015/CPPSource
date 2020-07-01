@@ -1,9 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Application.h" />
     <ClInclude Include="DllExport.h" />
-    <ClInclude Include="Object.h" />
     <ClInclude Include="IO\Directory.h">
       <Filter>IO</Filter>
     </ClInclude>
@@ -109,10 +107,29 @@
     <ClInclude Include="Net\Sockets\NetworkStream.h">
       <Filter>Net\Sockets</Filter>
     </ClInclude>
+    <ClInclude Include="IO\SeekOrigin.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Sockets\SocketAsyncEventArgs.h">
+      <Filter>Net\Sockets</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EventArgs.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="IDisposable.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="EventHandler.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Object.cpp" />
     <ClCompile Include="IO\Directory.cpp">
       <Filter>IO</Filter>
     </ClCompile>
@@ -158,8 +175,25 @@
     <ClCompile Include="Logger\CLogger.cpp">
       <Filter>Logger</Filter>
     </ClCompile>
-    <ClCompile Include="Net\Sockets\Socket.cpp" />
     <ClCompile Include="Net\TcpClient.cpp">
+      <Filter>Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Sockets\Socket.cpp">
+      <Filter>Net\Sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="IO\Stream.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Sockets\SocketAsyncEventArgs.cpp">
+      <Filter>Net\Sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Sockets\NetworkStream.cpp">
+      <Filter>Net\Sockets</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\TcpListener.cpp">
       <Filter>Net</Filter>
     </ClCompile>
   </ItemGroup>
@@ -193,6 +227,9 @@
     </Filter>
     <Filter Include="Net\Sockets">
       <UniqueIdentifier>{e07f9da8-a028-466e-8606-c77d6c8ea960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{ec560d9a-8ad7-42fd-ad55-f326df71dd91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

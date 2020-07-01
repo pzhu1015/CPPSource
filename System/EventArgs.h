@@ -6,9 +6,18 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
+#ifndef SYSTEM_EVENTS_EVENTARGS_H
+#define SYSTEM_EVENTS_EVENTARGS_H
 #include "System/DllExport.h"
-#include "Object.h"
 
 namespace System
 {
+	class SYSTEM_API EventArgs
+	{
+	public:
+		EventArgs() = default;
+	};
 }
+
+
+#endif // !SYSTEM_EVENTS_EVENTARGS_H

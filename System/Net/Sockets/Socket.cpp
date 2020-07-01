@@ -1,4 +1,13 @@
+///////////////////////////////////////////////////////////////////
+// Copyright 2020 Pengzhihu All Right Reserved
+// FileName:
+// Author: Pengzhihu
+// Date: 2020-05-20
+// Version: 1.0
+// Description:
+///////////////////////////////////////////////////////////////////
 #include "System/Net/Sockets/Socket.h"
+#include "System/Net/IPEndPoint.h"
 
 namespace System
 {
@@ -6,17 +15,32 @@ namespace System
 	{
 		namespace Sockets
 		{
+			Socket::Socket(SOCKET sock, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+			{
+				m_address_family = addressFamily;
+				m_socket_type = socketType;
+				m_protocol_type = protocolType;
+				m_sock = sock;
+			}
+
 			Socket::Socket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
 			{
 				m_address_family = addressFamily;
 				m_socket_type = socketType;
 				m_protocol_type = protocolType;
+#ifdef _WIN32
+				WORD ver = MAKEWORD(2, 2);
+				WSADATA dat;
+				WSAStartup(ver, &dat);
+#endif
+				m_sock = socket(m_address_family, m_socket_type, m_protocol_type);
 			}
 
 			Socket::~Socket()
 			{
 				delete m_local_endpoint;
 				delete m_remote_endpoint;
+				Close();
 			}
 
 			bool Socket::SupportIpv4()
@@ -32,7 +56,29 @@ namespace System
 			void Socket::Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds)
 			{
 				timeval tv = { 0, microSeconds };
-				select(0, checkRead, checkWrite, checkError, &tv);
+				int maxfd = -1;
+				for (u_int i = 0; i < checkRead->fd_count; i++)
+				{
+					if (maxfd < (int)checkRead->fd_array[i])
+					{
+						maxfd = (int)checkRead->fd_array[i];
+					}
+				}
+				for (u_int i = 0; i < checkWrite->fd_count; i++)
+				{
+					if (maxfd < (int)checkWrite->fd_array[i])
+					{
+						maxfd = (int)checkWrite->fd_array[i];
+					}
+				}
+				for (u_int i = 0; i < checkError->fd_count; i++)
+				{
+					if (maxfd < (int)checkError->fd_array[i])
+					{
+						maxfd = (int)checkError->fd_array[i];
+					}
+				}
+				select(maxfd + 1, checkRead, checkWrite, checkError, &tv);
 			}
 
 			bool Socket::GetBlocking() const
@@ -97,12 +143,12 @@ namespace System
 
 			SOCKET Socket::GetHandle() const
 			{
-				return SOCKET();
+				return m_sock;
 			}
 
 			AddressFamily Socket::GetAddressFamily() const
 			{
-				return AddressFamily();
+				return m_address_family;
 			}
 
 			EndPoint* Socket::GetLocalEndPoint() const
@@ -127,39 +173,156 @@ namespace System
 
 			Socket* Socket::Accept()
 			{
-				return nullptr;
+				sockaddr_in client_addr = {};
+				int len = sizeof(sockaddr_in);
+				SOCKET sock = INVALID_SOCKET;
+#ifdef _WIN32
+				sock = accept(m_sock, (sockaddr*)&client_addr, &len);
+#else
+				sock = accept(m_sock, (sockaddr*)&client_addr, (socket_t*)&len);
+#endif
+				if (INVALID_SOCKET == sock)
+				{
+					return nullptr;
+				}
+				std::string ip = inet_ntoa(client_addr.sin_addr);
+				int port = ntohs(client_addr.sin_port);
+				Socket* socket = new Socket(sock, AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
+				socket->m_remote_endpoint = new IPEndPoint(new IPAddress(ip), port);
+				return socket;
 			}
 
-			bool Socket::AcceptAsync()
+			bool Socket::AcceptAsync(SocketAsyncEventArgs* e)
 			{
 				return false;
 			}
 
-			void Socket::Bind(EndPoint * endpoint)
+			bool Socket::Bind(EndPoint * endpoint)
 			{
+				if (INVALID_SOCKET == m_sock)
+				{
+					return false;
+				}
+				IPEndPoint* ipendpoint = dynamic_cast<IPEndPoint*>(endpoint);
+				if (ipendpoint == nullptr)
+				{
+					return false;
+				}
+				IPAddress* ipaddress = ipendpoint->GetIPAddress();
+				if (ipaddress == nullptr)
+				{
+					return false;
+				}
+				std::string ip = ipaddress->GetIPAddress();
+				int port = ipendpoint->GetPort();
+				sockaddr_in _sin = {};
+				_sin.sin_family = AF_INET;
+				_sin.sin_port = htons(port);
+#ifdef _WIN32
+				if (strcmp(ip.c_str(), "") == 0)
+				{
+					_sin.sin_addr.S_un.S_addr = inet_addr(ip.c_str());
+				}
+				else
+				{
+					_sin.sin_addr.S_un.S_addr = INADDR_ANY;
+				}
+#else
+				if (strcmp(ip, "") == 0)
+				{
+					_sin.sin_addr.s_addr = inet_addr(ip);
+				}
+				else
+				{
+					_sin.sin_addr.s_addr = INADDR_ANY;
+				}
+#endif
+
+				int ret = bind(m_sock, (sockaddr*)&_sin, sizeof(_sin));
+				if (SOCKET_ERROR == ret)
+				{
+					return false;
+				}
+				return true;
 			}
 
-			void Socket::Close()
+			bool Socket::Close()
 			{
+				if (INVALID_SOCKET == m_sock)
+				{
+					return true;
+				}
+#ifdef _WIN32
+				closesocket(m_sock);
+#else
+				close(m_sock);
+#endif
+				if (m_connected)
+				{
+					m_sock = INVALID_SOCKET;
+					m_connected = false;
+				}
+				return true;
 			}
 
-			void Socket::Close(int timeout)
+			bool Socket::Close(int timeout)
 			{
+				return false;
 			}
 
-			void Socket::Connect(EndPoint * remoteEP)
+			bool Socket::Connect(EndPoint * remoteEP)
 			{
+				if (remoteEP == nullptr)
+				{
+					return false;
+				}
+
+				IPEndPoint* ipendpoint = dynamic_cast<IPEndPoint*>(remoteEP);
+				if (remoteEP == nullptr)
+				{
+					return false;
+				}
+				return Connect(ipendpoint->GetIPAddress(), ipendpoint->GetPort());
 			}
 
-			void Socket::Connect(IPAddress * address, int port)
+			bool Socket::Connect(IPAddress * address, int port)
 			{
+				if (address == nullptr || port < 0)
+				{
+					return false;
+				}
+				return Connect(address->GetIPAddress(), port);
 			}
 
-			void Socket::Connect(const std::string & ip, int port)
+			bool Socket::Connect(const std::string & ip, int port)
 			{
+				if (INVALID_SOCKET == m_sock || port < 0 || ip == "")
+				{
+					return false;
+				}
+
+				if (m_connected)
+				{
+					return true;
+				}
+				sockaddr_in sin = {};
+				sin.sin_family = AF_INET;
+				sin.sin_port = htons(port);
+#ifdef _WIN32
+				sin.sin_addr.S_un.S_addr = inet_addr(ip.c_str());
+#else
+				sin.sin_addr.s_addr = inet_addr(ip);
+#endif
+				int ret = connect(m_sock, (sockaddr*)&sin, sizeof(sockaddr_in));
+				if (SOCKET_ERROR == ret)
+				{
+					return false;
+				}
+				m_connected = true;
+				return true;
 			}
 
-			bool Socket::ConnectAsync()
+			bool Socket::ConnectAsync(SocketAsyncEventArgs* e)
 			{
 				return false;
 			}
@@ -168,13 +331,23 @@ namespace System
 			{
 			}
 
-			bool Socket::DisconnectAsync()
+			bool Socket::DisconnectAsync(SocketAsyncEventArgs* e)
 			{
 				return false;
 			}
 
-			void Socket::Listen(int backlog)
+			bool Socket::Listen(int backlog)
 			{
+				if (INVALID_SOCKET == m_sock)
+				{
+					return false;
+				}
+				int ret = listen(m_sock, backlog);
+				if (SOCKET_ERROR == ret)
+				{
+					return false;
+				}
+				return true;
 			}
 
 			bool Socket::Poll(int microSeconds, SelectMode selectMode)
@@ -184,20 +357,30 @@ namespace System
 
 			int Socket::Receive(char * buffer, int length)
 			{
-				return 0;
+				if (INVALID_SOCKET == m_sock)
+				{
+					return -1;
+				}
+				int ret = recv(m_sock, buffer, length, 0);
+				return ret;
 			}
 
-			bool Socket::ReceiveAsync()
+			bool Socket::ReceiveAsync(SocketAsyncEventArgs* e)
 			{
 				return false;
 			}
 
 			int Socket::Send(char * buffer, int length)
 			{
-				return 0;
+				if (INVALID_SOCKET == m_sock)
+				{
+					return false;
+				}
+				int ret = send(m_sock, buffer, length, 0);
+				return ret;
 			}
 
-			bool Socket::SendAsync()
+			bool Socket::SendAsync(SocketAsyncEventArgs* e)
 			{
 				return false;
 			}
@@ -207,7 +390,7 @@ namespace System
 				return 0;
 			}
 
-			bool Socket::ReceiveFromAsync()
+			bool Socket::ReceiveFromAsync(SocketAsyncEventArgs* e)
 			{
 				return false;
 			}
@@ -217,8 +400,19 @@ namespace System
 				return 0;
 			}
 
-			void Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char * optValue, int optLength)
+			bool Socket::SendToAsync(SocketAsyncEventArgs * e)
 			{
+				return false;
+			}
+
+			int Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char * optValue, int optLength)
+			{
+				if (INVALID_SOCKET == m_sock)
+				{
+					return -1;
+				}
+				int ret = setsockopt(m_sock, (int)optionLevel, (int)optionName, optValue, optLength);
+				return ret;
 			}
 
 			void Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optValue)
@@ -227,6 +421,13 @@ namespace System
 
 			void Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optValue)
 			{
+			}
+
+			void Socket::Dispose()
+			{
+#ifdef _WIN32
+				WSACleanup();
+#endif
 			}
 		}
 	}

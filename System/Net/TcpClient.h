@@ -18,14 +18,14 @@ namespace System
 {
 	namespace Net
 	{
-		class SYSTEM_API TcpClient
+		class SYSTEM_API TcpClient: public IDisposable
 		{
 		public:
 			TcpClient();
 			TcpClient(IPEndPoint* localEP);
 			TcpClient(AddressFamily family);
 			TcpClient(const std::string &hostname, int port);
-			~TcpClient();
+			virtual ~TcpClient();
 
 			int GetAvailable() const;
 			Socket* GetClient() const;
@@ -47,6 +47,8 @@ namespace System
 			void Connect(const std::string &ip, int port);
 
 			NetworkStream* GetStream();
+
+			virtual void Dispose();
 		private:
 			Socket* m_client;
 			bool m_active;

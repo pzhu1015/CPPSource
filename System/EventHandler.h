@@ -6,23 +6,14 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_NET_SOCKETTYPE_H
-#define SYSTEM_NET_SOCKETTYPE_H
-
-#include "System/Net/Sockets/SocketInclude.h"
+#ifndef SYSTEM_EVENTHANDLER_H
+#define SYSTEM_EVENTHANDLER_H
+#include <functional>
+#include <list>
 
 namespace System
 {
-	namespace Net
-	{
-		namespace Sockets
-		{
-			enum SocketType
-			{
-				Stream = SOCK_STREAM,
-				Dgram = SOCK_DGRAM
-			};
-		}
-	}
+	typedef std::function<void(EventArgs*)> EventHandler;
 }
-#endif // !SYSTEM_NET_SOCKETTYPE_H
+
+#endif // !SYSTEM_EVENTHANDLER_H

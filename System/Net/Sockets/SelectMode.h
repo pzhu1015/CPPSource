@@ -17,7 +17,7 @@ namespace System
 	{
 		namespace Sockets
 		{
-			enum class SelectMode
+			enum SelectMode
 			{
 				SelectRead,
 				SelectWrite,
