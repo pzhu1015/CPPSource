@@ -57,6 +57,9 @@ namespace System
 			void NetworkStream::Write(char * buffer, int offset, int count)
 			{
 			}
+			void NetworkStream::Dispose()
+			{
+			}
 		}
 	}
 }

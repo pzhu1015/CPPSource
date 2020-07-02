@@ -39,8 +39,8 @@ namespace System
 			static bool Exists(const std::string &path);
 			static bool Move(const std::string &str, const std::string &dest);
 
-			static FileStream Open(const std::string &path, const FileMode &mode);
-			static FileStream Open(const std::string &path, const FileMode &mode, const FileAccess &access);
+			static FileStream* Open(const std::string &path, const FileMode &mode);
+			static FileStream* Open(const std::string &path, const FileMode &mode, const FileAccess &access);
 
 			static std::string ReadAllText(const std::string &path);
 			static std::string ReadAllText(const std::string &path, const Encoding &encoding);

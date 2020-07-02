@@ -17,7 +17,7 @@ namespace System
 	{
 		namespace Sockets
 		{
-			enum ProtocolType
+			enum class ProtocolType
 			{
 				Tcp = IPPROTO_TCP,
 				Udp = IPPROTO_UDP

@@ -54,9 +54,9 @@ namespace System
 		{
 			return FileInfo();
 		}
-		FileStream FileInfo::Create()
+		FileStream* FileInfo::Create()
 		{
-			return FileStream();
+			return nullptr;
 		}
 		void FileInfo::Delete()
 		{

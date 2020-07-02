@@ -17,7 +17,7 @@ namespace System
 	{
 		namespace Sockets
 		{
-			enum AddressFamily
+			enum class AddressFamily
 			{
 				InterNetwork = AF_INET
 			};

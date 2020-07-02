@@ -24,16 +24,17 @@ namespace System
 			public:
 				NetworkStream();
 				virtual ~NetworkStream();
-				virtual bool GetCanRead() const;
-				virtual bool GetCanSeek() const;
-				virtual bool GetCanWrite() const;
-				virtual int64_t GetLength() const;
-				virtual int64_t GetPosition() const;
-				virtual void Flush();
-				virtual int Read(char* buffer, int offset, int count);
-				virtual int64_t Seek(int64_t offset, SeekOrigin origin);
-				virtual void SetLength(int64_t value);
-				virtual void Write(char* buffer, int offset, int count);
+				virtual bool GetCanRead() const override;
+				virtual bool GetCanSeek() const override;
+				virtual bool GetCanWrite() const override;
+				virtual int64_t GetLength() const override;
+				virtual int64_t GetPosition() const override;
+				virtual void Flush() override;
+				virtual int Read(char* buffer, int offset, int count) override;
+				virtual int64_t Seek(int64_t offset, SeekOrigin origin) override;
+				virtual void SetLength(int64_t value) override;
+				virtual void Write(char* buffer, int offset, int count) override;
+				virtual void Dispose() override;
 			};
 		}
 	}

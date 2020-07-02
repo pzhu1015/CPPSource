@@ -35,7 +35,7 @@ namespace System
 				WSADATA dat;
 				WSAStartup(ver, &dat);
 #endif
-				m_sock = socket(m_address_family, m_socket_type, m_protocol_type);
+				m_sock = socket((int)m_address_family, m_socket_type, (int)m_protocol_type);
 			}
 
 			Socket::~Socket()
@@ -227,7 +227,7 @@ namespace System
 				std::string ip = ipaddress->GetIPAddress();
 				int port = ipendpoint->GetPort();
 				sockaddr_in _sin = {};
-				_sin.sin_family = AF_INET;
+				_sin.sin_family = (int)m_address_family;
 				_sin.sin_port = htons(port);
 #ifdef _WIN32
 				if (strcmp(ip.c_str(), "") == 0)
@@ -317,7 +317,7 @@ namespace System
 					return true;
 				}
 				sockaddr_in sin = {};
-				sin.sin_family = AF_INET;
+				sin.sin_family = (int)m_address_family;
 				sin.sin_port = htons(port);
 #ifdef _WIN32
 				sin.sin_addr.S_un.S_addr = inet_addr(ip.c_str());

@@ -32,7 +32,7 @@ namespace System
 			int64_t Length();
 			std::string Name();
 			FileInfo CopyTo(const std::string &dest, bool overwrite = false);
-			FileStream Create();
+			FileStream* Create();
 			void Delete();
 			void MoveTo(const std::string &dest);
 		private:

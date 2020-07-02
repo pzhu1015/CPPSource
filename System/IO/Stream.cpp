@@ -106,5 +106,8 @@ namespace System
 		void Stream::WriteByte()
 		{
 		}
+		void Stream::Dispose()
+		{
+		}
 	}
 }

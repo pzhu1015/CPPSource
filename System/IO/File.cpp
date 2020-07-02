@@ -157,13 +157,13 @@ namespace System
 		{
 			return false;
 		}
-		FileStream File::Open(const std::string & path, const FileMode & mode)
+		FileStream* File::Open(const std::string & path, const FileMode & mode)
 		{
-			return FileStream();
+			return nullptr;
 		}
-		FileStream File::Open(const std::string & path, const FileMode & mode, const FileAccess & access)
+		FileStream* File::Open(const std::string & path, const FileMode & mode, const FileAccess & access)
 		{
-			return FileStream();
+			return nullptr;
 		}
 	}
 }

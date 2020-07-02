@@ -11,13 +11,14 @@
 
 #include "System/DllExport.h"
 #include "System/IO/SeekOrigin.h"
+#include "System/IDisposable.h"
 #include <stdint.h>
 
 namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API Stream
+		class SYSTEM_API Stream : public IDisposable
 		{
 		public:
 			Stream();
@@ -41,10 +42,15 @@ namespace System
 			virtual void SetLength(int64_t value) = 0;
 			virtual void Write(char* buffer, int offset, int count) = 0;
 			virtual void WriteByte();
-		private:
+			virtual void Dispose() override;
+		protected:
+			bool m_can_read = false;
+			bool m_can_write = false;
 			bool m_can_timeout = false;
 			int m_read_timeout = 0;
 			int m_write_timeout = 0;
+			int64_t m_length;
+			int64_t m_position;
 		};
 	}
 }
