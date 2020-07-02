@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IO_FILEACCESS_H
 #define SYSTEM_IO_FILEACCESS_H
+#include <fstream>
 
 namespace System
 {
@@ -15,9 +16,9 @@ namespace System
 	{
 		enum class FileAccess
 		{
-			Read = 1,
-			Write = 2,
-			ReadWrite = 3
+			Read = std::ios::in,
+			Write = std::ios::out,
+			ReadWrite = std::ios::in | std::ios::out
 		};
 	}
 }

@@ -103,7 +103,7 @@ namespace System
 		{
 		}
 
-		void Stream::WriteByte()
+		void Stream::WriteByte(char value)
 		{
 		}
 		void Stream::Dispose()

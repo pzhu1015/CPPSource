@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IO_FILEMODE_H
 #define SYSTEM_IO_FILEMODE_H
+#include <fstream>
 
 namespace System
 {
@@ -19,8 +20,8 @@ namespace System
 			Create = 2,
 			Open = 3,
 			OpenOrCreate = 4,
-			Truncate = 5,
-			Append = 6
+			Truncate = std::ios::trunc,
+			Append = std::ios::app
 		};
 	}
 }

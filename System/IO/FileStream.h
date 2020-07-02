@@ -34,13 +34,22 @@ namespace System
 			virtual int64_t GetLength() const override;
 			virtual int64_t GetPosition() const override;
 			virtual void Flush() override;
+			virtual void Flush(bool flushToDisk);
 			virtual int Read(char* buffer, int offset, int count) override;
+			virtual int ReadByte() override;
 			virtual int64_t Seek(int64_t offset, SeekOrigin origin) override;
 			virtual void SetLength(int64_t value) override;
 			virtual void Write(char* buffer, int offset, int count) override;
+			virtual void WriteByte(char value) override;
 			virtual void Dispose() override;
+			virtual void Dispose(bool disposing);
+
+			virtual void Lock(int64_t position, int64_t length);
+			virtual void UnLock(int64_t position, int64_t length);
 		private:
-			std::fstream* m_stream;
+			std::fstream* m_iostream = nullptr;
+			std::ifstream* m_istream = nullptr;
+			std::ofstream* m_ostream = nullptr;
 			FileMode m_mode;
 			FileAccess m_access;
 		};

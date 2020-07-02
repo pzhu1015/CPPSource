@@ -17,94 +17,81 @@ namespace System
 	{
 		FileStream::FileStream(const std::string & filename, FileMode mode)
 		{
-			m_mode = mode;
-			m_stream = new std::fstream();
-			m_stream->open(filename, (int)mode);
+			
 		}
+
 		FileStream::FileStream(const std::string & filename, FileMode mode, FileAccess access)
 		{
-			m_mode = mode;
-			m_access = access;
-			m_stream = new std::fstream();
-			m_stream->open(filename, (int)mode, (int)access);
+			
 		}
+
 		FileStream::~FileStream()
 		{
 		}
+
 		bool FileStream::GetCanRead() const
 		{
+			if (m_access == FileAccess::Read || m_access == FileAccess::ReadWrite)
+			{
+				return true;
+			}
 			return false;
 		}
+
 		bool FileStream::GetCanSeek() const
 		{
-			return false;
+			return true;
 		}
+
 		bool FileStream::GetCanWrite() const
 		{
+			if (m_access == FileAccess::Write || m_access == FileAccess::ReadWrite)
+			{
+				return true;
+			}
 			return false;
 		}
+
 		int64_t FileStream::GetLength() const
 		{
 			return int64_t();
 		}
+
 		int64_t FileStream::GetPosition() const
 		{
-			if (m_stream == nullptr)
-			{
-				return -1;
-			}
-			if (m_access == FileAccess::Read)
-			{
-				return m_stream->tellg();
-			}
-			else if (m_access == FileAccess::Write)
-			{
-				return m_stream->tellp();
-			}
-			else
-			{
-				//TODO
-			}
 			return -1;
 		}
 
 		void FileStream::Flush()
 		{
-			if (m_stream != nullptr)
-			{
-				m_stream->flush();
-			}
+		}
+
+		void FileStream::Flush(bool flushToDisk)
+		{
 		}
 
 		int FileStream::Read(char * buffer, int offset, int count)
 		{
-			if (m_stream != nullptr)
+			if (GetCanRead())
 			{
-				m_stream->seekg(offset);
-				m_stream->read(buffer, count);
+				m_istream->seekg(offset);
+				m_istream->read(buffer, count);
 				return 1;
+			}
+			return -1;
+		}
+
+		int FileStream::ReadByte()
+		{
+			if (GetCanRead())
+			{
+				return m_istream->get();
 			}
 			return -1;
 		}
 
 		int64_t FileStream::Seek(int64_t offset, SeekOrigin origin)
 		{
-			if (m_stream == nullptr)
-			{
-				return -1;
-			}
-			if (m_access == FileAccess::Read)
-			{
-				//return m_stream->seekg(offset, (int)origin);
-			}
-			else if (m_access == FileAccess::Write)
-			{
-				//return m_stream->seekp(offset, (int)origin);
-			}
-			else
-			{
-				//TODO
-			}
 			return -1;
 		}
 
@@ -114,16 +101,35 @@ namespace System
 
 		void FileStream::Write(char * buffer, int offset, int count)
 		{
-			m_stream->seekp(offset);
-			m_stream->write(buffer, count);
+			if (GetCanWrite())
+			{
+				m_ostream->seekp(offset);
+				m_ostream->write(buffer, count);
+			}
+		}
+
+		void FileStream::WriteByte(char value)
+		{
+			if (GetCanWrite())
+			{
+				m_ostream->put(value);
+			}
 		}
 
 		void FileStream::Dispose()
 		{
-			if (m_stream != nullptr)
-			{
-				m_stream->close();
-			}
+		}
+
+		void FileStream::Dispose(bool disposing)
+		{
+		}
+
+		void FileStream::Lock(int64_t position, int64_t length)
+		{
+		}
+
+		void FileStream::UnLock(int64_t position, int64_t length)
+		{
 		}
 	}
 }

@@ -41,7 +41,7 @@ namespace System
 			virtual int64_t Seek(int64_t offset, SeekOrigin origin) = 0;
 			virtual void SetLength(int64_t value) = 0;
 			virtual void Write(char* buffer, int offset, int count) = 0;
-			virtual void WriteByte();
+			virtual void WriteByte(char value);
 			virtual void Dispose() override;
 		protected:
 			bool m_can_read = false;

@@ -159,11 +159,11 @@ namespace System
 		}
 		FileStream* File::Open(const std::string & path, const FileMode & mode)
 		{
-			return nullptr;
+			return new FileStream(path, mode);
 		}
 		FileStream* File::Open(const std::string & path, const FileMode & mode, const FileAccess & access)
 		{
-			return nullptr;
+			return new FileStream(path, mode, access);
 		}
 	}
 }
