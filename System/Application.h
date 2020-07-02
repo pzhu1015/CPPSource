@@ -6,11 +6,10 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef System_Application_h
-#define System_Application_h
+#ifndef SYSTEM_APPLICATION_H
+#define SYSTEM_APPLICATION_H
 
 #include "System/DllExport.h"
-#include "System/Object.h"
 #include <string>
 
 namespace System
@@ -38,4 +37,4 @@ namespace System
 	};
 }
 
-#endif // !System_Application_h
+#endif // !SYSTEM_APPLICATION_H

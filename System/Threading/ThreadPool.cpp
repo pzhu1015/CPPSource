@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Threading/ThreadPool.h"
+#include "System/Threading/Thread.h"
 
 namespace System
 {
@@ -67,7 +68,7 @@ namespace System
 			m_threads.clear();
 		}
 
-		void ThreadPool::AddTask(const ThreadPool::Task &task)
+		void ThreadPool::AddTask(const Task &task)
 		{
 			std::unique_lock<std::mutex> lock(m_mutex);
 			while (m_tasks.size() >= m_task_size)
@@ -78,14 +79,14 @@ namespace System
 			m_full_cond.notify_one();
 		}
 
-		ThreadPool::Task ThreadPool::GetTask()
+		Task ThreadPool::GetTask()
 		{
 			std::unique_lock<std::mutex> lock(m_mutex);
 			while (m_tasks.empty())
 			{
 				m_full_cond.wait(lock);
 			}
-			ThreadPool::Task task = m_tasks.front();
+			Task task = m_tasks.front();
 			m_tasks.pop();
 			m_empty_cond.notify_one();
 			return task;
@@ -98,10 +99,10 @@ namespace System
 
 		void ThreadPool::Run()
 		{
-			while (true)
+			while (m_is_started)
 			{
-				ThreadPool::Task task = std::move(GetTask());
-				if (task)
+				Task task = std::move(GetTask());
+				if (task != nullptr)
 				{
 					task();
 				}

@@ -45,6 +45,7 @@ namespace System
 	}
 	void Application::Exit()
 	{
+		exit(0);
 	}
 	void Application::ExitThread()
 	{

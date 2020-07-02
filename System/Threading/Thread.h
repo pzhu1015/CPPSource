@@ -10,7 +10,6 @@
 #define THREADING_THREAD_H
 
 #include "System/DllExport.h"
-#include "System/Object.h"
 #include "System/Threading/Runnable.h"
 #include <thread>
 #include <functional>
@@ -20,14 +19,14 @@ namespace System
 {
 	namespace Threading
 	{
-		
+		class Runable;
 		class SYSTEM_API Thread
 		{
 		public:
 			Thread() = default;
 			explicit Thread(const Thread &thread) = delete;
 			explicit Thread(const std::function<void()> &function);
-			explicit Thread(const std::shared_ptr<Runnable> &runnable);
+			explicit Thread(Runnable* runnable);
 			virtual ~Thread();
 			void Start();
 			void Stop();
@@ -38,10 +37,10 @@ namespace System
 			bool IsInterrupted() const;
 			virtual void Run();
 		private:
-			std::thread m_thread;
+			std::thread* m_thread;
 			std::function<void()> m_function;
 			std::atomic<bool> m_isInterript = false;
-			std::shared_ptr<Runnable> m_runnable = nullptr;
+			Runnable* m_runnable = nullptr;
 		};
 
 		SYSTEM_API std::thread::id CurrentThreadId();

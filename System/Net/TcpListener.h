@@ -9,14 +9,19 @@
 #ifndef SYSTEM_NET_TCPLISTENER_H
 #define SYSTEM_NET_TCPLISTENER_H
 #include "System/DllExport.h"
-#include "System/Net/IPEndPoint.h"
-#include "System/Net/Sockets/Socket.h"
-#include "System/Net/TcpClient.h"
+#include "System/Net/EndPoint.h"
 
 namespace System
 {
 	namespace Net
 	{
+		class TcpClient;
+		class IPAddress;
+		class IPEndPoint;
+		namespace Sockets
+		{
+			class Socket;
+		}
 		class SYSTEM_API TcpListener
 		{
 		public:

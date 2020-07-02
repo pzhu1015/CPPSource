@@ -10,13 +10,14 @@
 #define SYSTEM_NET_SIMPLETCPCLITENER_H
 #include "System/DllExport.h"
 #include "System/Net/IPEndPoint.h"
-#include "System/Net/SimpleTcpClient.h"
+
 #include <memory>
 
 namespace System
 {
 	namespace Net
 	{
+		class SimpleTcpClient;
 		class SYSTEM_API SimpleTcpListener
 		{
 		public:

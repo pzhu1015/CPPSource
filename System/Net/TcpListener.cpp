@@ -7,6 +7,10 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/TcpListener.h"
+#include "System/Net/Sockets/Socket.h"
+#include "System/Net/TcpClient.h"
+#include "System/Net/IPAddress.h"
+#include "System/Net/IPEndPoint.h"
 
 namespace System
 {

@@ -16,12 +16,12 @@ namespace System
 		Thread::Thread(const std::function<void()> &callback)
 			:
 			m_isInterript(false),
-			m_function(std::move(callback)),
+			m_function(callback),
 			m_runnable(nullptr)
 		{
 		}
 
-		Thread::Thread(const std::shared_ptr<Runnable> &runnable)
+		Thread::Thread(Runnable* runnable)
 			:
 			m_isInterript(false),
 			m_function(nullptr),
@@ -35,16 +35,15 @@ namespace System
 			{
 				m_isInterript = true;
 			}
-			if (m_thread.joinable())
+			if (m_thread != nullptr && m_thread->joinable())
 			{
-				m_thread.join();
+				m_thread->join();
 			}
 		}
 
 		void Thread::Start()
 		{
-			std::thread th(std::bind(&Thread::Run, this));
-			m_thread = std::move(th);
+			m_thread = new std::thread(std::bind(&Thread::Run, this));
 		}
 
 		void Thread::Stop()
@@ -53,7 +52,7 @@ namespace System
 
 		std::thread::id Thread::GetID() const
 		{
-			return m_thread.get_id();
+			return m_thread->get_id();
 		}
 
 		void Thread::Interrupt()
@@ -68,12 +67,18 @@ namespace System
 
 		void Thread::Join()
 		{
-			m_thread.join();
+			if (m_thread != nullptr)
+			{
+				m_thread->join();
+			}
 		}
 
 		void Thread::Detach()
 		{
-			m_thread.detach();
+			if (m_thread != nullptr)
+			{
+				m_thread->detach();
+			}
 		}
 
 		void Thread::Run()
@@ -108,7 +113,8 @@ namespace System
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(seconds));
 		}
-		SYSTEM_API void SleepMs(const int millisecond)
+
+		void SleepMs(const int millisecond)
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(millisecond));
 		}

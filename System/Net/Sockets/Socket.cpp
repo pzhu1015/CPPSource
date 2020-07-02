@@ -8,6 +8,8 @@
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/Sockets/Socket.h"
 #include "System/Net/IPEndPoint.h"
+#include "System/Net/IPAddress.h"
+#include "System/Net/Sockets/SocketAsyncEventArgs.h"
 
 namespace System
 {
@@ -53,32 +55,41 @@ namespace System
 				return false;
 			}
 
-			void Socket::Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds)
+			int Socket::Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds)
 			{
 				timeval tv = { 0, microSeconds };
 				int maxfd = -1;
-				for (u_int i = 0; i < checkRead->fd_count; i++)
+				if (checkRead)
 				{
-					if (maxfd < (int)checkRead->fd_array[i])
+					for (u_int i = 0; i < checkRead->fd_count; i++)
 					{
-						maxfd = (int)checkRead->fd_array[i];
+						if (maxfd < (int)checkRead->fd_array[i])
+						{
+							maxfd = (int)checkRead->fd_array[i];
+						}
 					}
 				}
-				for (u_int i = 0; i < checkWrite->fd_count; i++)
+				if (checkWrite)
 				{
-					if (maxfd < (int)checkWrite->fd_array[i])
+					for (u_int i = 0; i < checkWrite->fd_count; i++)
 					{
-						maxfd = (int)checkWrite->fd_array[i];
+						if (maxfd < (int)checkWrite->fd_array[i])
+						{
+							maxfd = (int)checkWrite->fd_array[i];
+						}
 					}
 				}
-				for (u_int i = 0; i < checkError->fd_count; i++)
+				if (checkError)
 				{
-					if (maxfd < (int)checkError->fd_array[i])
+					for (u_int i = 0; i < checkError->fd_count; i++)
 					{
-						maxfd = (int)checkError->fd_array[i];
+						if (maxfd < (int)checkError->fd_array[i])
+						{
+							maxfd = (int)checkError->fd_array[i];
+						}
 					}
 				}
-				select(maxfd + 1, checkRead, checkWrite, checkError, &tv);
+				return select(maxfd + 1, checkRead, checkWrite, checkError, &tv);
 			}
 
 			bool Socket::GetBlocking() const

@@ -17,14 +17,13 @@
 #include "System/Net/Sockets/SelectMode.h"
 #include "System/Net/Sockets/SocketOptionLevel.h"
 #include "System/Net/Sockets/SocketOptionName.h"
-#include "System/Net/Sockets/SocketAsyncEventArgs.h"
 #include "System/Net/EndPoint.h"
-#include "System/Net/IPAddress.h"
 
 namespace System
 {
 	namespace Net
 	{
+		class IPAddress;
 		namespace Sockets
 		{
 			class SocketAsyncEventArgs;
@@ -37,7 +36,7 @@ namespace System
 
 				static bool SupportIpv4();
 				static bool SupportIpv6();
-				static void Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds);
+				static int Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds);
 
 				bool GetBlocking() const;
 				void SetBlocking(bool blocking);
@@ -103,7 +102,6 @@ namespace System
 				ProtocolType m_protocol_type;
 				SocketType m_socket_type;
 				SOCKET m_sock;
-
 			};
 		}
 	}

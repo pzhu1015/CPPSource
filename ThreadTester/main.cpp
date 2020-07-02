@@ -82,7 +82,7 @@ int main(int args, char** argv)
 		CLOG_CONSOLE_INFO("main thread run here t1...");
 
 		//实现Runnable接口
-		std::shared_ptr<Runnable> runnable = std::make_shared<RunableTester>();
+		Runnable* runnable = new RunableTester();
 		std::shared_ptr<Thread> t2 = std::make_shared<Thread>(runnable);
 		t2->Start();
 		CLOG_CONSOLE_INFO("main thread run here t2...");

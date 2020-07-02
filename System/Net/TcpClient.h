@@ -9,15 +9,18 @@
 #ifndef SYSTEM_NET_TCPCLIENT_H
 #define SYSTEM_NET_TCPCLIENT_H
 #include "System/DllExport.h"
+#include "System/IDisposable.h"
 #include "System/Net/IPEndPoint.h"
-#include "System/Net/Sockets/Socket.h"
-#include "System/Net/Sockets/NetworkStream.h"
 
-using namespace System::Net::Sockets;
 namespace System
 {
 	namespace Net
 	{
+		namespace Sockets
+		{
+			class Socket;
+			class NetworkStream;
+		}
 		class SYSTEM_API TcpClient: public IDisposable
 		{
 		public:
