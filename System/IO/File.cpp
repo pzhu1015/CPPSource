@@ -38,7 +38,17 @@ namespace System
 
 		bool File::WriteAllLines(const std::string & path, const std::vector<std::string>& lines)
 		{
-			return false;
+			std::ofstream ofs(path);
+			if (!ofs.is_open())
+			{
+				return false;
+			}
+			for (auto line : lines)
+			{
+				ofs << line << std::endl;
+			}
+			ofs.close();
+			return true;
 		}
 
 		bool File::WriteAllLines(const std::string & path, const std::vector<std::string>& lines, const Encoding & encoding)
@@ -123,6 +133,16 @@ namespace System
 		}
 		bool File::AppendAllLines(const std::string & path, std::vector<std::string>& lines)
 		{
+			std::ofstream ofs(path, std::ios::app);
+			if (!ofs.is_open())
+			{
+				return false;
+			}
+			for (auto line : lines)
+			{
+				ofs << line << std::endl;
+			}
+			ofs.close();
 			return false;
 		}
 		bool File::AppendAllLines(const std::string & path, std::vector<std::string>& lines, const Encoding & encoding)
@@ -131,7 +151,14 @@ namespace System
 		}
 		bool File::AppendAllText(const std::string & path, std::string & contents)
 		{
-			return false;
+			std::ofstream ofs(path, std::ios::app);
+			if (!ofs.is_open())
+			{
+				return false;
+			}
+			ofs << contents;
+			ofs.close();
+			return true;
 		}
 		bool File::AppendAllText(const std::string & path, std::string & contents, const Encoding & encoding)
 		{
