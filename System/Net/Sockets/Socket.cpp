@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/Sockets/Socket.h"
+#include "System/Net/EndPoint.h"
 #include "System/Net/IPEndPoint.h"
 #include "System/Net/IPAddress.h"
 #include "System/Net/Sockets/SocketAsyncEventArgs.h"
@@ -40,8 +41,14 @@ namespace System
 
 			Socket::~Socket()
 			{
-				delete m_local_endpoint;
-				delete m_remote_endpoint;
+				if (m_local_endpoint != nullptr)
+				{
+					delete m_local_endpoint;
+				}
+				if (m_remote_endpoint != nullptr)
+				{
+					delete m_remote_endpoint;
+				}
 				Close();
 			}
 
@@ -55,43 +62,6 @@ namespace System
 				return false;
 			}
 
-			int Socket::Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds)
-			{
-				timeval tv = { 0, microSeconds };
-				int maxfd = -1;
-				if (checkRead)
-				{
-					for (u_int i = 0; i < checkRead->fd_count; i++)
-					{
-						if (maxfd < (int)checkRead->fd_array[i])
-						{
-							maxfd = (int)checkRead->fd_array[i];
-						}
-					}
-				}
-				if (checkWrite)
-				{
-					for (u_int i = 0; i < checkWrite->fd_count; i++)
-					{
-						if (maxfd < (int)checkWrite->fd_array[i])
-						{
-							maxfd = (int)checkWrite->fd_array[i];
-						}
-					}
-				}
-				if (checkError)
-				{
-					for (u_int i = 0; i < checkError->fd_count; i++)
-					{
-						if (maxfd < (int)checkError->fd_array[i])
-						{
-							maxfd = (int)checkError->fd_array[i];
-						}
-					}
-				}
-				return select(maxfd + 1, checkRead, checkWrite, checkError, &tv);
-			}
-
 			bool Socket::GetBlocking() const
 			{
 				return m_blocking;
@@ -100,6 +70,12 @@ namespace System
 			void Socket::SetBlocking(bool blocking)
 			{
 				m_blocking = blocking;
+#ifdef _WIN32
+				int iMode = (int)!m_blocking;
+				int ret = ioctlsocket(m_sock, FIONBIO, (u_long FAR*)&iMode);
+#else
+				ioctl(sockfd, FIONBIO, (int)blocking);
+#endif 	
 			}
 
 			bool Socket::GetConnected() const
@@ -109,42 +85,42 @@ namespace System
 
 			int Socket::GetReceiveTimeout() const
 			{
-				return m_receive_buffsize;
+				return GetSocketOption(SocketOptionLevel::Socket, SocketOptionName::ReceiveTimeout);
 			}
 
 			void Socket::SetReceiveTimeout(int timeout)
 			{
-				m_receive_timeout = timeout;
+				SetSocketOption(SocketOptionLevel::Socket, SocketOptionName::ReceiveTimeout, timeout);
 			}
 
 			int Socket::GetSendTimeout() const
 			{
-				return m_send_timeout;
+				return GetSocketOption(SocketOptionLevel::Socket, SocketOptionName::SendTimeout);
 			}
 
 			void Socket::SetSendTimeout(int timeout)
 			{
-				m_send_timeout = timeout;
+				SetSocketOption(SocketOptionLevel::Socket, SocketOptionName::SendTimeout, timeout);
 			}
 
 			int Socket::GetReceiveBuffSize() const
 			{
-				return m_receive_buffsize;
+				return GetSocketOption(SocketOptionLevel::Socket, SocketOptionName::ReceiveBuffer);
 			}
 
 			void Socket::SetReceiveBuffSize(int size)
 			{
-				m_receive_buffsize = size;
+				SetSocketOption(SocketOptionLevel::Socket, SocketOptionName::ReceiveBuffer, size);
 			}
 
 			int Socket::GetSendBuffSize() const
 			{
-				return 0;
+				return GetSocketOption(SocketOptionLevel::Socket, SocketOptionName::SendBuffer);
 			}
 
 			void Socket::SetSendBuffSize(int size)
 			{
-				m_send_buffsize = size;
+				SetSocketOption(SocketOptionLevel::Socket, SocketOptionName::SendBuffer, size);
 			}
 
 			int Socket::GetAvailable() const
@@ -385,7 +361,7 @@ namespace System
 			{
 				if (INVALID_SOCKET == m_sock)
 				{
-					return false;
+					return -1;
 				}
 				int ret = send(m_sock, buffer, length, 0);
 				return ret;
@@ -428,16 +404,72 @@ namespace System
 
 			void Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optValue)
 			{
+				SetSocketOption(optionLevel, optionName, (const char*)&optValue, sizeof(optValue));
 			}
 
 			void Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optValue)
 			{
+				setsockopt(m_sock, (int)optionLevel, (int)optionName, (const char*)&optValue, sizeof(optValue));
+				SetSocketOption(optionLevel, optionName, (const char*)&optValue, sizeof(optValue));
+			}
+
+			int Socket::GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName) const
+			{
+				int result = 0;
+				int length = sizeof(result);
+				int ret = getsockopt(m_sock, (int)optionLevel, (int)optionName, (char*)&result, &length);
+				if (SOCKET_ERROR == ret)
+				{
+					return -1;
+				}
+				return result;
 			}
 
 			void Socket::Dispose()
 			{
 #ifdef _WIN32
 				WSACleanup();
+#endif
+			}
+
+			int Socket::Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds)
+			{
+				timeval tv = { 0, microSeconds };
+#ifdef _WIN32
+				return select(0, checkRead, checkWrite, checkError, &tv);
+#else
+				int maxfd = -1;
+				if (checkRead)
+				{
+					for (u_int i = 0; i < checkRead->fd_count; i++)
+					{
+						if (maxfd < (int)checkRead->fd_array[i])
+						{
+							maxfd = (int)checkRead->fd_array[i];
+						}
+					}
+				}
+				if (checkWrite)
+				{
+					for (u_int i = 0; i < checkWrite->fd_count; i++)
+					{
+						if (maxfd < (int)checkWrite->fd_array[i])
+						{
+							maxfd = (int)checkWrite->fd_array[i];
+						}
+					}
+				}
+				if (checkError)
+				{
+					for (u_int i = 0; i < checkError->fd_count; i++)
+					{
+						if (maxfd < (int)checkError->fd_array[i])
+						{
+							maxfd = (int)checkError->fd_array[i];
+						}
+					}
+				}
+				return select(maxfd + 1, checkRead, checkWrite, checkError, &tv);
 #endif
 			}
 		}

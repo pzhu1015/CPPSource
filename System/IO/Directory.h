@@ -15,20 +15,29 @@
 
 namespace System
 {
+	namespace DateTimes
+	{
+		class DateTime;
+	}
 	namespace IO
 	{
+		class DirectoryInfo;
 		class SYSTEM_API Directory
 		{
 		public:
-			Directory() = default;
-			Directory(const std::string &path);
-			~Directory() = default;
 			static void CreateDirectory(const std::string &path);
-			static void Delete(const std::string &path, bool recurse = false);
+			static void Delete(const std::string &path);
+			static void Delete(const std::string &path, bool recurse);
 			static bool Exists(const std::string &path);
 			static void Move(const std::string &src_path, const std::string &dest_path);
 			static std::vector<std::string> GetFiles(const std::string &path);
 			static std::vector<std::string> GetDirectories(const std::string &path);
+			static DateTimes::DateTime* GetCreationTime(const std::string &path);
+			static DateTimes::DateTime* GetLastAccessTime(const std::string &path);
+			static DateTimes::DateTime* GetLastWriteTime(const std::string &path);
+			static DirectoryInfo* GetParent(const std::string &path);
+			static std::string GetDirectoryRoot(const std::string &path);
+
 		};
 	}
 }

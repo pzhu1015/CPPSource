@@ -188,6 +188,7 @@
     <ClInclude Include="IO\FileMode.h" />
     <ClInclude Include="IO\FileStream.h" />
     <ClInclude Include="DllExport.h" />
+    <ClInclude Include="IO\FileSystemInfo.h" />
     <ClInclude Include="IO\SeekOrigin.h" />
     <ClInclude Include="IO\Stream.h" />
     <ClInclude Include="Logger\CLogger.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="IO\File.cpp" />
     <ClCompile Include="IO\FileInfo.cpp" />
     <ClCompile Include="IO\FileStream.cpp" />
+    <ClCompile Include="IO\FileSystemInfo.cpp" />
     <ClCompile Include="IO\Stream.cpp" />
     <ClCompile Include="Logger\CLogger.cpp" />
     <ClCompile Include="Net\IPAddress.cpp" />

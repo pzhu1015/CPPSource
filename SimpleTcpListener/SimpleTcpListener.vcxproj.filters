@@ -18,5 +18,64 @@
     <ClCompile Include="server.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SelectTcpListener.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpStartEventArgs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpSelectErrorEventArgs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpAcceptEventArgs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Process.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OnLineEventArgs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OffLineEventArgs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SelectTcpListener.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpStartEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpStopEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpAcceptEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpReceiveEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpSendEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpSelectErrorEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessStartEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OnLineEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="OffLineEventArgs.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

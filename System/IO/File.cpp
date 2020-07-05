@@ -7,9 +7,20 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/IO/File.h"
+#include "System/DateTimes/DateTime.h"
+#include "System/IO/FileStream.h"
+#include "System/IO/Encoding.h"
 #include <fstream>
 #include <ostream>
+#include <stdio.h>
+#ifdef _WIN32
+#include <io.h>
+#include <sys/stat.h>
+#else
+#include <unistd.h>
+#endif
 
+using namespace System::DateTimes;
 namespace System
 {
 	namespace IO
@@ -31,8 +42,9 @@ namespace System
 			return contents;
 		}
 
-		std::string File::ReadAllText(const std::string & path, const Encoding & encoding)
+		std::string File::ReadAllText(const std::string & path, Encoding* encoding)
 		{
+			//TODO
 			return std::string();
 		}
 
@@ -51,7 +63,7 @@ namespace System
 			return true;
 		}
 
-		bool File::WriteAllLines(const std::string & path, const std::vector<std::string>& lines, const Encoding & encoding)
+		bool File::WriteAllLines(const std::string & path, const std::vector<std::string>& lines,Encoding* encoding)
 		{
 			return false;
 		}
@@ -71,7 +83,7 @@ namespace System
 			return true;
 		}
 
-		bool File::WriteAllText(const std::string & path, const std::string & contents, const Encoding & encoding)
+		bool File::WriteAllText(const std::string & path, const std::string & contents, Encoding* encoding)
 		{
 			return false;
 		}
@@ -106,7 +118,6 @@ namespace System
 			return true;
 		}
 
-
 		std::vector<std::string> File::ReadAllLines(const std::string & path)
 		{
 			std::ifstream ifs(path);
@@ -127,10 +138,51 @@ namespace System
 
 			return lines;
 		}
-		std::vector<std::string> File::ReadAllLines(const std::string & path, const Encoding & encoding)
+
+		std::vector<std::string> File::ReadAllLines(const std::string & path, Encoding* encoding)
 		{
 			return std::vector<std::string>();
 		}
+
+		DateTimes::DateTime * File::GetCreationTime(const std::string & path)
+		{
+#ifdef _WIN32
+			struct _stat st;
+			_stat(path.c_str(), &st);
+#else
+			struct stat st;
+			stat(path.c_str(), &st);
+#endif
+			DateTime* dt = new DateTime(st.st_ctime);
+			return dt;
+		}
+
+		DateTimes::DateTime * File::GetLastAccessTime(const std::string & path)
+		{
+#ifdef _WIN32
+			struct _stat info;
+			_stat(path.c_str(), &info);
+#else
+			struct stat info;
+			stat(path.c_str(), &info);
+#endif
+			DateTime* dt = new DateTime(info.st_atime);
+			return dt;
+		}
+
+		DateTimes::DateTime * File::GetLastWriteTime(const std::string & path)
+		{
+#ifdef _WIN32
+			struct _stat info;
+			_stat(path.c_str(), &info);
+#else
+			struct stat info;
+			stat(path.c_str(), &info);
+#endif
+			DateTime* dt = new DateTime(info.st_mtime);
+			return dt;
+		}
+
 		bool File::AppendAllLines(const std::string & path, std::vector<std::string>& lines)
 		{
 			std::ofstream ofs(path, std::ios::app);
@@ -145,10 +197,12 @@ namespace System
 			ofs.close();
 			return false;
 		}
-		bool File::AppendAllLines(const std::string & path, std::vector<std::string>& lines, const Encoding & encoding)
+
+		bool File::AppendAllLines(const std::string & path, std::vector<std::string>& lines, Encoding* encoding)
 		{
 			return false;
 		}
+
 		bool File::AppendAllText(const std::string & path, std::string & contents)
 		{
 			std::ofstream ofs(path, std::ios::app);
@@ -160,35 +214,87 @@ namespace System
 			ofs.close();
 			return true;
 		}
-		bool File::AppendAllText(const std::string & path, std::string & contents, const Encoding & encoding)
+
+		bool File::AppendAllText(const std::string & path, std::string & contents, Encoding* encoding)
 		{
+			//TODO
 			return false;
 		}
+
 		bool File::Copy(const std::string & src, const std::string & dest)
 		{
-			return false;
+			std::ifstream ifs(src.c_str(), std::ios::in | std::ios::binary);
+			if (!ifs)
+			{
+				return false;
+			}
+			std::ofstream ofs(dest.c_str(), std::ios::out | std::ios::binary);
+			if (!ofs)
+			{
+				return false;
+			}
+			ofs << ifs.rdbuf();
+			ifs.close();
+			ofs.close();
+			return true;
 		}
+
 		bool File::Copy(const std::string & src, const std::string & dest, const bool overwrite)
 		{
+			if (overwrite)
+			{
+				return File::Copy(src, dest);
+			}
+			else
+			{
+				if (File::Exists(dest))
+				{
+					return false;
+				}
+				else
+				{
+					return File::Copy(src, dest);
+				}
+			}
 			return false;
 		}
+
 		bool File::Delete(const std::string & path)
 		{
-			return false;
+			if (File::Exists(path))
+			{
+				if (remove(path.c_str()) == 0)
+				{
+					return false;
+				}
+			}
+			return true;
 		}
+
 		bool File::Exists(const std::string & path)
 		{
-			return false;
+			return (access(path.c_str(), 0) == 0);
 		}
-		bool File::Move(const std::string & str, const std::string & dest)
+
+		bool File::Move(const std::string & src, const std::string & dest)
 		{
-			return false;
+			if (!File::Exists(src))
+			{
+				return false;
+			}
+			if (rename(src.c_str(), dest.c_str()) == 0)
+			{
+				return false;
+			}
+			return true;
 		}
-		FileStream* File::Open(const std::string & path, const FileMode & mode)
+
+		FileStream* File::Open(const std::string & path, FileMode mode)
 		{
 			return new FileStream(path, mode);
 		}
-		FileStream* File::Open(const std::string & path, const FileMode & mode, const FileAccess & access)
+
+		FileStream* File::Open(const std::string & path, FileMode mode, FileAccess access)
 		{
 			return new FileStream(path, mode, access);
 		}

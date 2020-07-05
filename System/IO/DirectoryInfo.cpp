@@ -7,6 +7,18 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/IO/DirectoryInfo.h"
+#include "System/IO/FileInfo.h"
+#include "System/IO/File.h"
+#include "System/IO/Directory.h"
+#include "System/Application.h"
+
+#ifdef _WIN32
+#include <direct.h>
+#include <io.h>
+#else
+#include<unistd.h>
+#endif
+
 
 namespace System
 {
@@ -14,46 +26,96 @@ namespace System
 	{
 		DirectoryInfo::DirectoryInfo(const std::string & dirname)
 		{
+			m_originalpath = dirname;
+			m_fullpath = Application::GetAbsolutePath(dirname);
+#ifdef _WIN32
+			_stat(m_fullpath.c_str(), &m_stat);
+			m_name = m_fullpath.substr(m_fullpath.find_last_of('\\') + 1);
+#else
+			struct stat st;
+			stat(m_fullpath.c_str(), &m_stat);
+			m_name = m_fullpath.substr(m_fullpath.find_last_of('/') + 1);
+#endif
+			m_exists = File::Exists(m_fullpath);
 		}
+
 		DirectoryInfo::~DirectoryInfo()
 		{
 		}
-		bool DirectoryInfo::Exists() const
+
+		bool DirectoryInfo::GetExists() const
 		{
-			return false;
+			return m_exists;
 		}
-		std::string DirectoryInfo::Name() const
+
+		void DirectoryInfo::Delete() const
 		{
-			return std::string();
+			Directory::Delete(m_fullpath);
 		}
-		std::string DirectoryInfo::Parent() const
+
+		std::string DirectoryInfo::GetName() const
 		{
-			return std::string();
+			return m_name;
 		}
-		std::string DirectoryInfo::Root() const
+
+		DirectoryInfo* DirectoryInfo::Parent() const
 		{
-			return std::string();
+			return Directory::GetParent(m_fullpath);
 		}
+
+		DirectoryInfo* DirectoryInfo::Root() const
+		{
+			return new DirectoryInfo(Directory::GetDirectoryRoot(m_fullpath));
+		}
+
 		void DirectoryInfo::Create()
 		{
+			Directory::CreateDirectory(m_fullpath);
 		}
+
 		void DirectoryInfo::Delete(bool recursive)
 		{
+			Directory::Delete(m_fullpath, recursive);
 		}
-		std::vector<DirectoryInfo> DirectoryInfo::GetDirectories()
+
+		std::vector<DirectoryInfo*> DirectoryInfo::GetDirectories()
 		{
-			return std::vector<DirectoryInfo>();
+			auto dirnames = Directory::GetDirectories(m_fullpath);
+			std::vector<DirectoryInfo*> dirinfos;
+			for (auto dirname : dirnames)
+			{
+				dirinfos.push_back(new DirectoryInfo(dirname));
+			}
+			return dirinfos;
 		}
-		std::vector<FileInfo> DirectoryInfo::GetFiles()
+
+		std::vector<FileInfo*> DirectoryInfo::GetFiles()
 		{
-			return std::vector<FileInfo>();
+			auto filenames = Directory::GetFiles(m_fullpath);
+			std::vector<FileInfo*> fileinfos;
+			for (auto filename : filenames)
+			{
+				fileinfos.push_back(new FileInfo(filename));
+			}
+			return fileinfos;
 		}
+
 		void DirectoryInfo::MoveTo(const std::string & dest)
 		{
+			Directory::Move(m_fullpath, dest);
 		}
-		DirectoryInfo DirectoryInfo::CreateSubDirectory(const std::string & path)
+
+		DirectoryInfo* DirectoryInfo::CreateSubDirectory(const std::string & path)
 		{
-			return DirectoryInfo(path);
+			std::string fullpath = m_fullpath;
+#ifdef _WIN32
+			fullpath.append("\\");
+#else
+			fullpath.append("/");
+#endif
+			fullpath.append(fullpath);
+			Directory::CreateDirectory(fullpath);
+			return new DirectoryInfo(fullpath);
 		}
 	}
 }

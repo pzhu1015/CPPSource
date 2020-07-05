@@ -10,37 +10,39 @@
 #define SYSTEM_IO_FILEINFO_H
 
 #include "System/DllExport.h"
-#include "System/IO/Directory.h"
-#include "System/IO/FileStream.h"
+#include "System/IO/FileSystemInfo.h"
+
 #include <string>
 
 namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API FileInfo
+		class FileStream;
+		class DirectoryInfo;
+		class SYSTEM_API FileInfo : public FileSystemInfo
 		{
 		public:
-			FileInfo() = default;
 			FileInfo(const std::string &filename);
-			~FileInfo();
+			virtual ~FileInfo();
 
-			Directory Directory();
-			std::string DirectoryName();
-			bool Exists();
-			bool IsReadOnly();
-			int64_t Length();
-			std::string Name();
-			FileInfo CopyTo(const std::string &dest, bool overwrite = false);
+			DirectoryInfo* GetDirectory() const;
+			std::string GetDirectoryName() const;
+			
+			int64_t GetLength() const;
+			
+			FileInfo* CopyTo(const std::string &dest);
+			FileInfo* CopyTo(const std::string &dest, bool overwrite);
 			FileStream* Create();
-			void Delete();
+			
 			void MoveTo(const std::string &dest);
+
+			virtual std::string GetName() const override;
+			virtual bool GetExists() const override;
+			virtual void Delete() const override;
 		private:
+			std::string m_dirname;
 			int64_t m_length;
-			std::string m_name;
-			std::string m_dir_name;
-			bool m_is_readonly;
-			bool m_exists;
 		};
 	}
 }

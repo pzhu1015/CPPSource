@@ -20,8 +20,9 @@ namespace System
 			enum class SocketOptionName
 			{
 				SendBuffer = SO_SNDBUF,
-				ReceiveBuff = SO_RCVBUF
-
+				ReceiveBuffer = SO_RCVBUF,
+				SendTimeout = SO_SNDTIMEO,
+				ReceiveTimeout = SO_RCVTIMEO
 			};
 		}
 	}

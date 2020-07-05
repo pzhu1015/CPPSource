@@ -166,7 +166,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="OffLineEventArgs.cpp" />
+    <ClCompile Include="OnLineEventArgs.cpp" />
+    <ClCompile Include="Process.cpp" />
+    <ClCompile Include="SelectTcpListener.cpp" />
     <ClCompile Include="server.cpp" />
+    <ClCompile Include="TcpAcceptEventArgs.cpp" />
+    <ClCompile Include="TcpSelectErrorEventArgs.cpp" />
+    <ClCompile Include="TcpStartEventArgs.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Events.h" />
+    <ClInclude Include="OffLineEventArgs.h" />
+    <ClInclude Include="OnLineEventArgs.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="ProcessStartEventArgs.h" />
+    <ClInclude Include="SelectTcpListener.h" />
+    <ClInclude Include="TcpAcceptEventArgs.h" />
+    <ClInclude Include="TcpReceiveEventArgs.h" />
+    <ClInclude Include="TcpSelectErrorEventArgs.h" />
+    <ClInclude Include="TcpSendEventArgs.h" />
+    <ClInclude Include="TcpStartEventArgs.h" />
+    <ClInclude Include="TcpStopEventArgs.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

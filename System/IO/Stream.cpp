@@ -16,6 +16,10 @@ namespace System
 		{
 		}
 
+		void Stream::Dispose(bool disposing)
+		{
+		}
+
 		bool Stream::GetCanRead() const
 		{
 			return false;
@@ -46,7 +50,7 @@ namespace System
 			return int64_t();
 		}
 
-		int Stream::GetReadTimeout()
+		int Stream::GetReadTimeout() const
 		{
 			return 0;
 		}
@@ -55,7 +59,7 @@ namespace System
 		{
 		}
 
-		int Stream::GetWriteTimeout()
+		int Stream::GetWriteTimeout() const
 		{
 			return 0;
 		}

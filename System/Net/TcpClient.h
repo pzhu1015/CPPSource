@@ -10,7 +10,10 @@
 #define SYSTEM_NET_TCPCLIENT_H
 #include "System/DllExport.h"
 #include "System/IDisposable.h"
-#include "System/Net/IPEndPoint.h"
+#include "System/Net/Sockets/AddressFamily.h"
+#include <string>
+
+using namespace System::Net::Sockets;
 
 namespace System
 {
@@ -21,6 +24,8 @@ namespace System
 			class Socket;
 			class NetworkStream;
 		}
+		class IPEndPoint;
+		class IPAddress;
 		class SYSTEM_API TcpClient: public IDisposable
 		{
 		public:
@@ -42,9 +47,6 @@ namespace System
 			void SetReceiveTimeout(int timeout);
 			int GetSendTimeout() const;
 			void SetSendTimeout(int timeout);
-			bool GetActive() const;
-			void SetActive(bool active);
-
 			void Connect(IPEndPoint* remoteEP);
 			void Connect(IPAddress* address, int port);
 			void Connect(const std::string &ip, int port);
@@ -52,6 +54,9 @@ namespace System
 			NetworkStream* GetStream();
 
 			virtual void Dispose();
+		protected:
+			bool GetActive() const;
+			void SetActive(bool active);
 		private:
 			Socket* m_client;
 			bool m_active;

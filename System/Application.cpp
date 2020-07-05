@@ -43,6 +43,19 @@ namespace System
 	{
 		return std::string();
 	}
+	std::string Application::GetAbsolutePath(const std::string & path)
+	{
+#ifdef _WIN32
+#define max_path 4096
+		char resolved_path[max_path] = { 0 };
+		_fullpath(resolved_path, path.c_str(), max_path);
+#else
+#define max_path 40960
+		char resolved_path[max_path] = { 0 };
+		realpath(path.c_str(), resolved_path);
+#endif
+		return std::string(resolved_path);
+	}
 	void Application::Exit()
 	{
 		exit(0);

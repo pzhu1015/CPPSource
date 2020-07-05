@@ -17,26 +17,25 @@
 #include "System/Net/Sockets/SelectMode.h"
 #include "System/Net/Sockets/SocketOptionLevel.h"
 #include "System/Net/Sockets/SocketOptionName.h"
-#include "System/Net/EndPoint.h"
+#include <string>
 
 namespace System
 {
 	namespace Net
 	{
 		class IPAddress;
+		class EndPoint;
 		namespace Sockets
 		{
 			class SocketAsyncEventArgs;
 			class SYSTEM_API Socket : public IDisposable
 			{
 			public:
+				//for server
 				Socket(SOCKET sock, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
+				//for client
 				Socket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				~Socket();
-
-				static bool SupportIpv4();
-				static bool SupportIpv6();
-				static int Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds);
 
 				bool GetBlocking() const;
 				void SetBlocking(bool blocking);
@@ -51,9 +50,9 @@ namespace System
 				void SetSendBuffSize(int size);
 				int GetAvailable() const;
 				SOCKET GetHandle() const;
-				AddressFamily GetAddressFamily() const;
 				EndPoint* GetLocalEndPoint() const;
 				EndPoint* GetRemoteEndPoint() const;
+				AddressFamily GetAddressFamily() const;
 				ProtocolType GetProtocolType() const;
 				SocketType GetSocketType() const;
 
@@ -86,19 +85,19 @@ namespace System
 				int SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char* optValue, int optLength);
 				void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optValue);
 				void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optValue);
+				int GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName) const;
 
 				virtual void Dispose() override;
+				static bool SupportIpv4();
+				static bool SupportIpv6();
+				static int Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds);
 
 			private:
-				bool m_blocking;
-				bool m_connected;
-				int m_receive_timeout;
-				int m_send_timeout;
-				int m_receive_buffsize;
-				int m_send_buffsize;
+				bool m_blocking = false;
+				bool m_connected = false;
+				EndPoint* m_local_endpoint = nullptr;
+				EndPoint* m_remote_endpoint = nullptr;
 				AddressFamily m_address_family;
-				EndPoint* m_local_endpoint;
-				EndPoint* m_remote_endpoint;
 				ProtocolType m_protocol_type;
 				SocketType m_socket_type;
 				SOCKET m_sock;

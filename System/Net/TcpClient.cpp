@@ -9,6 +9,8 @@
 #include "System/Net/TcpClient.h"
 #include "System/Net/Sockets/Socket.h"
 #include "System/Net/Sockets/NetworkStream.h"
+#include "System/Net/IPEndPoint.h"
+#include "System/Net/IPAddress.h"
 
 namespace System
 {
@@ -128,7 +130,7 @@ namespace System
 
 		NetworkStream* TcpClient::GetStream()
 		{
-			return new NetworkStream();
+			return nullptr;
 		}
 
 		void TcpClient::Dispose()

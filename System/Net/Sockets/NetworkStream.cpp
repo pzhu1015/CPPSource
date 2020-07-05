@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/Sockets/NetworkStream.h"
+#include "System/Net/Sockets/Socket.h"
 
 namespace System
 {
@@ -14,50 +15,141 @@ namespace System
 	{
 		namespace Sockets
 		{
-			NetworkStream::NetworkStream()
+			NetworkStream::NetworkStream(Socket * socket)
 			{
+				m_socket = socket;
 			}
+
+			NetworkStream::NetworkStream(Socket * socket, bool ownsSocket)
+			{
+				m_socket = socket;
+				m_ownsocket = ownsSocket;
+			}
+
+			NetworkStream::NetworkStream(Socket * socket, FileAccess access)
+			{
+				m_socket = socket;
+				m_access = access;
+			}
+
+			NetworkStream::NetworkStream(Socket * socket, FileAccess access, bool ownsSocket)
+			{
+				m_socket = socket;
+				m_access = access;
+				m_ownsocket = ownsSocket;
+			}
+
 			NetworkStream::~NetworkStream()
 			{
 			}
+
 			bool NetworkStream::GetCanRead() const
 			{
-				return false;
+				return (m_access == FileAccess::Read) || (m_access == FileAccess::ReadWrite);
 			}
-			bool NetworkStream::GetCanSeek() const
-			{
-				return false;
-			}
+
 			bool NetworkStream::GetCanWrite() const
 			{
+				return (m_access == FileAccess::Write) || (m_access == FileAccess::ReadWrite);
+			}
+
+			bool NetworkStream::GetDataAvailable() const
+			{
 				return false;
 			}
-			int64_t NetworkStream::GetLength() const
+
+			int NetworkStream::GetReadTimeout() const
 			{
-				return int64_t();
+				return m_socket->GetReceiveTimeout();
 			}
-			int64_t NetworkStream::GetPosition() const
+
+			void NetworkStream::SetReadTimeout(int timeout)
 			{
-				return int64_t();
+				m_socket->SetReceiveTimeout(timeout);
 			}
-			void NetworkStream::Flush()
+
+			int NetworkStream::GetWriteTimeout() const
 			{
+				return m_socket->GetSendTimeout();
 			}
+
+			void NetworkStream::SetWriteTimeout(int timeout)
+			{
+				m_socket->SetSendTimeout(timeout);
+			}
+
+			void NetworkStream::Close(int timeout)
+			{
+				m_socket->Close(timeout);
+			}
+
 			int NetworkStream::Read(char * buffer, int offset, int count)
 			{
 				return 0;
 			}
-			int64_t NetworkStream::Seek(int64_t offset, SeekOrigin origin)
-			{
-				return int64_t();
-			}
-			void NetworkStream::SetLength(int64_t value)
-			{
-			}
+
 			void NetworkStream::Write(char * buffer, int offset, int count)
 			{
 			}
-			void NetworkStream::Dispose()
+
+			bool NetworkStream::GetWriteable() const
+			{
+				return false;
+			}
+
+			void NetworkStream::SetWriteable(bool writeable)
+			{
+			}
+
+			bool NetworkStream::GetReadable() const
+			{
+				return false;
+			}
+
+			void NetworkStream::SetReadable(bool readable)
+			{
+			}
+
+			Socket * NetworkStream::GetSocket() const
+			{
+				return m_socket;
+			}
+
+			int64_t NetworkStream::GetLength() const
+			{
+				//Not Support
+				return -1;
+			}
+
+			int64_t NetworkStream::GetPosition() const
+			{
+				//Not Support
+				return -1;
+			}
+
+			bool NetworkStream::GetCanSeek() const
+			{
+				//Not Support
+				return false;
+			}
+
+			void NetworkStream::Flush()
+			{
+				//Not Support
+			}
+
+			int64_t NetworkStream::Seek(int64_t offset, SeekOrigin origin)
+			{
+				//Not Support
+				return -1;
+			}
+
+			void NetworkStream::SetLength(int64_t value)
+			{
+				//Not Support
+			}
+
+			void NetworkStream::Dispose(bool disposing)
 			{
 			}
 		}

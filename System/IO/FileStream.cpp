@@ -76,7 +76,7 @@ namespace System
 			{
 				m_istream->seekg(offset);
 				m_istream->read(buffer, count);
-				return 1;
+				return (int)m_istream->gcount();
 			}
 			return -1;
 		}

@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Threading/Thread.h"
+#include "System/Threading/Runnable.h"
 #include <sstream>
 
 namespace System

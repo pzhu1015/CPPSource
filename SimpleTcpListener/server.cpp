@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 
 #define FD_SETSIZE      4096
+#include "System/Net/SimpleTcpClient.h"
 #include "System/NET/SimpleTcpListener.h"
 #include "System/Logger/CLogger.h"
 #include "System/Threading/Thread.h"

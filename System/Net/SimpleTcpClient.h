@@ -11,13 +11,12 @@
 
 #include "System/DllExport.h"
 #include "System/Net/IPEndPoint.h"
-#define MAX_SEND_BUFF_SIZE (8192);
-#define MAX_RECV_BUFF_SIZE (8192);
 
 namespace System
 {
 	namespace Net
 	{
+		class IPAddress;
 		class SYSTEM_API SimpleTcpClient
 		{
 		public:
@@ -42,11 +41,6 @@ namespace System
 			void SetIPEndPoint(IPEndPoint* endpoint);
 			IPEndPoint* GetIPEndPoint() const;
 
-			bool SetSendBuffSize(int buff_size);
-			int GetSendBuffSize() const;
-
-			bool SetRecvBuffSize(int buff_size);
-			int GetRecvBuffSize() const;
 		private:
 			bool Init();
 
@@ -55,8 +49,6 @@ namespace System
 			IPAddress* m_ipaddress = nullptr;
 			IPEndPoint* m_endpoint = nullptr;
 			bool m_connected = false;
-			int m_send_buff_size = MAX_SEND_BUFF_SIZE;
-			int m_recv_buff_size = MAX_RECV_BUFF_SIZE;
 		};
 	}
 }

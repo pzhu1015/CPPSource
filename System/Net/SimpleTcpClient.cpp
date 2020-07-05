@@ -1,4 +1,13 @@
+///////////////////////////////////////////////////////////////////
+// Copyright 2020 Pengzhihu All Right Reserved
+// FileName:
+// Author: Pengzhihu
+// Date: 2020-05-20
+// Version: 1.0
+// Description:
+///////////////////////////////////////////////////////////////////
 #include "System/Net/SimpleTcpClient.h"
+#include "System/Net/IPAddress.h"
 
 namespace System
 {
@@ -163,38 +172,6 @@ namespace System
 		IPEndPoint* SimpleTcpClient::GetIPEndPoint() const
 		{
 			return m_endpoint;
-		}
-
-		bool SimpleTcpClient::SetSendBuffSize(int buff_size)
-		{
-			m_send_buff_size = buff_size;
-			if (INVALID_SOCKET == m_sock)
-			{
-				return false;
-			}
-			setsockopt(m_sock, SOL_SOCKET, SO_SNDBUF, (const char*)&m_send_buff_size, sizeof(m_send_buff_size));
-			return true;
-		}
-
-		int SimpleTcpClient::GetSendBuffSize() const
-		{
-			return m_send_buff_size;
-		}
-
-		bool SimpleTcpClient::SetRecvBuffSize(int buff_size)
-		{
-			m_recv_buff_size = buff_size;
-			if (INVALID_SOCKET == m_sock)
-			{
-				return false;
-			}
-			setsockopt(m_sock, SOL_SOCKET, SO_RCVBUF, (const char*)&m_recv_buff_size, sizeof(m_recv_buff_size));
-			return true;
-		}
-
-		int SimpleTcpClient::GetRecvBuffSize() const
-		{
-			return m_recv_buff_size;
 		}
 
 		bool SimpleTcpClient::Init()

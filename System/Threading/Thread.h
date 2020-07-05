@@ -10,7 +10,7 @@
 #define THREADING_THREAD_H
 
 #include "System/DllExport.h"
-#include "System/Threading/Runnable.h"
+//#include "System/Threading/Runnable.h"
 #include <thread>
 #include <functional>
 #include <atomic>
@@ -19,7 +19,7 @@ namespace System
 {
 	namespace Threading
 	{
-		class Runable;
+		class Runnable;
 		class SYSTEM_API Thread
 		{
 		public:

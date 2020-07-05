@@ -25,6 +25,7 @@ namespace System
 		static std::string GetProductVersion();
 		static std::string GetStartupPath();
 		static std::string GetExecutablePath();
+		static std::string GetAbsolutePath(const std::string &path);
 		static void Exit();
 		static void ExitThread();
 	private:
