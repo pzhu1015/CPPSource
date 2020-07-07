@@ -116,16 +116,19 @@ namespace System
 		void TcpClient::Connect(IPEndPoint* remoteEP)
 		{
 			m_client->Connect(remoteEP);
+			m_active = true;
 		}
 
 		void TcpClient::Connect(IPAddress* address, int port)
 		{
 			m_client->Connect(address, port);
+			m_active = true;
 		}
 
 		void TcpClient::Connect(const std::string & ip, int port)
 		{
 			m_client->Connect(ip, port);
+			m_active = true;
 		}
 
 		NetworkStream* TcpClient::GetStream()

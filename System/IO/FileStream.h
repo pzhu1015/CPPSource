@@ -10,8 +10,6 @@
 #define SYSTEM_IO_FILESTREAM_H
 
 #include "System/DllExport.h"
-#include "System/Object.h"
-#include "System/IDisposable.h"
 #include "System/IO/Stream.h"
 #include "System/IO/FileMode.h"
 #include "System/IO/FileAccess.h"
@@ -41,17 +39,15 @@ namespace System
 			virtual void SetLength(int64_t value) override;
 			virtual void Write(char* buffer, int offset, int count) override;
 			virtual void WriteByte(char value) override;
-			virtual void Dispose() override;
-			virtual void Dispose(bool disposing);
 
 			virtual void Lock(int64_t position, int64_t length);
 			virtual void UnLock(int64_t position, int64_t length);
+		protected:
+			virtual void Dispose(bool disposing);
 		private:
 			std::fstream* m_iostream = nullptr;
-			std::ifstream* m_istream = nullptr;
-			std::ofstream* m_ostream = nullptr;
-			FileMode m_mode;
-			FileAccess m_access;
+			FileMode m_mode = FileMode::Create;
+			FileAccess m_access = FileAccess::ReadWrite;
 		};
 	}
 }

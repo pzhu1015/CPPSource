@@ -8,16 +8,16 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IO_SEEKORIGIN_H
 #define SYSTEM_IO_SEEKORIGIN_H
-
+#include <fstream>
 namespace System
 {
 	namespace IO
 	{
 		enum class SeekOrigin
 		{
-			Begin = 0 ,
-			Current = 1,
-			End = 2
+			Begin = std::ios::beg,
+			Current = std::ios::cur,
+			End = std::ios::end
 		};
 	}
 }

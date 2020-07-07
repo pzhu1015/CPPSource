@@ -7,9 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/IO/FileStream.h"
-
-//p is write
-//g is read
+#include "System/IO/File.h"
 
 namespace System
 {
@@ -17,12 +15,114 @@ namespace System
 	{
 		FileStream::FileStream(const std::string & filename, FileMode mode)
 		{
-			
+			m_mode = mode;
+			int m = -1;
+			if (mode == FileMode::Create)
+			{
+				//文件存在，覆盖
+				m = std::ios::out | std::ios::binary;
+				m_access = FileAccess::Write;
+			}
+			else if (mode == FileMode::CreateNew)
+			{
+				//文件存在，异常
+				if (File::Exists(filename))
+				{
+					throw "create new a file, but file is exists";
+				}
+				m = std::ios::out | std::ios::binary;
+				m_access = FileAccess::Write;
+			}
+			else if (mode == FileMode::Open)
+			{
+				//打开现有文件
+				m = std::ios::in | std::ios::out | std::ios::binary;
+				m_access = FileAccess::ReadWrite;
+			}
+			else if (mode == FileMode::OpenOrCreate)
+			{
+				//打开现有文件，如果文件不存在创建新文件
+				if (!File::Exists(filename))
+				{
+					m = std::ios::in | std::ios::binary;
+					m_access = FileAccess::Write;
+				}
+				else
+				{
+					m = std::ios::in | std::ios::out | std::ios::binary;
+					m_access = FileAccess::ReadWrite;
+				}
+			}
+			else if (mode == FileMode::Truncate)
+			{
+				//打开现有文件，并清空文件内容
+				m = std::ios::in | std::ios::trunc | std::ios::binary;
+				m_access = FileAccess::Write;
+			}
+			else if (mode == FileMode::Append)
+			{
+				//打开现有文件，并向文件末尾追加内容
+				m = std::ios::in | std::ios::app | std::ios::binary;
+				m_access = FileAccess::Write;
+			}
+			else
+			{
+				//nothing
+			}
+			m_iostream = new std::fstream(filename.c_str(), m);
 		}
 
 		FileStream::FileStream(const std::string & filename, FileMode mode, FileAccess access)
 		{
-			
+			m_mode = mode;
+			m_access = access;
+			int m = -1;
+			if (mode == FileMode::Create)
+			{
+				//文件存在，覆盖
+				m = std::ios::out | std::ios::binary;
+			}
+			else if (mode == FileMode::CreateNew)
+			{
+				//文件存在，异常
+				if (File::Exists(filename))
+				{
+					throw "create new a file, but file is exists";
+				}
+				m = std::ios::out | std::ios::binary;
+			}
+			else if (mode == FileMode::Open)
+			{
+				//打开现有文件
+				m = std::ios::in | std::ios::out | std::ios::binary;
+			}
+			else if (mode == FileMode::OpenOrCreate)
+			{
+				//打开现有文件，如果文件不存在创建新文件
+				if (!File::Exists(filename))
+				{
+					m = std::ios::in | std::ios::binary;
+				}
+				else
+				{
+					m = std::ios::in | std::ios::out | std::ios::binary;
+				}
+			}
+			else if (mode == FileMode::Truncate)
+			{
+				//打开现有文件，并清空文件内容
+				m = std::ios::in | std::ios::trunc | std::ios::binary;
+			}
+			else if (mode == FileMode::Append)
+			{
+				//打开现有文件，并向文件末尾追加内容
+				m = std::ios::in | std::ios::app | std::ios::binary;
+			}
+			else
+			{
+				//nothing
+			}
+			m_iostream = new std::fstream(filename.c_str(), m);
 		}
 
 		FileStream::~FileStream()
@@ -59,24 +159,36 @@ namespace System
 
 		int64_t FileStream::GetPosition() const
 		{
-			return -1;
+			if (GetCanRead())
+			{
+				return m_iostream->tellg();
+			}
+			else
+			{
+				return m_iostream->tellp();
+			}
 		}
 
 		void FileStream::Flush()
 		{
+			m_iostream->flush();
 		}
 
 		void FileStream::Flush(bool flushToDisk)
 		{
+			if (flushToDisk)
+			{
+				Flush();
+			}
 		}
 
 		int FileStream::Read(char * buffer, int offset, int count)
 		{
 			if (GetCanRead())
 			{
-				m_istream->seekg(offset);
-				m_istream->read(buffer, count);
-				return (int)m_istream->gcount();
+				m_iostream->seekg(offset);
+				m_iostream->read(buffer, count);
+				return (int)m_iostream->gcount();
 			}
 			return -1;
 		}
@@ -85,14 +197,23 @@ namespace System
 		{
 			if (GetCanRead())
 			{
-				return m_istream->get();
+				return m_iostream->get();
 			}
 			return -1;
 		}
 
 		int64_t FileStream::Seek(int64_t offset, SeekOrigin origin)
 		{
-			return -1;
+			if (GetCanRead())
+			{
+				m_iostream->seekg(offset, (int)origin);
+				return m_iostream->tellg();
+			}
+			else
+			{
+				m_iostream->seekp(offset, (int)origin);
+				return m_iostream->tellp();
+			}
 		}
 
 		void FileStream::SetLength(int64_t value)
@@ -103,8 +224,8 @@ namespace System
 		{
 			if (GetCanWrite())
 			{
-				m_ostream->seekp(offset);
-				m_ostream->write(buffer, count);
+				m_iostream->seekp(offset);
+				m_iostream->write(buffer, count);
 			}
 		}
 
@@ -112,12 +233,8 @@ namespace System
 		{
 			if (GetCanWrite())
 			{
-				m_ostream->put(value);
+				m_iostream->put(value);
 			}
-		}
-
-		void FileStream::Dispose()
-		{
 		}
 
 		void FileStream::Dispose(bool disposing)

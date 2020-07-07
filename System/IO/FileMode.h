@@ -20,8 +20,8 @@ namespace System
 			Create = 2,
 			Open = 3,
 			OpenOrCreate = 4,
-			Truncate = std::ios::trunc,
-			Append = std::ios::app
+			Truncate = 5,
+			Append = 6
 		};
 	}
 }
