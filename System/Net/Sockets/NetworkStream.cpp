@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/Sockets/NetworkStream.h"
 #include "System/Net/Sockets/Socket.h"
+#include "System/NotSupportedException.h"
 
 namespace System
 {
@@ -154,36 +155,32 @@ namespace System
 
 			int64_t NetworkStream::GetLength() const
 			{
-				//Not Support
-				return -1;
+				throw NotSupportedException(__func__);
 			}
 
 			int64_t NetworkStream::GetPosition() const
 			{
-				//Not Support
-				return -1;
+				throw NotSupportedException(__func__);
 			}
 
 			bool NetworkStream::GetCanSeek() const
 			{
-				//Not Support
-				return false;
+				throw NotSupportedException(__func__);
 			}
 
 			void NetworkStream::Flush()
 			{
-				//Not Support
+				throw NotSupportedException(__func__);
 			}
 
 			int64_t NetworkStream::Seek(int64_t offset, SeekOrigin origin)
 			{
-				//Not Support
-				return -1;
+				throw NotSupportedException(__func__);
 			}
 
 			void NetworkStream::SetLength(int64_t value)
 			{
-				//Not Support
+				throw NotSupportedException(__func__);
 			}
 
 			void NetworkStream::Dispose(bool disposing)

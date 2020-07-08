@@ -136,6 +136,18 @@
     <ClInclude Include="IO\BufferedStream.h">
       <Filter>IO</Filter>
     </ClInclude>
+    <ClInclude Include="ArgumentException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="NotSupportedException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="ExceptionId.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -210,6 +222,18 @@
     <ClCompile Include="IO\BufferedStream.cpp">
       <Filter>IO</Filter>
     </ClCompile>
+    <ClCompile Include="Exception.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="ArgumentException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="NotSupportedException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="ExceptionId.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
@@ -245,7 +269,7 @@
     <Filter Include="DateTimes">
       <UniqueIdentifier>{6a79569a-96ae-4f6e-9b14-a6e4654b4057}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Exception">
+    <Filter Include="Exceptions">
       <UniqueIdentifier>{62832565-1830-4360-93f7-c537c9df741d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

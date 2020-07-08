@@ -171,6 +171,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="ArgumentException.h" />
     <ClInclude Include="DateTimes\Date.h" />
     <ClInclude Include="DateTimes\Duration.h" />
     <ClInclude Include="DateTimes\DateTime.h" />
@@ -178,6 +179,8 @@
     <ClInclude Include="DateTimes\Timestamp.h" />
     <ClInclude Include="EventArgs.h" />
     <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="Exception.h" />
+    <ClInclude Include="ExceptionId.h" />
     <ClInclude Include="IDisposable.h" />
     <ClInclude Include="IO\BufferedStream.h" />
     <ClInclude Include="IO\Directory.h" />
@@ -211,6 +214,7 @@
     <ClInclude Include="Net\Sockets\SocketType.h" />
     <ClInclude Include="Net\TcpClient.h" />
     <ClInclude Include="Net\TcpListener.h" />
+    <ClInclude Include="NotSupportedException.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Threading\Runnable.h" />
     <ClInclude Include="Threading\Thread.h" />
@@ -218,9 +222,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="ArgumentException.cpp" />
     <ClCompile Include="DateTimes\Date.cpp" />
     <ClCompile Include="DateTimes\DateTime.cpp" />
     <ClCompile Include="DateTimes\Time.cpp" />
+    <ClCompile Include="Exception.cpp" />
+    <ClCompile Include="ExceptionId.cpp" />
     <ClCompile Include="IO\BufferedStream.cpp" />
     <ClCompile Include="IO\Directory.cpp" />
     <ClCompile Include="IO\DirectoryInfo.cpp" />
@@ -239,6 +246,7 @@
     <ClCompile Include="Net\Sockets\SocketAsyncEventArgs.cpp" />
     <ClCompile Include="Net\TcpClient.cpp" />
     <ClCompile Include="Net\TcpListener.cpp" />
+    <ClCompile Include="NotSupportedException.cpp" />
     <ClCompile Include="Threading\Thread.cpp" />
     <ClCompile Include="Threading\ThreadPool.cpp" />
   </ItemGroup>
