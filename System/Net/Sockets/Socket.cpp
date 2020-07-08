@@ -11,7 +11,9 @@
 #include "System/Net/IPEndPoint.h"
 #include "System/Net/IPAddress.h"
 #include "System/Net/Sockets/SocketAsyncEventArgs.h"
+#include "System/Threading/Thread.h"
 
+using namespace System::Threading;
 namespace System
 {
 	namespace Net
@@ -254,7 +256,8 @@ namespace System
 
 			bool Socket::Close(int timeout)
 			{
-				return false;
+				System::Threading::SleepMs(timeout);
+				return Close();
 			}
 
 			bool Socket::Connect(EndPoint * remoteEP)

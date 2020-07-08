@@ -179,6 +179,7 @@
     <ClInclude Include="EventArgs.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="IDisposable.h" />
+    <ClInclude Include="IO\BufferedStream.h" />
     <ClInclude Include="IO\Directory.h" />
     <ClInclude Include="IO\DirectoryInfo.h" />
     <ClInclude Include="IO\Encoding.h" />
@@ -220,6 +221,7 @@
     <ClCompile Include="DateTimes\Date.cpp" />
     <ClCompile Include="DateTimes\DateTime.cpp" />
     <ClCompile Include="DateTimes\Time.cpp" />
+    <ClCompile Include="IO\BufferedStream.cpp" />
     <ClCompile Include="IO\Directory.cpp" />
     <ClCompile Include="IO\DirectoryInfo.cpp" />
     <ClCompile Include="IO\File.cpp" />

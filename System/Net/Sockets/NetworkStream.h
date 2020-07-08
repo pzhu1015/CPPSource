@@ -46,8 +46,7 @@ namespace System
 				virtual void Flush() override;//Not Support
 				virtual int64_t Seek(int64_t offset, SeekOrigin origin) override;//Not Support
 				virtual void SetLength(int64_t value) override;//Not Support
-
-				
+	
 			protected:
 				bool GetWriteable() const;
 				void SetWriteable(bool writeable);

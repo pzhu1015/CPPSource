@@ -161,17 +161,28 @@ namespace System
 		{
 			if (GetCanRead())
 			{
-				return m_iostream->tellg();
+				if (m_iostream != nullptr)
+				{
+					return m_iostream->tellg();
+				}
+				return -1;
 			}
 			else
 			{
-				return m_iostream->tellp();
+				if (m_iostream != nullptr)
+				{
+					return m_iostream->tellp();
+				}
+				return -1;
 			}
 		}
 
 		void FileStream::Flush()
 		{
-			m_iostream->flush();
+			if (m_iostream != nullptr)
+			{
+				m_iostream->flush();
+			}
 		}
 
 		void FileStream::Flush(bool flushToDisk)
@@ -184,7 +195,7 @@ namespace System
 
 		int FileStream::Read(char * buffer, int offset, int count)
 		{
-			if (GetCanRead())
+			if (GetCanRead() && m_iostream != nullptr)
 			{
 				m_iostream->seekg(offset);
 				m_iostream->read(buffer, count);
@@ -195,7 +206,7 @@ namespace System
 
 		int FileStream::ReadByte()
 		{
-			if (GetCanRead())
+			if (GetCanRead() && m_iostream != nullptr)
 			{
 				return m_iostream->get();
 			}
@@ -206,13 +217,21 @@ namespace System
 		{
 			if (GetCanRead())
 			{
-				m_iostream->seekg(offset, (int)origin);
-				return m_iostream->tellg();
+				if (m_iostream != nullptr)
+				{
+					m_iostream->seekg(offset, (int)origin);
+					return m_iostream->tellg();
+				}
+				return -1;
 			}
 			else
 			{
-				m_iostream->seekp(offset, (int)origin);
-				return m_iostream->tellp();
+				if (m_iostream != nullptr)
+				{
+					m_iostream->seekp(offset, (int)origin);
+					return m_iostream->tellp();
+				}
+				return -1;
 			}
 		}
 
@@ -222,7 +241,7 @@ namespace System
 
 		void FileStream::Write(char * buffer, int offset, int count)
 		{
-			if (GetCanWrite())
+			if (GetCanWrite() && m_iostream != nullptr)
 			{
 				m_iostream->seekp(offset);
 				m_iostream->write(buffer, count);
@@ -231,7 +250,7 @@ namespace System
 
 		void FileStream::WriteByte(char value)
 		{
-			if (GetCanWrite())
+			if (GetCanWrite() && m_iostream != nullptr)
 			{
 				m_iostream->put(value);
 			}
@@ -239,6 +258,10 @@ namespace System
 
 		void FileStream::Dispose(bool disposing)
 		{
+			if (disposing)
+			{
+				Stream::Dispose();
+			}
 		}
 
 		void FileStream::Lock(int64_t position, int64_t length)

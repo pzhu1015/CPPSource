@@ -18,17 +18,21 @@ namespace System
 			NetworkStream::NetworkStream(Socket * socket)
 			{
 				m_socket = socket;
+				m_ownsocket = false;
+				m_access = FileAccess::ReadWrite;
 			}
 
 			NetworkStream::NetworkStream(Socket * socket, bool ownsSocket)
 			{
 				m_socket = socket;
 				m_ownsocket = ownsSocket;
+				m_access = FileAccess::ReadWrite;
 			}
 
 			NetworkStream::NetworkStream(Socket * socket, FileAccess access)
 			{
 				m_socket = socket;
+				m_ownsocket = false;
 				m_access = access;
 			}
 
@@ -41,6 +45,14 @@ namespace System
 
 			NetworkStream::~NetworkStream()
 			{
+				if (m_ownsocket)
+				{
+					if (m_socket != nullptr)
+					{
+						m_socket->Close();
+						m_socket->Dispose();
+					}
+				}
 			}
 
 			bool NetworkStream::GetCanRead() const
@@ -60,36 +72,61 @@ namespace System
 
 			int NetworkStream::GetReadTimeout() const
 			{
-				return m_socket->GetReceiveTimeout();
+				if (m_socket != nullptr)
+				{
+					return m_socket->GetReceiveTimeout();
+				}
+				return -1;
 			}
 
 			void NetworkStream::SetReadTimeout(int timeout)
 			{
-				m_socket->SetReceiveTimeout(timeout);
+				if (m_socket != nullptr)
+				{
+					m_socket->SetReceiveTimeout(timeout);
+				}
 			}
 
 			int NetworkStream::GetWriteTimeout() const
 			{
-				return m_socket->GetSendTimeout();
+				if (m_socket != nullptr)
+				{
+					return m_socket->GetSendTimeout();
+				}
+				return -1;
 			}
 
 			void NetworkStream::SetWriteTimeout(int timeout)
 			{
-				m_socket->SetSendTimeout(timeout);
+				if (m_socket != nullptr)
+				{
+					m_socket->SetSendTimeout(timeout);
+				}
 			}
 
 			void NetworkStream::Close(int timeout)
 			{
-				m_socket->Close(timeout);
+				if (m_socket != nullptr)
+				{
+					m_socket->Close(timeout);
+				}
 			}
 
 			int NetworkStream::Read(char * buffer, int offset, int count)
 			{
-				return 0;
+				if (m_socket != nullptr)
+				{
+					return m_socket->Receive(buffer + offset, count);
+				}
+				return -1;
 			}
 
 			void NetworkStream::Write(char * buffer, int offset, int count)
 			{
+				if (m_socket)
+				{
+					m_socket->Send(buffer + offset, count);
+				}
 			}
 
 			bool NetworkStream::GetWriteable() const
@@ -151,6 +188,10 @@ namespace System
 
 			void NetworkStream::Dispose(bool disposing)
 			{
+				if (disposing)
+				{
+					Stream::Dispose();
+				}
 			}
 		}
 	}
