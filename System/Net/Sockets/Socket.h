@@ -31,8 +31,6 @@ namespace System
 			class SYSTEM_API Socket : public IDisposable
 			{
 			public:
-				//for server
-				Socket(SOCKET sock, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				//for client
 				Socket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				~Socket();
@@ -93,6 +91,9 @@ namespace System
 				static int Select(fd_set* checkRead, fd_set* checkWrite, fd_set* checkError, int microSeconds);
 
 			private:
+				//for server
+				friend class TcpListener;
+				Socket(SOCKET sock, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				bool m_blocking = false;
 				bool m_connected = false;
 				EndPoint* m_local_endpoint = nullptr;
