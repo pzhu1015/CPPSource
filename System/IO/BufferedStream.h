@@ -31,8 +31,14 @@ namespace System
 			virtual void SetLength(int64_t value) override;
 			virtual void Flush() override;
 		private:
-			int m_buffersize = 4096;
-			int m_pos = 0;
+			void FlushWrite();
+			void FlushRead();
+		private:
+			const int DEFAULT_BUFFER_SIZE = 4096;
+			int m_buffersize = DEFAULT_BUFFER_SIZE;
+			int m_read_pos = 0;
+			int m_write_pos = 0;
+			int m_read_length = 0;
 			Stream* m_stream = nullptr;
 			char* m_buffer = nullptr;
 		};
