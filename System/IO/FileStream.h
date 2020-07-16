@@ -31,6 +31,7 @@ namespace System
 			virtual bool GetCanWrite() const override;
 			virtual int64_t GetLength() const override;
 			virtual int64_t GetPosition() const override;
+			virtual void SetPosition(int64_t pos) override;
 			virtual void Flush() override;
 			virtual void Flush(bool flushToDisk);
 			virtual int Read(char* buffer, int offset, int count) override;

@@ -25,29 +25,9 @@ namespace System
 			return false;
 		}
 
-		bool Stream::GetCanSeek() const
-		{
-			return false;
-		}
-
 		bool Stream::GetCanTimeout()
 		{
 			return false;
-		}
-
-		bool Stream::GetCanWrite() const
-		{
-			return false;
-		}
-
-		int64_t Stream::GetLength() const
-		{
-			return int64_t();
-		}
-
-		int64_t Stream::GetPosition() const
-		{
-			return int64_t();
 		}
 
 		int Stream::GetReadTimeout() const
@@ -70,6 +50,7 @@ namespace System
 
 		void Stream::Close()
 		{
+			Dispose(true);
 		}
 
 		void Stream::CopyTo(Stream * dest)
@@ -80,38 +61,26 @@ namespace System
 		{
 		}
 
-		void Stream::Flush()
-		{
-		}
-
-		int Stream::Read(char * buffer, int offset, int count)
-		{
-			return 0;
-		}
-
 		int Stream::ReadByte()
 		{
-			return 0;
-		}
-
-		int64_t Stream::Seek(int64_t offset, SeekOrigin origin)
-		{
-			return int64_t();
-		}
-
-		void Stream::SetLength(int64_t value)
-		{
-		}
-
-		void Stream::Write(char * buffer, int offset, int count)
-		{
+			char byte[1];
+			int reads = Read(byte, 0, 1);
+			if (reads == 0)
+			{
+				return -1;
+			}
+			return byte[0];
 		}
 
 		void Stream::WriteByte(char value)
 		{
+			char byte[1];
+			byte[0] = value;
+			Write(byte, 0, 1);
 		}
 		void Stream::Dispose()
 		{
+			Close();
 		}
 	}
 }

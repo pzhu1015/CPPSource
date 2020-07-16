@@ -172,6 +172,8 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="ArgumentException.h" />
+    <ClInclude Include="ArgumentNullException.h" />
+    <ClInclude Include="ArgumentOutOfRangeException.h" />
     <ClInclude Include="DateTimes\Date.h" />
     <ClInclude Include="DateTimes\Duration.h" />
     <ClInclude Include="DateTimes\DateTime.h" />
@@ -182,6 +184,8 @@
     <ClInclude Include="Exception.h" />
     <ClInclude Include="ExceptionId.h" />
     <ClInclude Include="IDisposable.h" />
+    <ClInclude Include="InvalidOperationException.h" />
+    <ClInclude Include="IOException.h" />
     <ClInclude Include="IO\BufferedStream.h" />
     <ClInclude Include="IO\Directory.h" />
     <ClInclude Include="IO\DirectoryInfo.h" />
@@ -223,11 +227,15 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="ArgumentException.cpp" />
+    <ClCompile Include="ArgumentNullException.cpp" />
+    <ClCompile Include="ArgumentOutOfRangeException.cpp" />
     <ClCompile Include="DateTimes\Date.cpp" />
     <ClCompile Include="DateTimes\DateTime.cpp" />
     <ClCompile Include="DateTimes\Time.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="ExceptionId.cpp" />
+    <ClCompile Include="InvalidOperationException.cpp" />
+    <ClCompile Include="IOException.cpp" />
     <ClCompile Include="IO\BufferedStream.cpp" />
     <ClCompile Include="IO\Directory.cpp" />
     <ClCompile Include="IO\DirectoryInfo.cpp" />

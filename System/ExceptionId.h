@@ -15,8 +15,12 @@ namespace System
 	enum class ExceptionId
 	{
 		Exception,
+		IO,
 		NotSupported,
-		Argument
+		Argument,
+		ArgumentOutOfRange,
+		ArgumentNull,
+		InvalidOperation,
 	};
 
 	SYSTEM_API ExceptionId GetExceptionId(const std::string& str);

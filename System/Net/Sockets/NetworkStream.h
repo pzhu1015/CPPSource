@@ -55,9 +55,13 @@ namespace System
 				Socket* GetSocket() const;
 				virtual void Dispose(bool disposing) override;
 			private:
+				void InitNetworkStream(Socket* socket, FileAccess access);
+			private:
 				Socket* m_socket = nullptr;
 				bool m_ownsocket = false;
-				FileAccess m_access = FileAccess::ReadWrite;
+				bool m_readable = false;
+				bool m_writeable = false;
+				int m_close_timeout = 0;
 			};
 		}
 	}

@@ -26,6 +26,7 @@ namespace System
 			virtual bool GetCanWrite() const = 0;
 			virtual int64_t GetLength() const = 0;
 			virtual int64_t GetPosition() const = 0;
+			virtual void SetPosition(int64_t pos) = 0;
 			virtual int Read(char* buffer, int offset, int count) = 0;
 			virtual int64_t Seek(int64_t offset, SeekOrigin origin) = 0;
 			virtual void Write(char* buffer, int offset, int count) = 0;

@@ -177,6 +177,10 @@ namespace System
 			}
 		}
 
+		void FileStream::SetPosition(int64_t pos)
+		{
+		}
+
 		void FileStream::Flush()
 		{
 			if (m_iostream != nullptr)

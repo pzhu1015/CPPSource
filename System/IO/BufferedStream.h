@@ -25,16 +25,23 @@ namespace System
 			virtual bool GetCanWrite() const override;
 			virtual int64_t GetLength() const override;
 			virtual int64_t GetPosition() const override;
+			virtual void SetPosition(int64_t pos) override;
 			virtual int Read(char* buffer, int offset, int count) override;
 			virtual int64_t Seek(int64_t offset, SeekOrigin origin) override;
 			virtual void Write(char* buffer, int offset, int count) override;
 			virtual void SetLength(int64_t value) override;
 			virtual void Flush() override;
+			virtual int ReadByte() override;
+			virtual void WriteByte(char value) override;
 		private:
 			void FlushWrite();
 			void FlushRead();
+			void ClearReadBufferBeforeWrite();
+			void WriteToBuffer(char* buffer, int &offset, int &count);
+			int ReadFromBuffer(char* buffer, int offset, int count);
 		private:
 			const int DEFAULT_BUFFER_SIZE = 4096;
+			const int MAX_SHADOW_BUFFER_SIZE = 81920;
 			int m_buffersize = DEFAULT_BUFFER_SIZE;
 			int m_read_pos = 0;
 			int m_write_pos = 0;

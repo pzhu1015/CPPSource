@@ -9,6 +9,11 @@
 #include "System/Net/Sockets/NetworkStream.h"
 #include "System/Net/Sockets/Socket.h"
 #include "System/NotSupportedException.h"
+#include "System/ArgumentNullException.h"
+#include "System/ArgumentOutOfRangeException.h"
+#include "System/InvalidOperationException.h"
+#include "System/IOException.h"
+#include <assert.h>
 
 namespace System
 {
@@ -18,134 +23,169 @@ namespace System
 		{
 			NetworkStream::NetworkStream(Socket * socket)
 			{
-				m_socket = socket;
-				m_ownsocket = false;
-				m_access = FileAccess::ReadWrite;
+				if (socket == nullptr)
+				{
+					throw ArgumentNullException("socket");
+				}
+				assert(socket != nullptr);
+				InitNetworkStream(socket, FileAccess::ReadWrite);
 			}
 
 			NetworkStream::NetworkStream(Socket * socket, bool ownsSocket)
 			{
-				m_socket = socket;
-				m_ownsocket = ownsSocket;
-				m_access = FileAccess::ReadWrite;
+				if (socket == nullptr)
+				{
+					throw ArgumentNullException("socket");
+				}
+				assert(socket != nullptr);
+				InitNetworkStream(socket, FileAccess::ReadWrite);
 			}
 
 			NetworkStream::NetworkStream(Socket * socket, FileAccess access)
 			{
-				m_socket = socket;
-				m_ownsocket = false;
-				m_access = access;
+				if (socket == nullptr)
+				{
+					throw ArgumentNullException("socket");
+				}
+				assert(socket != nullptr);
+				InitNetworkStream(socket, access);
 			}
 
 			NetworkStream::NetworkStream(Socket * socket, FileAccess access, bool ownsSocket)
 			{
-				m_socket = socket;
-				m_access = access;
-				m_ownsocket = ownsSocket;
+				if (socket == nullptr)
+				{
+					throw ArgumentNullException("socket");
+				}
+				assert(socket != nullptr);
+				InitNetworkStream(socket, access);
 			}
 
 			NetworkStream::~NetworkStream()
 			{
-				if (m_ownsocket)
-				{
-					if (m_socket != nullptr)
-					{
-						m_socket->Close();
-						m_socket->Dispose();
-					}
-				}
+				Dispose(false);
 			}
 
 			bool NetworkStream::GetCanRead() const
 			{
-				return (m_access == FileAccess::Read) || (m_access == FileAccess::ReadWrite);
+				return m_readable;
 			}
 
 			bool NetworkStream::GetCanWrite() const
 			{
-				return (m_access == FileAccess::Write) || (m_access == FileAccess::ReadWrite);
+				return m_writeable;
 			}
 
 			bool NetworkStream::GetDataAvailable() const
 			{
-				return false;
+				assert(m_socket != nullptr);
+				return m_socket->GetAvailable() != 0;
 			}
 
 			int NetworkStream::GetReadTimeout() const
 			{
-				if (m_socket != nullptr)
-				{
-					return m_socket->GetReceiveTimeout();
-				}
-				return -1;
+				assert(m_socket != nullptr);
+				return m_socket->GetReceiveTimeout();
 			}
 
 			void NetworkStream::SetReadTimeout(int timeout)
 			{
-				if (m_socket != nullptr)
+				if (timeout < 0)
 				{
-					m_socket->SetReceiveTimeout(timeout);
+					throw ArgumentOutOfRangeException("timeout");
 				}
+				assert(m_socket != nullptr);
+				m_socket->SetReceiveTimeout(timeout);
 			}
 
 			int NetworkStream::GetWriteTimeout() const
 			{
-				if (m_socket != nullptr)
-				{
-					return m_socket->GetSendTimeout();
-				}
-				return -1;
+				assert(m_socket != nullptr);
+				return m_socket->GetSendTimeout();
 			}
 
 			void NetworkStream::SetWriteTimeout(int timeout)
 			{
-				if (m_socket != nullptr)
+				if (timeout < 0)
 				{
-					m_socket->SetSendTimeout(timeout);
+					throw ArgumentOutOfRangeException("timeout");
 				}
+				assert(m_socket != nullptr);
+				m_socket->SetSendTimeout(timeout);
 			}
 
 			void NetworkStream::Close(int timeout)
 			{
-				if (m_socket != nullptr)
+				if (timeout < 0)
 				{
-					m_socket->Close(timeout);
+					throw ArgumentOutOfRangeException("timeout");
 				}
+				m_close_timeout = timeout;
+				Stream::Close();
 			}
 
 			int NetworkStream::Read(char * buffer, int offset, int count)
 			{
-				if (m_socket != nullptr)
+				if (buffer == nullptr)
 				{
-					return m_socket->Receive(buffer + offset, count);
+					throw ArgumentNullException("buffer");
 				}
-				return -1;
+				if (offset < 0)
+				{
+					throw ArgumentOutOfRangeException("offset");
+				}
+				if (count < 0)
+				{
+					throw ArgumentOutOfRangeException("count");
+				}
+				if (!GetCanRead())
+				{
+					throw InvalidOperationException("CanRead");
+				}
+				assert(m_socket != nullptr);
+				return m_socket->Receive(buffer + offset, count);
 			}
 
 			void NetworkStream::Write(char * buffer, int offset, int count)
 			{
-				if (m_socket)
+				if (buffer == nullptr)
 				{
-					m_socket->Send(buffer + offset, count);
+					throw ArgumentNullException("buffer");
 				}
+				if (offset < 0)
+				{
+					throw ArgumentOutOfRangeException("offset");
+				}
+				if (count < 0)
+				{
+					throw ArgumentOutOfRangeException("count");
+				}
+				if (!GetCanWrite())
+				{
+					throw InvalidOperationException("CanWrite");
+				}
+				assert(m_socket != nullptr);
+				m_socket->Send(buffer + offset, count);
 			}
 
 			bool NetworkStream::GetWriteable() const
 			{
-				return false;
+				return m_writeable;
 			}
 
 			void NetworkStream::SetWriteable(bool writeable)
 			{
+				m_writeable = writeable;
 			}
 
 			bool NetworkStream::GetReadable() const
 			{
-				return false;
+				return m_readable;
 			}
 
 			void NetworkStream::SetReadable(bool readable)
 			{
+				m_readable = readable;
 			}
 
 			Socket * NetworkStream::GetSocket() const
@@ -165,7 +205,7 @@ namespace System
 
 			bool NetworkStream::GetCanSeek() const
 			{
-				throw NotSupportedException(__func__);
+				return false;
 			}
 
 			void NetworkStream::Flush()
@@ -187,7 +227,45 @@ namespace System
 			{
 				if (disposing)
 				{
-					Stream::Dispose();
+					if (m_socket != nullptr)
+					{
+						m_readable = false;
+						m_writeable = false;
+						if (m_ownsocket)
+						{
+							m_socket->Close(m_close_timeout);
+						}
+					}
+				}
+				Stream::Dispose(disposing);
+			}
+			void NetworkStream::InitNetworkStream(Socket * socket, FileAccess access)
+			{
+				if (!socket->GetBlocking())
+				{
+					throw IOException("socket not blocking");
+				}
+				if (!socket->GetConnected())
+				{
+					throw IOException("socket not connected");
+				}
+				if (socket->GetSocketType() != SocketType::Stream)
+				{
+					throw IOException("socket not stream");
+				}
+				m_socket = socket;
+				switch (access)
+				{
+				case FileAccess::Read:
+					m_readable = true;
+					break;
+				case FileAccess::Write:
+					m_writeable = true;
+					break;
+				case FileAccess::ReadWrite:
+					m_readable = true;
+					m_writeable = true;
+					break;
 				}
 			}
 		}
