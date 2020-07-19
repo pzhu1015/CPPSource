@@ -6,16 +6,19 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SIMPLETCPLISTENER_TCPSENDEVENTARGS_H
-#define SIMPLETCPLISTENER_TCPSENDEVENTARGS_H
-
+#ifndef SYSTEM_HCN_TCPSTOPEVENTARGS_H
+#define SYSTEM_HCN_TCPSTOPEVENTARGS_H
 #include "System/EventArgs.h"
 
-using namespace System;
-
-class TcpSendEventArgs : public System::EventArgs
+namespace System
 {
+	namespace HCN
+	{
+		class TcpStopEventArgs : public EventArgs
+		{
 
-};
+		};
+	}
+}
 
-#endif // !SIMPLETCPLISTENER_TCPSENDEVENTARGS_H
+#endif // !SYSTEM_HCN_TCPSTOPEVENTARGS_H

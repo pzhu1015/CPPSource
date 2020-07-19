@@ -6,27 +6,27 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SIMPLETCPLISTENER_TCPACCEPTEVENTARGS_H
-#define SIMPLETCPLISTENER_TCPACCEPTEVENTARGS_H
+#ifndef SYSTEM_HCN_TCPACCEPTEVENTARGS_H
+#define SYSTEM_HCN_TCPACCEPTEVENTARGS_H
 #include "System/EventArgs.h"
+#include "System/Net/Ptrs.h"
 
+using namespace System::Net;
 namespace System
 {
-	namespace Net
+	namespace HCN
 	{
-		class TcpClient;
+		class TcpAcceptEventArgs : public EventArgs
+		{
+		public:
+			TcpAcceptEventArgs(const TcpClientPtr &client);
+			virtual ~TcpAcceptEventArgs();
+
+			TcpClientPtr GetClient() const;
+		private:
+			TcpClientPtr m_client;
+		};
 	}
 }
-
-class TcpAcceptEventArgs : public System::EventArgs
-{
-public:
-	TcpAcceptEventArgs(System::Net::TcpClient* client);
-	~TcpAcceptEventArgs();
-
-	System::Net::TcpClient* GetClient() const;
-private:
-	System::Net::TcpClient* m_client;
-};
 
 #endif // !SIMPLETCPLISTENER_TCPACCEPTEVENTARGS_H

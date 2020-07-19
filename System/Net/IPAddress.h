@@ -10,8 +10,12 @@
 #define SYSTEM_NET_IPADDRESS_H
 
 #include "System/DllExport.h"
+#include "System/Net/Sockets/AddressFamily.h"
+#include "System/Net/Ptrs.h"
 #include <string>
+#include <memory>
 
+using namespace System::Net::Sockets;
 namespace System
 {
 	namespace Net
@@ -24,11 +28,13 @@ namespace System
 
 			std::string GetIPAddress() const;
 			std::string ToString() const;
+			AddressFamily GetAddressFamily() const;
 
-			static IPAddress Parse(const std::string &str);
+			static IPAddressPtr Parse(const std::string &str);
 			static bool IsLoopback(const IPAddress &ipaddress);
 		private:
 			std::string m_ip;
+			AddressFamily m_family = AddressFamily::InterNetwork;
 		};
 	}
 }

@@ -10,34 +10,29 @@
 #define SYSTEM_NET_TCPLISTENER_H
 #include "System/DllExport.h"
 #include "System/Net/EndPoint.h"
+#include "System/Net/Ptrs.h"
+#include "System/Net/Sockets/Ptrs.h"
 
 namespace System
 {
 	namespace Net
 	{
-		class TcpClient;
-		class IPAddress;
-		class IPEndPoint;
-		namespace Sockets
-		{
-			class Socket;
-		}
 		class SYSTEM_API TcpListener
 		{
 		public:
-			TcpListener(IPEndPoint* localEp);
+			TcpListener(const IPEndPointPtr &localEp);
 			TcpListener(int port);
-			TcpListener(IPAddress* localaddr, int port);
+			TcpListener(const IPAddressPtr &localaddr, int port);
 
-			EndPoint* GetLocalEndPoint() const;
-			Socket* GetServer() const;
-			Socket* AcceptSocket();
-			TcpClient* AcceptTcpClient();
+			EndPointPtr GetLocalEndPoint() const;
+			SocketPtr GetServer() const;
+			SocketPtr AcceptSocket();
+			TcpClientPtr AcceptTcpClient();
 			void Start();
 			void Start(int backlog);
 			void Stop();
 		private:
-			Socket* m_server;
+			SocketPtr m_server;
 		};
 	}
 }

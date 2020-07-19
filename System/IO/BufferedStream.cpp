@@ -17,14 +17,14 @@ namespace System
 {
 	namespace IO
 	{
-		BufferedStream::BufferedStream(Stream * stream)
+		BufferedStream::BufferedStream(const StreamPtr &stream)
 		{
 			m_stream = stream;
 			m_buffersize = DEFAULT_BUFFER_SIZE;
 			m_buffer = new char[m_buffersize];
 		}
 
-		BufferedStream::BufferedStream(Stream * stream, int size)
+		BufferedStream::BufferedStream(const StreamPtr &stream, int size)
 		{
 			m_stream = stream;
 			m_buffersize = size;
@@ -34,7 +34,6 @@ namespace System
 		BufferedStream::~BufferedStream()
 		{
 			delete[] m_buffer;
-			delete m_stream;
 		}
 
 		bool BufferedStream::GetCanRead() const

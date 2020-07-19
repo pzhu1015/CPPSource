@@ -9,13 +9,12 @@
 #ifndef SYSTEM_IO_FILESYSTEMINFO_H
 #define SYSTEM_IO_FILESYSTEMINFO_H
 #include "System/DllExport.h"
+#include "System/DateTimes/Ptrs.h"
 #include <string>
+
+using namespace System::DateTimes;
 namespace System
 {
-	namespace DateTimes
-	{
-		class DateTime;
-	}
 	namespace IO
 	{
 		class SYSTEM_API FileSystemInfo
@@ -23,9 +22,9 @@ namespace System
 		protected:
 			FileSystemInfo();
 		public:
-			DateTimes::DateTime* GetCreationTime();
-			DateTimes::DateTime* GetLastAccessTime();
-			DateTimes::DateTime* GetLastWriteTime();
+			DateTimePtr GetCreationTime();
+			DateTimePtr GetLastAccessTime();
+			DateTimePtr GetLastWriteTime();
 
 			std::string GetExtension();
 			void Refresh();

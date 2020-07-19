@@ -10,6 +10,7 @@
 #define SYSTEM_THREADING_THREADPOOL_H
 
 #include "System/DllExport.h"
+#include "System/Threading/Ptrs.h"
 #include <functional>
 #include <mutex>
 #include <atomic>
@@ -43,7 +44,7 @@ namespace System
 			size_t m_task_size;
 			std::queue<Task> m_tasks;
 			const size_t m_thread_size;
-			std::vector<std::unique_ptr<Thread>> m_threads;
+			std::vector<ThreadPtr> m_threads;
 			std::atomic<bool> m_is_started;
 		};
 	}

@@ -21,6 +21,7 @@ namespace System
 		ArgumentOutOfRange,
 		ArgumentNull,
 		InvalidOperation,
+		Socket
 	};
 
 	SYSTEM_API ExceptionId GetExceptionId(const std::string& str);

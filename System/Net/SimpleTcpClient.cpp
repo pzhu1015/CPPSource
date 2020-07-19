@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/SimpleTcpClient.h"
+#include "System/Net/IPEndPoint.h"
 #include "System/Net/IPAddress.h"
 
 namespace System
@@ -20,20 +21,18 @@ namespace System
 
 		SimpleTcpClient::~SimpleTcpClient()
 		{
-			delete m_ipaddress;
-			delete m_endpoint;
 			Close();
 		}
 
 		SimpleTcpClient::SimpleTcpClient(const std::string & ip, int port)
 			:
-			m_ipaddress(new IPAddress(ip)),
-			m_endpoint(new IPEndPoint(m_ipaddress, port))
+			m_ipaddress(std::make_shared<IPAddress>(ip)),
+			m_endpoint(std::make_shared<IPEndPoint>(m_ipaddress, port))
 		{
 			Connect(ip, port);
 		}
 
-		SimpleTcpClient::SimpleTcpClient(IPEndPoint* endpoint)
+		SimpleTcpClient::SimpleTcpClient(const IPEndPointPtr &endpoint)
 			:
 			m_ipaddress(endpoint->GetIPAddress()),
 			m_endpoint(endpoint)
@@ -74,7 +73,7 @@ namespace System
 			return true;
 		}
 
-		bool SimpleTcpClient::Connect(IPEndPoint* endpoint)
+		bool SimpleTcpClient::Connect(const IPEndPointPtr &endpoint)
 		{
 			int port = endpoint->GetPort();
 			std::string ip = endpoint->GetIPAddress()->GetIPAddress();
@@ -154,22 +153,22 @@ namespace System
 			return m_sock;
 		}
 
-		IPAddress* SimpleTcpClient::GetIPAddress() const
+		IPAddressPtr SimpleTcpClient::GetIPAddress() const
 		{
 			return m_ipaddress;
 		}
 
-		void SimpleTcpClient::SetIPAddress(IPAddress* ipaddress)
+		void SimpleTcpClient::SetIPAddress(const IPAddressPtr &ipaddress)
 		{
 			m_ipaddress = ipaddress;
 		}
 
-		void SimpleTcpClient::SetIPEndPoint(IPEndPoint* endpoint)
+		void SimpleTcpClient::SetIPEndPoint(const IPEndPointPtr &endpoint)
 		{
 			m_endpoint = endpoint;
 		}
 
-		IPEndPoint* SimpleTcpClient::GetIPEndPoint() const
+		IPEndPointPtr SimpleTcpClient::GetIPEndPoint() const
 		{
 			return m_endpoint;
 		}

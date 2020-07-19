@@ -21,7 +21,7 @@ namespace System
 	{
 		namespace Sockets
 		{
-			NetworkStream::NetworkStream(Socket * socket)
+			NetworkStream::NetworkStream(const SocketPtr &socket)
 			{
 				if (socket == nullptr)
 				{
@@ -31,7 +31,7 @@ namespace System
 				InitNetworkStream(socket, FileAccess::ReadWrite);
 			}
 
-			NetworkStream::NetworkStream(Socket * socket, bool ownsSocket)
+			NetworkStream::NetworkStream(const SocketPtr &socket, bool ownsSocket)
 			{
 				if (socket == nullptr)
 				{
@@ -41,7 +41,7 @@ namespace System
 				InitNetworkStream(socket, FileAccess::ReadWrite);
 			}
 
-			NetworkStream::NetworkStream(Socket * socket, FileAccess access)
+			NetworkStream::NetworkStream(const SocketPtr &socket, FileAccess access)
 			{
 				if (socket == nullptr)
 				{
@@ -51,7 +51,7 @@ namespace System
 				InitNetworkStream(socket, access);
 			}
 
-			NetworkStream::NetworkStream(Socket * socket, FileAccess access, bool ownsSocket)
+			NetworkStream::NetworkStream(const SocketPtr &socket, FileAccess access, bool ownsSocket)
 			{
 				if (socket == nullptr)
 				{
@@ -188,7 +188,7 @@ namespace System
 				m_readable = readable;
 			}
 
-			Socket * NetworkStream::GetSocket() const
+			SocketPtr NetworkStream::GetSocket() const
 			{
 				return m_socket;
 			}
@@ -199,6 +199,11 @@ namespace System
 			}
 
 			int64_t NetworkStream::GetPosition() const
+			{
+				throw NotSupportedException(__func__);
+			}
+
+			void NetworkStream::SetPosition(int64_t pos)
 			{
 				throw NotSupportedException(__func__);
 			}
@@ -239,7 +244,7 @@ namespace System
 				}
 				Stream::Dispose(disposing);
 			}
-			void NetworkStream::InitNetworkStream(Socket * socket, FileAccess access)
+			void NetworkStream::InitNetworkStream(const SocketPtr &socket, FileAccess access)
 			{
 				if (!socket->GetBlocking())
 				{

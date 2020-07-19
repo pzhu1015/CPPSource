@@ -6,13 +6,18 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SIMPLETCPLISTENER_PROCESSSTARTEVENTARGS_H
-#define SIMPLETCPLISTENER_PROCESSSTARTEVENTARGS_H
+#ifndef SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
+#define SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
 #include "System/EventArgs.h"
 
-class ProcessStartEventArgs : public System::EventArgs
+namespace System
 {
+	namespace HCN
+	{
+		class TcpReceiveEventArgs : public EventArgs
+		{
 
-};
-
-#endif // !SIMPLETCPLISTENER_PROCESSSTARTEVENTARGS_H
+		};
+	}
+}
+#endif // !SYSTEM_HCN_TCPRECEIVEEVENTARGS_H

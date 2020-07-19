@@ -58,14 +58,14 @@ namespace System
 			return m_name;
 		}
 
-		DirectoryInfo* DirectoryInfo::Parent() const
+		DirectoryInfoPtr DirectoryInfo::Parent() const
 		{
 			return Directory::GetParent(m_fullpath);
 		}
 
-		DirectoryInfo* DirectoryInfo::Root() const
+		DirectoryInfoPtr DirectoryInfo::Root() const
 		{
-			return new DirectoryInfo(Directory::GetDirectoryRoot(m_fullpath));
+			return std::make_shared<DirectoryInfo>(Directory::GetDirectoryRoot(m_fullpath));
 		}
 
 		void DirectoryInfo::Create()
@@ -78,24 +78,24 @@ namespace System
 			Directory::Delete(m_fullpath, recursive);
 		}
 
-		std::vector<DirectoryInfo*> DirectoryInfo::GetDirectories()
+		std::vector<DirectoryInfoPtr> DirectoryInfo::GetDirectories()
 		{
 			auto dirnames = Directory::GetDirectories(m_fullpath);
-			std::vector<DirectoryInfo*> dirinfos;
+			std::vector<DirectoryInfoPtr> dirinfos;
 			for (auto dirname : dirnames)
 			{
-				dirinfos.push_back(new DirectoryInfo(dirname));
+				dirinfos.push_back(std::make_shared<DirectoryInfo>(dirname));
 			}
 			return dirinfos;
 		}
 
-		std::vector<FileInfo*> DirectoryInfo::GetFiles()
+		std::vector<FileInfoPtr> DirectoryInfo::GetFiles()
 		{
 			auto filenames = Directory::GetFiles(m_fullpath);
-			std::vector<FileInfo*> fileinfos;
+			std::vector<FileInfoPtr> fileinfos;
 			for (auto filename : filenames)
 			{
-				fileinfos.push_back(new FileInfo(filename));
+				fileinfos.push_back(std::make_shared<FileInfo>(filename));
 			}
 			return fileinfos;
 		}
@@ -105,7 +105,7 @@ namespace System
 			Directory::Move(m_fullpath, dest);
 		}
 
-		DirectoryInfo* DirectoryInfo::CreateSubDirectory(const std::string & path)
+		DirectoryInfoPtr DirectoryInfo::CreateSubDirectory(const std::string & path)
 		{
 			std::string fullpath = m_fullpath;
 #ifdef _WIN32
@@ -115,7 +115,7 @@ namespace System
 #endif
 			fullpath.append(fullpath);
 			Directory::CreateDirectory(fullpath);
-			return new DirectoryInfo(fullpath);
+			return std::make_shared<DirectoryInfo>(fullpath);
 		}
 	}
 }

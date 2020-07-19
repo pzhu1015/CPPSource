@@ -8,24 +8,23 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_NET_SIMPLETCPCLIENT_H
 #define SYSTEM_NET_SIMPLETCPCLIENT_H
-
 #include "System/DllExport.h"
-#include "System/Net/IPEndPoint.h"
-
+#include "System/Net/Sockets/SocketInclude.h"
+#include "System/Net/Ptrs.h"
+#include <string>
 namespace System
 {
 	namespace Net
 	{
-		class IPAddress;
 		class SYSTEM_API SimpleTcpClient
 		{
 		public:
 			SimpleTcpClient();
 			~SimpleTcpClient();
 			SimpleTcpClient(const std::string &ip, int port);
-			SimpleTcpClient(IPEndPoint* endpoint);
+			SimpleTcpClient(const IPEndPointPtr &endpoint);
 			bool Connect(const std::string &ip, int port);
-			bool Connect(IPEndPoint* endpoint);
+			bool Connect(const IPEndPointPtr &endpoint);
 			bool Connect();
 			bool Close();
 			bool Send(const char* data, int length);
@@ -35,19 +34,19 @@ namespace System
 			void SetSocket(SOCKET sock);
 			SOCKET GetSocket() const;
 
-			void SetIPAddress(IPAddress* ipaddress);
-			IPAddress* GetIPAddress() const;
+			void SetIPAddress(const IPAddressPtr &ipaddress);
+			IPAddressPtr GetIPAddress() const;
 			
-			void SetIPEndPoint(IPEndPoint* endpoint);
-			IPEndPoint* GetIPEndPoint() const;
+			void SetIPEndPoint(const IPEndPointPtr &endpoint);
+			IPEndPointPtr GetIPEndPoint() const;
 
 		private:
 			bool Init();
 
 		private:
 			SOCKET m_sock = INVALID_SOCKET;
-			IPAddress* m_ipaddress = nullptr;
-			IPEndPoint* m_endpoint = nullptr;
+			IPAddressPtr m_ipaddress = nullptr;
+			IPEndPointPtr m_endpoint = nullptr;
 			bool m_connected = false;
 		};
 	}

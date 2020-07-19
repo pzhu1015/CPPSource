@@ -12,6 +12,7 @@
 #include "System/DllExport.h"
 #include "System/IO/SeekOrigin.h"
 #include "System/IDisposable.h"
+#include "System/IO/Ptrs.h"
 #include <stdint.h>
 
 namespace System
@@ -39,8 +40,8 @@ namespace System
 			virtual int GetWriteTimeout() const ;
 			virtual void SetWriteTimeout(int timeout);
 			virtual void Close();
-			virtual void CopyTo(Stream* dest);
-			virtual void CopyTo(Stream* dest, int buffersize);
+			virtual void CopyTo(const StreamPtr &dest);
+			virtual void CopyTo(const StreamPtr &dest, int buffersize);
 			
 			virtual int ReadByte();
 			virtual void WriteByte(char value);

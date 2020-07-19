@@ -24,10 +24,16 @@ namespace System
 			return m_ip;
 		}
 
-		IPAddress IPAddress::Parse(const std::string & str)
+		AddressFamily IPAddress::GetAddressFamily() const
 		{
-			return std::move(IPAddress(str));
+			return m_family;
 		}
+
+		IPAddressPtr IPAddress::Parse(const std::string & str)
+		{
+			return std::make_shared<IPAddress>(str);
+		}
+
 		bool IPAddress::IsLoopback(const IPAddress & ipaddress)
 		{
 			return false;

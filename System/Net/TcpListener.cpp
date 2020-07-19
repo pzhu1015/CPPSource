@@ -16,44 +16,43 @@ namespace System
 {
 	namespace Net
 	{
-		TcpListener::TcpListener(IPEndPoint * localEp)
+		TcpListener::TcpListener(const IPEndPointPtr &localEp)
 		{
-			m_server = new Socket(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
+			m_server = std::make_shared<Socket>(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
 			m_server->Bind(localEp);
 		}
 
 		TcpListener::TcpListener(int port)
 		{
-			m_server = new Socket(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
-			m_server->Bind(new IPEndPoint(new IPAddress("0.0.0.0"), port));
+			m_server = std::make_shared<Socket>(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
+			m_server->Bind(std::make_shared<IPEndPoint>(std::make_shared<IPAddress>("0.0.0.0"), port));
 		}
 
-		TcpListener::TcpListener(IPAddress * localaddr, int port)
+		TcpListener::TcpListener(const IPAddressPtr &localaddr, int port)
 		{
-			m_server = new Socket(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
-			m_server->Bind(new IPEndPoint(localaddr, port));
+			m_server = std::make_shared<Socket>(AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
+			m_server->Bind(std::make_shared<IPEndPoint>(localaddr, port));
 		}
 
-		EndPoint * TcpListener::GetLocalEndPoint() const
+		EndPointPtr TcpListener::GetLocalEndPoint() const
 		{
 			return m_server->GetLocalEndPoint();
 		}
 
-		Socket * TcpListener::GetServer() const
+		SocketPtr TcpListener::GetServer() const
 		{
 			return m_server;
 		}
 
-		Socket * TcpListener::AcceptSocket()
+		SocketPtr TcpListener::AcceptSocket()
 		{
 			return m_server->Accept();
 		}
 
-		TcpClient * TcpListener::AcceptTcpClient()
+		TcpClientPtr TcpListener::AcceptTcpClient()
 		{
-			Socket* socket = m_server->Accept();
-			TcpClient* client = new TcpClient();
-			client->SetClient(socket);
+			SocketPtr socket = m_server->Accept();
+			TcpClientPtr client = std::make_shared<TcpClient>(socket);
 			return client;
 		}
 

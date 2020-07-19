@@ -6,14 +6,15 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SIMPLETCPLISTENER_TCPSTOPEVENTARGS_H
-#define SIMPLETCPLISTENER_TCPSTOPEVENTARGS_H
-
-#include "System/EventArgs.h"
-
-class TcpStopEventArgs : public System::EventArgs
+#ifndef SYSTEM_DATETIMES_PTRS_H
+#define SYSTEM_DATETIMES_PTRS_H
+#include <memory>
+namespace System
 {
-
-};
-
-#endif // !SIMPLETCPLISTENER_TCPSTOPEVENTARGS_H
+	namespace DateTimes
+	{
+		class DateTime;
+		typedef std::shared_ptr<DateTime> DateTimePtr;
+	}
+}
+#endif // !SYSTEM_DATETIMES_PTRS_H

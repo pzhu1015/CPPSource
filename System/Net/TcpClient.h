@@ -11,6 +11,8 @@
 #include "System/DllExport.h"
 #include "System/IDisposable.h"
 #include "System/Net/Sockets/AddressFamily.h"
+#include "System/Net/Ptrs.h"
+#include "System/Net/Sockets/Ptrs.h"
 #include <string>
 
 using namespace System::Net::Sockets;
@@ -19,25 +21,19 @@ namespace System
 {
 	namespace Net
 	{
-		namespace Sockets
-		{
-			class Socket;
-			class NetworkStream;
-		}
-		class IPEndPoint;
-		class IPAddress;
 		class SYSTEM_API TcpClient: public IDisposable
 		{
 		public:
 			TcpClient();
-			TcpClient(IPEndPoint* localEP);
+			TcpClient(const IPEndPointPtr &localEP);
 			TcpClient(AddressFamily family);
 			TcpClient(const std::string &hostname, int port);
+			TcpClient(const SocketPtr &acceptedSocket);
 			virtual ~TcpClient();
 
 			int GetAvailable() const;
-			Socket* GetClient() const;
-			void SetClient(Socket* client);
+			SocketPtr GetClient() const;
+			void SetClient(const SocketPtr &client);
 			bool GetConnected() const;
 			int GetReceiveBuffSize() const;
 			void SetReceiveBuffSize(int size);
@@ -47,19 +43,24 @@ namespace System
 			void SetReceiveTimeout(int timeout);
 			int GetSendTimeout() const;
 			void SetSendTimeout(int timeout);
-			void Connect(IPEndPoint* remoteEP);
-			void Connect(IPAddress* address, int port);
+			void Connect(const IPEndPointPtr &remoteEP);
+			void Connect(const IPAddressPtr &address, int port);
 			void Connect(const std::string &ip, int port);
 
-			NetworkStream* GetStream();
+			NetworkStreamPtr GetStream();
 
-			virtual void Dispose();
+			virtual void Dispose() override;
 		protected:
 			bool GetActive() const;
 			void SetActive(bool active);
+			virtual void Dispose(bool disposing);
 		private:
-			Socket* m_client;
-			bool m_active;
+			void Initialize();
+		private:
+			SocketPtr m_client = nullptr;
+			NetworkStreamPtr m_stream = nullptr;
+			AddressFamily m_family = AddressFamily::InterNetwork;
+			bool m_active = false;
 		};
 	}
 }

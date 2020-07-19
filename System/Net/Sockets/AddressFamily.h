@@ -19,6 +19,7 @@ namespace System
 		{
 			enum class AddressFamily
 			{
+				Unknown = -1,
 				InterNetwork = AF_INET
 			};
 		}

@@ -19,6 +19,7 @@ namespace System
 		{
 			enum class ProtocolType
 			{
+				Unknown = -1,
 				Tcp = IPPROTO_TCP,
 				Udp = IPPROTO_UDP
 			};

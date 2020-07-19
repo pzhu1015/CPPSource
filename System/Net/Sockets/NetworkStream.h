@@ -11,6 +11,7 @@
 #include "System/DllExport.h"
 #include "System/IO/Stream.h"
 #include "System/IO/FileAccess.h"
+#include "System/Net/Sockets/Ptrs.h"
 
 using namespace System::IO;
 
@@ -20,14 +21,13 @@ namespace System
 	{
 		namespace Sockets
 		{
-			class Socket;
 			class SYSTEM_API NetworkStream : public Stream
 			{
 			public:
-				NetworkStream(Socket* socket);
-				NetworkStream(Socket* socket, bool ownsSocket);
-				NetworkStream(Socket* socket, FileAccess access);
-				NetworkStream(Socket* socket, FileAccess access, bool ownsSocket);
+				NetworkStream(const SocketPtr &socket);
+				NetworkStream(const SocketPtr &socket, bool ownsSocket);
+				NetworkStream(const SocketPtr &socket, FileAccess access);
+				NetworkStream(const SocketPtr &socket, FileAccess access, bool ownsSocket);
 				virtual ~NetworkStream();
 				virtual bool GetCanRead() const override;
 				virtual bool GetCanWrite() const override;
@@ -43,6 +43,7 @@ namespace System
 				virtual bool GetCanSeek() const override;//Not Support
 				virtual int64_t GetLength() const override;//Not Support
 				virtual int64_t GetPosition() const override;//Not Support
+				virtual void SetPosition(int64_t pos) override;//Not Support
 				virtual void Flush() override;//Not Support
 				virtual int64_t Seek(int64_t offset, SeekOrigin origin) override;//Not Support
 				virtual void SetLength(int64_t value) override;//Not Support
@@ -52,12 +53,12 @@ namespace System
 				void SetWriteable(bool writeable);
 				bool GetReadable() const;
 				void SetReadable(bool readable);
-				Socket* GetSocket() const;
+				SocketPtr GetSocket() const;
 				virtual void Dispose(bool disposing) override;
 			private:
-				void InitNetworkStream(Socket* socket, FileAccess access);
+				void InitNetworkStream(const SocketPtr &socket, FileAccess access);
 			private:
-				Socket* m_socket = nullptr;
+				SocketPtr m_socket = nullptr;
 				bool m_ownsocket = false;
 				bool m_readable = false;
 				bool m_writeable = false;

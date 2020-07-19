@@ -10,7 +10,7 @@
 #define THREADING_THREAD_H
 
 #include "System/DllExport.h"
-//#include "System/Threading/Runnable.h"
+#include "System/Threading/Ptrs.h"
 #include <thread>
 #include <functional>
 #include <atomic>
@@ -19,14 +19,13 @@ namespace System
 {
 	namespace Threading
 	{
-		class Runnable;
 		class SYSTEM_API Thread
 		{
 		public:
 			Thread() = default;
 			explicit Thread(const Thread &thread) = delete;
 			explicit Thread(const std::function<void()> &function);
-			explicit Thread(Runnable* runnable);
+			explicit Thread(RunnablePtr runnable);
 			virtual ~Thread();
 			void Start();
 			void Stop();
@@ -40,7 +39,7 @@ namespace System
 			std::thread* m_thread;
 			std::function<void()> m_function;
 			std::atomic<bool> m_isInterript = false;
-			Runnable* m_runnable = nullptr;
+			RunnablePtr m_runnable = nullptr;
 		};
 
 		SYSTEM_API std::thread::id CurrentThreadId();

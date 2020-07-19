@@ -6,24 +6,17 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_NET_SOCKETTYPE_H
-#define SYSTEM_NET_SOCKETTYPE_H
-
-#include "System/Net/Sockets/SocketInclude.h"
-
+#ifndef SYSTEM_SOCKETEXCEPTION_H
+#define SYSTEM_SOCKETEXCEPTION_H
+#include "System/Exception.h"
 namespace System
 {
-	namespace Net
+	class SYSTEM_API SocketException : public Exception
 	{
-		namespace Sockets
-		{
-			enum SocketType
-			{
-				Unknown = -1,
-				Stream = SOCK_STREAM,
-				Dgram = SOCK_DGRAM
-			};
-		}
-	}
+	public:
+		SocketException();
+		SocketException(const std::string &msg);
+		virtual ~SocketException();
+	};
 }
-#endif // !SYSTEM_NET_SOCKETTYPE_H
+#endif // !SYSTEM_SOCKETEXCEPTION_H

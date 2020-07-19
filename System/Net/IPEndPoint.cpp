@@ -1,4 +1,13 @@
+///////////////////////////////////////////////////////////////////
+// Copyright 2020 Pengzhihu All Right Reserved
+// FileName:
+// Author: Pengzhihu
+// Date: 2020-05-20
+// Version: 1.0
+// Description:
+///////////////////////////////////////////////////////////////////
 #include "System/Net/IPEndPoint.h"
+#include "System/Net/IPAddress.h"
 
 namespace System
 {
@@ -9,7 +18,6 @@ namespace System
 		}
 		IPEndPoint::~IPEndPoint()
 		{
-			delete m_ip;
 		}
 		IPEndPoint::IPEndPoint(const IPEndPoint & endpoint)
 			:
@@ -17,7 +25,7 @@ namespace System
 			m_port(endpoint.GetPort())
 		{
 		}
-		IPEndPoint::IPEndPoint(IPAddress* ip, int port)
+		IPEndPoint::IPEndPoint(const IPAddressPtr &ip, int port)
 			:
 			m_ip(ip),
 			m_port(port)
@@ -27,7 +35,7 @@ namespace System
 		{
 			return m_port;
 		}
-		IPAddress* IPEndPoint::GetIPAddress() const
+		IPAddressPtr IPEndPoint::GetIPAddress() const
 		{
 			return m_ip;
 		}
@@ -43,7 +51,7 @@ namespace System
 		}
 		AddressFamily IPEndPoint::GetAddressFamily()
 		{
-			return AddressFamily();
+			return m_ip->GetAddressFamily();
 		}
 	}
 }

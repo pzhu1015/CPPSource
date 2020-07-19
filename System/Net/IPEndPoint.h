@@ -9,8 +9,9 @@
 #ifndef SYSTEM_NET_IPENDPOINT_H
 #define SYSTEM_NET_IPENDPOINT_H
 #include "System/DllExport.h"
-#include "System/Net/IPAddress.h"
 #include "System/Net/EndPoint.h"
+#include "System/Net/Ptrs.h"
+
 namespace System
 {
 	namespace Net
@@ -18,20 +19,20 @@ namespace System
 		class SYSTEM_API IPEndPoint : public EndPoint
 		{
 		public:
-			const int MAXPORT = 65535;
-			const int MINPORT = 0;
+			static const int MAXPORT = 65535;
+			static const int MINPORT = 0;
 		public:
 			IPEndPoint();
 			virtual ~IPEndPoint();
 			IPEndPoint(const IPEndPoint &endpoint);
-			IPEndPoint(IPAddress* ip, int port);
+			IPEndPoint(const IPAddressPtr &ip, int port);
 			int GetPort() const;
-			IPAddress* GetIPAddress() const;	
+			IPAddressPtr GetIPAddress() const;	
 			IPEndPoint& operator = (const IPEndPoint &endpoint);
 			virtual AddressFamily GetAddressFamily() override;
 			virtual std::string ToString() override;
 		private:
-			IPAddress* m_ip;
+			IPAddressPtr m_ip;
 			int m_port;
 		};
 	}

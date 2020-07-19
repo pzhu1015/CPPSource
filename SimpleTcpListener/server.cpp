@@ -9,10 +9,13 @@
 
 #define FD_SETSIZE      4096
 #include "System/Net/SimpleTcpClient.h"
-#include "System/NET/SimpleTcpListener.h"
+#include "System/Net/SimpleTcpListener.h"
+#include "System/Net/IPEndPoint.h"
+#include "System/Net/IPAddress.h"
 #include "System/Logger/CLogger.h"
 #include "System/Threading/Thread.h"
 #include "System/DateTimes/DateTime.h"
+#include "System/Net/Ptrs.h"
 #include <unordered_map>
 #include <mutex>
 #include <deque>
@@ -30,7 +33,7 @@ struct DataHeader;
 #define BUFF_SIZE 10240
 
 std::vector<CellServer*> g_servers;
-std::shared_ptr<SimpleTcpListener> g_server = std::make_shared<SimpleTcpListener>(8888);
+SimpleTcpListenerPtr g_server = std::make_shared<SimpleTcpListener>(8888);
 
 std::atomic<int> g_client_count = 0;
 int g_recv_count = 0;
@@ -53,7 +56,7 @@ struct DataPackage : DataHeader
 class CellClient
 {
 public:
-	CellClient(SimpleTcpClient* client)
+	CellClient(const SimpleTcpClientPtr &client)
 	{
 		m_client = client;
 		memset(m_buff, 0, sizeof(m_buff));
@@ -61,7 +64,6 @@ public:
 	}
 	~CellClient()
 	{
-		delete m_client;
 	}
 
 	int Recv(char* data, int length)
@@ -74,7 +76,7 @@ public:
 		return m_client->Send(data, length);
 	}
 
-	SimpleTcpClient* GetClient()
+	SimpleTcpClientPtr GetClient()
 	{
 		return m_client;
 	}
@@ -94,7 +96,7 @@ public:
 		m_last_pos = pos;
 	}
 private:
-	SimpleTcpClient* m_client;
+	SimpleTcpClientPtr m_client;
 	char* m_buff = new char[BUFF_SIZE * 5];
 	int m_last_pos = 0;
 };
@@ -105,14 +107,13 @@ class CellServer
 public:
 	CellServer()
 	{
-		m_thread = new Thread(std::bind(&CellServer::HandleClients, this));
+		m_thread = std::make_shared<Thread>(std::bind(&CellServer::HandleClients, this));
 	}
 	~CellServer()
 	{
-		delete m_thread;
 	}
 
-	void AddTcpClient(SimpleTcpClient* client)
+	void AddTcpClient(const SimpleTcpClientPtr &client)
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 		m_tcp_clients.push_back(client);
@@ -231,8 +232,8 @@ public:
 
 private:
 	std::mutex m_mutex;
-	Thread* m_thread;
-	std::vector<SimpleTcpClient*> m_tcp_clients;//need lock shared resource
+	ThreadPtr m_thread;
+	std::vector<SimpleTcpClientPtr> m_tcp_clients;//need lock shared resource
 	std::unordered_map<SOCKET, CellClient*> m_clients;
 };
 
@@ -278,7 +279,7 @@ int main(int argc, char** argv)
 		if (FD_ISSET(g_server->GetSocket(), &fdRead))
 		{
 			FD_CLR(g_server->GetSocket(), &fdRead);
-			SimpleTcpClient* client = g_server->AcceptTcpClient();
+			SimpleTcpClientPtr client = g_server->AcceptTcpClient();
 			if (client == nullptr)
 			{
 				CLOG_CONSOLE_ERROR("accept invalid client<error: %s>", strerror(errno));

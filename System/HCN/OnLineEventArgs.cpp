@@ -6,21 +6,26 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "SimpleTcpListener/OnLineEventArgs.h"
+#include "System/HCN/OnLineEventArgs.h"
 #include "System/Net/TcpClient.h"
 
 using namespace System::Net;
-
-OnLineEventArgs::OnLineEventArgs(System::Net::TcpClient * client)
+namespace System
 {
-	m_client = client;
-}
+	namespace HCN
+	{
+		OnLineEventArgs::OnLineEventArgs(const TcpClientPtr &client)
+		{
+			m_client = client;
+		}
 
-OnLineEventArgs::~OnLineEventArgs()
-{
-}
+		OnLineEventArgs::~OnLineEventArgs()
+		{
+		}
 
-System::Net::TcpClient * OnLineEventArgs::GetClient() const
-{
-	return m_client;
+		TcpClientPtr OnLineEventArgs::GetClient() const
+		{
+			return m_client;
+		}
+	}
 }

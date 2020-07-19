@@ -11,29 +11,27 @@
 
 #include "System/DllExport.h"
 #include "System/IO/FileSystemInfo.h"
-
+#include "System/IO/Ptrs.h"
 #include <string>
 
 namespace System
 {
 	namespace IO
 	{
-		class FileStream;
-		class DirectoryInfo;
 		class SYSTEM_API FileInfo : public FileSystemInfo
 		{
 		public:
 			FileInfo(const std::string &filename);
 			virtual ~FileInfo();
 
-			DirectoryInfo* GetDirectory() const;
+			DirectoryInfoPtr GetDirectory() const;
 			std::string GetDirectoryName() const;
 			
 			int64_t GetLength() const;
 			
-			FileInfo* CopyTo(const std::string &dest);
-			FileInfo* CopyTo(const std::string &dest, bool overwrite);
-			FileStream* Create();
+			FileInfoPtr CopyTo(const std::string &dest);
+			FileInfoPtr CopyTo(const std::string &dest, bool overwrite);
+			FileStreamPtr Create();
 			
 			void MoveTo(const std::string &dest);
 

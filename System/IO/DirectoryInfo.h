@@ -11,6 +11,7 @@
 
 #include "System/DllExport.h"
 #include "System/IO/FileSystemInfo.h"
+#include "System/IO/Ptrs.h"
 #include <string>
 #include <vector>
 
@@ -18,20 +19,19 @@ namespace System
 {
 	namespace IO
 	{
-		class FileInfo;
 		class SYSTEM_API DirectoryInfo : public FileSystemInfo
 		{
 		public:
 			DirectoryInfo(const std::string &dirname);
 			virtual ~DirectoryInfo();
 			
-			DirectoryInfo* Parent() const;
-			DirectoryInfo* Root() const;
+			DirectoryInfoPtr Parent() const;
+			DirectoryInfoPtr Root() const;
 			void Create();
-			std::vector<DirectoryInfo*> GetDirectories();
-			std::vector<FileInfo*> GetFiles();
+			std::vector<DirectoryInfoPtr> GetDirectories();
+			std::vector<FileInfoPtr> GetFiles();
 			void MoveTo(const std::string &dest);
-			DirectoryInfo* CreateSubDirectory(const std::string &path);
+			DirectoryInfoPtr CreateSubDirectory(const std::string &path);
 
 			virtual std::string GetName() const override;
 			virtual bool GetExists() const override;

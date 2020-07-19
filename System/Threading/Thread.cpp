@@ -22,7 +22,7 @@ namespace System
 		{
 		}
 
-		Thread::Thread(Runnable* runnable)
+		Thread::Thread(RunnablePtr runnable)
 			:
 			m_isInterript(false),
 			m_function(nullptr),
@@ -39,6 +39,7 @@ namespace System
 			if (m_thread != nullptr && m_thread->joinable())
 			{
 				m_thread->join();
+				delete m_thread;
 			}
 		}
 

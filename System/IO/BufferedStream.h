@@ -10,6 +10,7 @@
 #define SYSTEM_IO_BUFFEREDSTREAM_H
 #include "System/DllExport.h"
 #include "System/IO/Stream.h"
+#include "System/IO/Ptrs.h"
 namespace System
 {
 	namespace IO
@@ -17,8 +18,8 @@ namespace System
 		class SYSTEM_API BufferedStream : public Stream
 		{
 		public:
-			BufferedStream(Stream* stream);
-			BufferedStream(Stream* stream, int size);
+			BufferedStream(const StreamPtr &stream);
+			BufferedStream(const StreamPtr &stream, int size);
 			virtual ~BufferedStream();
 			virtual bool GetCanRead() const override;
 			virtual bool GetCanSeek() const override;
@@ -40,13 +41,13 @@ namespace System
 			void WriteToBuffer(char* buffer, int &offset, int &count);
 			int ReadFromBuffer(char* buffer, int offset, int count);
 		private:
-			const int DEFAULT_BUFFER_SIZE = 4096;
-			const int MAX_SHADOW_BUFFER_SIZE = 81920;
+			static const int DEFAULT_BUFFER_SIZE = 4096;
+			static const int MAX_SHADOW_BUFFER_SIZE = 81920;
 			int m_buffersize = DEFAULT_BUFFER_SIZE;
 			int m_read_pos = 0;
 			int m_write_pos = 0;
 			int m_read_length = 0;
-			Stream* m_stream = nullptr;
+			StreamPtr m_stream = nullptr;
 			char* m_buffer = nullptr;
 		};
 	}

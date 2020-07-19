@@ -9,38 +9,38 @@
 #ifndef SYSTEM_NET_SIMPLETCPCLITENER_H
 #define SYSTEM_NET_SIMPLETCPCLITENER_H
 #include "System/DllExport.h"
-#include "System/Net/IPEndPoint.h"
+#include "System/Net/Sockets/SocketInclude.h"
+#include "System/Net/Ptrs.h"
 
-#include <memory>
+#include <string>
 
 namespace System
 {
 	namespace Net
 	{
-		class SimpleTcpClient;
 		class SYSTEM_API SimpleTcpListener
 		{
 		public:
 			SimpleTcpListener();
-			SimpleTcpListener(IPEndPoint* endpoint);
+			SimpleTcpListener(const IPEndPointPtr &endpoint);
 			SimpleTcpListener(int port);
-			SimpleTcpListener(IPAddress* ipaddress, int port);
+			SimpleTcpListener(const IPAddressPtr &ipaddress, int port);
 
 			bool Start();
 			bool Start(int backlog);
 			bool Stop();
-			SimpleTcpClient* AcceptTcpClient();
+			SimpleTcpClientPtr AcceptTcpClient();
 			SOCKET AcceptSocket();
 			void AcceptSocket(std::string &ip, SOCKET &sock);
-			IPEndPoint* GetEndPoint() const;
-			void SetEndPoint(IPEndPoint* endpoint);
+			IPEndPointPtr GetEndPoint() const;
+			void SetEndPoint(const IPEndPointPtr &endpoint);
 			SOCKET GetSocket() const;
 		private:
 			bool Init();
 			bool Close();
 		private:
 			SOCKET m_sock = INVALID_SOCKET;
-			IPEndPoint* m_endpoint;
+			IPEndPointPtr m_endpoint;
 		};
 	}
 }

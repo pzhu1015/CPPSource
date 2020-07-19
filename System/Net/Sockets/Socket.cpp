@@ -12,20 +12,29 @@
 #include "System/Net/IPAddress.h"
 #include "System/Net/Sockets/SocketAsyncEventArgs.h"
 #include "System/Threading/Thread.h"
+#include "System/ArgumentException.h"
+#include "System/ArgumentNullException.h"
+#include "System/InvalidOperationException.h"
+#include "System/ArgumentOutOfRangeException.h"
+#include "System/NotSupportedException.h"
+#include <assert.h>
 
-using namespace System::Threading;
 namespace System
 {
 	namespace Net
 	{
 		namespace Sockets
 		{
-			Socket::Socket(SOCKET sock, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+			Socket::Socket(SOCKET accecpedSocket)
 			{
-				m_address_family = addressFamily;
-				m_socket_type = socketType;
-				m_protocol_type = protocolType;
-				m_sock = sock;
+				if (INVALID_SOCKET == accecpedSocket)
+				{
+					throw ArgumentException("accecpedSocket");
+				}
+				m_address_family = AddressFamily::Unknown;
+				m_socket_type = SocketType::Unknown;
+				m_protocol_type = ProtocolType::Unknown;
+				m_sock = accecpedSocket;
 			}
 
 			Socket::Socket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
@@ -43,14 +52,6 @@ namespace System
 
 			Socket::~Socket()
 			{
-				if (m_local_endpoint != nullptr)
-				{
-					delete m_local_endpoint;
-				}
-				if (m_remote_endpoint != nullptr)
-				{
-					delete m_remote_endpoint;
-				}
 				Close();
 			}
 
@@ -140,12 +141,12 @@ namespace System
 				return m_address_family;
 			}
 
-			EndPoint* Socket::GetLocalEndPoint() const
+			EndPointPtr Socket::GetLocalEndPoint() const
 			{
 				return m_local_endpoint;
 			}
 
-			EndPoint* Socket::GetRemoteEndPoint() const
+			EndPointPtr Socket::GetRemoteEndPoint() const
 			{
 				return m_remote_endpoint;
 			}
@@ -160,7 +161,7 @@ namespace System
 				return m_socket_type;
 			}
 
-			Socket* Socket::Accept()
+			SocketPtr Socket::Accept()
 			{
 				sockaddr_in client_addr = {};
 				int len = sizeof(sockaddr_in);
@@ -176,28 +177,32 @@ namespace System
 				}
 				std::string ip = inet_ntoa(client_addr.sin_addr);
 				int port = ntohs(client_addr.sin_port);
-				Socket* socket = new Socket(sock, AddressFamily::InterNetwork, SocketType::Stream, ProtocolType::Tcp);
-				socket->m_remote_endpoint = new IPEndPoint(new IPAddress(ip), port);
+				SocketPtr socket = std::make_shared<Socket>(sock);
+				socket->m_remote_endpoint = std::make_shared<IPEndPoint>(std::make_shared<IPAddress>(ip), port);
 				return socket;
 			}
 
-			bool Socket::AcceptAsync(SocketAsyncEventArgs* e)
+			bool Socket::AcceptAsync(const SocketAsyncEventArgsPtr &e)
 			{
 				return false;
 			}
 
-			bool Socket::Bind(EndPoint * endpoint)
+			bool Socket::Bind(const EndPointPtr &endpoint)
 			{
+				if (endpoint == nullptr)
+				{
+					throw ArgumentNullException("endpoint");
+				}
 				if (INVALID_SOCKET == m_sock)
 				{
 					return false;
 				}
-				IPEndPoint* ipendpoint = dynamic_cast<IPEndPoint*>(endpoint);
+				IPEndPointPtr ipendpoint = std::dynamic_pointer_cast<IPEndPoint>(endpoint);
 				if (ipendpoint == nullptr)
 				{
 					return false;
 				}
-				IPAddress* ipaddress = ipendpoint->GetIPAddress();
+				IPAddressPtr ipaddress = ipendpoint->GetIPAddress();
 				if (ipaddress == nullptr)
 				{
 					return false;
@@ -260,14 +265,19 @@ namespace System
 				return Close();
 			}
 
-			bool Socket::Connect(EndPoint * remoteEP)
+			bool Socket::Connect(const EndPointPtr &remoteEP)
 			{
 				if (remoteEP == nullptr)
 				{
-					return false;
+					throw ArgumentNullException("remoteEP");
 				}
 
-				IPEndPoint* ipendpoint = dynamic_cast<IPEndPoint*>(remoteEP);
+				if (m_connected)
+				{
+					throw InvalidOperationException("socket is connected");
+				}
+
+				IPEndPointPtr ipendpoint = std::dynamic_pointer_cast<IPEndPoint>(remoteEP);
 				if (remoteEP == nullptr)
 				{
 					return false;
@@ -275,26 +285,41 @@ namespace System
 				return Connect(ipendpoint->GetIPAddress(), ipendpoint->GetPort());
 			}
 
-			bool Socket::Connect(IPAddress * address, int port)
+			bool Socket::Connect(const IPAddressPtr &address, int port)
 			{
-				if (address == nullptr || port < 0)
+				if (address == nullptr)
 				{
-					return false;
+					throw ArgumentNullException("address");
+				}
+				if (port > IPEndPoint::MAXPORT || port < IPEndPoint::MINPORT)
+				{
+					throw ArgumentOutOfRangeException("port");
 				}
 				return Connect(address->GetIPAddress(), port);
 			}
 
 			bool Socket::Connect(const std::string & ip, int port)
 			{
-				if (INVALID_SOCKET == m_sock || port < 0 || ip == "")
+				if (ip == "")
 				{
-					return false;
+					throw ArgumentNullException("ip");
 				}
-
+				if (port > IPEndPoint::MAXPORT || port < IPEndPoint::MINPORT)
+				{
+					throw ArgumentOutOfRangeException("port");
+				}
+				if (m_address_family != AddressFamily::InterNetwork)
+				{
+					throw NotSupportedException("invalid address family");
+				}
 				if (m_connected)
 				{
-					return true;
+					throw InvalidOperationException("socket is connected");
 				}
+				assert(INVALID_SOCKET != m_sock);
+				assert(port <= IPEndPoint::MAXPORT && port > IPEndPoint::MINPORT);
+				assert(ip != "");
+				assert(!m_connected);
 				sockaddr_in sin = {};
 				sin.sin_family = (int)m_address_family;
 				sin.sin_port = htons(port);
@@ -312,7 +337,7 @@ namespace System
 				return true;
 			}
 
-			bool Socket::ConnectAsync(SocketAsyncEventArgs* e)
+			bool Socket::ConnectAsync(const SocketAsyncEventArgsPtr &e)
 			{
 				return false;
 			}
@@ -321,7 +346,7 @@ namespace System
 			{
 			}
 
-			bool Socket::DisconnectAsync(SocketAsyncEventArgs* e)
+			bool Socket::DisconnectAsync(const SocketAsyncEventArgsPtr &e)
 			{
 				return false;
 			}
@@ -347,6 +372,7 @@ namespace System
 
 			int Socket::Receive(char * buffer, int length)
 			{
+				assert(INVALID_SOCKET != m_sock);
 				if (INVALID_SOCKET == m_sock)
 				{
 					return -1;
@@ -355,13 +381,14 @@ namespace System
 				return ret;
 			}
 
-			bool Socket::ReceiveAsync(SocketAsyncEventArgs* e)
+			bool Socket::ReceiveAsync(const SocketAsyncEventArgsPtr &e)
 			{
 				return false;
 			}
 
 			int Socket::Send(char * buffer, int length)
 			{
+				assert(INVALID_SOCKET != m_sock);
 				if (INVALID_SOCKET == m_sock)
 				{
 					return -1;
@@ -370,39 +397,35 @@ namespace System
 				return ret;
 			}
 
-			bool Socket::SendAsync(SocketAsyncEventArgs* e)
+			bool Socket::SendAsync(const SocketAsyncEventArgsPtr &e)
 			{
 				return false;
 			}
 
-			int Socket::ReceiveFrom(char * buffer, int length, EndPoint * remoteEP)
+			int Socket::ReceiveFrom(char * buffer, int length, const EndPointPtr &remoteEP)
 			{
 				return 0;
 			}
 
-			bool Socket::ReceiveFromAsync(SocketAsyncEventArgs* e)
+			bool Socket::ReceiveFromAsync(const SocketAsyncEventArgsPtr &e)
 			{
 				return false;
 			}
 
-			int Socket::SendTo(char * buffer, int length, EndPoint * remoteEP)
+			int Socket::SendTo(char * buffer, int length, const EndPointPtr &remoteEP)
 			{
 				return 0;
 			}
 
-			bool Socket::SendToAsync(SocketAsyncEventArgs * e)
+			bool Socket::SendToAsync(const SocketAsyncEventArgsPtr &e)
 			{
 				return false;
 			}
 
 			int Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char * optValue, int optLength)
 			{
-				if (INVALID_SOCKET == m_sock)
-				{
-					return -1;
-				}
-				int ret = setsockopt(m_sock, (int)optionLevel, (int)optionName, optValue, optLength);
-				return ret;
+				assert(INVALID_SOCKET != m_sock);
+				return setsockopt(m_sock, (int)optionLevel, (int)optionName, optValue, optLength);
 			}
 
 			void Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optValue)
@@ -412,12 +435,12 @@ namespace System
 
 			void Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optValue)
 			{
-				setsockopt(m_sock, (int)optionLevel, (int)optionName, (const char*)&optValue, sizeof(optValue));
 				SetSocketOption(optionLevel, optionName, (const char*)&optValue, sizeof(optValue));
 			}
 
 			int Socket::GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName) const
 			{
+				assert(INVALID_SOCKET != m_sock);
 				int result = 0;
 				int length = sizeof(result);
 				int ret = getsockopt(m_sock, (int)optionLevel, (int)optionName, (char*)&result, &length);

@@ -6,12 +6,19 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "SimpleTcpListener/TcpSelectErrorEventArgs.h"
+#ifndef SYSTEM_HCN_PROCESSSTARTEVENTARGS_H
+#define SYSTEM_HCN_PROCESSSTARTEVENTARGS_H
+#include "System/EventArgs.h"
 
-TcpSelectErrorEventArgs::TcpSelectErrorEventArgs()
+namespace System
 {
+	namespace HCN
+	{
+		class ProcessStartEventArgs : public EventArgs
+		{
+
+		};
+	}
 }
 
-TcpSelectErrorEventArgs::~TcpSelectErrorEventArgs()
-{
-}
+#endif // !SYSTEM_HCN_PROCESSSTARTEVENTARGS_H

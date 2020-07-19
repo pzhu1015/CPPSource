@@ -34,9 +34,7 @@ namespace System
 			m_is_started = true;
 			for (size_t i = 0; i < m_thread_size; i++)
 			{
-				m_threads.push_back(std::unique_ptr<Thread>(
-					new Thread(
-						std::bind(&ThreadPool::Run, this))));
+				m_threads.push_back(std::make_shared<Thread>(std::bind(&ThreadPool::Run, this)));
 			}
 
 			for (size_t i = 0; i < m_thread_size; i++)

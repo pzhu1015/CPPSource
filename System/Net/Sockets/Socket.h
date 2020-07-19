@@ -17,21 +17,21 @@
 #include "System/Net/Sockets/SelectMode.h"
 #include "System/Net/Sockets/SocketOptionLevel.h"
 #include "System/Net/Sockets/SocketOptionName.h"
+#include "System/Net/Ptrs.h"
+#include "System/Net/Sockets/Ptrs.h"
 #include <string>
 
 namespace System
 {
 	namespace Net
 	{
-		class IPAddress;
-		class EndPoint;
 		namespace Sockets
 		{
-			class SocketAsyncEventArgs;
 			class SYSTEM_API Socket : public IDisposable
 			{
 			public:
 				//for client
+				Socket(SOCKET accecpedSocket);
 				Socket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				~Socket();
 
@@ -48,37 +48,37 @@ namespace System
 				void SetSendBuffSize(int size);
 				int GetAvailable() const;
 				SOCKET GetHandle() const;
-				EndPoint* GetLocalEndPoint() const;
-				EndPoint* GetRemoteEndPoint() const;
+				EndPointPtr GetLocalEndPoint() const;
+				EndPointPtr GetRemoteEndPoint() const;
 				AddressFamily GetAddressFamily() const;
 				ProtocolType GetProtocolType() const;
 				SocketType GetSocketType() const;
 
-				Socket* Accept();
-				bool AcceptAsync(SocketAsyncEventArgs* e);
-				bool Bind(EndPoint* endpoint);
+				SocketPtr Accept();
+				bool AcceptAsync(const SocketAsyncEventArgsPtr &e);
+				bool Bind(const EndPointPtr &endpoint);
 				bool Close();
 				bool Close(int timeout);
-				bool Connect(EndPoint* remoteEP);
-				bool Connect(IPAddress* address, int port);
+				bool Connect(const EndPointPtr &remoteEP);
+				bool Connect(const IPAddressPtr &address, int port);
 				bool Connect(const std::string &ip, int port);
-				bool ConnectAsync(SocketAsyncEventArgs* e);
+				bool ConnectAsync(const SocketAsyncEventArgsPtr &e);
 				void Disconnect(bool reuseSocket);
-				bool DisconnectAsync(SocketAsyncEventArgs* e);
+				bool DisconnectAsync(const SocketAsyncEventArgsPtr &e);
 				bool Listen(int backlog);
 				bool Poll(int microSeconds, SelectMode selectMode);
 
 				//for tcp
 				int Receive(char* buffer, int length);
-				bool ReceiveAsync(SocketAsyncEventArgs* e);
+				bool ReceiveAsync(const SocketAsyncEventArgsPtr &e);
 				int Send(char* buffer, int length);
-				bool SendAsync(SocketAsyncEventArgs* e);
+				bool SendAsync(const SocketAsyncEventArgsPtr &e);
 
 				//for udp
-				int ReceiveFrom(char* buffer, int length, EndPoint* remoteEP);
-				bool ReceiveFromAsync(SocketAsyncEventArgs* e);
-				int SendTo(char* buffer, int length, EndPoint* remoteEP);
-				bool SendToAsync(SocketAsyncEventArgs* e);
+				int ReceiveFrom(char* buffer, int length, const EndPointPtr &remoteEP);
+				bool ReceiveFromAsync(const SocketAsyncEventArgsPtr &e);
+				int SendTo(char* buffer, int length, const EndPointPtr &remoteEP);
+				bool SendToAsync(const SocketAsyncEventArgsPtr &e);
 
 				int SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char* optValue, int optLength);
 				void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optValue);
@@ -92,12 +92,10 @@ namespace System
 
 			private:
 				//for server
-				friend class TcpListener;
-				Socket(SOCKET sock, AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType);
 				bool m_blocking = false;
 				bool m_connected = false;
-				EndPoint* m_local_endpoint = nullptr;
-				EndPoint* m_remote_endpoint = nullptr;
+				EndPointPtr m_local_endpoint = nullptr;
+				EndPointPtr m_remote_endpoint = nullptr;
 				AddressFamily m_address_family;
 				ProtocolType m_protocol_type;
 				SocketType m_socket_type;

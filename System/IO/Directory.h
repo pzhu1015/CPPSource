@@ -8,17 +8,15 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IO_DIRECTORY_H
 #define SYSTEM_IO_DIRECTORY_H
-
 #include "System/DllExport.h"
+#include "System/IO/Ptrs.h"
+#include "System/DateTimes/Ptrs.h"
 #include <string>
 #include <vector>
 
+using namespace System::DateTimes;
 namespace System
 {
-	namespace DateTimes
-	{
-		class DateTime;
-	}
 	namespace IO
 	{
 		class DirectoryInfo;
@@ -32,10 +30,10 @@ namespace System
 			static void Move(const std::string &src_path, const std::string &dest_path);
 			static std::vector<std::string> GetFiles(const std::string &path);
 			static std::vector<std::string> GetDirectories(const std::string &path);
-			static DateTimes::DateTime* GetCreationTime(const std::string &path);
-			static DateTimes::DateTime* GetLastAccessTime(const std::string &path);
-			static DateTimes::DateTime* GetLastWriteTime(const std::string &path);
-			static DirectoryInfo* GetParent(const std::string &path);
+			static DateTimePtr GetCreationTime(const std::string &path);
+			static DateTimePtr GetLastAccessTime(const std::string &path);
+			static DateTimePtr GetLastWriteTime(const std::string &path);
+			static DirectoryInfoPtr GetParent(const std::string &path);
 			static std::string GetDirectoryRoot(const std::string &path);
 
 		};

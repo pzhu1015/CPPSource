@@ -53,11 +53,11 @@ namespace System
 			Dispose(true);
 		}
 
-		void Stream::CopyTo(Stream * dest)
+		void Stream::CopyTo(const StreamPtr &dest)
 		{
 		}
 
-		void Stream::CopyTo(Stream * dest, int buffersize)
+		void Stream::CopyTo(const StreamPtr &dest, int buffersize)
 		{
 		}
 

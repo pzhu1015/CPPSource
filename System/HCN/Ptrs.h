@@ -6,24 +6,17 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_NET_SOCKETTYPE_H
-#define SYSTEM_NET_SOCKETTYPE_H
-
-#include "System/Net/Sockets/SocketInclude.h"
-
+#ifndef SYSTEM_HCN_PTRS_H
+#define SYSTEM_HCN_PTRS_H
+#include <memory>
 namespace System
 {
-	namespace Net
+	namespace HCN
 	{
-		namespace Sockets
-		{
-			enum SocketType
-			{
-				Unknown = -1,
-				Stream = SOCK_STREAM,
-				Dgram = SOCK_DGRAM
-			};
-		}
+		class Process;
+		class ClientWrapper;
+		typedef std::shared_ptr<ClientWrapper> ClientWrapperPtr;
+		typedef std::shared_ptr<Process> ProcessPtr;
 	}
 }
-#endif // !SYSTEM_NET_SOCKETTYPE_H
+#endif // !SYSTEM_HCN_PTRS_H

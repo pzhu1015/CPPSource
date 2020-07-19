@@ -18,8 +18,6 @@
 #include <unistd.h>
 #endif
 
-using namespace System::DateTimes;
-
 namespace System
 {
 	namespace IO
@@ -103,7 +101,7 @@ namespace System
 #endif
 		}
 
-		DateTimes::DateTime * Directory::GetCreationTime(const std::string & path)
+		DateTimePtr Directory::GetCreationTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat st;
@@ -112,11 +110,10 @@ namespace System
 			struct stat st;
 			stat(path.c_str(), &st);
 #endif
-			DateTime* dt = new DateTime(st.st_ctime);
-			return dt;
+			return std::make_shared<DateTime>(st.st_ctime);
 		}
 
-		DateTimes::DateTime * Directory::GetLastAccessTime(const std::string & path)
+		DateTimePtr Directory::GetLastAccessTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat st;
@@ -125,11 +122,10 @@ namespace System
 			struct stat st;
 			stat(path.c_str(), &st);
 #endif
-			DateTime* dt = new DateTime(st.st_atime);
-			return dt;
+			return std::make_shared<DateTime>(st.st_atime);
 		}
 
-		DateTimes::DateTime * Directory::GetLastWriteTime(const std::string & path)
+		DateTimePtr Directory::GetLastWriteTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat st;
@@ -138,14 +134,13 @@ namespace System
 			struct stat st;
 			stat(path.c_str(), &st);
 #endif
-			DateTime* dt = new DateTime(st.st_mtime);
-			return dt;
+			return std::make_shared<DateTime>(st.st_mtime);
 		}
 
-		DirectoryInfo * Directory::GetParent(const std::string & path)
+		DirectoryInfoPtr Directory::GetParent(const std::string & path)
 		{
 			std::string parent_path = path.substr(0, path.find_last_of('\\'));
-			return new DirectoryInfo(parent_path);
+			return std::make_shared<DirectoryInfo>(parent_path);
 		}
 
 		std::string Directory::GetDirectoryRoot(const std::string & path)

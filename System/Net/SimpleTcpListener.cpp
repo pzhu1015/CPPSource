@@ -8,6 +8,8 @@
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/SimpleTcpListener.h"
 #include "System/Net/SimpleTcpClient.h"
+#include "System/Net/IPAddress.h"
+#include "System/Net/IPEndPoint.h"
 namespace System
 {
 	namespace Net
@@ -16,7 +18,7 @@ namespace System
 		{
 			Init();
 		}
-		SimpleTcpListener::SimpleTcpListener(IPEndPoint* endpoint)
+		SimpleTcpListener::SimpleTcpListener(const IPEndPointPtr &endpoint)
 			:
 			m_endpoint(endpoint)
 		{
@@ -25,14 +27,14 @@ namespace System
 
 		SimpleTcpListener::SimpleTcpListener(int port)
 			:
-			m_endpoint(new IPEndPoint(new IPAddress("0.0.0.0"), port))
+			m_endpoint(std::make_shared<IPEndPoint>(std::make_shared<IPAddress>("0.0.0.0"), port))
 		{
 			Init();
 		}
 
-		SimpleTcpListener::SimpleTcpListener(IPAddress* ipaddress, int port)
+		SimpleTcpListener::SimpleTcpListener(const IPAddressPtr &ipaddress, int port)
 			:
-			m_endpoint(new IPEndPoint(ipaddress, port))
+			m_endpoint(std::make_shared<IPEndPoint>(ipaddress, port))
 		{
 			Init();
 		}
@@ -82,22 +84,22 @@ namespace System
 			ip = inet_ntoa(clientAddr.sin_addr);
 		}
 
-		SimpleTcpClient* SimpleTcpListener::AcceptTcpClient()
+		SimpleTcpClientPtr SimpleTcpListener::AcceptTcpClient()
 		{
 			SOCKET sock;
 			std::string ip;
 			AcceptSocket(ip, sock);
-			SimpleTcpClient* client = new SimpleTcpClient();
-			client->SetIPAddress(new IPAddress(ip));
+			SimpleTcpClientPtr client = std::make_shared<SimpleTcpClient>();
+			client->SetIPAddress(std::make_shared<IPAddress>(ip));
 			client->SetSocket(sock);
 			return client;
 		}
 
-		IPEndPoint* SimpleTcpListener::GetEndPoint() const
+		IPEndPointPtr SimpleTcpListener::GetEndPoint() const
 		{
 			return m_endpoint;
 		}
-		void SimpleTcpListener::SetEndPoint(IPEndPoint* endpoint)
+		void SimpleTcpListener::SetEndPoint(const IPEndPointPtr &endpoint)
 		{
 			m_endpoint = endpoint;
 		}
@@ -139,7 +141,7 @@ namespace System
 				return false;
 			}
 
-			IPAddress* ipaddress = m_endpoint->GetIPAddress();
+			IPAddressPtr ipaddress = m_endpoint->GetIPAddress();
 			std::string ip = ipaddress->GetIPAddress();
 			int port = m_endpoint->GetPort();
 			sockaddr_in _sin = {};

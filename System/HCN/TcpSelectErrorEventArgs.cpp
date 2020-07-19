@@ -6,13 +6,18 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SIMPLETCPLISTENER_TCPRECEIVEEVENTARGS_H
-#define SIMPLETCPLISTENER_TCPRECEIVEEVENTARGS_H
-#include "System/EventArgs.h"
+#include "System/HCN/TcpSelectErrorEventArgs.h"
 
-class TcpReceiveEventArgs : public System::EventArgs
+namespace System
 {
+	namespace HCN
+	{
+		TcpSelectErrorEventArgs::TcpSelectErrorEventArgs()
+		{
+		}
 
-};
-
-#endif // !SIMPLETCPLISTENER_TCPRECEIVEEVENTARGS_H
+		TcpSelectErrorEventArgs::~TcpSelectErrorEventArgs()
+		{
+		}
+	}
+}

@@ -6,21 +6,26 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "SimpleTcpListener/OffLineEventArgs.h"
+#include "System/HCN/OffLineEventArgs.h"
 #include "System/Net/TcpClient.h"
 
 using namespace System::Net;
-
-OffLineEventArgs::OffLineEventArgs(System::Net::TcpClient * client)
+namespace System
 {
-	m_client = client;
-}
+	namespace HCN
+	{
+		OffLineEventArgs::OffLineEventArgs(TcpClient * client)
+		{
+			m_client = client;
+		}
 
-OffLineEventArgs::~OffLineEventArgs()
-{
-}
+		OffLineEventArgs::~OffLineEventArgs()
+		{
+		}
 
-System::Net::TcpClient * OffLineEventArgs::GetClient() const
-{
-	return m_client;
+		TcpClient * OffLineEventArgs::GetClient() const
+		{
+			return m_client;
+		}
+	}
 }

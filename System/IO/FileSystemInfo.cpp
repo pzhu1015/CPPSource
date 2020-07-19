@@ -15,15 +15,15 @@ namespace System
 		FileSystemInfo::FileSystemInfo()
 		{
 		}
-		DateTimes::DateTime * FileSystemInfo::GetCreationTime()
+		DateTimePtr FileSystemInfo::GetCreationTime()
 		{
 			return nullptr;
 		}
-		DateTimes::DateTime * FileSystemInfo::GetLastAccessTime()
+		DateTimePtr FileSystemInfo::GetLastAccessTime()
 		{
 			return nullptr;
 		}
-		DateTimes::DateTime * FileSystemInfo::GetLastWriteTime()
+		DateTimePtr FileSystemInfo::GetLastWriteTime()
 		{
 			return nullptr;
 		}

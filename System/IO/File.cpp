@@ -20,7 +20,6 @@
 #include <unistd.h>
 #endif
 
-using namespace System::DateTimes;
 namespace System
 {
 	namespace IO
@@ -42,7 +41,7 @@ namespace System
 			return contents;
 		}
 
-		std::string File::ReadAllText(const std::string & path, Encoding* encoding)
+		std::string File::ReadAllText(const std::string & path, const EncodingPtr &encoding)
 		{
 			//TODO
 			return std::string();
@@ -63,7 +62,7 @@ namespace System
 			return true;
 		}
 
-		bool File::WriteAllLines(const std::string & path, const std::vector<std::string>& lines,Encoding* encoding)
+		bool File::WriteAllLines(const std::string & path, const std::vector<std::string>& lines, const EncodingPtr &encoding)
 		{
 			return false;
 		}
@@ -83,7 +82,7 @@ namespace System
 			return true;
 		}
 
-		bool File::WriteAllText(const std::string & path, const std::string & contents, Encoding* encoding)
+		bool File::WriteAllText(const std::string & path, const std::string & contents, const EncodingPtr &encoding)
 		{
 			return false;
 		}
@@ -139,12 +138,12 @@ namespace System
 			return lines;
 		}
 
-		std::vector<std::string> File::ReadAllLines(const std::string & path, Encoding* encoding)
+		std::vector<std::string> File::ReadAllLines(const std::string & path, const EncodingPtr &encoding)
 		{
 			return std::vector<std::string>();
 		}
 
-		DateTimes::DateTime * File::GetCreationTime(const std::string & path)
+		DateTimePtr File::GetCreationTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat st;
@@ -153,11 +152,11 @@ namespace System
 			struct stat st;
 			stat(path.c_str(), &st);
 #endif
-			DateTime* dt = new DateTime(st.st_ctime);
+			DateTimePtr dt = std::make_shared<DateTime>(st.st_ctime);
 			return dt;
 		}
 
-		DateTimes::DateTime * File::GetLastAccessTime(const std::string & path)
+		DateTimePtr File::GetLastAccessTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat info;
@@ -166,11 +165,11 @@ namespace System
 			struct stat info;
 			stat(path.c_str(), &info);
 #endif
-			DateTime* dt = new DateTime(info.st_atime);
+			DateTimePtr dt = std::make_shared<DateTime>(info.st_atime);
 			return dt;
 		}
 
-		DateTimes::DateTime * File::GetLastWriteTime(const std::string & path)
+		DateTimePtr File::GetLastWriteTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat info;
@@ -179,7 +178,7 @@ namespace System
 			struct stat info;
 			stat(path.c_str(), &info);
 #endif
-			DateTime* dt = new DateTime(info.st_mtime);
+			DateTimePtr dt = std::make_shared<DateTime>(info.st_mtime);
 			return dt;
 		}
 
@@ -198,7 +197,7 @@ namespace System
 			return false;
 		}
 
-		bool File::AppendAllLines(const std::string & path, std::vector<std::string>& lines, Encoding* encoding)
+		bool File::AppendAllLines(const std::string & path, std::vector<std::string>& lines, const EncodingPtr &encoding)
 		{
 			return false;
 		}
@@ -215,7 +214,7 @@ namespace System
 			return true;
 		}
 
-		bool File::AppendAllText(const std::string & path, std::string & contents, Encoding* encoding)
+		bool File::AppendAllText(const std::string & path, std::string & contents, const EncodingPtr &encoding)
 		{
 			//TODO
 			return false;
@@ -289,14 +288,14 @@ namespace System
 			return true;
 		}
 
-		FileStream* File::Open(const std::string & path, FileMode mode)
+		FileStreamPtr File::Open(const std::string & path, FileMode mode)
 		{
-			return new FileStream(path, mode);
+			return std::make_shared<FileStream>(path, mode);
 		}
 
-		FileStream* File::Open(const std::string & path, FileMode mode, FileAccess access)
+		FileStreamPtr File::Open(const std::string & path, FileMode mode, FileAccess access)
 		{
-			return new FileStream(path, mode, access);
+			return std::make_shared<FileStream>(path, mode, access);
 		}
 	}
 }
