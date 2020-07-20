@@ -23,20 +23,20 @@ namespace System
 		class TcpSendEventArgs;
 		class TcpSelectErrorEventArgs;
 
-		class ClientProcessStartEventArgs;
-		class ClientProcessStopEventArgs;
+		class IOProcessStartEventArgs;
+		class IOProcessStopEventArgs;
 
-		typedef std::function<void(ClientProcessStartEventArgs&)> ClientProcessStartEventHandler;
-		typedef std::function<void(ClientProcessStopEventArgs&)> ClientProcessStopEventHandler;
+		typedef std::function<void(const IOProcessStartEventArgs&)> IOProcessStartEventHandler;
+		typedef std::function<void(const IOProcessStopEventArgs&)> IOProcessStopEventHandler;
 
-		typedef std::function<void(TcpOnLineEventArgs&)> TcpOnLineEventHandler;
-		typedef std::function<void(TcpOffLineEventArgs&)> TcpOffLineEventHandler;
-		typedef std::function<void(TcpStartEventArgs&)> TcpStartEventHandler;
-		typedef std::function<void(TcpStopEventArgs&)> TcpSTopEventHandler;
-		typedef std::function<void(TcpAcceptEventArgs&)> TcpAccetpEventHandler;
-		typedef std::function<void(TcpReceiveEventArgs&)> TcpReceiveEventHandler;
-		typedef std::function<void(TcpSendEventArgs&)> TcpSendEventHandler;
-		typedef std::function<void(TcpSelectErrorEventArgs&)> TcpSelectErrorEventHandler;
+		typedef std::function<void(const TcpOnLineEventArgs&)> TcpOnLineEventHandler;
+		typedef std::function<void(const TcpOffLineEventArgs&)> TcpOffLineEventHandler;
+		typedef std::function<void(const TcpStartEventArgs&)> TcpStartEventHandler;
+		typedef std::function<void(const TcpStopEventArgs&)> TcpSTopEventHandler;
+		typedef std::function<void(const TcpAcceptEventArgs&)> TcpAccetpEventHandler;
+		typedef std::function<void(const TcpReceiveEventArgs&)> TcpReceiveEventHandler;
+		typedef std::function<void(const TcpSendEventArgs&)> TcpSendEventHandler;
+		typedef std::function<void(const TcpSelectErrorEventArgs&)> TcpSelectErrorEventHandler;
 	}
 }
 

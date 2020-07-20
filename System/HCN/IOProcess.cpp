@@ -6,12 +6,12 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/HCN/ClientProcess.h"
+#include "System/HCN/IOProcess.h"
 #include "System/Threading/Thread.h"
 #include "System/Net/TcpClient.h"
 #include "System/Net/Sockets/Socket.h"
-#include "System/HCN/ClientProcessStartEventArgs.h"
-#include "System/HCN/ClientProcessStopEventArgs.h"
+#include "System/HCN/IOProcessStartEventArgs.h"
+#include "System/HCN/IOProcessStopEventArgs.h"
 #include "System/HCN/TcpOnLineEventArgs.h"
 #include "System/HCN/TcpOffLineEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
@@ -25,24 +25,24 @@ namespace System
 {
 	namespace HCN
 	{
-		ClientProcess::ClientProcess()
+		IOProcess::IOProcess()
 		{
-			m_thread = std::make_shared<Thread>(std::bind(&ClientProcess::AsyncStart, this));
+			m_thread = std::make_shared<Thread>(std::bind(&IOProcess::AsyncStart, this));
 		}
 
-		ClientProcess::~ClientProcess()
+		IOProcess::~IOProcess()
 		{
 		}
 
-		void ClientProcess::Start()
+		void IOProcess::Start()
 		{
 			m_thread->Start();
 		}
 
-		void ClientProcess::AsyncStart()
+		void IOProcess::AsyncStart()
 		{
 			m_is_start = true;
-			this->OnStart(ClientProcessStartEventArgs());
+			this->OnStart(IOProcessStartEventArgs());
 			while (m_is_start)
 			{
 				//TODO handle client to receive data
@@ -97,15 +97,15 @@ namespace System
 					}
 				}
 			}
-			this->OnStop(ClientProcessStopEventArgs());
+			this->OnStop(IOProcessStopEventArgs());
 		}
 
-		size_t ClientProcess::GetClients() const
+		size_t IOProcess::GetClients() const
 		{
 			return m_clients.size();
 		}
 
-		void ClientProcess::AddClient(const TcpClientPtr &client)
+		void IOProcess::AddClient(const TcpClientPtr &client)
 		{
 			{
 				std::lock_guard<std::mutex> lock(m_mutex);
@@ -115,28 +115,28 @@ namespace System
 			this->OnOnLine(TcpOnLineEventArgs(client));
 		}
 
-		void ClientProcess::Stop()
+		void IOProcess::Stop()
 		{
 			m_is_start = false;
 		}
 
-		void ClientProcess::OnStart(ClientProcessStartEventArgs& e)
+		void IOProcess::OnStart(const IOProcessStartEventArgs& e)
 		{
-			if (this->ClientProcessStart != nullptr)
+			if (this->IOProcessStart != nullptr)
 			{
-				this->ClientProcessStart(e);
+				this->IOProcessStart(e);
 			}
 		}
 
-		void ClientProcess::OnStop(ClientProcessStopEventArgs & e)
+		void IOProcess::OnStop(const IOProcessStopEventArgs & e)
 		{
-			if (this->ClientProcessStop != nullptr)
+			if (this->IOProcessStop != nullptr)
 			{
-				this->ClientProcessStop(e);
+				this->IOProcessStop(e);
 			}
 		}
 
-		void ClientProcess::OnOnLine(TcpOnLineEventArgs& e)
+		void IOProcess::OnOnLine(const TcpOnLineEventArgs& e)
 		{
 			if (this->OnLine != nullptr)
 			{
@@ -144,7 +144,7 @@ namespace System
 			}
 		}
 
-		void ClientProcess::OnOffLine(TcpOffLineEventArgs& e)
+		void IOProcess::OnOffLine(const TcpOffLineEventArgs& e)
 		{
 			if (this->OffLine != nullptr)
 			{
@@ -152,7 +152,7 @@ namespace System
 			}
 		}
 
-		void ClientProcess::OnSelectError(TcpSelectErrorEventArgs& e)
+		void IOProcess::OnSelectError(const TcpSelectErrorEventArgs& e)
 		{
 			if (this->SelectError != nullptr)
 			{

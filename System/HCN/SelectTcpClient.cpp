@@ -55,14 +55,14 @@ namespace System
 		{
 			return m_client;
 		}
-		void SelectTcpClient::OnReceive(TcpReceiveEventArgs & e)
+		void SelectTcpClient::OnReceive(const TcpReceiveEventArgs & e)
 		{
 			if (Receive != nullptr)
 			{
 				this->Receive(e);
 			}
 		}
-		void SelectTcpClient::OnSend(TcpSendEventArgs & e)
+		void SelectTcpClient::OnSend(const TcpSendEventArgs & e)
 		{
 			if (Send != nullptr)
 			{

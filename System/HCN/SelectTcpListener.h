@@ -30,16 +30,16 @@ namespace System
 			bool Stop();
 
 		protected:
-			virtual void OnStart(TcpStartEventArgs& e);
-			virtual void OnStop(TcpStopEventArgs& e);
-			virtual void OnAccept(TcpAcceptEventArgs& e);
-			virtual void OnSelectError(TcpSelectErrorEventArgs& e);
+			virtual void OnStart(const TcpStartEventArgs& e);
+			virtual void OnStop(const TcpStopEventArgs& e);
+			virtual void OnAccept(const TcpAcceptEventArgs& e);
+			virtual void OnSelectError(const TcpSelectErrorEventArgs& e);
 
 		private:
 			void AsyncStart(int port, int threads);
 			void AsyncAccept(const TcpClientPtr &client);
-			void OnClientProcessStart(ClientProcessStartEventArgs& e);
-			void OnClientProcessStop(ClientProcessStopEventArgs& e);
+			void OnIOProcessStart(const IOProcessStartEventArgs& e);
+			void OnIOProcessStop(const IOProcessStopEventArgs& e);
 
 		public:
 			TcpStartEventHandler Started;
@@ -54,7 +54,7 @@ namespace System
 		private:
 			bool m_is_start = false;
 			TcpListenerPtr m_server = nullptr;
-			std::vector<ClientProcessPtr> m_clients;
+			std::vector<IOProcessPtr> m_clients;
 			ThreadPoolPtr m_threadpool = nullptr;
 			ThreadPtr m_thread = nullptr;
 			SemaphorePtr m_start_sem = nullptr;

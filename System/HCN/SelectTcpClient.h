@@ -27,8 +27,8 @@ namespace System
 
 			TcpClientPtr GetClient() const;
 		protected:
-			virtual void OnReceive(TcpReceiveEventArgs& e);
-			virtual void OnSend(TcpSendEventArgs& e);
+			virtual void OnReceive(const TcpReceiveEventArgs& e);
+			virtual void OnSend(const TcpSendEventArgs& e);
 		public:
 			TcpReceiveEventHandler Receive;
 			TcpSendEventHandler Send;

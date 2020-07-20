@@ -10,14 +10,14 @@
 #include "System/Net/TcpListener.h"
 #include "System/Net/TcpClient.h"
 #include "System/Net/Sockets/Socket.h"
-#include "System/HCN/ClientProcess.h"
+#include "System/HCN/IOProcess.h"
 #include "System/HCN/TcpStartEventArgs.h"
 #include "System/HCN/TcpStopEventArgs.h"
 #include "System/HCN/TcpAcceptEventArgs.h"
 #include "System/HCN/TcpReceiveEventArgs.h"
 #include "System/HCN/TcpSendEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
-#include "System/HCN/ClientProcessStartEventArgs.h"
+#include "System/HCN/IOProcessStartEventArgs.h"
 #include "System/HCN/TcpOnLineEventArgs.h"
 #include "System/HCN/TcpOffLineEventArgs.h"
 #include "System/Threading/Thread.h"
@@ -58,7 +58,7 @@ namespace System
 			return true;
 		}
 
-		void SelectTcpListener::OnStart(TcpStartEventArgs& e)
+		void SelectTcpListener::OnStart(const TcpStartEventArgs& e)
 		{
 			if (this->Started != nullptr)
 			{
@@ -66,7 +66,7 @@ namespace System
 			}
 		}
 
-		void SelectTcpListener::OnStop(TcpStopEventArgs& e)
+		void SelectTcpListener::OnStop(const TcpStopEventArgs& e)
 		{
 			if (this->Stoped != nullptr)
 			{
@@ -74,7 +74,7 @@ namespace System
 			}
 		}
 
-		void SelectTcpListener::OnAccept(TcpAcceptEventArgs& e)
+		void SelectTcpListener::OnAccept(const TcpAcceptEventArgs& e)
 		{
 			if (this->Accepted != nullptr)
 			{
@@ -82,7 +82,7 @@ namespace System
 			}
 		}
 
-		void SelectTcpListener::OnSelectError(TcpSelectErrorEventArgs& e)
+		void SelectTcpListener::OnSelectError(const TcpSelectErrorEventArgs& e)
 		{
 			if (this->SelectError != nullptr)
 			{
@@ -90,12 +90,12 @@ namespace System
 			}
 		}
 
-		void SelectTcpListener::OnClientProcessStart(ClientProcessStartEventArgs& e)
+		void SelectTcpListener::OnIOProcessStart(const IOProcessStartEventArgs& e)
 		{
 			m_start_sem->signal();
 		}
 
-		void SelectTcpListener::OnClientProcessStop(ClientProcessStopEventArgs & e)
+		void SelectTcpListener::OnIOProcessStop(const IOProcessStopEventArgs & e)
 		{
 			m_stop_sem->signal();
 		}
@@ -106,9 +106,9 @@ namespace System
 			m_server->Start();
 			for (int i = 0; i < threads; i++)
 			{
-				m_clients.push_back(std::make_shared<ClientProcess>());
-				m_clients[i]->ClientProcessStart = std::bind(&SelectTcpListener::OnClientProcessStart, this, std::placeholders::_1);
-				m_clients[i]->ClientProcessStop = std::bind(&SelectTcpListener::OnClientProcessStop, this, std::placeholders::_1);
+				m_clients.push_back(std::make_shared<IOProcess>());
+				m_clients[i]->IOProcessStart = std::bind(&SelectTcpListener::OnIOProcessStart, this, std::placeholders::_1);
+				m_clients[i]->IOProcessStop = std::bind(&SelectTcpListener::OnIOProcessStop, this, std::placeholders::_1);
 				m_clients[i]->OnLine = this->OnLine;
 				m_clients[i]->OffLine = this->OffLine;
 				m_clients[i]->Receive = this->Receive;
@@ -172,7 +172,7 @@ namespace System
 		void SelectTcpListener::AsyncAccept(const TcpClientPtr &client)
 		{
 			size_t min_size = 0;
-			ClientProcessPtr min_clinet;
+			IOProcessPtr min_clinet;
 			for (auto c : m_clients)
 			{
 				size_t size = c->GetClients();

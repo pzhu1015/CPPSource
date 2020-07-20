@@ -6,8 +6,9 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_HNC_CLIENTPROCESS_H
-#define SYSTEM_HNC_CLIENTPROCESS_H
+#ifndef SYSTEM_HNC_IOPROCESS_H
+#define SYSTEM_HNC_IOPROCESS_H
+#include "System/DllExport.h"
 #include "System/HCN/Events.h"
 #include "System/HCN/Ptrs.h"
 #include "System/Net/Sockets/SocketInclude.h"
@@ -26,11 +27,11 @@ namespace System
 {
 	namespace HCN
 	{
-		class ClientProcess
+		class SYSTEM_API IOProcess
 		{
 		public:
-			ClientProcess();
-			~ClientProcess();
+			IOProcess();
+			~IOProcess();
 
 			void Start();
 
@@ -40,18 +41,18 @@ namespace System
 
 			void Stop();
 		protected:
-			virtual void OnStart(ClientProcessStartEventArgs& e);
-			virtual void OnStop(ClientProcessStopEventArgs& e);
-			virtual void OnOnLine(TcpOnLineEventArgs& e);
-			virtual void OnOffLine(TcpOffLineEventArgs& e);
-			virtual void OnSelectError(TcpSelectErrorEventArgs& e);
+			virtual void OnStart(const IOProcessStartEventArgs& e);
+			virtual void OnStop(const IOProcessStopEventArgs& e);
+			virtual void OnOnLine(const TcpOnLineEventArgs& e);
+			virtual void OnOffLine(const TcpOffLineEventArgs& e);
+			virtual void OnSelectError(const TcpSelectErrorEventArgs& e);
 
 		private:
 			void AsyncStart();
 
 		public:
-			ClientProcessStartEventHandler ClientProcessStart;
-			ClientProcessStopEventHandler ClientProcessStop;
+			IOProcessStartEventHandler IOProcessStart;
+			IOProcessStopEventHandler IOProcessStop;
 			TcpOnLineEventHandler OnLine;
 			TcpOffLineEventHandler OffLine;
 			TcpReceiveEventHandler Receive;
@@ -68,4 +69,4 @@ namespace System
 	}
 }
 
-#endif // !SYSTEM_HNC_CLIENTPROCESS_H
+#endif // !SYSTEM_HNC_IOPROCESS_H
