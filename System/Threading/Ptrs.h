@@ -16,9 +16,11 @@ namespace System
 		class Thread;
 		class ThreadPool;
 		class Runnable;
+		class Semaphore;
 		typedef std::shared_ptr<Runnable> RunnablePtr;
 		typedef std::shared_ptr<Thread> ThreadPtr;
 		typedef std::shared_ptr<ThreadPool> ThreadPoolPtr;
+		typedef std::shared_ptr<Semaphore> SemaphorePtr;
 	}
 }
 

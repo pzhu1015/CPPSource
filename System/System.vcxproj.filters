@@ -163,15 +163,6 @@
     <ClInclude Include="HCN\Events.h">
       <Filter>HCN\Events</Filter>
     </ClInclude>
-    <ClInclude Include="HCN\OffLineEventArgs.h">
-      <Filter>HCN\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="HCN\OnLineEventArgs.h">
-      <Filter>HCN\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="HCN\ProcessStartEventArgs.h">
-      <Filter>HCN\Events</Filter>
-    </ClInclude>
     <ClInclude Include="HCN\TcpAcceptEventArgs.h">
       <Filter>HCN\Events</Filter>
     </ClInclude>
@@ -189,9 +180,6 @@
     </ClInclude>
     <ClInclude Include="HCN\TcpStopEventArgs.h">
       <Filter>HCN\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="HCN\Process.h">
-      <Filter>HCN</Filter>
     </ClInclude>
     <ClInclude Include="HCN\SelectTcpListener.h">
       <Filter>HCN</Filter>
@@ -216,6 +204,30 @@
     </ClInclude>
     <ClInclude Include="DateTimes\Ptrs.h">
       <Filter>DateTimes</Filter>
+    </ClInclude>
+    <ClInclude Include="Threading\Semaphore.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\ClientProcessStartEventArgs.h">
+      <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\ClientProcess.h">
+      <Filter>HCN</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\SelectTcpClient.h">
+      <Filter>HCN</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\Msg.h">
+      <Filter>HCN</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\TcpOnLineEventArgs.h">
+      <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\TcpOffLineEventArgs.h">
+      <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\ClientProcessStopEventArgs.h">
+      <Filter>HCN\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -315,12 +327,6 @@
     <ClCompile Include="IOException.cpp">
       <Filter>Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="HCN\OffLineEventArgs.cpp">
-      <Filter>HCN\Events</Filter>
-    </ClCompile>
-    <ClCompile Include="HCN\OnLineEventArgs.cpp">
-      <Filter>HCN\Events</Filter>
-    </ClCompile>
     <ClCompile Include="HCN\TcpAcceptEventArgs.cpp">
       <Filter>HCN\Events</Filter>
     </ClCompile>
@@ -330,14 +336,29 @@
     <ClCompile Include="HCN\TcpStartEventArgs.cpp">
       <Filter>HCN\Events</Filter>
     </ClCompile>
-    <ClCompile Include="HCN\Process.cpp">
-      <Filter>HCN</Filter>
-    </ClCompile>
     <ClCompile Include="HCN\SelectTcpListener.cpp">
       <Filter>HCN</Filter>
     </ClCompile>
     <ClCompile Include="SocketException.cpp">
       <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Threading\Semaphore.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\ClientProcess.cpp">
+      <Filter>HCN</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\SelectTcpClient.cpp">
+      <Filter>HCN</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\TcpReceiveEventArgs.cpp">
+      <Filter>HCN\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\TcpOnLineEventArgs.cpp">
+      <Filter>HCN\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\TcpOffLineEventArgs.cpp">
+      <Filter>HCN\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

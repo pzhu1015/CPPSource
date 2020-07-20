@@ -6,8 +6,8 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_HCN_TCPACCEPTEVENTARGS_H
-#define SYSTEM_HCN_TCPACCEPTEVENTARGS_H
+#ifndef SYSTEM_HCN_TCPONLINEEVENTARGS_H
+#define SYSTEM_HCN_TCPONLINEEVENTARGS_H
 #include "System/EventArgs.h"
 #include "System/Net/Ptrs.h"
 
@@ -16,11 +16,11 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpAcceptEventArgs : public EventArgs
+		class SYSTEM_API TcpOnLineEventArgs : public EventArgs
 		{
 		public:
-			TcpAcceptEventArgs(const TcpClientPtr &client);
-			virtual ~TcpAcceptEventArgs();
+			TcpOnLineEventArgs(const TcpClientPtr &client);
+			virtual ~TcpOnLineEventArgs();
 
 			TcpClientPtr GetClient() const;
 		private:
@@ -28,5 +28,4 @@ namespace System
 		};
 	}
 }
-
-#endif // !SIMPLETCPLISTENER_TCPACCEPTEVENTARGS_H
+#endif // !SYSTEM_HCN_ONLINEEVENTARGS_H

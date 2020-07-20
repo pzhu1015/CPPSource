@@ -13,28 +13,30 @@ namespace System
 {
 	namespace HCN
 	{
-		class ProcessStartEventArgs;
-		class OnLineEventArgs;
-		class OffLineEventArgs;
-
+		
+		class TcpOnLineEventArgs;
+		class TcpOffLineEventArgs;
 		class TcpStartEventArgs;
 		class TcpStopEventArgs;
 		class TcpAcceptEventArgs;
 		class TcpReceiveEventArgs;
 		class TcpSendEventArgs;
 		class TcpSelectErrorEventArgs;
-		class ProcessStartEventArgs;
 
-		typedef std::function<void(ProcessStartEventArgs*)> ProcessStartEventHandler;
-		typedef std::function<void(OnLineEventArgs*)> OnLineEventHandler;
-		typedef std::function<void(OffLineEventArgs*)> OffLineEventHandler;
+		class ClientProcessStartEventArgs;
+		class ClientProcessStopEventArgs;
 
-		typedef std::function<void(TcpStartEventArgs*)> TcpStartEventHandler;
-		typedef std::function<void(TcpStopEventArgs*)> TcpSTopEventHandler;
-		typedef std::function<void(TcpAcceptEventArgs*)> TcpAccetpEventHandler;
-		typedef std::function<void(TcpReceiveEventArgs*)> TcpReceiveEventHandler;
-		typedef std::function<void(TcpSendEventArgs*)> TcpSendEventHandler;
-		typedef std::function<void(TcpSelectErrorEventArgs*)> TcpSelectErrorEventHandler;
+		typedef std::function<void(ClientProcessStartEventArgs&)> ClientProcessStartEventHandler;
+		typedef std::function<void(ClientProcessStopEventArgs&)> ClientProcessStopEventHandler;
+
+		typedef std::function<void(TcpOnLineEventArgs&)> TcpOnLineEventHandler;
+		typedef std::function<void(TcpOffLineEventArgs&)> TcpOffLineEventHandler;
+		typedef std::function<void(TcpStartEventArgs&)> TcpStartEventHandler;
+		typedef std::function<void(TcpStopEventArgs&)> TcpSTopEventHandler;
+		typedef std::function<void(TcpAcceptEventArgs&)> TcpAccetpEventHandler;
+		typedef std::function<void(TcpReceiveEventArgs&)> TcpReceiveEventHandler;
+		typedef std::function<void(TcpSendEventArgs&)> TcpSendEventHandler;
+		typedef std::function<void(TcpSelectErrorEventArgs&)> TcpSelectErrorEventHandler;
 	}
 }
 

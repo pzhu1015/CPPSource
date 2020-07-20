@@ -26,38 +26,36 @@ namespace System
 {
 	namespace HCN
 	{
-		class ClientWrapper
+		class ClientProcess
 		{
 		public:
-			ClientWrapper(const TcpClientPtr &client);
-			~ClientWrapper();
-			BufferedStreamPtr m_stream;
-			TcpClientPtr m_client;
-		};
-		class Process
-		{
-		public:
-			Process();
-			~Process();
+			ClientProcess();
+			~ClientProcess();
 
 			void Start();
 
 			size_t GetClients() const;
 
 			void AddClient(const TcpClientPtr &client);
+
+			void Stop();
 		protected:
-			virtual void OnStart(ProcessStartEventArgs* e);
-			virtual void OnOnLine(OnLineEventArgs* e);
-			virtual void OnOffLine(OffLineEventArgs* e);
-			virtual void OnSelectError(TcpSelectErrorEventArgs* e);
+			virtual void OnStart(ClientProcessStartEventArgs& e);
+			virtual void OnStop(ClientProcessStopEventArgs& e);
+			virtual void OnOnLine(TcpOnLineEventArgs& e);
+			virtual void OnOffLine(TcpOffLineEventArgs& e);
+			virtual void OnSelectError(TcpSelectErrorEventArgs& e);
 
 		private:
 			void AsyncStart();
 
 		public:
-			ProcessStartEventHandler ProcessStart;
-			OnLineEventHandler OnLine;
-			OffLineEventHandler OffLine;
+			ClientProcessStartEventHandler ClientProcessStart;
+			ClientProcessStopEventHandler ClientProcessStop;
+			TcpOnLineEventHandler OnLine;
+			TcpOffLineEventHandler OffLine;
+			TcpReceiveEventHandler Receive;
+			TcpSendEventHandler Send;
 			TcpSelectErrorEventHandler SelectError;
 		private:
 			bool m_is_start = false;
@@ -65,7 +63,7 @@ namespace System
 			std::condition_variable m_cond;
 			ThreadPtr m_thread;
 			std::vector<TcpClientPtr> m_tcpclients;
-			std::unordered_map<SOCKET, ClientWrapperPtr> m_clients;
+			std::unordered_map<SOCKET, SelectTcpClientPtr> m_clients;
 		};
 	}
 }

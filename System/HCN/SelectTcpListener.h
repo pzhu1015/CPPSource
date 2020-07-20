@@ -30,39 +30,35 @@ namespace System
 			bool Stop();
 
 		protected:
-			virtual void OnStart(TcpStartEventArgs* e);
-			virtual void OnStop(TcpStopEventArgs* e);
-			virtual void OnAccept(TcpAcceptEventArgs* e);
-			virtual void OnReceive(TcpReceiveEventArgs* e);
-			virtual void OnSend(TcpSendEventArgs* e);
-			virtual void OnSelectError(TcpSelectErrorEventArgs* e);
+			virtual void OnStart(TcpStartEventArgs& e);
+			virtual void OnStop(TcpStopEventArgs& e);
+			virtual void OnAccept(TcpAcceptEventArgs& e);
+			virtual void OnSelectError(TcpSelectErrorEventArgs& e);
 
 		private:
 			void AsyncStart(int port, int threads);
 			void AsyncAccept(const TcpClientPtr &client);
-
-			void ProcessStart(ProcessStartEventArgs* e);
-			void OnLine(OnLineEventArgs* e);
-			void OffLine(OffLineEventArgs* e);
+			void OnClientProcessStart(ClientProcessStartEventArgs& e);
+			void OnClientProcessStop(ClientProcessStopEventArgs& e);
 
 		public:
 			TcpStartEventHandler Started;
 			TcpSTopEventHandler Stoped;
 			TcpAccetpEventHandler Accepted;
-			TcpReceiveEventHandler Received;
+			TcpReceiveEventHandler Receive;
 			TcpSendEventHandler Send;
 			TcpSelectErrorEventHandler SelectError;
-
-			ProcessStartEventHandler TcpProcessStart;
-			OnLineEventHandler TcpClientOnLine;
-			OffLineEventHandler TcpClientOffLine;
+			TcpOnLineEventHandler OnLine;
+			TcpOffLineEventHandler OffLine;
 
 		private:
 			bool m_is_start = false;
 			TcpListenerPtr m_server = nullptr;
-			std::vector<ProcessPtr> m_clients;
+			std::vector<ClientProcessPtr> m_clients;
 			ThreadPoolPtr m_threadpool = nullptr;
 			ThreadPtr m_thread = nullptr;
+			SemaphorePtr m_start_sem = nullptr;
+			SemaphorePtr m_stop_sem = nullptr;
 		};
 	}
 }

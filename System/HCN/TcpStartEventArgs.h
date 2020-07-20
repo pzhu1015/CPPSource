@@ -14,7 +14,7 @@ namespace System
 {
 	namespace HCN
 	{
-		class TcpStartEventArgs : public EventArgs
+		class SYSTEM_API TcpStartEventArgs : public EventArgs
 		{
 		public:
 			TcpStartEventArgs(int port, int threads);

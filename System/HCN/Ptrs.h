@@ -13,10 +13,10 @@ namespace System
 {
 	namespace HCN
 	{
-		class Process;
-		class ClientWrapper;
-		typedef std::shared_ptr<ClientWrapper> ClientWrapperPtr;
-		typedef std::shared_ptr<Process> ProcessPtr;
+		class ClientProcess;
+		class SelectTcpClient;
+		typedef std::shared_ptr<SelectTcpClient> SelectTcpClientPtr;
+		typedef std::shared_ptr<ClientProcess> ClientProcessPtr;
 	}
 }
 #endif // !SYSTEM_HCN_PTRS_H

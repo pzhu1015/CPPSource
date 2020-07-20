@@ -6,42 +6,43 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/HCN/Process.h"
+#include "System/HCN/ClientProcess.h"
 #include "System/Threading/Thread.h"
 #include "System/Net/TcpClient.h"
 #include "System/Net/Sockets/Socket.h"
-#include "System/HCN/ProcessStartEventArgs.h"
-#include "System/HCN/OnLineEventArgs.h"
+#include "System/HCN/ClientProcessStartEventArgs.h"
+#include "System/HCN/ClientProcessStopEventArgs.h"
+#include "System/HCN/TcpOnLineEventArgs.h"
+#include "System/HCN/TcpOffLineEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
 #include "System/Net/Sockets/NetworkStream.h"
 #include "System/IO/BufferedStream.h"
+#include "System/HCN/SelectTcpClient.h"
 
-using namespace System::Net;
 using namespace System::Net::Sockets;
-using namespace System::Threading;
 
 namespace System
 {
 	namespace HCN
 	{
-		Process::Process()
+		ClientProcess::ClientProcess()
 		{
-			m_thread = std::make_shared<Thread>(std::bind(&Process::AsyncStart, this));
+			m_thread = std::make_shared<Thread>(std::bind(&ClientProcess::AsyncStart, this));
 		}
 
-		Process::~Process()
+		ClientProcess::~ClientProcess()
 		{
 		}
 
-		void Process::Start()
+		void ClientProcess::Start()
 		{
 			m_thread->Start();
 		}
 
-		void Process::AsyncStart()
+		void ClientProcess::AsyncStart()
 		{
 			m_is_start = true;
-			this->OnStart(new ProcessStartEventArgs());
+			this->OnStart(ClientProcessStartEventArgs());
 			while (m_is_start)
 			{
 				//TODO handle client to receive data
@@ -53,7 +54,10 @@ namespace System
 						for (auto client : m_tcpclients)
 						{
 							SocketPtr socket = client->GetClient();
-							m_clients[socket->GetHandle()] = std::make_shared<ClientWrapper>(client);
+							SelectTcpClientPtr sclient = std::make_shared<SelectTcpClient>(client);
+							sclient->Receive = this->Receive;
+							sclient->Send = this->Send;
+							m_clients[socket->GetHandle()] = sclient;
 						}
 					}
 				}
@@ -62,7 +66,7 @@ namespace System
 					std::unique_lock <std::mutex> lock(m_mutex);
 					if (m_clients.empty())
 					{
-						m_cond.wait_for(lock, std::chrono::milliseconds(10000));
+						m_cond.wait_for(lock, std::chrono::milliseconds(1000));
 						continue;
 					}
 				}
@@ -71,7 +75,7 @@ namespace System
 				int ret = Socket::Select(&checkRead, nullptr, nullptr, 100);
 				if (ret < 0)
 				{
-					this->OnSelectError(new TcpSelectErrorEventArgs());
+					this->OnSelectError(TcpSelectErrorEventArgs());
 					continue;
 				}
 				else if (ret == 0)
@@ -84,46 +88,63 @@ namespace System
 					{
 						SOCKET sock = checkRead.fd_array[i];
 						auto itr = m_clients.find(sock);
-						//TODO need client wraper to record receive's buff position
-						//(itr->second)->m_stream->Read();
+						bool rslt = (itr->second)->Read();
+						if (!rslt)
+						{
+							m_clients.erase(itr);
+							this->OnOffLine(TcpOffLineEventArgs((itr->second)->GetClient()));
+						}
 					}
 				}
 			}
+			this->OnStop(ClientProcessStopEventArgs());
 		}
 
-		size_t Process::GetClients() const
+		size_t ClientProcess::GetClients() const
 		{
 			return m_clients.size();
 		}
 
-		void Process::AddClient(const TcpClientPtr &client)
+		void ClientProcess::AddClient(const TcpClientPtr &client)
 		{
 			{
 				std::lock_guard<std::mutex> lock(m_mutex);
 				m_tcpclients.push_back(client);
+				m_cond.notify_one();
 			}
-			this->OnOnLine(new OnLineEventArgs(client));
+			this->OnOnLine(TcpOnLineEventArgs(client));
 		}
 
-		void Process::OnStart(ProcessStartEventArgs * e)
+		void ClientProcess::Stop()
 		{
-			if (this->ProcessStart != nullptr)
+			m_is_start = false;
+		}
+
+		void ClientProcess::OnStart(ClientProcessStartEventArgs& e)
+		{
+			if (this->ClientProcessStart != nullptr)
 			{
-				this->ProcessStart(e);
-				delete e;
+				this->ClientProcessStart(e);
 			}
 		}
 
-		void Process::OnOnLine(OnLineEventArgs * e)
+		void ClientProcess::OnStop(ClientProcessStopEventArgs & e)
+		{
+			if (this->ClientProcessStop != nullptr)
+			{
+				this->ClientProcessStop(e);
+			}
+		}
+
+		void ClientProcess::OnOnLine(TcpOnLineEventArgs& e)
 		{
 			if (this->OnLine != nullptr)
 			{
 				this->OnLine(e);
-				delete e;
 			}
 		}
 
-		void Process::OnOffLine(OffLineEventArgs * e)
+		void ClientProcess::OnOffLine(TcpOffLineEventArgs& e)
 		{
 			if (this->OffLine != nullptr)
 			{
@@ -131,20 +152,12 @@ namespace System
 			}
 		}
 
-		void Process::OnSelectError(TcpSelectErrorEventArgs * e)
+		void ClientProcess::OnSelectError(TcpSelectErrorEventArgs& e)
 		{
 			if (this->SelectError != nullptr)
 			{
 				this->SelectError(e);
 			}
-		}
-		ClientWrapper::ClientWrapper(const TcpClientPtr &client)
-		{
-			m_client = client;
-			m_stream = std::make_shared<BufferedStream>(client->GetStream());
-		}
-		ClientWrapper::~ClientWrapper()
-		{
 		}
 	}
 }

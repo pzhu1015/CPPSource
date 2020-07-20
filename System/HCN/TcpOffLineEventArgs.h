@@ -6,21 +6,22 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_HCN_ONLINEEVENTARGS_H
-#define SYSTEM_HCN_ONLINEEVENTARGS_H
+#ifndef SYSTEM_HCN_TCPOFFLINEEVENTARGS_H
+#define SYSTEM_HCN_TCPOFFLINEEVENTARGS_H
 #include "System/EventArgs.h"
 #include "System/Net/Ptrs.h"
 
 using namespace System::Net;
 namespace System
 {
+
 	namespace HCN
 	{
-		class OnLineEventArgs : public EventArgs
+		class SYSTEM_API TcpOffLineEventArgs : public EventArgs
 		{
 		public:
-			OnLineEventArgs(const TcpClientPtr &client);
-			virtual ~OnLineEventArgs();
+			TcpOffLineEventArgs(const TcpClientPtr& client);
+			virtual ~TcpOffLineEventArgs();
 
 			TcpClientPtr GetClient() const;
 		private:
@@ -28,4 +29,5 @@ namespace System
 		};
 	}
 }
-#endif // !SYSTEM_HCN_ONLINEEVENTARGS_H
+
+#endif // !SYSTEM_HCN_TCPOFFLINEEVENTARGS_H

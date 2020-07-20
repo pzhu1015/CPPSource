@@ -6,18 +6,19 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_HCN_TCPSENDEVENTARGS_H
-#define SYSTEM_HCN_TCPSENDEVENTARGS_H
+#ifndef SYSTEM_HCN_CLIENTPROCESSSTARTEVENTARGS_H
+#define SYSTEM_HCN_CLIENTPROCESSSTARTEVENTARGS_H
 #include "System/EventArgs.h"
 
 namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpSendEventArgs : public EventArgs
+		class SYSTEM_API ClientProcessStartEventArgs : public EventArgs
 		{
 
 		};
 	}
 }
-#endif // !SIMPLETCPLISTENER_TCPSENDEVENTARGS_H
+
+#endif // !SYSTEM_HCN_PROCESSSTARTEVENTARGS_H

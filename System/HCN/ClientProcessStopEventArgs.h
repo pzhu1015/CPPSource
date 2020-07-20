@@ -6,19 +6,18 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_HCN_PROCESSSTARTEVENTARGS_H
-#define SYSTEM_HCN_PROCESSSTARTEVENTARGS_H
+#ifndef SYSTEM_HCN_CLIENTPROCESSSTOPEVENTARGS_H
+#define SYSTEM_HCN_CLIENTPROCESSSTOPEVENTARGS_H
 #include "System/EventArgs.h"
-
 namespace System
 {
 	namespace HCN
 	{
-		class ProcessStartEventArgs : public EventArgs
+		class SYSTEM_API ClientProcessStopEventArgs : public EventArgs
 		{
 
 		};
 	}
 }
 
-#endif // !SYSTEM_HCN_PROCESSSTARTEVENTARGS_H
+#endif // !SYSTEM_HCN_CLIENTPROCESSSTOPEVENTARGS_H

@@ -184,17 +184,20 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="ExceptionId.h" />
+    <ClInclude Include="HCN\ClientProcessStopEventArgs.h" />
     <ClInclude Include="HCN\Events.h" />
-    <ClInclude Include="HCN\OffLineEventArgs.h" />
-    <ClInclude Include="HCN\OnLineEventArgs.h" />
-    <ClInclude Include="HCN\Process.h" />
-    <ClInclude Include="HCN\ProcessStartEventArgs.h" />
+    <ClInclude Include="HCN\Msg.h" />
+    <ClInclude Include="HCN\TcpOffLineEventArgs.h" />
+    <ClInclude Include="HCN\TcpOnLineEventArgs.h" />
+    <ClInclude Include="HCN\ClientProcess.h" />
+    <ClInclude Include="HCN\ClientProcessStartEventArgs.h" />
     <ClInclude Include="HCN\Ptrs.h" />
     <ClInclude Include="HCN\SelectTcpListener.h" />
     <ClInclude Include="HCN\TcpAcceptEventArgs.h" />
     <ClInclude Include="HCN\TcpReceiveEventArgs.h" />
     <ClInclude Include="HCN\TcpSelectErrorEventArgs.h" />
     <ClInclude Include="HCN\TcpSendEventArgs.h" />
+    <ClInclude Include="HCN\SelectTcpClient.h" />
     <ClInclude Include="HCN\TcpStartEventArgs.h" />
     <ClInclude Include="HCN\TcpStopEventArgs.h" />
     <ClInclude Include="IDisposable.h" />
@@ -240,6 +243,7 @@
     <ClInclude Include="SocketException.h" />
     <ClInclude Include="Threading\Ptrs.h" />
     <ClInclude Include="Threading\Runnable.h" />
+    <ClInclude Include="Threading\Semaphore.h" />
     <ClInclude Include="Threading\Thread.h" />
     <ClInclude Include="Threading\ThreadPool.h" />
   </ItemGroup>
@@ -253,12 +257,14 @@
     <ClCompile Include="DateTimes\Time.cpp" />
     <ClCompile Include="Exception.cpp" />
     <ClCompile Include="ExceptionId.cpp" />
-    <ClCompile Include="HCN\OffLineEventArgs.cpp" />
-    <ClCompile Include="HCN\OnLineEventArgs.cpp" />
-    <ClCompile Include="HCN\Process.cpp" />
+    <ClCompile Include="HCN\TcpOffLineEventArgs.cpp" />
+    <ClCompile Include="HCN\TcpOnLineEventArgs.cpp" />
+    <ClCompile Include="HCN\ClientProcess.cpp" />
     <ClCompile Include="HCN\SelectTcpListener.cpp" />
     <ClCompile Include="HCN\TcpAcceptEventArgs.cpp" />
+    <ClCompile Include="HCN\TcpReceiveEventArgs.cpp" />
     <ClCompile Include="HCN\TcpSelectErrorEventArgs.cpp" />
+    <ClCompile Include="HCN\SelectTcpClient.cpp" />
     <ClCompile Include="HCN\TcpStartEventArgs.cpp" />
     <ClCompile Include="InvalidOperationException.cpp" />
     <ClCompile Include="IOException.cpp" />
@@ -282,6 +288,7 @@
     <ClCompile Include="Net\TcpListener.cpp" />
     <ClCompile Include="NotSupportedException.cpp" />
     <ClCompile Include="SocketException.cpp" />
+    <ClCompile Include="Threading\Semaphore.cpp" />
     <ClCompile Include="Threading\Thread.cpp" />
     <ClCompile Include="Threading\ThreadPool.cpp" />
   </ItemGroup>

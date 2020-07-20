@@ -6,26 +6,18 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/HCN/OffLineEventArgs.h"
-#include "System/Net/TcpClient.h"
-
-using namespace System::Net;
+#include "System/HCN/TcpReceiveEventArgs.h"
 namespace System
 {
 	namespace HCN
 	{
-		OffLineEventArgs::OffLineEventArgs(TcpClient * client)
+		TcpReceiveEventArgs::TcpReceiveEventArgs(const TcpClientPtr & client, Msg * msg)
 		{
 			m_client = client;
+			m_msg = msg;
 		}
-
-		OffLineEventArgs::~OffLineEventArgs()
+		TcpReceiveEventArgs::~TcpReceiveEventArgs()
 		{
-		}
-
-		TcpClient * OffLineEventArgs::GetClient() const
-		{
-			return m_client;
 		}
 	}
 }
