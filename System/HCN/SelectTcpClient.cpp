@@ -10,10 +10,15 @@
 #include "System/Net/TcpClient.h"
 #include "System/Net/Sockets/Socket.h"
 #include "System/HCN/TcpReceiveEventArgs.h"
+#include "System/HCN/TcpConnectEventArgs.h"
 namespace System
 {
 	namespace HCN
 	{
+		SelectTcpClient::SelectTcpClient()
+		{
+			m_client = std::make_shared<TcpClient>();
+		}
 		SelectTcpClient::SelectTcpClient(const TcpClientPtr& client)
 		{
 			m_client = client;
@@ -52,6 +57,12 @@ namespace System
 			return true;
 		}
 
+		void SelectTcpClient::ConnectTo(const std::string & ip, int port)
+		{
+			m_client->Connect(ip, port);
+			this->OnConnect(TcpConnectEventArgs(m_client));
+		}
+
 		TcpClientPtr SelectTcpClient::GetClient() const
 		{
 			return m_client;
@@ -70,6 +81,13 @@ namespace System
 			if (Send != nullptr)
 			{
 				this->Send(e);
+			}
+		}
+		void SelectTcpClient::OnConnect(const TcpConnectEventArgs & e)
+		{
+			if (Connect != nullptr)
+			{
+				this->Connect(e);
 			}
 		}
 	}

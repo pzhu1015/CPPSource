@@ -304,7 +304,7 @@ namespace System
 				.append(":")
 				.append(std::to_string(line))
 				.append(" ")
-				.append(Threading::CurrentThreadStrId())
+				.append(Thread::CurrentThreadStrId())
 				.append(" ")
 				.append(pre_fix)
 				.append("] ")

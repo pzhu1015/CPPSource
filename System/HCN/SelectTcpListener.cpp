@@ -47,14 +47,15 @@ namespace System
 			m_start_sem = std::make_shared<Semaphore>(0);
 			m_stop_sem = std::make_shared<Semaphore>(0);
 			m_threadpool = std::make_shared<ThreadPool>(10000, 10);
+			m_threadpool->Start();
 			m_thread = std::make_shared<Thread>(std::bind(&SelectTcpListener::AsyncStart, this, port, threads));
+			m_thread->Start();
 			return true;
 		}
 
 		bool SelectTcpListener::Stop()
 		{
 			m_is_start = false;
-			
 			return true;
 		}
 
@@ -166,6 +167,7 @@ namespace System
 			{
 				m_stop_sem->wait();
 			}
+			m_threadpool->Stop();
 			this->OnStop(TcpStopEventArgs());
 		}
 
@@ -176,14 +178,15 @@ namespace System
 			for (auto c : m_clients)
 			{
 				size_t size = c->GetClients();
-				if (min_size < size)
+				if (min_size <= size)
 				{
 					min_size = size;
 					min_clinet = c;
 				}
 			}
-			min_clinet->AddClient(client);
 			this->OnAccept(TcpAcceptEventArgs(client));
+			//TODO accept and online event duplicate
+			min_clinet->AddClient(client);
 		}
 	}
 }

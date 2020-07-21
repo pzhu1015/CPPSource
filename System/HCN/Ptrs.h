@@ -15,7 +15,9 @@ namespace System
 	{
 		class IOProcess;
 		class SelectTcpClient;
+		class SelectTcpListener;
 		typedef std::shared_ptr<SelectTcpClient> SelectTcpClientPtr;
+		typedef std::shared_ptr<SelectTcpListener> SelectTcpListenerPtr;
 		typedef std::shared_ptr<IOProcess> IOProcessPtr;
 	}
 }

@@ -229,6 +229,9 @@
     <ClInclude Include="Exceptions\SocketException.h">
       <Filter>Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="HCN\TcpConnectEventArgs.h">
+      <Filter>HCN\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -359,6 +362,9 @@
     </ClCompile>
     <ClCompile Include="Exceptions\SocketException.cpp">
       <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\TcpConnectEventArgs.cpp">
+      <Filter>HCN\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

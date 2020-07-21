@@ -94,10 +94,11 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -112,10 +113,11 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -191,6 +193,7 @@
     <ClInclude Include="HCN\IOProcessStopEventArgs.h" />
     <ClInclude Include="HCN\Events.h" />
     <ClInclude Include="HCN\Msg.h" />
+    <ClInclude Include="HCN\TcpConnectEventArgs.h" />
     <ClInclude Include="HCN\TcpOffLineEventArgs.h" />
     <ClInclude Include="HCN\TcpOnLineEventArgs.h" />
     <ClInclude Include="HCN\IOProcess.h" />
@@ -261,6 +264,7 @@
     <ClCompile Include="Exceptions\IOException.cpp" />
     <ClCompile Include="Exceptions\NotSupportedException.cpp" />
     <ClCompile Include="Exceptions\SocketException.cpp" />
+    <ClCompile Include="HCN\TcpConnectEventArgs.cpp" />
     <ClCompile Include="HCN\TcpOffLineEventArgs.cpp" />
     <ClCompile Include="HCN\TcpOnLineEventArgs.cpp" />
     <ClCompile Include="HCN\IOProcess.cpp" />

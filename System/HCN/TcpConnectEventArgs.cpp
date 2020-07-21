@@ -6,26 +6,21 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/HCN/TcpReceiveEventArgs.h"
+#include "System/HCN/TcpConnectEventArgs.h"
 namespace System
 {
 	namespace HCN
 	{
-		TcpReceiveEventArgs::TcpReceiveEventArgs(const TcpClientPtr & client, Msg * msg)
+		TcpConnectEventArgs::TcpConnectEventArgs(const TcpClientPtr & client)
 		{
 			m_client = client;
-			m_msg = msg;
 		}
-		TcpReceiveEventArgs::~TcpReceiveEventArgs()
+		TcpConnectEventArgs::~TcpConnectEventArgs()
 		{
 		}
-		TcpClientPtr TcpReceiveEventArgs::GetClient() const
+		TcpClientPtr TcpConnectEventArgs::GetClient() const
 		{
 			return m_client;
-		}
-		Msg * TcpReceiveEventArgs::GetMsg() const
-		{
-			return m_msg;
 		}
 	}
 }

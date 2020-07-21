@@ -59,6 +59,7 @@ namespace System
 							sclient->Send = this->Send;
 							m_clients[socket->GetHandle()] = sclient;
 						}
+						m_tcpclients.clear();
 					}
 				}
 				if (m_clients.empty())
@@ -72,6 +73,11 @@ namespace System
 				}
 
 				fd_set checkRead;
+				FD_ZERO(&checkRead);
+				for (auto client : m_clients)
+				{
+					FD_SET(client.first, &checkRead);
+				}
 				int ret = Socket::Select(&checkRead, nullptr, nullptr, 100);
 				if (ret < 0)
 				{
@@ -91,8 +97,8 @@ namespace System
 						bool rslt = (itr->second)->Read();
 						if (!rslt)
 						{
-							m_clients.erase(itr);
 							this->OnOffLine(TcpOffLineEventArgs((itr->second)->GetClient()));
+							m_clients.erase(itr);
 						}
 					}
 				}

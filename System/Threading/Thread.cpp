@@ -98,12 +98,12 @@ namespace System
 			}
 		}
 
-		std::thread::id CurrentThreadId()
+		std::thread::id Thread::CurrentThreadId()
 		{
 			return std::this_thread::get_id();
 		}
 
-		std::string CurrentThreadStrId()
+		std::string Thread::CurrentThreadStrId()
 		{
 			std::thread::id id = std::this_thread::get_id();
 			std::ostringstream oss;
@@ -111,12 +111,12 @@ namespace System
 			return std::string(oss.str());
 		}
 
-		void Sleep(const int seconds)
+		void Thread::Sleep(const int seconds)
 		{
 			std::this_thread::sleep_for(std::chrono::seconds(seconds));
 		}
 
-		void SleepMs(const int millisecond)
+		void Thread::SleepMs(const int millisecond)
 		{
 			std::this_thread::sleep_for(std::chrono::milliseconds(millisecond));
 		}

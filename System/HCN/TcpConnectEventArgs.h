@@ -6,27 +6,25 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
-#define SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
+#ifndef SYSTEM_HCN_TCPCONNECTEVENTARGS_H
+#define SYSTEM_HCN_TCPCONNECTEVENTARGS_H
 #include "System/EventArgs.h"
 #include "System/Net/Ptrs.h"
-#include "System/HCN/Msg.h"
 using namespace System::Net;
 namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpReceiveEventArgs : public EventArgs
+		class SYSTEM_API TcpConnectEventArgs : public EventArgs
 		{
 		public:
-			TcpReceiveEventArgs(const TcpClientPtr &client, Msg* msg);
-			virtual ~TcpReceiveEventArgs();
+			TcpConnectEventArgs(const TcpClientPtr& client);
+			virtual ~TcpConnectEventArgs();
 			TcpClientPtr GetClient() const;
-			Msg* GetMsg() const;
 		private:
 			TcpClientPtr m_client = nullptr;
-			Msg* m_msg = nullptr;
 		};
 	}
 }
-#endif // !SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
+
+#endif // !SYSTEM_HCN_TCPCONNECTEVENTARGS_H

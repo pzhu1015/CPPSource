@@ -35,6 +35,10 @@ namespace System
 			std::thread::id GetID() const;
 			bool IsInterrupted() const;
 			virtual void Run();
+			static std::thread::id CurrentThreadId();
+			static std::string CurrentThreadStrId();
+			static void Sleep(const int seconds);
+			static void SleepMs(const int millisecond);
 		private:
 			std::thread* m_thread;
 			std::function<void()> m_function;
@@ -42,10 +46,7 @@ namespace System
 			RunnablePtr m_runnable = nullptr;
 		};
 
-		SYSTEM_API std::thread::id CurrentThreadId();
-		SYSTEM_API std::string CurrentThreadStrId();
-		SYSTEM_API void Sleep(const int seconds);
-		SYSTEM_API void SleepMs(const int millisecond);
+		
 	}
 }
 #endif

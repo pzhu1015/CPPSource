@@ -24,6 +24,7 @@ namespace System
 		TcpClient::TcpClient()
 		{
 			m_family = AddressFamily::InterNetwork;
+			Initialize();
 		}
 
 		TcpClient::TcpClient(const IPEndPointPtr &localEP)

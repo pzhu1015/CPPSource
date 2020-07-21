@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HNC_SELECTTCPLISTENER_H
 #define SYSTEM_HNC_SELECTTCPLISTENER_H
+#include "System/DllExport.h"
 #include "System/HCN/Events.h"
 #include "System/HCN/Ptrs.h"
 #include "System/Threading/Ptrs.h"
@@ -20,7 +21,7 @@ namespace System
 {
 	namespace HCN
 	{
-		class SelectTcpListener
+		class SYSTEM_API SelectTcpListener
 		{
 		public:
 			SelectTcpListener();

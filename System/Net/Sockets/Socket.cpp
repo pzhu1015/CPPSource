@@ -262,7 +262,7 @@ namespace System
 
 			bool Socket::Close(int timeout)
 			{
-				System::Threading::SleepMs(timeout);
+				System::Threading::Thread::SleepMs(timeout);
 				return Close();
 			}
 

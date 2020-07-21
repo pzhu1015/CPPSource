@@ -16,22 +16,28 @@ namespace System
 {
 	namespace HCN
 	{
-		
 		class SYSTEM_API SelectTcpClient
 		{
 		public:
+			//for client
+			SelectTcpClient();
+			//for server
 			SelectTcpClient(const TcpClientPtr& client);
 			~SelectTcpClient();
 
 			bool Read();
 
+			void ConnectTo(const std::string &ip, int port);
+
 			TcpClientPtr GetClient() const;
 		protected:
 			virtual void OnReceive(const TcpReceiveEventArgs& e);
 			virtual void OnSend(const TcpSendEventArgs& e);
+			virtual void OnConnect(const TcpConnectEventArgs& e);
 		public:
 			TcpReceiveEventHandler Receive;
 			TcpSendEventHandler Send;
+			TcpConnectEventHandler Connect;
 		private:
 			static const int BUFF_SIZE = 10240 * 5;
 			TcpClientPtr m_client = nullptr;
