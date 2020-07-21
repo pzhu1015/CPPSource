@@ -12,19 +12,22 @@
 #include <string>
 namespace System
 {
-	enum class ExceptionId
+	namespace Exceptions
 	{
-		Exception,
-		IO,
-		NotSupported,
-		Argument,
-		ArgumentOutOfRange,
-		ArgumentNull,
-		InvalidOperation,
-		Socket
-	};
+		enum class ExceptionId
+		{
+			Exception,
+			IO,
+			NotSupported,
+			Argument,
+			ArgumentOutOfRange,
+			ArgumentNull,
+			InvalidOperation,
+			Socket
+		};
 
-	SYSTEM_API ExceptionId GetExceptionId(const std::string& str);
-	SYSTEM_API std::string GetExceptionName(ExceptionId id);
+		SYSTEM_API ExceptionId GetExceptionId(const std::string& str);
+		SYSTEM_API std::string GetExceptionName(ExceptionId id);
+	}
 }
 #endif // !SYSTEM_EXCEPTIONID_H

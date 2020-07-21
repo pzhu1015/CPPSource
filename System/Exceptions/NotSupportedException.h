@@ -8,16 +8,19 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_NOTSUPPORTEDEXCEPTION_H
 #define SYSTEM_NOTSUPPORTEDEXCEPTION_H
-#include "System/Exception.h"
+#include "System/Exceptions/Exception.h"
 namespace System
 {
-	class SYSTEM_API NotSupportedException : public Exception
+	namespace Exceptions
 	{
-	public:
-		NotSupportedException();
-		NotSupportedException(const std::string &msg);
-		virtual ~NotSupportedException();
-	};
+		class SYSTEM_API NotSupportedException : public Exception
+		{
+		public:
+			NotSupportedException();
+			NotSupportedException(const std::string &msg);
+			virtual ~NotSupportedException();
+		};
+	}
 }
 
 #endif // !SYSTEM_NOTSUPPORTEDEXCEPTION_H

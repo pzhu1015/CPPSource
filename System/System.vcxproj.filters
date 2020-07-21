@@ -136,30 +136,6 @@
     <ClInclude Include="IO\BufferedStream.h">
       <Filter>IO</Filter>
     </ClInclude>
-    <ClInclude Include="ArgumentException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="Exception.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="NotSupportedException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="ExceptionId.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="ArgumentOutOfRangeException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="ArgumentNullException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="InvalidOperationException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
-    <ClInclude Include="IOException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="HCN\Events.h">
       <Filter>HCN\Events</Filter>
     </ClInclude>
@@ -183,9 +159,6 @@
     </ClInclude>
     <ClInclude Include="HCN\SelectTcpListener.h">
       <Filter>HCN</Filter>
-    </ClInclude>
-    <ClInclude Include="SocketException.h">
-      <Filter>Exceptions</Filter>
     </ClInclude>
     <ClInclude Include="Net\Ptrs.h">
       <Filter>Net</Filter>
@@ -228,6 +201,33 @@
     </ClInclude>
     <ClInclude Include="HCN\IOProcessStopEventArgs.h">
       <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\ArgumentException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\ArgumentNullException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\ArgumentOutOfRangeException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\Exception.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\ExceptionId.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\InvalidOperationException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\IOException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\NotSupportedException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\SocketException.h">
+      <Filter>Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -303,30 +303,6 @@
     <ClCompile Include="IO\BufferedStream.cpp">
       <Filter>IO</Filter>
     </ClCompile>
-    <ClCompile Include="Exception.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="ArgumentException.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="NotSupportedException.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="ExceptionId.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="ArgumentOutOfRangeException.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="ArgumentNullException.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="InvalidOperationException.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="IOException.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
     <ClCompile Include="HCN\TcpAcceptEventArgs.cpp">
       <Filter>HCN\Events</Filter>
     </ClCompile>
@@ -338,9 +314,6 @@
     </ClCompile>
     <ClCompile Include="HCN\SelectTcpListener.cpp">
       <Filter>HCN</Filter>
-    </ClCompile>
-    <ClCompile Include="SocketException.cpp">
-      <Filter>Exceptions</Filter>
     </ClCompile>
     <ClCompile Include="Threading\Semaphore.cpp">
       <Filter>Threading</Filter>
@@ -359,6 +332,33 @@
     </ClCompile>
     <ClCompile Include="HCN\IOProcess.cpp">
       <Filter>HCN</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\ArgumentException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\ArgumentNullException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\ArgumentOutOfRangeException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\Exception.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\ExceptionId.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\InvalidOperationException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\IOException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\NotSupportedException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\SocketException.cpp">
+      <Filter>Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

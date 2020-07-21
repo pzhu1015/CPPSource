@@ -6,22 +6,23 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/ArgumentException.h"
+#include "System/Exceptions/IOException.h"
 namespace System
 {
-	ArgumentException::ArgumentException()
-		:
-		Exception(ExceptionId::Argument)
+	namespace Exceptions
 	{
-	}
-
-	ArgumentException::ArgumentException(const std::string & msg)
-		:
-		Exception(msg, ExceptionId::Argument)
-	{
-	}
-
-	ArgumentException::~ArgumentException()
-	{
+		IOException::IOException()
+			:
+			Exception(ExceptionId::IO)
+		{
+		}
+		IOException::IOException(const std::string & msg)
+			:
+			Exception(msg, ExceptionId::IO)
+		{
+		}
+		IOException::~IOException()
+		{
+		}
 	}
 }

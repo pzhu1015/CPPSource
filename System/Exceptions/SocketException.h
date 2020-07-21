@@ -8,15 +8,18 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_SOCKETEXCEPTION_H
 #define SYSTEM_SOCKETEXCEPTION_H
-#include "System/Exception.h"
+#include "System/Exceptions/Exception.h"
 namespace System
 {
-	class SYSTEM_API SocketException : public Exception
+	namespace Exceptions
 	{
-	public:
-		SocketException();
-		SocketException(const std::string &msg);
-		virtual ~SocketException();
-	};
+		class SYSTEM_API SocketException : public Exception
+		{
+		public:
+			SocketException();
+			SocketException(const std::string &msg);
+			virtual ~SocketException();
+		};
+	}
 }
 #endif // !SYSTEM_SOCKETEXCEPTION_H

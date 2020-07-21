@@ -8,13 +8,14 @@
 ///////////////////////////////////////////////////////////////////
 #include "System/Net/Sockets/NetworkStream.h"
 #include "System/Net/Sockets/Socket.h"
-#include "System/NotSupportedException.h"
-#include "System/ArgumentNullException.h"
-#include "System/ArgumentOutOfRangeException.h"
-#include "System/InvalidOperationException.h"
-#include "System/IOException.h"
+#include "System/Exceptions/NotSupportedException.h"
+#include "System/Exceptions/ArgumentNullException.h"
+#include "System/Exceptions/ArgumentOutOfRangeException.h"
+#include "System/Exceptions/InvalidOperationException.h"
+#include "System/Exceptions/IOException.h"
 #include <assert.h>
 
+using namespace System::Exceptions;
 namespace System
 {
 	namespace Net

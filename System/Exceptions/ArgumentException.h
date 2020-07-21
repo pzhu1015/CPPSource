@@ -8,16 +8,19 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_EXCEPTIONS_ARGUMENTEXCEPTION_H
 #define SYSTEM_EXCEPTIONS_ARGUMENTEXCEPTION_H
-#include "System/Exception.h"
+#include "System/Exceptions/Exception.h"
 namespace System
 {
-	class SYSTEM_API ArgumentException : public Exception
+	namespace Exceptions
 	{
-	public:
-		ArgumentException();
-		ArgumentException(const std::string &msg);
-		virtual ~ArgumentException();
-	};
+		class SYSTEM_API ArgumentException : public Exception
+		{
+		public:
+			ArgumentException();
+			ArgumentException(const std::string &msg);
+			virtual ~ArgumentException();
+		};
+	}
 }
 
 #endif // !SYSTEM_EXCEPTIONS_ARGUMENTEXCEPTION_H

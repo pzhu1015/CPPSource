@@ -8,15 +8,18 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_ARGUMENTNULLEXCEPTION_H
 #define SYSTEM_ARGUMENTNULLEXCEPTION_H
-#include "System/Exception.h"
+#include "System/Exceptions/Exception.h"
 namespace System
 {
-	class SYSTEM_API ArgumentNullException: public Exception
+	namespace Exceptions
 	{
-	public:
-		ArgumentNullException();
-		ArgumentNullException(const std::string &msg);
-		~ArgumentNullException();
-	};
+		class SYSTEM_API ArgumentNullException : public Exception
+		{
+		public:
+			ArgumentNullException();
+			ArgumentNullException(const std::string &msg);
+			~ArgumentNullException();
+		};
+	}
 }
 #endif // !SYSTEM_ARGUMENTNULLEXCEPTION_H

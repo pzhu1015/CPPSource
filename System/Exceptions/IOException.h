@@ -8,16 +8,19 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IOEXCEPTION_H
 #define SYSTEM_IOEXCEPTION_H
-#include "System/Exception.h"
+#include "System/Exceptions/Exception.h"
 namespace System
 {
-	class SYSTEM_API IOException : public Exception
+	namespace Exceptions
 	{
-	public:
-		IOException();
-		IOException(const std::string &msg);
-		virtual ~IOException();
-	};
+		class SYSTEM_API IOException : public Exception
+		{
+		public:
+			IOException();
+			IOException(const std::string &msg);
+			virtual ~IOException();
+		};
+	}
 }
 
 #endif // !SYSTEM_IOEXCEPTION_H

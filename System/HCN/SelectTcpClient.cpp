@@ -51,10 +51,12 @@ namespace System
 			}
 			return true;
 		}
+
 		TcpClientPtr SelectTcpClient::GetClient() const
 		{
 			return m_client;
 		}
+
 		void SelectTcpClient::OnReceive(const TcpReceiveEventArgs & e)
 		{
 			if (Receive != nullptr)
@@ -62,6 +64,7 @@ namespace System
 				this->Receive(e);
 			}
 		}
+
 		void SelectTcpClient::OnSend(const TcpSendEventArgs & e)
 		{
 			if (Send != nullptr)

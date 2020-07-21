@@ -8,16 +8,19 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_INVALIDOPERATIONEXCEPTION_H
 #define SYSTEM_INVALIDOPERATIONEXCEPTION_H
-#include "System/Exception.h"
+#include "System/Exceptions/Exception.h"
 namespace System
 {
-	class SYSTEM_API InvalidOperationException : public Exception
+	namespace Exceptions
 	{
-	public:
-		InvalidOperationException();
-		InvalidOperationException(const std::string &msg);
-		virtual ~InvalidOperationException();
-	};
+		class SYSTEM_API InvalidOperationException : public Exception
+		{
+		public:
+			InvalidOperationException();
+			InvalidOperationException(const std::string &msg);
+			virtual ~InvalidOperationException();
+		};
+	}
 }
 
 #endif // !SYSTEM_INVALIDOPERATIONEXCEPTION_H

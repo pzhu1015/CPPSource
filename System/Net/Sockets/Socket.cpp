@@ -12,13 +12,14 @@
 #include "System/Net/IPAddress.h"
 #include "System/Net/Sockets/SocketAsyncEventArgs.h"
 #include "System/Threading/Thread.h"
-#include "System/ArgumentException.h"
-#include "System/ArgumentNullException.h"
-#include "System/InvalidOperationException.h"
-#include "System/ArgumentOutOfRangeException.h"
-#include "System/NotSupportedException.h"
+#include "System/Exceptions/ArgumentException.h"
+#include "System/Exceptions/ArgumentNullException.h"
+#include "System/Exceptions/InvalidOperationException.h"
+#include "System/Exceptions/ArgumentOutOfRangeException.h"
+#include "System/Exceptions/NotSupportedException.h"
 #include <assert.h>
 
+using namespace System::Exceptions;
 namespace System
 {
 	namespace Net

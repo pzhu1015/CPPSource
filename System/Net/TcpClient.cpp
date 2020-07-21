@@ -11,11 +11,12 @@
 #include "System/Net/Sockets/NetworkStream.h"
 #include "System/Net/IPEndPoint.h"
 #include "System/Net/IPAddress.h"
-#include "System/InvalidOperationException.h"
-#include "System/ArgumentNullException.h"
-#include "System/ArgumentOutOfRangeException.h"
-#include "System/SocketException.h"
+#include "System/Exceptions/InvalidOperationException.h"
+#include "System/Exceptions/ArgumentNullException.h"
+#include "System/Exceptions/ArgumentOutOfRangeException.h"
+#include "System/Exceptions/SocketException.h"
 
+using namespace System::Exceptions;
 namespace System
 {
 	namespace Net
