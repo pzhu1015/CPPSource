@@ -22,8 +22,8 @@ public:
 	ThreadTester() = default;
 	virtual void Run() override
 	{
-		Threading::Sleep(1);
-		CLOG_CONSOLE_INFO("ThreadTester Run thread_id: %s", Threading::CurrentThreadStrId().data());
+		Thread::Sleep(1);
+		CLOG_CONSOLE_INFO("ThreadTester Run thread_id: %s", Thread::CurrentThreadStrId().data());
 	}
 };
 
@@ -33,8 +33,8 @@ public:
 	RunableTester() = default;
 	virtual void Run()
 	{
-		Threading::Sleep(2);
-		CLOG_CONSOLE_INFO("RunableTester Run thread_id: %s", Threading::CurrentThreadStrId().data());
+		Thread::Sleep(2);
+		CLOG_CONSOLE_INFO("RunableTester Run thread_id: %s", Thread::CurrentThreadStrId().data());
 	}
 };
 
@@ -43,25 +43,25 @@ class FunctionTester
 public:
 	void Run()
 	{
-		Threading::Sleep(3);
-		CLOG_CONSOLE_INFO("FunctionTester Run no args thread_id: %s", Threading::CurrentThreadStrId().data());
+		Thread::Sleep(3);
+		CLOG_CONSOLE_INFO("FunctionTester Run no args thread_id: %s", Thread::CurrentThreadStrId().data());
 	}
 	
 	void Run(const char* data)
 	{
-		Threading::Sleep(4);
-		CLOG_CONSOLE_INFO("FunctionTester with args: %s thread_id: %s", data, Threading::CurrentThreadStrId().data());
+		Thread::Sleep(4);
+		CLOG_CONSOLE_INFO("FunctionTester with args: %s thread_id: %s", data, Thread::CurrentThreadStrId().data());
 	}
 
 	void RunArgs(const char* data)
 	{
-		Threading::Sleep(4);
-		CLOG_CONSOLE_INFO("FunctionTester with args: %s thread_id: %s", data, Threading::CurrentThreadStrId().data());
+		Thread::Sleep(4);
+		CLOG_CONSOLE_INFO("FunctionTester with args: %s thread_id: %s", data, Thread::CurrentThreadStrId().data());
 
 		std::shared_ptr<Thread> t7 = std::make_shared<Thread>([]()
 		{
-			Threading::Sleep(3);
-			CLOG_CONSOLE_INFO("Anonymous lamda expression thread start thread thread_id: %s", Threading::CurrentThreadStrId().data());
+			Thread::Sleep(3);
+			CLOG_CONSOLE_INFO("Anonymous lamda expression thread start thread thread_id: %s", Thread::CurrentThreadStrId().data());
 		});
 		t7->Start();
 	}
@@ -108,8 +108,8 @@ int main(int args, char** argv)
 		//传递无参的lamda表达式
 		auto fn = []()
 		{
-			Threading::Sleep(5);
-			CLOG_CONSOLE_INFO("lamda expression thread_id: %s", Threading::CurrentThreadStrId().data());
+			Thread::Sleep(5);
+			CLOG_CONSOLE_INFO("lamda expression thread_id: %s", Thread::CurrentThreadStrId().data());
 		};
 		std::shared_ptr<Thread> t5 = std::make_shared<Thread>(fn);
 		t5->Start();
@@ -118,8 +118,8 @@ int main(int args, char** argv)
 		//传递匿名lamda表达式
 		std::shared_ptr<Thread> t6 = std::make_shared<Thread>([]()
 		{
-			Threading::Sleep(6);
-			CLOG_CONSOLE_INFO("Anonymous lamda expression thread_id: %s", Threading::CurrentThreadStrId().data());
+			Thread::Sleep(6);
+			CLOG_CONSOLE_INFO("Anonymous lamda expression thread_id: %s", Thread::CurrentThreadStrId().data());
 		});
 		t6->Start();
 		CLOG_CONSOLE_INFO("main thread run here t6...");

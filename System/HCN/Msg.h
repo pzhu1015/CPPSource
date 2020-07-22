@@ -41,7 +41,7 @@ namespace System
 			}
 
 		private:
-			char m_buff[996];
+			char m_buff[96];
 		};
 	}
 }

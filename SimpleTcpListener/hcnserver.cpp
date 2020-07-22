@@ -28,41 +28,39 @@ std::atomic<int> g_send_msgs = 0;
 
 void Start(const TcpStartEventArgs& e)
 {
-	CLOG_CONSOLE_INFO("start <port: %d><threads: %d>", e.GetPort(), e.GetThreads());
+	printf("start <port: %d><threads: %d>\n", e.GetPort(), e.GetThreads());
 }
 
 void Stop(const TcpStopEventArgs& e)
 {
-	CLOG_CONSOLE_INFO("stop");
+	printf("stop\n");
 }
 
 void OnLine(const TcpOnLineEventArgs& e)
 {
 	g_clients++;
-	CLOG_CONSOLE_INFO("online <socket: %d><total: %d>", e.GetClient()->GetClient()->GetHandle(), e.GetTotalClients());
+	printf("online <socket: %d><total: %lld>\n", (int)e.GetClient()->GetClient()->GetHandle(), e.GetTotalClients());
 }
 
 void OffLine(const TcpOffLineEventArgs& e)
 {
 	g_clients--;
-	CLOG_CONSOLE_INFO("offline <socket: %d><total: %d>", e.GetClient()->GetClient()->GetHandle(), e.GetTotalClient());
+	printf("offline <socket: %d><total: %lld>\n", (int)e.GetClient()->GetClient()->GetHandle(), e.GetTotalClient());
 }
 
 void SelectError(const TcpSelectErrorEventArgs& e)
 {
-	CLOG_CONSOLE_INFO("select error");
+	printf("select error\n");
 }
 
 void Receive(const TcpReceiveEventArgs& e)
 {
 	g_receive_msgs++;
-	//CLOG_CONSOLE_INFO("receive");
 }
 
 void Send(const TcpSendEventArgs& e)
 {
 	g_send_msgs++;
-	CLOG_CONSOLE_INFO("send");
 }
 
 int main(int argc, char** argv)

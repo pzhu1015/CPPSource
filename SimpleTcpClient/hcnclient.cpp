@@ -42,7 +42,7 @@ void Send(const TcpSendEventArgs& e)
 void SendMsg()
 {
 	std::vector<SelectTcpClientPtr> clients;
-	for (size_t i = 0; i < 250; i++)
+	for (size_t i = 0; i < 2500; i++)
 	{
 		clients.push_back(std::make_shared<SelectTcpClient>());
 		clients[i]->Connected = std::bind(Connected, std::placeholders::_1);
@@ -55,7 +55,7 @@ void SendMsg()
 	{
 		for (auto client : clients)
 		{
-			client->Write((char*)msgs, sizeof(msgs));
+			client->Write((char*)&msgs, sizeof(msgs));
 		}
 	}
 }
