@@ -10,7 +10,9 @@
 #include "System/Net/TcpClient.h"
 #include "System/Net/Sockets/Socket.h"
 #include "System/HCN/TcpReceiveEventArgs.h"
+#include "System/HCN/TcpSendEventArgs.h"
 #include "System/HCN/TcpConnectEventArgs.h"
+#include "System/HCN/Msg.h"
 namespace System
 {
 	namespace HCN
@@ -42,10 +44,10 @@ namespace System
 			while (m_read_pos >= sizeof(Msg))
 			{
 				Msg* msg = (Msg*)m_buff;
+				OnReceive(TcpReceiveEventArgs(m_client, msg));
 				if (m_read_pos >= msg->GetLength())
 				{
 					int last_size = m_read_pos - msg->GetLength();
-					OnReceive(TcpReceiveEventArgs(m_client, msg));
 					memcpy(m_buff, m_buff + msg->GetLength(), last_size);
 					m_read_pos = last_size;
 				}
@@ -57,7 +59,13 @@ namespace System
 			return true;
 		}
 
-		void SelectTcpClient::ConnectTo(const std::string & ip, int port)
+		void SelectTcpClient::Write(char* data, int length)
+		{
+			m_client->GetClient()->Send(data, length);
+			this->OnSend(TcpSendEventArgs());
+		}
+
+		void SelectTcpClient::Connect(const std::string & ip, int port)
 		{
 			m_client->Connect(ip, port);
 			this->OnConnect(TcpConnectEventArgs(m_client));
@@ -85,9 +93,9 @@ namespace System
 		}
 		void SelectTcpClient::OnConnect(const TcpConnectEventArgs & e)
 		{
-			if (Connect != nullptr)
+			if (Connected != nullptr)
 			{
-				this->Connect(e);
+				this->Connected(e);
 			}
 		}
 	}

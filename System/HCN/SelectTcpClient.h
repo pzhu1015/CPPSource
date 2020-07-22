@@ -16,6 +16,7 @@ namespace System
 {
 	namespace HCN
 	{
+		class Msg;
 		class SYSTEM_API SelectTcpClient
 		{
 		public:
@@ -26,8 +27,8 @@ namespace System
 			~SelectTcpClient();
 
 			bool Read();
-
-			void ConnectTo(const std::string &ip, int port);
+			void Write(char* data, int length);
+			void Connect(const std::string &ip, int port);
 
 			TcpClientPtr GetClient() const;
 		protected:
@@ -37,7 +38,7 @@ namespace System
 		public:
 			TcpReceiveEventHandler Receive;
 			TcpSendEventHandler Send;
-			TcpConnectEventHandler Connect;
+			TcpConnectEventHandler Connected;
 		private:
 			static const int BUFF_SIZE = 10240 * 5;
 			TcpClientPtr m_client = nullptr;

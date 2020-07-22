@@ -19,12 +19,14 @@ namespace System
 		class SYSTEM_API TcpOnLineEventArgs : public EventArgs
 		{
 		public:
-			TcpOnLineEventArgs(const TcpClientPtr &client);
+			TcpOnLineEventArgs(const TcpClientPtr &client, size_t total_clients);
 			virtual ~TcpOnLineEventArgs();
 
 			TcpClientPtr GetClient() const;
+			size_t GetTotalClients() const;
 		private:
-			TcpClientPtr m_client;
+			TcpClientPtr m_client = nullptr;
+			size_t m_total_clients = 0;
 		};
 	}
 }

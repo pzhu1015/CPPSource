@@ -200,7 +200,6 @@
     <ClInclude Include="HCN\IOProcessStartEventArgs.h" />
     <ClInclude Include="HCN\Ptrs.h" />
     <ClInclude Include="HCN\SelectTcpListener.h" />
-    <ClInclude Include="HCN\TcpAcceptEventArgs.h" />
     <ClInclude Include="HCN\TcpReceiveEventArgs.h" />
     <ClInclude Include="HCN\TcpSelectErrorEventArgs.h" />
     <ClInclude Include="HCN\TcpSendEventArgs.h" />
@@ -269,7 +268,6 @@
     <ClCompile Include="HCN\TcpOnLineEventArgs.cpp" />
     <ClCompile Include="HCN\IOProcess.cpp" />
     <ClCompile Include="HCN\SelectTcpListener.cpp" />
-    <ClCompile Include="HCN\TcpAcceptEventArgs.cpp" />
     <ClCompile Include="HCN\TcpReceiveEventArgs.cpp" />
     <ClCompile Include="HCN\TcpSelectErrorEventArgs.cpp" />
     <ClCompile Include="HCN\SelectTcpClient.cpp" />

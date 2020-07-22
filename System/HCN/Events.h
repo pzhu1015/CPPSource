@@ -18,7 +18,6 @@ namespace System
 		class TcpOffLineEventArgs;
 		class TcpStartEventArgs;
 		class TcpStopEventArgs;
-		class TcpAcceptEventArgs;
 		class TcpReceiveEventArgs;
 		class TcpSendEventArgs;
 		class TcpSelectErrorEventArgs;
@@ -35,7 +34,6 @@ namespace System
 		typedef std::function<void(const TcpOffLineEventArgs&)> TcpOffLineEventHandler;
 		typedef std::function<void(const TcpStartEventArgs&)> TcpStartEventHandler;
 		typedef std::function<void(const TcpStopEventArgs&)> TcpSTopEventHandler;
-		typedef std::function<void(const TcpAcceptEventArgs&)> TcpAccetpEventHandler;
 		typedef std::function<void(const TcpReceiveEventArgs&)> TcpReceiveEventHandler;
 		typedef std::function<void(const TcpSendEventArgs&)> TcpSendEventHandler;
 		typedef std::function<void(const TcpSelectErrorEventArgs&)> TcpSelectErrorEventHandler;

@@ -58,6 +58,7 @@ namespace System
 							sclient->Receive = this->Receive;
 							sclient->Send = this->Send;
 							m_clients[socket->GetHandle()] = sclient;
+							this->OnOnLine(TcpOnLineEventArgs(client, m_clients.size()));
 						}
 						m_tcpclients.clear();
 					}
@@ -97,8 +98,9 @@ namespace System
 						bool rslt = (itr->second)->Read();
 						if (!rslt)
 						{
-							this->OnOffLine(TcpOffLineEventArgs((itr->second)->GetClient()));
+							TcpClientPtr client = (itr->second)->GetClient();
 							m_clients.erase(itr);
+							this->OnOffLine(TcpOffLineEventArgs(client, m_clients.size()));
 						}
 					}
 				}
@@ -113,12 +115,9 @@ namespace System
 
 		void IOProcess::AddClient(const TcpClientPtr &client)
 		{
-			{
-				std::lock_guard<std::mutex> lock(m_mutex);
-				m_tcpclients.push_back(client);
-				m_cond.notify_one();
-			}
-			this->OnOnLine(TcpOnLineEventArgs(client));
+			std::lock_guard<std::mutex> lock(m_mutex);
+			m_tcpclients.push_back(client);
+			m_cond.notify_one();
 		}
 
 		void IOProcess::Stop()

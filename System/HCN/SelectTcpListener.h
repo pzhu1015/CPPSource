@@ -33,19 +33,17 @@ namespace System
 		protected:
 			virtual void OnStart(const TcpStartEventArgs& e);
 			virtual void OnStop(const TcpStopEventArgs& e);
-			virtual void OnAccept(const TcpAcceptEventArgs& e);
 			virtual void OnSelectError(const TcpSelectErrorEventArgs& e);
 
 		private:
 			void AsyncStart(int port, int threads);
-			void AsyncAccept(const TcpClientPtr &client);
+			void AsyncAccept(const TcpClientPtr &client, size_t idx);
 			void OnIOProcessStart(const IOProcessStartEventArgs& e);
 			void OnIOProcessStop(const IOProcessStopEventArgs& e);
 
 		public:
 			TcpStartEventHandler Started;
 			TcpSTopEventHandler Stoped;
-			TcpAccetpEventHandler Accepted;
 			TcpReceiveEventHandler Receive;
 			TcpSendEventHandler Send;
 			TcpSelectErrorEventHandler SelectError;

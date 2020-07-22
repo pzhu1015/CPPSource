@@ -14,9 +14,10 @@ namespace System
 {
 	namespace HCN
 	{
-		TcpOnLineEventArgs::TcpOnLineEventArgs(const TcpClientPtr &client)
+		TcpOnLineEventArgs::TcpOnLineEventArgs(const TcpClientPtr &client, size_t total_clients)
 		{
 			m_client = client;
+			m_total_clients = total_clients;
 		}
 
 		TcpOnLineEventArgs::~TcpOnLineEventArgs()
@@ -26,6 +27,10 @@ namespace System
 		TcpClientPtr TcpOnLineEventArgs::GetClient() const
 		{
 			return m_client;
+		}
+		size_t TcpOnLineEventArgs::GetTotalClients() const
+		{
+			return m_total_clients;
 		}
 	}
 }

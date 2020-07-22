@@ -139,9 +139,6 @@
     <ClInclude Include="HCN\Events.h">
       <Filter>HCN\Events</Filter>
     </ClInclude>
-    <ClInclude Include="HCN\TcpAcceptEventArgs.h">
-      <Filter>HCN\Events</Filter>
-    </ClInclude>
     <ClInclude Include="HCN\TcpReceiveEventArgs.h">
       <Filter>HCN\Events</Filter>
     </ClInclude>
@@ -305,9 +302,6 @@
     </ClCompile>
     <ClCompile Include="IO\BufferedStream.cpp">
       <Filter>IO</Filter>
-    </ClCompile>
-    <ClCompile Include="HCN\TcpAcceptEventArgs.cpp">
-      <Filter>HCN\Events</Filter>
     </ClCompile>
     <ClCompile Include="HCN\TcpSelectErrorEventArgs.cpp">
       <Filter>HCN\Events</Filter>

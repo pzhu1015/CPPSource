@@ -39,6 +39,7 @@ namespace System
 			{
 				m_length = sizeof(TestMsg);
 			}
+
 		private:
 			char m_buff[996];
 		};

@@ -20,12 +20,14 @@ namespace System
 		class SYSTEM_API TcpOffLineEventArgs : public EventArgs
 		{
 		public:
-			TcpOffLineEventArgs(const TcpClientPtr& client);
+			TcpOffLineEventArgs(const TcpClientPtr& client, size_t total_clients);
 			virtual ~TcpOffLineEventArgs();
 
 			TcpClientPtr GetClient() const;
+			size_t GetTotalClient() const;
 		private:
-			TcpClientPtr m_client;
+			TcpClientPtr m_client = nullptr;
+			size_t m_total_clients = 0;
 		};
 	}
 }

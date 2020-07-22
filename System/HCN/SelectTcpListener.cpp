@@ -13,7 +13,6 @@
 #include "System/HCN/IOProcess.h"
 #include "System/HCN/TcpStartEventArgs.h"
 #include "System/HCN/TcpStopEventArgs.h"
-#include "System/HCN/TcpAcceptEventArgs.h"
 #include "System/HCN/TcpReceiveEventArgs.h"
 #include "System/HCN/TcpSendEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
@@ -75,14 +74,6 @@ namespace System
 			}
 		}
 
-		void SelectTcpListener::OnAccept(const TcpAcceptEventArgs& e)
-		{
-			if (this->Accepted != nullptr)
-			{
-				this->Accepted(e);
-			}
-		}
-
 		void SelectTcpListener::OnSelectError(const TcpSelectErrorEventArgs& e)
 		{
 			if (this->SelectError != nullptr)
@@ -124,6 +115,7 @@ namespace System
 			m_is_start = true;
 			OnStart(TcpStartEventArgs(port, threads));
 
+			size_t idx = 0;
 			bool set = false;
 			SOCKET sock = m_server->GetServer()->GetHandle();
 			fd_set checkReadBack;
@@ -156,7 +148,11 @@ namespace System
 				else
 				{
 					TcpClientPtr client = m_server->AcceptTcpClient();
-					m_threadpool->AddTask(std::bind(&SelectTcpListener::AsyncAccept, this, client));
+					m_threadpool->AddTask(std::bind(&SelectTcpListener::AsyncAccept, this, client, idx++));
+					if (idx == m_clients.size())
+					{
+						idx = 0;
+					}
 				}
 			}
 			for (auto c : m_clients)
@@ -171,22 +167,10 @@ namespace System
 			this->OnStop(TcpStopEventArgs());
 		}
 
-		void SelectTcpListener::AsyncAccept(const TcpClientPtr &client)
+		void SelectTcpListener::AsyncAccept(const TcpClientPtr &client, size_t idx)
 		{
-			size_t min_size = 0;
-			IOProcessPtr min_clinet;
-			for (auto c : m_clients)
-			{
-				size_t size = c->GetClients();
-				if (min_size <= size)
-				{
-					min_size = size;
-					min_clinet = c;
-				}
-			}
-			this->OnAccept(TcpAcceptEventArgs(client));
-			//TODO accept and online event duplicate
-			min_clinet->AddClient(client);
+			IOProcessPtr io_process = m_clients[idx];
+			io_process->AddClient(client);
 		}
 	}
 }
