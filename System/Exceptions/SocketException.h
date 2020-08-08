@@ -13,7 +13,7 @@ namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API SocketException : public Exception
+		class SYSTEM_API SocketException final : public Exception
 		{
 		public:
 			SocketException();

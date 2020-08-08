@@ -14,7 +14,7 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpSelectErrorEventArgs : public EventArgs
+		class SYSTEM_API TcpSelectErrorEventArgs final : public EventArgs
 		{
 		public:
 			TcpSelectErrorEventArgs();

@@ -10,7 +10,6 @@
 #define SYSTEM_DATETIMES_DATETIME_H
 
 #include "System/DllExport.h"
-#include "System/DateTimes/Date.h"
 #include <time.h>
 #include <string>
 
@@ -18,7 +17,7 @@ namespace System
 {
 	namespace DateTimes
 	{
-		class SYSTEM_API DateTime
+		class SYSTEM_API DateTime final
 		{
 		public:
 			~DateTime();
@@ -59,8 +58,8 @@ namespace System
 			bool operator != (const DateTime &datetime) const;
 
 			static DateTime GetNow();
-			static int Comare(const DateTime* value1, const DateTime* value2);
-			static bool Equals(const DateTime* value1, const DateTime* value2);
+			static int Comare(const DateTime& value1, const DateTime& value2);
+			static bool Equals(const DateTime& value1, const DateTime& value2);
 			static DateTime Parse(const std::string &str);
 			static DateTime Parse(const std::string &str, const std::string &format);
 		private:

@@ -13,7 +13,7 @@ namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API InvalidOperationException : public Exception
+		class SYSTEM_API InvalidOperationException final : public Exception
 		{
 		public:
 			InvalidOperationException();

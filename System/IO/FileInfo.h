@@ -18,19 +18,19 @@ namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API FileInfo : public FileSystemInfo
+		class SYSTEM_API FileInfo final : public FileSystemInfo
 		{
 		public:
 			FileInfo(const std::string &filename);
 			virtual ~FileInfo();
 
-			DirectoryInfoPtr GetDirectory() const;
+			DirectoryInfo GetDirectory() const;
 			std::string GetDirectoryName() const;
 			
 			int64_t GetLength() const;
 			
-			FileInfoPtr CopyTo(const std::string &dest);
-			FileInfoPtr CopyTo(const std::string &dest, bool overwrite);
+			FileInfo CopyTo(const std::string &dest);
+			FileInfo CopyTo(const std::string &dest, bool overwrite);
 			FileStreamPtr Create();
 			
 			void MoveTo(const std::string &dest);

@@ -16,13 +16,17 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpReceiveEventArgs : public EventArgs
+		class SYSTEM_API TcpReceiveEventArgs final : public EventArgs
 		{
 		public:
+			TcpReceiveEventArgs();
 			TcpReceiveEventArgs(const TcpClientPtr &client, Msg* msg);
 			virtual ~TcpReceiveEventArgs();
 			TcpClientPtr GetClient() const;
 			Msg* GetMsg() const;
+
+			void SetClient(const TcpClientPtr &client);
+			void SetMsg(Msg* msg);
 		private:
 			TcpClientPtr m_client = nullptr;
 			Msg* m_msg = nullptr;

@@ -154,9 +154,6 @@
     <ClInclude Include="HCN\TcpStopEventArgs.h">
       <Filter>HCN\Events</Filter>
     </ClInclude>
-    <ClInclude Include="HCN\SelectTcpListener.h">
-      <Filter>HCN</Filter>
-    </ClInclude>
     <ClInclude Include="Net\Ptrs.h">
       <Filter>Net</Filter>
     </ClInclude>
@@ -177,9 +174,6 @@
     </ClInclude>
     <ClInclude Include="Threading\Semaphore.h">
       <Filter>Threading</Filter>
-    </ClInclude>
-    <ClInclude Include="HCN\SelectTcpClient.h">
-      <Filter>HCN</Filter>
     </ClInclude>
     <ClInclude Include="HCN\Msg.h">
       <Filter>HCN</Filter>
@@ -228,6 +222,30 @@
     </ClInclude>
     <ClInclude Include="HCN\TcpConnectEventArgs.h">
       <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\MemoryPool.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\ObjectPool.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Memory\Ptrs.h">
+      <Filter>Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="NoCopy.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\SelectIOProcess.h">
+      <Filter>HCN</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\TcpClientChannel.h">
+      <Filter>HCN</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\TcpListenerChannel.h">
+      <Filter>HCN</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\SelectTcpListenerChannel.h">
+      <Filter>HCN</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -309,14 +327,8 @@
     <ClCompile Include="HCN\TcpStartEventArgs.cpp">
       <Filter>HCN\Events</Filter>
     </ClCompile>
-    <ClCompile Include="HCN\SelectTcpListener.cpp">
-      <Filter>HCN</Filter>
-    </ClCompile>
     <ClCompile Include="Threading\Semaphore.cpp">
       <Filter>Threading</Filter>
-    </ClCompile>
-    <ClCompile Include="HCN\SelectTcpClient.cpp">
-      <Filter>HCN</Filter>
     </ClCompile>
     <ClCompile Include="HCN\TcpReceiveEventArgs.cpp">
       <Filter>HCN\Events</Filter>
@@ -359,6 +371,18 @@
     </ClCompile>
     <ClCompile Include="HCN\TcpConnectEventArgs.cpp">
       <Filter>HCN\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\TcpClientChannel.cpp">
+      <Filter>HCN</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\SelectIOProcess.cpp">
+      <Filter>HCN</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\TcpListenerChannel.cpp">
+      <Filter>HCN</Filter>
+    </ClCompile>
+    <ClCompile Include="HCN\SelectTcpListenerChannel.cpp">
+      <Filter>HCN</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +427,9 @@
     </Filter>
     <Filter Include="HCN\Events">
       <UniqueIdentifier>{671d2277-3948-4554-8e48-a48955734db3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory">
+      <UniqueIdentifier>{1079d8b5-4ef3-4319-b84a-01cf1231ea8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

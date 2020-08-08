@@ -15,7 +15,7 @@ namespace System
 {
 	namespace DateTimes
 	{
-		class SYSTEM_API Time
+		class SYSTEM_API Time final
 		{
 		public:
 			Time(const Time &time);

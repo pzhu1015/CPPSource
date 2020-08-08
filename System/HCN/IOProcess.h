@@ -12,21 +12,28 @@
 #include "System/HCN/Events.h"
 #include "System/HCN/Ptrs.h"
 #include "System/Net/Sockets/SocketInclude.h"
-#include "System/Threading/Ptrs.h"
 #include "System/Net/Ptrs.h"
+#include "System/Threading/Ptrs.h"
 #include "System/IO/Ptrs.h"
 #include <unordered_map>
 #include <vector>
 #include <mutex>
 #include <condition_variable>
 
-using namespace System::IO;
 using namespace System::Net;
 using namespace System::Threading;
 namespace System
 {
+	namespace Memory
+	{
+		template<typename T>
+		class ObjectPool;
+	}
+	using namespace System::Memory;
 	namespace HCN
 	{
+		static thread_local ObjectPool<TcpReceiveEventArgs>* t_recv_event_pool = nullptr;
+		static thread_local ObjectPool<TcpSendEventArgs>* t_send_event_pool = nullptr;
 		class SYSTEM_API IOProcess
 		{
 		public:
@@ -35,20 +42,22 @@ namespace System
 
 			void Start();
 
+			void Stop();
 			size_t GetClients() const;
 
-			void AddClient(const TcpClientPtr &client);
-
-			void Stop();
+			virtual void AddClient(const TcpClientChannelPtr& client) = 0;
 		protected:
 			virtual void OnStart(const IOProcessStartEventArgs& e);
 			virtual void OnStop(const IOProcessStopEventArgs& e);
 			virtual void OnOnLine(const TcpOnLineEventArgs& e);
 			virtual void OnOffLine(const TcpOffLineEventArgs& e);
 			virtual void OnSelectError(const TcpSelectErrorEventArgs& e);
-
+			virtual void IOReadHandle() = 0;
+			virtual void IOWriteHandle() = 0;
+			
 		private:
-			void AsyncStart();
+			void AsyncStartRead();
+			void AsyncStartWrite();
 
 		public:
 			IOProcessStartEventHandler IOProcessStart;
@@ -58,13 +67,17 @@ namespace System
 			TcpReceiveEventHandler Receive;
 			TcpSendEventHandler Send;
 			TcpSelectErrorEventHandler SelectError;
-		private:
+		protected:
 			bool m_is_start = false;
+			bool m_change = false;
 			std::mutex m_mutex;
 			std::condition_variable m_cond;
-			ThreadPtr m_thread;
+			ThreadPtr m_read_thread;
+			ThreadPtr m_write_thread;
 			std::vector<TcpClientPtr> m_tcpclients;
-			std::unordered_map<SOCKET, SelectTcpClientPtr> m_clients;
+			std::unordered_map<SOCKET, TcpClientChannelPtr> m_clients;
+			ObjectPool<TcpReceiveEventArgs>* m_recv_event_pool = nullptr;
+			ObjectPool<TcpSendEventArgs>* m_send_event_pool = nullptr;
 		};
 	}
 }

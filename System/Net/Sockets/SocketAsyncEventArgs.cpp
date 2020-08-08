@@ -68,7 +68,7 @@ namespace System
 			{
 			}
 
-			void SocketAsyncEventArgs::OnCompleted(SocketAsyncEventArgs* e)
+			void SocketAsyncEventArgs::OnCompleted(const SocketAsyncEventArgs& e)
 			{
 				if (this->Completed != nullptr)
 				{

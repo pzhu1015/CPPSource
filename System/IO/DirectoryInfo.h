@@ -19,19 +19,19 @@ namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API DirectoryInfo : public FileSystemInfo
+		class SYSTEM_API DirectoryInfo final : public FileSystemInfo
 		{
 		public:
 			DirectoryInfo(const std::string &dirname);
 			virtual ~DirectoryInfo();
 			
-			DirectoryInfoPtr Parent() const;
-			DirectoryInfoPtr Root() const;
+			DirectoryInfo Parent() const;
+			DirectoryInfo Root() const;
 			void Create();
-			std::vector<DirectoryInfoPtr> GetDirectories();
-			std::vector<FileInfoPtr> GetFiles();
+			std::vector<DirectoryInfo> GetDirectories();
+			std::vector<FileInfo> GetFiles();
 			void MoveTo(const std::string &dest);
-			DirectoryInfoPtr CreateSubDirectory(const std::string &path);
+			DirectoryInfo CreateSubDirectory(const std::string &path);
 
 			virtual std::string GetName() const override;
 			virtual bool GetExists() const override;

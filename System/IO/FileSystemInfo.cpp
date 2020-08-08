@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/IO/FileSystemInfo.h"
+#include "System/DateTimes/DateTime.h"
 
 namespace System
 {
@@ -15,17 +16,17 @@ namespace System
 		FileSystemInfo::FileSystemInfo()
 		{
 		}
-		DateTimePtr FileSystemInfo::GetCreationTime()
+		DateTime FileSystemInfo::GetCreationTime()
 		{
-			return nullptr;
+			return DateTime(0);
 		}
-		DateTimePtr FileSystemInfo::GetLastAccessTime()
+		DateTime FileSystemInfo::GetLastAccessTime()
 		{
-			return nullptr;
+			return DateTime(0);
 		}
-		DateTimePtr FileSystemInfo::GetLastWriteTime()
+		DateTime FileSystemInfo::GetLastWriteTime()
 		{
-			return nullptr;
+			return DateTime(0);
 		}
 		std::string FileSystemInfo::GetExtension()
 		{

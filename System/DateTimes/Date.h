@@ -16,7 +16,7 @@ namespace System
 {
 	namespace DateTimes
 	{
-		class SYSTEM_API Date
+		class SYSTEM_API Date final
 		{
 		public:
 			Date(const Date &date);

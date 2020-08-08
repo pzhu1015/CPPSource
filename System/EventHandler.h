@@ -13,7 +13,7 @@
 
 namespace System
 {
-	typedef std::function<void(EventArgs*)> EventHandler;
+	typedef std::function<void(const EventArgs&)> EventHandler;
 }
 
 #endif // !SYSTEM_EVENTHANDLER_H

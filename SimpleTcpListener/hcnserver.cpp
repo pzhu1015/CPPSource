@@ -7,7 +7,8 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #define FD_SETSIZE      4096
-#include "System/HCN/SelectTcpListener.h"
+#include "System/HCN/TcpListenerChannel.h"
+#include "System/HCN/SelectTcpListenerChannel.h"
 #include "System/Threading/Thread.h"
 #include "System/Net/TcpClient.h"
 #include "System/Net/Sockets/Socket.h"
@@ -65,7 +66,7 @@ void Send(const TcpSendEventArgs& e)
 
 int main(int argc, char** argv)
 {
-	SelectTcpListenerPtr server = std::make_shared<SelectTcpListener>();
+	TcpListenerChannelPtr server = std::make_shared<SelectTcpListenerChannel>();
 	server->Started = std::bind(Start, std::placeholders::_1);
 	server->Stoped = std::bind(Stop, std::placeholders::_1);
 	server->OnLine = std::bind(OnLine, std::placeholders::_1);

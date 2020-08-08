@@ -7,117 +7,45 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/HCN/IOProcess.h"
-#include "System/Threading/Thread.h"
-#include "System/Net/TcpClient.h"
-#include "System/Net/Sockets/Socket.h"
+
 #include "System/HCN/IOProcessStartEventArgs.h"
 #include "System/HCN/IOProcessStopEventArgs.h"
 #include "System/HCN/TcpOnLineEventArgs.h"
 #include "System/HCN/TcpOffLineEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
-#include "System/Net/Sockets/NetworkStream.h"
-#include "System/IO/BufferedStream.h"
-#include "System/HCN/SelectTcpClient.h"
-
-using namespace System::Net::Sockets;
+#include "System/HCN/TcpReceiveEventArgs.h"
+#include "System/HCN/TcpSendEventArgs.h"
+#include "System/Memory/ObjectPool.h"
+#include "System/Threading/Thread.h"
 
 namespace System
 {
 	namespace HCN
 	{
+		
 		IOProcess::IOProcess()
-		{
-			m_thread = std::make_shared<Thread>(std::bind(&IOProcess::AsyncStart, this));
+		{	
 		}
 
 		IOProcess::~IOProcess()
 		{
+			delete t_recv_event_pool;
+			delete t_send_event_pool;
 		}
 
 		void IOProcess::Start()
 		{
-			m_thread->Start();
-		}
-
-		void IOProcess::AsyncStart()
-		{
 			m_is_start = true;
-			this->OnStart(IOProcessStartEventArgs());
-			while (m_is_start)
-			{
-				//TODO handle client to receive data
-				if (!m_tcpclients.empty())
-				{
-					std::lock_guard<std::mutex> lock(m_mutex);
-					if (!m_tcpclients.empty())
-					{
-						for (auto client : m_tcpclients)
-						{
-							SocketPtr socket = client->GetClient();
-							SelectTcpClientPtr sclient = std::make_shared<SelectTcpClient>(client);
-							sclient->Receive = this->Receive;
-							sclient->Send = this->Send;
-							m_clients[socket->GetHandle()] = sclient;
-							this->OnOnLine(TcpOnLineEventArgs(client, m_clients.size()));
-						}
-						m_tcpclients.clear();
-					}
-				}
-				if (m_clients.empty())
-				{
-					std::unique_lock <std::mutex> lock(m_mutex);
-					if (m_clients.empty())
-					{
-						m_cond.wait_for(lock, std::chrono::milliseconds(1000));
-						continue;
-					}
-				}
+			m_read_thread = std::make_shared<Thread>(std::bind(&IOProcess::AsyncStartRead, this));
+			m_read_thread->Start();
 
-				fd_set checkRead;
-				FD_ZERO(&checkRead);
-				for (auto client : m_clients)
-				{
-					FD_SET(client.first, &checkRead);
-				}
-				int ret = Socket::Select(&checkRead, nullptr, nullptr, 100);
-				if (ret < 0)
-				{
-					this->OnSelectError(TcpSelectErrorEventArgs());
-					continue;
-				}
-				else if (ret == 0)
-				{
-					continue;
-				}
-				else
-				{
-					for (size_t i = 0; i < checkRead.fd_count; i++)
-					{
-						SOCKET sock = checkRead.fd_array[i];
-						auto itr = m_clients.find(sock);
-						bool rslt = (itr->second)->Read();
-						if (!rslt)
-						{
-							TcpClientPtr client = (itr->second)->GetClient();
-							m_clients.erase(itr);
-							this->OnOffLine(TcpOffLineEventArgs(client, m_clients.size()));
-						}
-					}
-				}
-			}
-			this->OnStop(IOProcessStopEventArgs());
+			m_write_thread = std::make_shared<Thread>(std::bind(&IOProcess::AsyncStartWrite, this));
+			m_write_thread->Start();
 		}
 
 		size_t IOProcess::GetClients() const
 		{
 			return m_clients.size();
-		}
-
-		void IOProcess::AddClient(const TcpClientPtr &client)
-		{
-			std::lock_guard<std::mutex> lock(m_mutex);
-			m_tcpclients.push_back(client);
-			m_cond.notify_one();
 		}
 
 		void IOProcess::Stop()
@@ -163,6 +91,26 @@ namespace System
 			{
 				this->SelectError(e);
 			}
+		}
+
+		void IOProcess::AsyncStartRead()
+		{
+			t_recv_event_pool = new ObjectPool<TcpReceiveEventArgs>(250000);
+			m_recv_event_pool = t_recv_event_pool;
+			
+			this->OnStart(IOProcessStartEventArgs());
+			IOReadHandle();
+			this->OnStop(IOProcessStopEventArgs());
+		}
+
+		void IOProcess::AsyncStartWrite()
+		{
+			t_send_event_pool = new ObjectPool<TcpSendEventArgs>(250000);
+			m_send_event_pool = t_send_event_pool;
+			m_is_start = true;
+			this->OnStart(IOProcessStartEventArgs());
+			IOWriteHandle();
+			this->OnStop(IOProcessStopEventArgs());
 		}
 	}
 }

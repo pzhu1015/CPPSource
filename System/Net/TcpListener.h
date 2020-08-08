@@ -17,7 +17,7 @@ namespace System
 {
 	namespace Net
 	{
-		class SYSTEM_API TcpListener
+		class SYSTEM_API TcpListener final
 		{
 		public:
 			TcpListener(const IPEndPointPtr &localEp);

@@ -13,7 +13,7 @@ namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API NotSupportedException : public Exception
+		class SYSTEM_API NotSupportedException final : public Exception
 		{
 		public:
 			NotSupportedException();

@@ -17,7 +17,7 @@ namespace System
 
 	namespace HCN
 	{
-		class SYSTEM_API TcpOffLineEventArgs : public EventArgs
+		class SYSTEM_API TcpOffLineEventArgs final : public EventArgs
 		{
 		public:
 			TcpOffLineEventArgs(const TcpClientPtr& client, size_t total_clients);

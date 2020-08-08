@@ -14,7 +14,7 @@
 
 namespace System
 {
-	class SYSTEM_API Application
+	class SYSTEM_API Application final
 	{
 	public:
 		Application() = default;

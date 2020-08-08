@@ -14,10 +14,10 @@ namespace System
 	namespace HCN
 	{
 		class IOProcess;
-		class SelectTcpClient;
-		class SelectTcpListener;
-		typedef std::shared_ptr<SelectTcpClient> SelectTcpClientPtr;
-		typedef std::shared_ptr<SelectTcpListener> SelectTcpListenerPtr;
+		class TcpClientChannel;
+		class TcpListenerChannel;
+		typedef std::shared_ptr<TcpClientChannel> TcpClientChannelPtr;
+		typedef std::shared_ptr<TcpListenerChannel> TcpListenerChannelPtr;
 		typedef std::shared_ptr<IOProcess> IOProcessPtr;
 	}
 }

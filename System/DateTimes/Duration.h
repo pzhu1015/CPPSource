@@ -15,7 +15,7 @@ namespace System
 {
 	namespace DateTimes
 	{
-		class SYSTEM_API Duration
+		class SYSTEM_API Duration final
 		{
 
 		};

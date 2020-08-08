@@ -22,9 +22,9 @@ namespace System
 		protected:
 			FileSystemInfo();
 		public:
-			DateTimePtr GetCreationTime();
-			DateTimePtr GetLastAccessTime();
-			DateTimePtr GetLastWriteTime();
+			DateTime GetCreationTime();
+			DateTime GetLastAccessTime();
+			DateTime GetLastWriteTime();
 
 			std::string GetExtension();
 			void Refresh();

@@ -125,7 +125,6 @@ namespace System
 			m_read_length = m_stream->Read(m_buffer, 0, m_buffersize);
 			bytes_from_buffer = ReadFromBuffer(buffer, offset, count);
 			return bytes_from_buffer + already_satisfied;
-			return 0;
 		}
 
 		int64_t BufferedStream::Seek(int64_t offset, SeekOrigin origin)

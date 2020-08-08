@@ -18,7 +18,7 @@ namespace System
 {
 	namespace Net
 	{
-		class SYSTEM_API SimpleTcpListener
+		class SYSTEM_API SimpleTcpListener final
 		{
 		public:
 			SimpleTcpListener();

@@ -16,7 +16,7 @@ namespace System
 {
 	namespace Net
 	{
-		class SYSTEM_API SimpleTcpClient
+		class SYSTEM_API SimpleTcpClient final
 		{
 		public:
 			SimpleTcpClient();

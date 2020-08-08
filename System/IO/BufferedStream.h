@@ -15,7 +15,7 @@ namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API BufferedStream : public Stream
+		class SYSTEM_API BufferedStream final : public Stream
 		{
 		public:
 			BufferedStream(const StreamPtr &stream);

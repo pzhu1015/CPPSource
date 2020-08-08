@@ -10,6 +10,7 @@
 #define SYSTEM_THREADING_THREADPOOL_H
 
 #include "System/DllExport.h"
+#include "System/NoCopy.h"
 #include "System/Threading/Ptrs.h"
 #include <functional>
 #include <mutex>
@@ -24,12 +25,10 @@ namespace System
 	{
 		class Thread;
 		typedef std::function<void()> Task;
-		class SYSTEM_API ThreadPool
+		class SYSTEM_API ThreadPool final : public NoCopy
 		{
 		public:
 			ThreadPool(size_t task_size = 256, size_t thread_size = 10);
-			ThreadPool(const ThreadPool& other) = delete;
-			ThreadPool& operator=(const ThreadPool& other) = delete;
 			virtual ~ThreadPool();
 			void Start();
 			void Stop();

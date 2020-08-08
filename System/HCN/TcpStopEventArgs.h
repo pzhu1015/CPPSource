@@ -14,7 +14,7 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpStopEventArgs : public EventArgs
+		class SYSTEM_API TcpStopEventArgs final : public EventArgs
 		{
 
 		};

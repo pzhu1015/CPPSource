@@ -13,7 +13,7 @@ namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API IOException : public Exception
+		class SYSTEM_API IOException final : public Exception
 		{
 		public:
 			IOException();

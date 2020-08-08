@@ -27,7 +27,7 @@ namespace System
 	{
 		namespace Sockets
 		{
-			class SYSTEM_API Socket : public IDisposable
+			class SYSTEM_API Socket final : public IDisposable
 			{
 			public:
 				//for client

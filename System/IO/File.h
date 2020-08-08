@@ -22,7 +22,7 @@ namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API File
+		class SYSTEM_API File final
 		{
 		public:
 			static bool AppendAllLines(const std::string &path, std::vector<std::string> &lines);

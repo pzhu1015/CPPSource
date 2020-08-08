@@ -11,6 +11,9 @@ namespace System
 {
 	namespace HCN
 	{
+		TcpReceiveEventArgs::TcpReceiveEventArgs()
+		{
+		}
 		TcpReceiveEventArgs::TcpReceiveEventArgs(const TcpClientPtr & client, Msg * msg)
 		{
 			m_client = client;
@@ -26,6 +29,14 @@ namespace System
 		Msg * TcpReceiveEventArgs::GetMsg() const
 		{
 			return m_msg;
+		}
+		void TcpReceiveEventArgs::SetClient(const TcpClientPtr & client)
+		{
+			m_client = client;
+		}
+		void TcpReceiveEventArgs::SetMsg(Msg * msg)
+		{
+			msg = msg;
 		}
 	}
 }

@@ -101,7 +101,7 @@ namespace System
 #endif
 		}
 
-		DateTimePtr Directory::GetCreationTime(const std::string & path)
+		DateTime Directory::GetCreationTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat st;
@@ -110,10 +110,10 @@ namespace System
 			struct stat st;
 			stat(path.c_str(), &st);
 #endif
-			return std::make_shared<DateTime>(st.st_ctime);
+			return DateTime(st.st_ctime);
 		}
 
-		DateTimePtr Directory::GetLastAccessTime(const std::string & path)
+		DateTime Directory::GetLastAccessTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat st;
@@ -122,10 +122,10 @@ namespace System
 			struct stat st;
 			stat(path.c_str(), &st);
 #endif
-			return std::make_shared<DateTime>(st.st_atime);
+			return DateTime(st.st_atime);
 		}
 
-		DateTimePtr Directory::GetLastWriteTime(const std::string & path)
+		DateTime Directory::GetLastWriteTime(const std::string & path)
 		{
 #ifdef _WIN32
 			struct _stat st;
@@ -134,13 +134,13 @@ namespace System
 			struct stat st;
 			stat(path.c_str(), &st);
 #endif
-			return std::make_shared<DateTime>(st.st_mtime);
+			return DateTime(st.st_mtime);
 		}
 
-		DirectoryInfoPtr Directory::GetParent(const std::string & path)
+		DirectoryInfo Directory::GetParent(const std::string & path)
 		{
 			std::string parent_path = path.substr(0, path.find_last_of('\\'));
-			return std::make_shared<DirectoryInfo>(parent_path);
+			return DirectoryInfo(parent_path);
 		}
 
 		std::string Directory::GetDirectoryRoot(const std::string & path)

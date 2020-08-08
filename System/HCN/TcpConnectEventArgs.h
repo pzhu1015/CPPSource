@@ -15,7 +15,7 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpConnectEventArgs : public EventArgs
+		class SYSTEM_API TcpConnectEventArgs final : public EventArgs
 		{
 		public:
 			TcpConnectEventArgs(const TcpClientPtr& client);

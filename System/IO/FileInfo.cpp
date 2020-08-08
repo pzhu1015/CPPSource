@@ -38,9 +38,9 @@ namespace System
 		FileInfo::~FileInfo()
 		{
 		}
-		DirectoryInfoPtr FileInfo::GetDirectory() const
+		DirectoryInfo FileInfo::GetDirectory() const
 		{
-			return std::make_shared<DirectoryInfo>(m_dirname);
+			return DirectoryInfo(m_dirname);
 		}
 		std::string FileInfo::GetDirectoryName() const
 		{
@@ -59,15 +59,15 @@ namespace System
 		{
 			return m_name;
 		}
-		FileInfoPtr FileInfo::CopyTo(const std::string & dest)
+		FileInfo FileInfo::CopyTo(const std::string & dest)
 		{
 			File::Copy(m_fullpath, dest);
-			return std::make_shared<FileInfo>(dest);
+			return FileInfo(dest);
 		}
-		FileInfoPtr FileInfo::CopyTo(const std::string & dest, bool overwrite)
+		FileInfo FileInfo::CopyTo(const std::string & dest, bool overwrite)
 		{
 			File::Copy(m_fullpath, dest, overwrite);
-			return std::make_shared<FileInfo>(dest);
+			return FileInfo(dest);
 		}
 		FileStreamPtr FileInfo::Create()
 		{

@@ -19,7 +19,7 @@ namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API FileStream : public Stream
+		class SYSTEM_API FileStream final : public Stream
 		{
 		public:
 			FileStream(const std::string &filename, FileMode mode);

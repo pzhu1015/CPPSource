@@ -13,7 +13,7 @@ namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API ArgumentOutOfRangeException : public Exception
+		class SYSTEM_API ArgumentOutOfRangeException final : public Exception
 		{
 		public:
 			ArgumentOutOfRangeException();

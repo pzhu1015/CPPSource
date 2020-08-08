@@ -15,7 +15,7 @@ namespace System
 {
 	namespace Threading
 	{
-		class SYSTEM_API Semaphore
+		class SYSTEM_API Semaphore final
 		{
 		public:
 			Semaphore(int value = 0);

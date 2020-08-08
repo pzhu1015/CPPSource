@@ -13,7 +13,7 @@ namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API ArgumentException : public Exception
+		class SYSTEM_API ArgumentException final : public Exception
 		{
 		public:
 			ArgumentException();

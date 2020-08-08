@@ -7,27 +7,462 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Logger", "Logger\Logger.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LibEventTester", "LibEventTester\LibEventTester.vcxproj", "{792B603B-64E5-4516-A0C8-C33724501984}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EasyTcpServer", "EasyTcpServer\EasyTcpServer.vcxproj", "{9CAF4708-5CC6-4AB0-A090-7809E5847294}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EasyTcpClient", "EasyTcpClient\EasyTcpClient.vcxproj", "{109BC8F0-A3FE-4FCF-8489-18249799B067}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ThreadTester", "ThreadTester\ThreadTester.vcxproj", "{08F6E6A5-4557-4875-8E27-AE8FC174C8CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LoggerTester", "LoggerTester\LoggerTester.vcxproj", "{2A1E3EBD-9131-41D6-9F03-EDC398E1E5CA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D981433-58B9-46A2-B490-D9B2CD21C360} = {9D981433-58B9-46A2-B490-D9B2CD21C360}
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kafka", "Kafka\Kafka.vcxproj", "{86176DDE-DD4D-4433-8C39-F3937FBD2419}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "System\System.vcxproj", "{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RedisTester", "RedisTester\RedisTester.vcxproj", "{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}"
+	ProjectSection(ProjectDependencies) = postProject
+		{70392FDA-01F9-4343-B244-B589BCA0CC40} = {70392FDA-01F9-4343-B244-B589BCA0CC40}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Redis", "Redis\Redis.vcxproj", "{70392FDA-01F9-4343-B244-B589BCA0CC40}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AlgorithmTester", "AlgorithmTester\AlgorithmTester.vcxproj", "{4AEEBCFB-70CC-4579-9EA8-FFE949077FFE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleTcpListener", "SimpleTcpListener\SimpleTcpListener.vcxproj", "{7316FF0C-5638-4FA7-AB92-0DCB439926EB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleTcpClient", "SimpleTcpClient\SimpleTcpClient.vcxproj", "{E0346872-7860-4B26-9308-9E6558DCF6E7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Verification", "Verification\Verification.vcxproj", "{0F06178D-D63E-44B1-A071-DB3270063202}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{485F6363-FE32-46DE-A1CD-536333869F60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Debug", "x64.Debug", "{A6E99907-5B27-4C35-BC9E-2008D3F477E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Release", "x64.Release", "{198FA059-ED73-46CA-A61C-1F449A914E87}"
+	ProjectSection(SolutionItems) = preProject
+		Library\x64.Release\hiredis.lib = Library\x64.Release\hiredis.lib
+		Library\x64.Release\jemalloc.lib = Library\x64.Release\jemalloc.lib
+		Library\x64.Release\jemallocso.dll = Library\x64.Release\jemallocso.dll
+		Library\x64.Release\jemallocso.lib = Library\x64.Release\jemallocso.lib
+		Library\x64.Release\libeay32.dll = Library\x64.Release\libeay32.dll
+		Library\x64.Release\libeay32.lib = Library\x64.Release\libeay32.lib
+		Library\x64.Release\libevent.lib = Library\x64.Release\libevent.lib
+		Library\x64.Release\libevent_core.lib = Library\x64.Release\libevent_core.lib
+		Library\x64.Release\libevent_extras.lib = Library\x64.Release\libevent_extras.lib
+		Library\x64.Release\librdkafka.dll = Library\x64.Release\librdkafka.dll
+		Library\x64.Release\librdkafka.lib = Library\x64.Release\librdkafka.lib
+		Library\x64.Release\librdkafkacpp.dll = Library\x64.Release\librdkafkacpp.dll
+		Library\x64.Release\librdkafkacpp.lib = Library\x64.Release\librdkafkacpp.lib
+		Library\x64.Release\libzstd.dll = Library\x64.Release\libzstd.dll
+		Library\x64.Release\log4cplus.dll = Library\x64.Release\log4cplus.dll
+		Library\x64.Release\log4cplus.lib = Library\x64.Release\log4cplus.lib
+		Library\x64.Release\log4cplusS.lib = Library\x64.Release\log4cplusS.lib
+		Library\x64.Release\ssleay32.dll = Library\x64.Release\ssleay32.dll
+		Library\x64.Release\ssleay32.lib = Library\x64.Release\ssleay32.lib
+		Library\x64.Release\Win32_Interop.lib = Library\x64.Release\Win32_Interop.lib
+		Library\x64.Release\zlib.dll = Library\x64.Release\zlib.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hiredis", "hiredis", "{3BE81031-A4AC-4A50-9EA9-F5BEF6F4A043}"
+	ProjectSection(SolutionItems) = preProject
+		Include\hiredis\async.h = Include\hiredis\async.h
+		Include\hiredis\dict.h = Include\hiredis\dict.h
+		Include\hiredis\fmacros.h = Include\hiredis\fmacros.h
+		Include\hiredis\hiredis.h = Include\hiredis\hiredis.h
+		Include\hiredis\net.h = Include\hiredis\net.h
+		Include\hiredis\sds.h = Include\hiredis\sds.h
+		Include\hiredis\win32_hiredis.h = Include\hiredis\win32_hiredis.h
+		Include\hiredis\zmalloc.h = Include\hiredis\zmalloc.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jemalloc", "jemalloc", "{E57465A4-6028-46F0-B8DD-070F856287C7}"
+	ProjectSection(SolutionItems) = preProject
+		Include\jemalloc\jemalloc.h = Include\jemalloc\jemalloc.h
+		Include\jemalloc\jemalloc.sh = Include\jemalloc\jemalloc.sh
+		Include\jemalloc\jemalloc_defs.h = Include\jemalloc\jemalloc_defs.h
+		Include\jemalloc\jemalloc_defs.h.in = Include\jemalloc\jemalloc_defs.h.in
+		Include\jemalloc\jemalloc_macros.h = Include\jemalloc\jemalloc_macros.h
+		Include\jemalloc\jemalloc_macros.h.in = Include\jemalloc\jemalloc_macros.h.in
+		Include\jemalloc\jemalloc_mangle.h = Include\jemalloc\jemalloc_mangle.h
+		Include\jemalloc\jemalloc_mangle.sh = Include\jemalloc\jemalloc_mangle.sh
+		Include\jemalloc\jemalloc_mangle_jet.h = Include\jemalloc\jemalloc_mangle_jet.h
+		Include\jemalloc\jemalloc_protos.h = Include\jemalloc\jemalloc_protos.h
+		Include\jemalloc\jemalloc_protos.h.in = Include\jemalloc\jemalloc_protos.h.in
+		Include\jemalloc\jemalloc_protos_jet.h = Include\jemalloc\jemalloc_protos_jet.h
+		Include\jemalloc\jemalloc_rename.h = Include\jemalloc\jemalloc_rename.h
+		Include\jemalloc\jemalloc_rename.sh = Include\jemalloc\jemalloc_rename.sh
+		Include\jemalloc\jemalloc_typedefs.h = Include\jemalloc\jemalloc_typedefs.h
+		Include\jemalloc\jemalloc_typedefs.h.in = Include\jemalloc\jemalloc_typedefs.h.in
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "internal", "internal", "{DCDA86A4-B208-4674-8933-AC267F1F302B}"
+	ProjectSection(SolutionItems) = preProject
+		Include\jemalloc\internal\arena.h = Include\jemalloc\internal\arena.h
+		Include\jemalloc\internal\assert.h = Include\jemalloc\internal\assert.h
+		Include\jemalloc\internal\atomic.h = Include\jemalloc\internal\atomic.h
+		Include\jemalloc\internal\base.h = Include\jemalloc\internal\base.h
+		Include\jemalloc\internal\bitmap.h = Include\jemalloc\internal\bitmap.h
+		Include\jemalloc\internal\chunk.h = Include\jemalloc\internal\chunk.h
+		Include\jemalloc\internal\chunk_dss.h = Include\jemalloc\internal\chunk_dss.h
+		Include\jemalloc\internal\chunk_mmap.h = Include\jemalloc\internal\chunk_mmap.h
+		Include\jemalloc\internal\ckh.h = Include\jemalloc\internal\ckh.h
+		Include\jemalloc\internal\ctl.h = Include\jemalloc\internal\ctl.h
+		Include\jemalloc\internal\extent.h = Include\jemalloc\internal\extent.h
+		Include\jemalloc\internal\hash.h = Include\jemalloc\internal\hash.h
+		Include\jemalloc\internal\huge.h = Include\jemalloc\internal\huge.h
+		Include\jemalloc\internal\jemalloc_internal.h = Include\jemalloc\internal\jemalloc_internal.h
+		Include\jemalloc\internal\jemalloc_internal.h.in = Include\jemalloc\internal\jemalloc_internal.h.in
+		Include\jemalloc\internal\jemalloc_internal_decls.h = Include\jemalloc\internal\jemalloc_internal_decls.h
+		Include\jemalloc\internal\jemalloc_internal_defs.h = Include\jemalloc\internal\jemalloc_internal_defs.h
+		Include\jemalloc\internal\jemalloc_internal_defs.h.in = Include\jemalloc\internal\jemalloc_internal_defs.h.in
+		Include\jemalloc\internal\jemalloc_internal_macros.h = Include\jemalloc\internal\jemalloc_internal_macros.h
+		Include\jemalloc\internal\mb.h = Include\jemalloc\internal\mb.h
+		Include\jemalloc\internal\mutex.h = Include\jemalloc\internal\mutex.h
+		Include\jemalloc\internal\nstime.h = Include\jemalloc\internal\nstime.h
+		Include\jemalloc\internal\pages.h = Include\jemalloc\internal\pages.h
+		Include\jemalloc\internal\ph.h = Include\jemalloc\internal\ph.h
+		Include\jemalloc\internal\private_namespace.h = Include\jemalloc\internal\private_namespace.h
+		Include\jemalloc\internal\private_namespace.sh = Include\jemalloc\internal\private_namespace.sh
+		Include\jemalloc\internal\private_symbols.txt = Include\jemalloc\internal\private_symbols.txt
+		Include\jemalloc\internal\private_unnamespace.h = Include\jemalloc\internal\private_unnamespace.h
+		Include\jemalloc\internal\private_unnamespace.sh = Include\jemalloc\internal\private_unnamespace.sh
+		Include\jemalloc\internal\prng.h = Include\jemalloc\internal\prng.h
+		Include\jemalloc\internal\prof.h = Include\jemalloc\internal\prof.h
+		Include\jemalloc\internal\public_namespace.h = Include\jemalloc\internal\public_namespace.h
+		Include\jemalloc\internal\public_namespace.sh = Include\jemalloc\internal\public_namespace.sh
+		Include\jemalloc\internal\public_symbols.txt = Include\jemalloc\internal\public_symbols.txt
+		Include\jemalloc\internal\public_unnamespace.h = Include\jemalloc\internal\public_unnamespace.h
+		Include\jemalloc\internal\public_unnamespace.sh = Include\jemalloc\internal\public_unnamespace.sh
+		Include\jemalloc\internal\ql.h = Include\jemalloc\internal\ql.h
+		Include\jemalloc\internal\qr.h = Include\jemalloc\internal\qr.h
+		Include\jemalloc\internal\quarantine.h = Include\jemalloc\internal\quarantine.h
+		Include\jemalloc\internal\rb.h = Include\jemalloc\internal\rb.h
+		Include\jemalloc\internal\rtree.h = Include\jemalloc\internal\rtree.h
+		Include\jemalloc\internal\size_classes.h = Include\jemalloc\internal\size_classes.h
+		Include\jemalloc\internal\size_classes.sh = Include\jemalloc\internal\size_classes.sh
+		Include\jemalloc\internal\smoothstep.h = Include\jemalloc\internal\smoothstep.h
+		Include\jemalloc\internal\smoothstep.sh = Include\jemalloc\internal\smoothstep.sh
+		Include\jemalloc\internal\spin.h = Include\jemalloc\internal\spin.h
+		Include\jemalloc\internal\stats.h = Include\jemalloc\internal\stats.h
+		Include\jemalloc\internal\tcache.h = Include\jemalloc\internal\tcache.h
+		Include\jemalloc\internal\ticker.h = Include\jemalloc\internal\ticker.h
+		Include\jemalloc\internal\tsd.h = Include\jemalloc\internal\tsd.h
+		Include\jemalloc\internal\util.h = Include\jemalloc\internal\util.h
+		Include\jemalloc\internal\valgrind.h = Include\jemalloc\internal\valgrind.h
+		Include\jemalloc\internal\witness.h = Include\jemalloc\internal\witness.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libevent", "libevent", "{557479E6-F59A-402A-B288-591FE88F647F}"
+	ProjectSection(SolutionItems) = preProject
+		Include\libevent\bufferevent-internal.h = Include\libevent\bufferevent-internal.h
+		Include\libevent\changelist-internal.h = Include\libevent\changelist-internal.h
+		Include\libevent\defer-internal.h = Include\libevent\defer-internal.h
+		Include\libevent\evbuffer-internal.h = Include\libevent\evbuffer-internal.h
+		Include\libevent\evdns.h = Include\libevent\evdns.h
+		Include\libevent\event-internal.h = Include\libevent\event-internal.h
+		Include\libevent\event.h = Include\libevent\event.h
+		Include\libevent\evhttp.h = Include\libevent\evhttp.h
+		Include\libevent\evmap-internal.h = Include\libevent\evmap-internal.h
+		Include\libevent\evrpc-internal.h = Include\libevent\evrpc-internal.h
+		Include\libevent\evrpc.h = Include\libevent\evrpc.h
+		Include\libevent\evsignal-internal.h = Include\libevent\evsignal-internal.h
+		Include\libevent\evthread-internal.h = Include\libevent\evthread-internal.h
+		Include\libevent\evutil.h = Include\libevent\evutil.h
+		Include\libevent\ht-internal.h = Include\libevent\ht-internal.h
+		Include\libevent\http-internal.h = Include\libevent\http-internal.h
+		Include\libevent\iocp-internal.h = Include\libevent\iocp-internal.h
+		Include\libevent\ipv6-internal.h = Include\libevent\ipv6-internal.h
+		Include\libevent\log-internal.h = Include\libevent\log-internal.h
+		Include\libevent\minheap-internal.h = Include\libevent\minheap-internal.h
+		Include\libevent\mm-internal.h = Include\libevent\mm-internal.h
+		Include\libevent\ratelim-internal.h = Include\libevent\ratelim-internal.h
+		Include\libevent\strlcpy-internal.h = Include\libevent\strlcpy-internal.h
+		Include\libevent\tree.h = Include\libevent\tree.h
+		Include\libevent\util-internal.h = Include\libevent\util-internal.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "event2", "event2", "{57556F2C-BDB0-4CA0-856B-225401CCC896}"
+	ProjectSection(SolutionItems) = preProject
+		Include\libevent\event2\buffer.h = Include\libevent\event2\buffer.h
+		Include\libevent\event2\buffer_compat.h = Include\libevent\event2\buffer_compat.h
+		Include\libevent\event2\bufferevent.h = Include\libevent\event2\bufferevent.h
+		Include\libevent\event2\bufferevent_compat.h = Include\libevent\event2\bufferevent_compat.h
+		Include\libevent\event2\bufferevent_ssl.h = Include\libevent\event2\bufferevent_ssl.h
+		Include\libevent\event2\bufferevent_struct.h = Include\libevent\event2\bufferevent_struct.h
+		Include\libevent\event2\dns.h = Include\libevent\event2\dns.h
+		Include\libevent\event2\dns_compat.h = Include\libevent\event2\dns_compat.h
+		Include\libevent\event2\dns_struct.h = Include\libevent\event2\dns_struct.h
+		Include\libevent\event2\event-config.h = Include\libevent\event2\event-config.h
+		Include\libevent\event2\event.h = Include\libevent\event2\event.h
+		Include\libevent\event2\event_compat.h = Include\libevent\event2\event_compat.h
+		Include\libevent\event2\event_struct.h = Include\libevent\event2\event_struct.h
+		Include\libevent\event2\http.h = Include\libevent\event2\http.h
+		Include\libevent\event2\http_compat.h = Include\libevent\event2\http_compat.h
+		Include\libevent\event2\http_struct.h = Include\libevent\event2\http_struct.h
+		Include\libevent\event2\keyvalq_struct.h = Include\libevent\event2\keyvalq_struct.h
+		Include\libevent\event2\listener.h = Include\libevent\event2\listener.h
+		Include\libevent\event2\rpc.h = Include\libevent\event2\rpc.h
+		Include\libevent\event2\rpc_compat.h = Include\libevent\event2\rpc_compat.h
+		Include\libevent\event2\rpc_struct.h = Include\libevent\event2\rpc_struct.h
+		Include\libevent\event2\tag.h = Include\libevent\event2\tag.h
+		Include\libevent\event2\tag_compat.h = Include\libevent\event2\tag_compat.h
+		Include\libevent\event2\thread.h = Include\libevent\event2\thread.h
+		Include\libevent\event2\util.h = Include\libevent\event2\util.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "librdkafka", "librdkafka", "{A5074F6C-1D06-460D-AB5A-951EB6214D32}"
+	ProjectSection(SolutionItems) = preProject
+		Include\librdkafka\rdkafka.h = Include\librdkafka\rdkafka.h
+		Include\librdkafka\rdkafkacpp.h = Include\librdkafka\rdkafkacpp.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "log4cplus", "log4cplus", "{B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\appender.h = Include\log4cplus\appender.h
+		Include\log4cplus\asyncappender.h = Include\log4cplus\asyncappender.h
+		Include\log4cplus\callbackappender.h = Include\log4cplus\callbackappender.h
+		Include\log4cplus\clfsappender.h = Include\log4cplus\clfsappender.h
+		Include\log4cplus\clogger.h = Include\log4cplus\clogger.h
+		Include\log4cplus\config.h.cmake.in = Include\log4cplus\config.h.cmake.in
+		Include\log4cplus\config.h.in = Include\log4cplus\config.h.in
+		Include\log4cplus\config.hxx = Include\log4cplus\config.hxx
+		Include\log4cplus\configurator.h = Include\log4cplus\configurator.h
+		Include\log4cplus\consoleappender.h = Include\log4cplus\consoleappender.h
+		Include\log4cplus\fileappender.h = Include\log4cplus\fileappender.h
+		Include\log4cplus\fstreams.h = Include\log4cplus\fstreams.h
+		Include\log4cplus\hierarchy.h = Include\log4cplus\hierarchy.h
+		Include\log4cplus\hierarchylocker.h = Include\log4cplus\hierarchylocker.h
+		Include\log4cplus\initializer.h = Include\log4cplus\initializer.h
+		Include\log4cplus\layout.h = Include\log4cplus\layout.h
+		Include\log4cplus\log4cplus.h = Include\log4cplus\log4cplus.h
+		Include\log4cplus\log4judpappender.h = Include\log4cplus\log4judpappender.h
+		Include\log4cplus\logger.h = Include\log4cplus\logger.h
+		Include\log4cplus\loggingmacros.h = Include\log4cplus\loggingmacros.h
+		Include\log4cplus\loglevel.h = Include\log4cplus\loglevel.h
+		Include\log4cplus\mdc.h = Include\log4cplus\mdc.h
+		Include\log4cplus\msttsappender.h = Include\log4cplus\msttsappender.h
+		Include\log4cplus\ndc.h = Include\log4cplus\ndc.h
+		Include\log4cplus\nteventlogappender.h = Include\log4cplus\nteventlogappender.h
+		Include\log4cplus\nullappender.h = Include\log4cplus\nullappender.h
+		Include\log4cplus\qt4debugappender.h = Include\log4cplus\qt4debugappender.h
+		Include\log4cplus\qt5debugappender.h = Include\log4cplus\qt5debugappender.h
+		Include\log4cplus\socketappender.h = Include\log4cplus\socketappender.h
+		Include\log4cplus\streams.h = Include\log4cplus\streams.h
+		Include\log4cplus\syslogappender.h = Include\log4cplus\syslogappender.h
+		Include\log4cplus\tchar.h = Include\log4cplus\tchar.h
+		Include\log4cplus\tracelogger.h = Include\log4cplus\tracelogger.h
+		Include\log4cplus\tstring.h = Include\log4cplus\tstring.h
+		Include\log4cplus\version.h = Include\log4cplus\version.h
+		Include\log4cplus\win32consoleappender.h = Include\log4cplus\win32consoleappender.h
+		Include\log4cplus\win32debugappender.h = Include\log4cplus\win32debugappender.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "boost", "boost", "{4326F1C7-8A1E-4592-A918-1D93DF9AC39E}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\boost\deviceappender.hxx = Include\log4cplus\boost\deviceappender.hxx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{E4175F29-D469-4176-8E8E-7E6160074131}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\config\defines.hxx.in = Include\log4cplus\config\defines.hxx.in
+		Include\log4cplus\config\macosx.h = Include\log4cplus\config\macosx.h
+		Include\log4cplus\config\win32.h = Include\log4cplus\config\win32.h
+		Include\log4cplus\config\windowsh-inc-full.h = Include\log4cplus\config\windowsh-inc-full.h
+		Include\log4cplus\config\windowsh-inc.h = Include\log4cplus\config\windowsh-inc.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helpers", "helpers", "{870A7040-9D96-4E8A-92F0-8057AA79AE34}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\helpers\appenderattachableimpl.h = Include\log4cplus\helpers\appenderattachableimpl.h
+		Include\log4cplus\helpers\connectorthread.h = Include\log4cplus\helpers\connectorthread.h
+		Include\log4cplus\helpers\fileinfo.h = Include\log4cplus\helpers\fileinfo.h
+		Include\log4cplus\helpers\lockfile.h = Include\log4cplus\helpers\lockfile.h
+		Include\log4cplus\helpers\loglog.h = Include\log4cplus\helpers\loglog.h
+		Include\log4cplus\helpers\pointer.h = Include\log4cplus\helpers\pointer.h
+		Include\log4cplus\helpers\property.h = Include\log4cplus\helpers\property.h
+		Include\log4cplus\helpers\queue.h = Include\log4cplus\helpers\queue.h
+		Include\log4cplus\helpers\snprintf.h = Include\log4cplus\helpers\snprintf.h
+		Include\log4cplus\helpers\socket.h = Include\log4cplus\helpers\socket.h
+		Include\log4cplus\helpers\socketbuffer.h = Include\log4cplus\helpers\socketbuffer.h
+		Include\log4cplus\helpers\stringhelper.h = Include\log4cplus\helpers\stringhelper.h
+		Include\log4cplus\helpers\thread-config.h = Include\log4cplus\helpers\thread-config.h
+		Include\log4cplus\helpers\timehelper.h = Include\log4cplus\helpers\timehelper.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "internal", "internal", "{44BD4C47-87B9-4885-AB70-751A0D44ABFC}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\internal\customloglevelmanager.h = Include\log4cplus\internal\customloglevelmanager.h
+		Include\log4cplus\internal\cygwin-win32.h = Include\log4cplus\internal\cygwin-win32.h
+		Include\log4cplus\internal\env.h = Include\log4cplus\internal\env.h
+		Include\log4cplus\internal\internal.h = Include\log4cplus\internal\internal.h
+		Include\log4cplus\internal\socket.h = Include\log4cplus\internal\socket.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "spi", "spi", "{E052FEB9-BA15-4D75-9718-8ECE96E6FA3B}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\spi\appenderattachable.h = Include\log4cplus\spi\appenderattachable.h
+		Include\log4cplus\spi\factory.h = Include\log4cplus\spi\factory.h
+		Include\log4cplus\spi\filter.h = Include\log4cplus\spi\filter.h
+		Include\log4cplus\spi\loggerfactory.h = Include\log4cplus\spi\loggerfactory.h
+		Include\log4cplus\spi\loggerimpl.h = Include\log4cplus\spi\loggerimpl.h
+		Include\log4cplus\spi\loggingevent.h = Include\log4cplus\spi\loggingevent.h
+		Include\log4cplus\spi\objectregistry.h = Include\log4cplus\spi\objectregistry.h
+		Include\log4cplus\spi\rootlogger.h = Include\log4cplus\spi\rootlogger.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "thread", "thread", "{255225F7-A3D7-44B2-8F07-1D500317D528}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\thread\syncprims-pub-impl.h = Include\log4cplus\thread\syncprims-pub-impl.h
+		Include\log4cplus\thread\syncprims.h = Include\log4cplus\thread\syncprims.h
+		Include\log4cplus\thread\threads.h = Include\log4cplus\thread\threads.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "impl", "impl", "{E500F3AA-FEA5-44E1-9499-97CB118D9138}"
+	ProjectSection(SolutionItems) = preProject
+		Include\log4cplus\thread\impl\syncprims-cxx11.h = Include\log4cplus\thread\impl\syncprims-cxx11.h
+		Include\log4cplus\thread\impl\syncprims-impl.h = Include\log4cplus\thread\impl\syncprims-impl.h
+		Include\log4cplus\thread\impl\syncprims-pmsm.h = Include\log4cplus\thread\impl\syncprims-pmsm.h
+		Include\log4cplus\thread\impl\threads-impl.h = Include\log4cplus\thread\impl\threads-impl.h
+		Include\log4cplus\thread\impl\tls.h = Include\log4cplus\thread\impl\tls.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "openssl", "openssl", "{658EDA7D-F10D-478B-B3F6-8EBCCCBC5939}"
+	ProjectSection(SolutionItems) = preProject
+		Include\openssl\aes.h = Include\openssl\aes.h
+		Include\openssl\applink.c = Include\openssl\applink.c
+		Include\openssl\asn1.h = Include\openssl\asn1.h
+		Include\openssl\asn1_mac.h = Include\openssl\asn1_mac.h
+		Include\openssl\asn1t.h = Include\openssl\asn1t.h
+		Include\openssl\bio.h = Include\openssl\bio.h
+		Include\openssl\blowfish.h = Include\openssl\blowfish.h
+		Include\openssl\bn.h = Include\openssl\bn.h
+		Include\openssl\buffer.h = Include\openssl\buffer.h
+		Include\openssl\camellia.h = Include\openssl\camellia.h
+		Include\openssl\cast.h = Include\openssl\cast.h
+		Include\openssl\cmac.h = Include\openssl\cmac.h
+		Include\openssl\cms.h = Include\openssl\cms.h
+		Include\openssl\comp.h = Include\openssl\comp.h
+		Include\openssl\conf.h = Include\openssl\conf.h
+		Include\openssl\conf_api.h = Include\openssl\conf_api.h
+		Include\openssl\crypto.h = Include\openssl\crypto.h
+		Include\openssl\des.h = Include\openssl\des.h
+		Include\openssl\des_old.h = Include\openssl\des_old.h
+		Include\openssl\dh.h = Include\openssl\dh.h
+		Include\openssl\dsa.h = Include\openssl\dsa.h
+		Include\openssl\dso.h = Include\openssl\dso.h
+		Include\openssl\dtls1.h = Include\openssl\dtls1.h
+		Include\openssl\e_os2.h = Include\openssl\e_os2.h
+		Include\openssl\ebcdic.h = Include\openssl\ebcdic.h
+		Include\openssl\ec.h = Include\openssl\ec.h
+		Include\openssl\ecdh.h = Include\openssl\ecdh.h
+		Include\openssl\ecdsa.h = Include\openssl\ecdsa.h
+		Include\openssl\engine.h = Include\openssl\engine.h
+		Include\openssl\err.h = Include\openssl\err.h
+		Include\openssl\evp.h = Include\openssl\evp.h
+		Include\openssl\hmac.h = Include\openssl\hmac.h
+		Include\openssl\idea.h = Include\openssl\idea.h
+		Include\openssl\krb5_asn.h = Include\openssl\krb5_asn.h
+		Include\openssl\kssl.h = Include\openssl\kssl.h
+		Include\openssl\lhash.h = Include\openssl\lhash.h
+		Include\openssl\md4.h = Include\openssl\md4.h
+		Include\openssl\md5.h = Include\openssl\md5.h
+		Include\openssl\mdc2.h = Include\openssl\mdc2.h
+		Include\openssl\modes.h = Include\openssl\modes.h
+		Include\openssl\obj_mac.h = Include\openssl\obj_mac.h
+		Include\openssl\objects.h = Include\openssl\objects.h
+		Include\openssl\ocsp.h = Include\openssl\ocsp.h
+		Include\openssl\opensslconf.h = Include\openssl\opensslconf.h
+		Include\openssl\opensslv.h = Include\openssl\opensslv.h
+		Include\openssl\ossl_typ.h = Include\openssl\ossl_typ.h
+		Include\openssl\pem.h = Include\openssl\pem.h
+		Include\openssl\pem2.h = Include\openssl\pem2.h
+		Include\openssl\pkcs12.h = Include\openssl\pkcs12.h
+		Include\openssl\pkcs7.h = Include\openssl\pkcs7.h
+		Include\openssl\pqueue.h = Include\openssl\pqueue.h
+		Include\openssl\rand.h = Include\openssl\rand.h
+		Include\openssl\rc2.h = Include\openssl\rc2.h
+		Include\openssl\rc4.h = Include\openssl\rc4.h
+		Include\openssl\ripemd.h = Include\openssl\ripemd.h
+		Include\openssl\rsa.h = Include\openssl\rsa.h
+		Include\openssl\safestack.h = Include\openssl\safestack.h
+		Include\openssl\seed.h = Include\openssl\seed.h
+		Include\openssl\sha.h = Include\openssl\sha.h
+		Include\openssl\srp.h = Include\openssl\srp.h
+		Include\openssl\srtp.h = Include\openssl\srtp.h
+		Include\openssl\ssl.h = Include\openssl\ssl.h
+		Include\openssl\ssl2.h = Include\openssl\ssl2.h
+		Include\openssl\ssl23.h = Include\openssl\ssl23.h
+		Include\openssl\ssl3.h = Include\openssl\ssl3.h
+		Include\openssl\stack.h = Include\openssl\stack.h
+		Include\openssl\symhacks.h = Include\openssl\symhacks.h
+		Include\openssl\tls1.h = Include\openssl\tls1.h
+		Include\openssl\ts.h = Include\openssl\ts.h
+		Include\openssl\txt_db.h = Include\openssl\txt_db.h
+		Include\openssl\ui.h = Include\openssl\ui.h
+		Include\openssl\ui_compat.h = Include\openssl\ui_compat.h
+		Include\openssl\whrlpool.h = Include\openssl\whrlpool.h
+		Include\openssl\x509.h = Include\openssl\x509.h
+		Include\openssl\x509_vfy.h = Include\openssl\x509_vfy.h
+		Include\openssl\x509v3.h = Include\openssl\x509v3.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msvc_compat", "msvc_compat", "{33B04CE3-2872-41D3-BF0F-F80ADEB2B511}"
+	ProjectSection(SolutionItems) = preProject
+		Include\msvc_compat\strings.h = Include\msvc_compat\strings.h
+		Include\msvc_compat\windows_extra.h = Include\msvc_compat\windows_extra.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C99", "C99", "{60750B0D-D779-48C2-B8B6-19111FBFEC15}"
+	ProjectSection(SolutionItems) = preProject
+		Include\msvc_compat\C99\stdbool.h = Include\msvc_compat\C99\stdbool.h
+		Include\msvc_compat\C99\stdint.h = Include\msvc_compat\C99\stdint.h
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win32_interop", "Win32_interop", "{D412764E-6868-465B-BE2D-E4FB2C79A17B}"
+	ProjectSection(SolutionItems) = preProject
+		Include\Win32_interop\EventLog.h = Include\Win32_interop\EventLog.h
+		Include\Win32_interop\Win32_ANSI.h = Include\Win32_interop\Win32_ANSI.h
+		Include\Win32_interop\Win32_APIs.h = Include\Win32_interop\Win32_APIs.h
+		Include\Win32_interop\Win32_Assert.h = Include\Win32_interop\Win32_Assert.h
+		Include\Win32_interop\Win32_CommandLine.h = Include\Win32_interop\Win32_CommandLine.h
+		Include\Win32_interop\Win32_Common.h = Include\Win32_interop\Win32_Common.h
+		Include\Win32_interop\Win32_dlmalloc.h = Include\Win32_interop\Win32_dlmalloc.h
+		Include\Win32_interop\Win32_Error.h = Include\Win32_interop\Win32_Error.h
+		Include\Win32_interop\Win32_EventLog.h = Include\Win32_interop\Win32_EventLog.h
+		Include\Win32_interop\Win32_FDAPI.h = Include\Win32_interop\Win32_FDAPI.h
+		Include\Win32_interop\Win32_fdapi_crt.h = Include\Win32_interop\Win32_fdapi_crt.h
+		Include\Win32_interop\Win32_Portability.h = Include\Win32_interop\Win32_Portability.h
+		Include\Win32_interop\Win32_PThread.h = Include\Win32_interop\Win32_PThread.h
+		Include\Win32_interop\Win32_QFork.h = Include\Win32_interop\Win32_QFork.h
+		Include\Win32_interop\Win32_QFork_impl.h = Include\Win32_interop\Win32_QFork_impl.h
+		Include\Win32_interop\Win32_RedisLog.h = Include\Win32_interop\Win32_RedisLog.h
+		Include\Win32_interop\win32_rfdmap.h = Include\Win32_interop\win32_rfdmap.h
+		Include\Win32_interop\Win32_Service.h = Include\Win32_interop\Win32_Service.h
+		Include\Win32_interop\Win32_Signal_Process.h = Include\Win32_interop\Win32_Signal_Process.h
+		Include\Win32_interop\Win32_SmartHandle.h = Include\Win32_interop\Win32_SmartHandle.h
+		Include\Win32_interop\Win32_StackTrace.h = Include\Win32_interop\Win32_StackTrace.h
+		Include\Win32_interop\Win32_ThreadControl.h = Include\Win32_interop\Win32_ThreadControl.h
+		Include\Win32_interop\Win32_Time.h = Include\Win32_interop\Win32_Time.h
+		Include\Win32_interop\win32_types.h = Include\Win32_interop\win32_types.h
+		Include\Win32_interop\win32_types_hiredis.h = Include\Win32_interop\win32_types_hiredis.h
+		Include\Win32_interop\Win32_variadicFunctor.h = Include\Win32_interop\Win32_variadicFunctor.h
+		Include\Win32_interop\win32_winapifamily.h = Include\Win32_interop\win32_winapifamily.h
+		Include\Win32_interop\win32_wsiocp.h = Include\Win32_interop\win32_wsiocp.h
+		Include\Win32_interop\win32_wsiocp2.h = Include\Win32_interop\win32_wsiocp2.h
+		Include\Win32_interop\win32fixes.h = Include\Win32_interop\win32fixes.h
+		Include\Win32_interop\WS2tcpip.h = Include\Win32_interop\WS2tcpip.h
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,22 +488,6 @@ Global
 		{792B603B-64E5-4516-A0C8-C33724501984}.Release|x64.Build.0 = Release|x64
 		{792B603B-64E5-4516-A0C8-C33724501984}.Release|x86.ActiveCfg = Release|Win32
 		{792B603B-64E5-4516-A0C8-C33724501984}.Release|x86.Build.0 = Release|Win32
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Debug|x64.ActiveCfg = Debug|x64
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Debug|x64.Build.0 = Debug|x64
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Debug|x86.ActiveCfg = Debug|Win32
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Debug|x86.Build.0 = Debug|Win32
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Release|x64.ActiveCfg = Release|x64
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Release|x64.Build.0 = Release|x64
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Release|x86.ActiveCfg = Release|Win32
-		{9CAF4708-5CC6-4AB0-A090-7809E5847294}.Release|x86.Build.0 = Release|Win32
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Debug|x64.ActiveCfg = Debug|x64
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Debug|x64.Build.0 = Debug|x64
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Debug|x86.ActiveCfg = Debug|Win32
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Debug|x86.Build.0 = Debug|Win32
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Release|x64.ActiveCfg = Release|x64
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Release|x64.Build.0 = Release|x64
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Release|x86.ActiveCfg = Release|Win32
-		{109BC8F0-A3FE-4FCF-8489-18249799B067}.Release|x86.Build.0 = Release|Win32
 		{08F6E6A5-4557-4875-8E27-AE8FC174C8CE}.Debug|x64.ActiveCfg = Debug|x64
 		{08F6E6A5-4557-4875-8E27-AE8FC174C8CE}.Debug|x64.Build.0 = Debug|x64
 		{08F6E6A5-4557-4875-8E27-AE8FC174C8CE}.Debug|x86.ActiveCfg = Debug|Win32
@@ -141,8 +560,38 @@ Global
 		{E0346872-7860-4B26-9308-9E6558DCF6E7}.Release|x64.Build.0 = Release|x64
 		{E0346872-7860-4B26-9308-9E6558DCF6E7}.Release|x86.ActiveCfg = Release|Win32
 		{E0346872-7860-4B26-9308-9E6558DCF6E7}.Release|x86.Build.0 = Release|Win32
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Debug|x64.ActiveCfg = Debug|x64
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Debug|x64.Build.0 = Debug|x64
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Debug|x86.ActiveCfg = Debug|Win32
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Debug|x86.Build.0 = Debug|Win32
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Release|x64.ActiveCfg = Release|x64
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Release|x64.Build.0 = Release|x64
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Release|x86.ActiveCfg = Release|Win32
+		{0F06178D-D63E-44B1-A071-DB3270063202}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A6E99907-5B27-4C35-BC9E-2008D3F477E7} = {485F6363-FE32-46DE-A1CD-536333869F60}
+		{198FA059-ED73-46CA-A61C-1F449A914E87} = {485F6363-FE32-46DE-A1CD-536333869F60}
+		{3BE81031-A4AC-4A50-9EA9-F5BEF6F4A043} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{E57465A4-6028-46F0-B8DD-070F856287C7} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{DCDA86A4-B208-4674-8933-AC267F1F302B} = {E57465A4-6028-46F0-B8DD-070F856287C7}
+		{557479E6-F59A-402A-B288-591FE88F647F} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{57556F2C-BDB0-4CA0-856B-225401CCC896} = {557479E6-F59A-402A-B288-591FE88F647F}
+		{A5074F6C-1D06-460D-AB5A-951EB6214D32} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{B1DAE9B5-31E5-45B4-B2BA-4493428B05D7} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{4326F1C7-8A1E-4592-A918-1D93DF9AC39E} = {B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}
+		{E4175F29-D469-4176-8E8E-7E6160074131} = {B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}
+		{870A7040-9D96-4E8A-92F0-8057AA79AE34} = {B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}
+		{44BD4C47-87B9-4885-AB70-751A0D44ABFC} = {B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}
+		{E052FEB9-BA15-4D75-9718-8ECE96E6FA3B} = {B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}
+		{255225F7-A3D7-44B2-8F07-1D500317D528} = {B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}
+		{E500F3AA-FEA5-44E1-9499-97CB118D9138} = {255225F7-A3D7-44B2-8F07-1D500317D528}
+		{658EDA7D-F10D-478B-B3F6-8EBCCCBC5939} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{33B04CE3-2872-41D3-BF0F-F80ADEB2B511} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{60750B0D-D779-48C2-B8B6-19111FBFEC15} = {33B04CE3-2872-41D3-BF0F-F80ADEB2B511}
+		{D412764E-6868-465B-BE2D-E4FB2C79A17B} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
 	EndGlobalSection
 EndGlobal

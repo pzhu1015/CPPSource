@@ -15,7 +15,7 @@ namespace System
 {
 	namespace DateTimes
 	{
-		class SYSTEM_API Timestamp
+		class SYSTEM_API Timestamp final
 		{
 
 		};

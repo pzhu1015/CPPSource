@@ -253,21 +253,22 @@ namespace System
 			return DateTime(time(0));
 		}
 
-		int DateTime::Comare(const DateTime * value1, const DateTime * value2)
+		int DateTime::Comare(const DateTime& value1, const DateTime& value2)
 		{
-			if (value1->m_seconds == value2->m_seconds)
+			if (value1.m_seconds == value2.m_seconds)
 			{
 				return 0;
 			}
-			if (value1->m_seconds < value2->m_seconds)
+			if (value1.m_seconds < value2.m_seconds)
 			{
 				return -1;
 			}
 			return 1;
 		}
-		bool DateTime::Equals(const DateTime * value1, const DateTime * value2)
+
+		bool DateTime::Equals(const DateTime& value1, const DateTime & value2)
 		{
-			if (value1->m_seconds == value2->m_seconds)
+			if (value1.m_seconds == value2.m_seconds)
 			{
 				return true;
 			}

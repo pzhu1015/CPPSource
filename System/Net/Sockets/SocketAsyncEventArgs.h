@@ -22,7 +22,7 @@ namespace System
 		namespace Sockets
 		{
 			class Socket;
-			class SYSTEM_API SocketAsyncEventArgs : public EventArgs, public IDisposable
+			class SYSTEM_API SocketAsyncEventArgs final : public EventArgs, public IDisposable
 			{
 			public:
 				SocketAsyncEventArgs();
@@ -50,7 +50,7 @@ namespace System
 				virtual void Dispose();
 
 			protected:
-				virtual void OnCompleted(SocketAsyncEventArgs* e);
+				virtual void OnCompleted(const SocketAsyncEventArgs& e);
 
 			public:
 				EventHandler Completed;

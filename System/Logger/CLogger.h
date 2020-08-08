@@ -41,7 +41,7 @@ namespace System
 			Appender_Console
 		};
 
-		class SYSTEM_API CLogger
+		class SYSTEM_API CLogger final
 		{
 		public:
 			CLogger();

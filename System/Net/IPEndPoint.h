@@ -16,7 +16,7 @@ namespace System
 {
 	namespace Net
 	{
-		class SYSTEM_API IPEndPoint : public EndPoint
+		class SYSTEM_API IPEndPoint final : public EndPoint
 		{
 		public:
 			static const int MAXPORT = 65535;

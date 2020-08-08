@@ -20,7 +20,7 @@ namespace System
 {
 	namespace Net
 	{
-		class SYSTEM_API IPAddress
+		class SYSTEM_API IPAddress final
 		{
 		public:
 			IPAddress();

@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 {
 	FileInfo info(argv[0]);
 	std::string config_path = info.GetDirectoryName();
-	config_path.append("log.properties");
+	config_path.append("\\log.properties");
 	System::Logger::Logger::Init(config_path);
 
 	for (int i = 0; i < 1000; i++)

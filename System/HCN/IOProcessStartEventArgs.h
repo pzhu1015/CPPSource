@@ -14,7 +14,7 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API IOProcessStartEventArgs : public EventArgs
+		class SYSTEM_API IOProcessStartEventArgs final : public EventArgs
 		{
 
 		};

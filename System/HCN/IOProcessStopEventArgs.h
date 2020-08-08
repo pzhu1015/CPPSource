@@ -13,7 +13,7 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API IOProcessStopEventArgs : public EventArgs
+		class SYSTEM_API IOProcessStopEventArgs final : public EventArgs
 		{
 
 		};

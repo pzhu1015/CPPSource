@@ -21,7 +21,7 @@ namespace System
 {
 	namespace Net
 	{
-		class SYSTEM_API TcpClient: public IDisposable
+		class SYSTEM_API TcpClient final : public IDisposable
 		{
 		public:
 			TcpClient();

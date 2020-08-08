@@ -15,7 +15,7 @@ namespace System
 {
 	namespace IO
 	{
-		class SYSTEM_API Encoding
+		class SYSTEM_API Encoding final
 		{
 
 		};

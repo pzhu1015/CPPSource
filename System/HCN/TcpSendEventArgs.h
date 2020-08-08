@@ -14,9 +14,11 @@ namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API TcpSendEventArgs : public EventArgs
+		class SYSTEM_API TcpSendEventArgs final : public EventArgs
 		{
-
+		public:
+			TcpSendEventArgs() {}
+			virtual ~TcpSendEventArgs() {}
 		};
 	}
 }
