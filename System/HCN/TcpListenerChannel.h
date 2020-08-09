@@ -31,8 +31,12 @@ namespace System
 			bool Start(int port, int threads);
 			bool Stop();
 
-			virtual void OnIOProcessStart(const IOProcessStartEventArgs& e);
-			virtual void OnIOProcessStop(const IOProcessStopEventArgs& e);
+			virtual void OnIOProcessReadStart(const IOProcessReadStartEventArgs& e);
+			virtual void OnIOProcessReadStop(const IOProcessReadStopEventArgs& e);
+
+			virtual void OnIOProcessWriteStart(const IOProcessWriteStartEventArgs& e);
+			virtual void OnIOProcessWriteStop(const IOProcessWriteStopEventArgs& e);
+
 			void AsyncAccept(const TcpClientPtr &client, size_t idx);
 		protected:
 			virtual void OnStart(const TcpStartEventArgs& e);
@@ -60,8 +64,10 @@ namespace System
 			std::vector<IOProcessPtr> m_io_processor;
 			ThreadPoolPtr m_threadpool = nullptr;
 			ThreadPtr m_thread = nullptr;
-			SemaphorePtr m_start_sem = nullptr;
-			SemaphorePtr m_stop_sem = nullptr;
+			SemaphorePtr m_startread_sem = nullptr;
+			SemaphorePtr m_stopread_sem = nullptr;
+			SemaphorePtr m_startwrite_sem = nullptr;
+			SemaphorePtr m_stopwrite_sem = nullptr;
 		};
 	}
 }

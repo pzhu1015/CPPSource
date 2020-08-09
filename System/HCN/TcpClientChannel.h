@@ -13,6 +13,7 @@
 #include "System/HCN/Events.h"
 
 #include <queue>
+#include <mutex>
 using namespace System::Net;
 namespace System
 {
@@ -35,8 +36,11 @@ namespace System
 			~TcpClientChannel();
 
 			bool Read();
-			void Write(Msg* msg);
+			void  Read(Msg* msg);
+			
 			bool Write();
+			void Write(Msg* msg);
+
 			void Connect(const std::string &ip, int port);
 
 			TcpClientPtr GetClient() const;
@@ -54,6 +58,8 @@ namespace System
 		private:
 			static const int RECV_BUFF_SIZE = 10240 * 5;
 			static const int SEND_BUFF_SIZE = 10240 * 5;
+			std::mutex m_send_mutex;
+			std::mutex m_recv_mutex;
 			std::queue<Msg*> m_recv_msgs;
 			std::queue<Msg*> m_send_msgs;
 			ObjectPool<TcpReceiveEventArgs>* m_recv_event_pool = nullptr;

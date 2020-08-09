@@ -6,18 +6,19 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_HCN_IOPROCESSSTOPEVENTARGS_H
-#define SYSTEM_HCN_IOPROCESSSTOPEVENTARGS_H
+#ifndef SYSTEM_HCN_IOPROCESSREADSTARTEVENTARGS_H
+#define SYSTEM_HCN_IOPROCESSREADSTARTEVENTARGS_H
 #include "System/EventArgs.h"
+
 namespace System
 {
 	namespace HCN
 	{
-		class SYSTEM_API IOProcessStopEventArgs final : public EventArgs
+		class SYSTEM_API IOProcessReadStartEventArgs final : public EventArgs
 		{
 
 		};
 	}
 }
 
-#endif // !SYSTEM_HCN_IOPROCESSSTOPEVENTARGS_H
+#endif // !SYSTEM_HCN_IOPROCESSREADSTARTEVENTARGS_H

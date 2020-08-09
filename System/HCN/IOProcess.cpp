@@ -8,8 +8,10 @@
 ///////////////////////////////////////////////////////////////////
 #include "System/HCN/IOProcess.h"
 
-#include "System/HCN/IOProcessStartEventArgs.h"
-#include "System/HCN/IOProcessStopEventArgs.h"
+#include "System/HCN/IOProcessReadStartEventArgs.h"
+#include "System/HCN/IOProcessReadStopEventArgs.h"
+#include "System/HCN/IOProcessWriteStartEventArgs.h"
+#include "System/HCN/IOProcessWriteStopEventArgs.h"
 #include "System/HCN/TcpOnLineEventArgs.h"
 #include "System/HCN/TcpOffLineEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
@@ -53,19 +55,35 @@ namespace System
 			m_is_start = false;
 		}
 
-		void IOProcess::OnStart(const IOProcessStartEventArgs& e)
+		void IOProcess::OnReadStart(const IOProcessReadStartEventArgs& e)
 		{
-			if (this->IOProcessStart != nullptr)
+			if (this->IOProcessReadStart != nullptr)
 			{
-				this->IOProcessStart(e);
+				this->IOProcessReadStart(e);
 			}
 		}
 
-		void IOProcess::OnStop(const IOProcessStopEventArgs & e)
+		void IOProcess::OnReadStop(const IOProcessReadStopEventArgs & e)
 		{
-			if (this->IOProcessStop != nullptr)
+			if (this->IOProcessReadStop != nullptr)
 			{
-				this->IOProcessStop(e);
+				this->IOProcessReadStop(e);
+			}
+		}
+
+		void IOProcess::OnWriteStart(const IOProcessWriteStartEventArgs& e)
+		{
+			if (this->IOProcessWriteStart != nullptr)
+			{
+				this->IOProcessWriteStart(e);
+			}
+		}
+
+		void IOProcess::OnWriteStop(const IOProcessWriteStopEventArgs & e)
+		{
+			if (this->IOProcessWriteStop != nullptr)
+			{
+				this->IOProcessWriteStop(e);
 			}
 		}
 
@@ -98,9 +116,9 @@ namespace System
 			t_recv_event_pool = new ObjectPool<TcpReceiveEventArgs>(250000);
 			m_recv_event_pool = t_recv_event_pool;
 			
-			this->OnStart(IOProcessStartEventArgs());
+			this->OnReadStart(IOProcessReadStartEventArgs());
 			IOReadHandle();
-			this->OnStop(IOProcessStopEventArgs());
+			this->OnReadStop(IOProcessReadStopEventArgs());
 		}
 
 		void IOProcess::AsyncStartWrite()
@@ -108,9 +126,9 @@ namespace System
 			t_send_event_pool = new ObjectPool<TcpSendEventArgs>(250000);
 			m_send_event_pool = t_send_event_pool;
 			m_is_start = true;
-			this->OnStart(IOProcessStartEventArgs());
+			this->OnWriteStart(IOProcessWriteStartEventArgs());
 			IOWriteHandle();
-			this->OnStop(IOProcessStopEventArgs());
+			this->OnWriteStop(IOProcessWriteStopEventArgs());
 		}
 	}
 }

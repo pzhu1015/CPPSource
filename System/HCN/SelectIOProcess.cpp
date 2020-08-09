@@ -7,8 +7,6 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/HCN/SelectIOProcess.h"
-#include "System/HCN/IOProcessStartEventArgs.h"
-#include "System/HCN/IOProcessStopEventArgs.h"
 #include "System/HCN/TcpOnLineEventArgs.h"
 #include "System/HCN/TcpOffLineEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
@@ -117,46 +115,9 @@ namespace System
 					}
 				}
 
-				fd_set checkWrite;
-				if (m_change)
+				for (auto itr : m_clients)
 				{
-					m_change = false;
-					FD_ZERO(&checkWrite);
-					for (auto client : m_clients)
-					{
-						FD_SET(client.first, &checkWrite);
-					}
-					memcpy(&m_check_write_back, &checkWrite, sizeof(fd_set));
-				}
-				else
-				{
-					memcpy(&checkWrite, &m_check_write_back, sizeof(fd_set));
-				}
-				int ret = Socket::Select(nullptr, &checkWrite, nullptr, 100);
-				if (ret < 0)
-				{
-					this->OnSelectError(TcpSelectErrorEventArgs());
-					continue;
-				}
-				else if (ret == 0)
-				{
-					continue;
-				}
-				else
-				{
-					for (size_t i = 0; i < checkWrite.fd_count; i++)
-					{
-						SOCKET sock = checkWrite.fd_array[i];
-						auto itr = m_clients.find(sock);
-						bool rslt = (itr->second)->Write();
-						if (!rslt)
-						{
-							m_change = true;
-							TcpClientPtr client = (itr->second)->GetClient();
-							m_clients.erase(itr);
-							this->OnOffLine(TcpOffLineEventArgs(client, m_clients.size()));
-						}
-					}
+					itr.second->Write();
 				}
 			}
 		}

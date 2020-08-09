@@ -30,8 +30,10 @@ namespace System
 		IOProcessPtr SelectTcpListenerChannel::GetIOProcess()
 		{
 			IOProcessPtr io_process = std::make_shared<SelectIOProcess>();
-			io_process->IOProcessStart = std::bind(&TcpListenerChannel::OnIOProcessStart, this, std::placeholders::_1);
-			io_process->IOProcessStop = std::bind(&TcpListenerChannel::OnIOProcessStop, this, std::placeholders::_1);
+			io_process->IOProcessReadStart = std::bind(&TcpListenerChannel::OnIOProcessReadStart, this, std::placeholders::_1);
+			io_process->IOProcessReadStop = std::bind(&TcpListenerChannel::OnIOProcessReadStop, this, std::placeholders::_1);
+			io_process->IOProcessWriteStart = std::bind(&TcpListenerChannel::OnIOProcessWriteStart, this, std::placeholders::_1);
+			io_process->IOProcessWriteStop = std::bind(&TcpListenerChannel::OnIOProcessWriteStop, this, std::placeholders::_1);
 			io_process->OnLine = this->OnLine;
 			io_process->OffLine = this->OffLine;
 			io_process->Receive = this->Receive;
@@ -39,6 +41,7 @@ namespace System
 			io_process->SelectError = this->SelectError;
 			return io_process;
 		}
+
 		void SelectTcpListenerChannel::AcceptHandle(SOCKET sock)
 		{
 			size_t idx = 0;

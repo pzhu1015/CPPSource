@@ -23,11 +23,17 @@ namespace System
 		class TcpSelectErrorEventArgs;
 		class TcpConnectEventArgs;
 
-		class IOProcessStartEventArgs;
-		class IOProcessStopEventArgs;
+		class IOProcessReadStartEventArgs;
+		class IOProcessReadStopEventArgs;
 
-		typedef std::function<void(const IOProcessStartEventArgs&)> IOProcessStartEventHandler;
-		typedef std::function<void(const IOProcessStopEventArgs&)> IOProcessStopEventHandler;
+		class IOProcessWriteStartEventArgs;
+		class IOProcessWriteStopEventArgs;
+
+		typedef std::function<void(const IOProcessReadStartEventArgs&)> IOProcessReadStartEventHandler;
+		typedef std::function<void(const IOProcessReadStopEventArgs&)> IOProcessReadStopEventHandler;
+
+		typedef std::function<void(const IOProcessWriteStartEventArgs&)> IOProcessWriteStartEventHandler;
+		typedef std::function<void(const IOProcessWriteStopEventArgs&)> IOProcessWriteStopEventHandler;
 
 		typedef std::function<void(const TcpConnectEventArgs&)> TcpConnectEventHandler;
 		typedef std::function<void(const TcpOnLineEventArgs&)> TcpOnLineEventHandler;

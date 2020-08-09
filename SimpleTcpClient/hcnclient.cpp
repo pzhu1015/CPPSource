@@ -32,30 +32,52 @@ using namespace System::Memory;
 std::atomic<int> g_clients = 0;
 std::atomic<int> g_send_msgs = 0;
 std::atomic<int> g_receive_msgs = 0;
+std::vector<IOProcessPtr> g_io_processor;
 int64_t g_time = GetTimestamp();
-SemaphorePtr g_start_sem = std::make_shared<Semaphore>(0);
-SemaphorePtr g_stop_sem = std::make_shared<Semaphore>(0);
+SemaphorePtr g_startread_sem = std::make_shared<Semaphore>(0);
+SemaphorePtr g_stopread_sem = std::make_shared<Semaphore>(0);
+SemaphorePtr g_startwrite_sem = std::make_shared<Semaphore>(0);
+SemaphorePtr g_stopwrite_sem = std::make_shared<Semaphore>(0);
 
-//void SendMsg()
-//{
-//	TestMsg msgs[10];
-//	while (true)
-//	{
-//		for (auto client : clients)
-//		{
-//			client->Write((char*)&msgs, sizeof(msgs));
-//		}
-//	}
-//}
-
-void IOProcessStart(const IOProcessStartEventArgs& e)
+void SendMsg(int idx)
 {
-	g_start_sem->signal();
+	std::vector<TcpClientChannelPtr> channels;
+	for (size_t i = 0; i < 250; i++)
+	{
+		TcpClientChannelPtr channel = std::make_shared<TcpClientChannel>();
+		channel->Connect("127.0.0.1", 8888);
+		g_io_processor[idx]->AddClient(channel);
+		channels.push_back(channel);
+	}
+	//TODO start thread send msg
+	TestMsg msg;
+	while (true)
+	{
+		for (auto channel : channels)
+		{
+			channel->Write((Msg*)&msg);
+		}
+	}
 }
 
-void IOProcessStop(const IOProcessStopEventArgs& e)
+void IOProcessReadStart(const IOProcessReadStartEventArgs& e)
 {
-	g_stop_sem->signal();
+	g_startread_sem->signal();
+}
+
+void IOProcessReadStop(const IOProcessReadStopEventArgs& e)
+{
+	g_stopread_sem->signal();
+}
+
+void IOProcessWriteStart(const IOProcessWriteStartEventArgs& e)
+{
+	g_startwrite_sem->signal();
+}
+
+void IOProcessWriteStop(const IOProcessWriteStopEventArgs& e)
+{
+	g_stopwrite_sem->signal();
 }
 
 void OnLine(const TcpOnLineEventArgs& e)
@@ -85,35 +107,41 @@ void SelectError(const TcpSelectErrorEventArgs& e)
 
 int main(int args, char** argv)
 {
-	std::vector<IOProcessPtr> io_processor;
 	for (int i = 0; i < 4; i++)
 	{
-		io_processor.push_back(std::make_shared<SelectIOProcess>());
-		io_processor[i]->IOProcessStart = std::bind(IOProcessStart, std::placeholders::_1);
-		io_processor[i]->IOProcessStop = std::bind(IOProcessStop, std::placeholders::_1);
-		io_processor[i]->OnLine = std::bind(OnLine, std::placeholders::_1);
-		io_processor[i]->OffLine = std::bind(OffLine, std::placeholders::_1);
-		io_processor[i]->Receive = std::bind(Receive, std::placeholders::_1);
-		io_processor[i]->Send = std::bind(Send, std::placeholders::_1);
-		io_processor[i]->SelectError = std::bind(SelectError, std::placeholders::_1);
-		io_processor[i]->Start();
+		g_io_processor.push_back(std::make_shared<SelectIOProcess>());
+		g_io_processor[i]->IOProcessReadStart = std::bind(IOProcessReadStart, std::placeholders::_1);
+		g_io_processor[i]->IOProcessReadStop = std::bind(IOProcessReadStop, std::placeholders::_1);
+
+		g_io_processor[i]->IOProcessWriteStart = std::bind(IOProcessWriteStart, std::placeholders::_1);
+		g_io_processor[i]->IOProcessWriteStop = std::bind(IOProcessWriteStop, std::placeholders::_1);
+
+		g_io_processor[i]->OnLine = std::bind(OnLine, std::placeholders::_1);
+		g_io_processor[i]->OffLine = std::bind(OffLine, std::placeholders::_1);
+		g_io_processor[i]->Receive = std::bind(Receive, std::placeholders::_1);
+		g_io_processor[i]->Send = std::bind(Send, std::placeholders::_1);
+		g_io_processor[i]->SelectError = std::bind(SelectError, std::placeholders::_1);
+		g_io_processor[i]->Start();
 	}
 
-	for (auto p : io_processor)
+	for (auto p : g_io_processor)
 	{
-		g_start_sem->wait();
+		g_startread_sem->wait();
+		g_startwrite_sem->wait();
 	}
 
-	int idx = 0;
-	for (size_t i = 0; i < 1000; i++)
+
+	std::vector<ThreadPtr> threads;
+	for (int i = 0; i < 4; i++)
 	{
-		TcpClientChannelPtr client = std::make_shared<TcpClientChannel>();
-		client->Connect("127.0.0.1", 8888);
-		io_processor[idx++]->AddClient(client);
-		if (idx == 4)
-		{
-			idx = 0;
-		}
+		threads.push_back(std::make_shared<Thread>(std::bind(SendMsg, i)));
+		threads[i]->Start();
+	}
+
+	for (auto p : g_io_processor)
+	{
+		g_stopread_sem->wait();
+		g_stopwrite_sem->wait();
 	}
 
 	while (true)

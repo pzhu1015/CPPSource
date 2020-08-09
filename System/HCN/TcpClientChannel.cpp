@@ -44,6 +44,7 @@ namespace System
 			}
 
 			m_read_pos += length;
+			std::vector<Msg*> msgs;
 			while (m_read_pos >= sizeof(Msg))
 			{
 				Msg* msg = (Msg*)m_recv_buff;
@@ -52,13 +53,8 @@ namespace System
 					char* copy_msg = new char[msg->GetLength()];
 					memcpy(copy_msg, m_recv_buff, msg->GetLength());
 					Msg* recv_msg = (Msg*)copy_msg;
-					m_recv_msgs.push(recv_msg);
-					//TODO another thread to handle OnReceive
-					/*TcpReceiveEventArgs args = m_recv_event_pool->Allocate();
-					args.SetClient(m_client);
-					args.SetMsg(msg);
-					this->OnReceive(args);
-					m_recv_event_pool->Release(args);*/
+					msgs.push_back(recv_msg);
+					
 					int last_size = m_read_pos - msg->GetLength();
 					memcpy(m_recv_buff, m_recv_buff + msg->GetLength(), last_size);
 					m_read_pos = last_size;
@@ -68,11 +64,43 @@ namespace System
 					break;
 				}
 			}
+			{
+				std::lock_guard<std::mutex> lock(m_recv_mutex);
+				for (auto msg : msgs)
+				{
+					m_recv_msgs.push(msg);
+				}
+			}
 			return true;
+		}
+
+		void TcpClientChannel::Read(Msg* msg)
+		{
+			if (!m_recv_msgs.empty())
+			{
+				std::lock_guard<std::mutex> lock(m_recv_mutex);
+				if (m_recv_msgs.empty())
+				{
+					msg = nullptr;
+					return;
+				}
+				msg = m_recv_msgs.front();
+				m_recv_msgs.pop();
+			}
+			if (msg)
+			{
+				//TODO another thread to handle OnReceive
+				TcpReceiveEventArgs args = m_recv_event_pool->Allocate();
+				args.SetClient(m_client);
+				args.SetMsg(msg);
+				this->OnReceive(args);
+				m_recv_event_pool->Release(args);
+			}
 		}
 
 		void TcpClientChannel::Write(Msg * msg)
 		{
+			std::lock_guard<std::mutex> lock(m_send_mutex);
 			m_send_msgs.push(msg);
 		}
 
@@ -81,12 +109,20 @@ namespace System
 			//TODO send to buffer, and timer expire to send data
 			while (true)
 			{
-				if (m_send_msgs.empty())
+				Msg* msg = nullptr;
+				if (!m_send_msgs.empty())
+				{
+					std::lock_guard<std::mutex> lock(m_send_mutex);
+					if (!m_send_msgs.empty())
+					{
+						msg = m_send_msgs.front();
+						m_send_msgs.pop();
+					}
+				}
+				if (!msg)
 				{
 					break;
 				}
-				Msg* msg = m_send_msgs.front();
-				m_send_msgs.pop();
 				const char* data = (const char*)msg;
 				int send_length = msg->GetLength();
 				while (true)

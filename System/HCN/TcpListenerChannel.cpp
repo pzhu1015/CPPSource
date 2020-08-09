@@ -14,7 +14,6 @@
 #include "System/HCN/TcpReceiveEventArgs.h"
 #include "System/HCN/TcpSendEventArgs.h"
 #include "System/HCN/TcpSelectErrorEventArgs.h"
-#include "System/HCN/IOProcessStartEventArgs.h"
 #include "System/HCN/TcpOnLineEventArgs.h"
 #include "System/HCN/TcpOffLineEventArgs.h"
 #include "System/HCN/TcpClientChannel.h"
@@ -43,8 +42,10 @@ namespace System
 
 		bool TcpListenerChannel::Start(int port, int threads)
 		{
-			m_start_sem = std::make_shared<Semaphore>(0);
-			m_stop_sem = std::make_shared<Semaphore>(0);
+			m_startread_sem = std::make_shared<Semaphore>(0);
+			m_stopread_sem = std::make_shared<Semaphore>(0);
+			m_startwrite_sem = std::make_shared<Semaphore>(0);
+			m_stopwrite_sem = std::make_shared<Semaphore>(0);
 			m_threadpool = std::make_shared<ThreadPool>(10000, 10);
 			m_threadpool->Start();
 			m_thread = std::make_shared<Thread>(std::bind(&TcpListenerChannel::AsyncStart, this, port, threads));
@@ -82,14 +83,24 @@ namespace System
 			}
 		}
 
-		void TcpListenerChannel::OnIOProcessStart(const IOProcessStartEventArgs& e)
+		void TcpListenerChannel::OnIOProcessReadStart(const IOProcessReadStartEventArgs& e)
 		{
-			m_start_sem->signal();
+			m_startread_sem->signal();
 		}
 
-		void TcpListenerChannel::OnIOProcessStop(const IOProcessStopEventArgs & e)
+		void TcpListenerChannel::OnIOProcessReadStop(const IOProcessReadStopEventArgs & e)
 		{
-			m_stop_sem->signal();
+			m_stopread_sem->signal();
+		}
+
+		void TcpListenerChannel::OnIOProcessWriteStart(const IOProcessWriteStartEventArgs& e)
+		{
+			m_startwrite_sem->signal();
+		}
+
+		void TcpListenerChannel::OnIOProcessWriteStop(const IOProcessWriteStopEventArgs & e)
+		{
+			m_stopwrite_sem->signal();
 		}
 
 		void TcpListenerChannel::AsyncStart(int port, int threads)
@@ -103,7 +114,8 @@ namespace System
 			}
 			for (auto p : m_io_processor)
 			{
-				m_start_sem->wait();
+				m_startread_sem->wait();
+				m_startwrite_sem->wait();
 			}
 			m_is_start = true;
 			OnStart(TcpStartEventArgs(port, threads));
@@ -115,7 +127,8 @@ namespace System
 			}
 			for (auto p : m_io_processor)
 			{
-				m_stop_sem->wait();
+				m_stopread_sem->wait();
+				m_stopwrite_sem->wait();
 			}
 			m_threadpool->Stop();
 			this->OnStop(TcpStopEventArgs());

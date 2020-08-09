@@ -47,8 +47,10 @@ namespace System
 
 			virtual void AddClient(const TcpClientChannelPtr& client) = 0;
 		protected:
-			virtual void OnStart(const IOProcessStartEventArgs& e);
-			virtual void OnStop(const IOProcessStopEventArgs& e);
+			virtual void OnReadStart(const IOProcessReadStartEventArgs& e);
+			virtual void OnReadStop(const IOProcessReadStopEventArgs& e);
+			virtual void OnWriteStart(const IOProcessWriteStartEventArgs& e);
+			virtual void OnWriteStop(const IOProcessWriteStopEventArgs& e);
 			virtual void OnOnLine(const TcpOnLineEventArgs& e);
 			virtual void OnOffLine(const TcpOffLineEventArgs& e);
 			virtual void OnSelectError(const TcpSelectErrorEventArgs& e);
@@ -60,8 +62,12 @@ namespace System
 			void AsyncStartWrite();
 
 		public:
-			IOProcessStartEventHandler IOProcessStart;
-			IOProcessStopEventHandler IOProcessStop;
+			IOProcessReadStartEventHandler IOProcessReadStart;
+			IOProcessReadStopEventHandler IOProcessReadStop;
+
+			IOProcessWriteStartEventHandler IOProcessWriteStart;
+			IOProcessWriteStopEventHandler IOProcessWriteStop;
+
 			TcpOnLineEventHandler OnLine;
 			TcpOffLineEventHandler OffLine;
 			TcpReceiveEventHandler Receive;

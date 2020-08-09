@@ -187,12 +187,6 @@
     <ClInclude Include="HCN\IOProcess.h">
       <Filter>HCN</Filter>
     </ClInclude>
-    <ClInclude Include="HCN\IOProcessStartEventArgs.h">
-      <Filter>HCN\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="HCN\IOProcessStopEventArgs.h">
-      <Filter>HCN\Events</Filter>
-    </ClInclude>
     <ClInclude Include="Exceptions\ArgumentException.h">
       <Filter>Exceptions</Filter>
     </ClInclude>
@@ -246,6 +240,18 @@
     </ClInclude>
     <ClInclude Include="HCN\SelectTcpListenerChannel.h">
       <Filter>HCN</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\IOProcessReadStartEventArgs.h">
+      <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\IOProcessReadStopEventArgs.h">
+      <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\IOProcessWriteStartEventArgs.h">
+      <Filter>HCN\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="HCN\IOProcessWriteStopEventArgs.h">
+      <Filter>HCN\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

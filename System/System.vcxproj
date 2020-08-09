@@ -190,8 +190,10 @@
     <ClInclude Include="Exceptions\IOException.h" />
     <ClInclude Include="Exceptions\NotSupportedException.h" />
     <ClInclude Include="Exceptions\SocketException.h" />
-    <ClInclude Include="HCN\IOProcessStopEventArgs.h" />
+    <ClInclude Include="HCN\IOProcessReadStopEventArgs.h" />
     <ClInclude Include="HCN\Events.h" />
+    <ClInclude Include="HCN\IOProcessWriteStartEventArgs.h" />
+    <ClInclude Include="HCN\IOProcessWriteStopEventArgs.h" />
     <ClInclude Include="HCN\Msg.h" />
     <ClInclude Include="HCN\SelectIOProcess.h" />
     <ClInclude Include="HCN\SelectTcpListenerChannel.h" />
@@ -199,7 +201,7 @@
     <ClInclude Include="HCN\TcpOffLineEventArgs.h" />
     <ClInclude Include="HCN\TcpOnLineEventArgs.h" />
     <ClInclude Include="HCN\IOProcess.h" />
-    <ClInclude Include="HCN\IOProcessStartEventArgs.h" />
+    <ClInclude Include="HCN\IOProcessReadStartEventArgs.h" />
     <ClInclude Include="HCN\Ptrs.h" />
     <ClInclude Include="HCN\TcpListenerChannel.h" />
     <ClInclude Include="HCN\TcpReceiveEventArgs.h" />

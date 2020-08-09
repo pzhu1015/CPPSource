@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="server.cpp_bk">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="hcnserver.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
