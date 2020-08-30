@@ -9,9 +9,9 @@
 #ifndef SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
 #define SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
 #include "System/EventArgs.h"
-#include "System/Net/Ptrs.h"
+#include "System/HCN/Ptrs.h"
 #include "System/HCN/Msg.h"
-using namespace System::Net;
+
 namespace System
 {
 	namespace HCN
@@ -20,15 +20,15 @@ namespace System
 		{
 		public:
 			TcpReceiveEventArgs();
-			TcpReceiveEventArgs(const TcpClientPtr &client, Msg* msg);
+			TcpReceiveEventArgs(const TcpClientChannelPtr &client, Msg* msg);
 			virtual ~TcpReceiveEventArgs();
-			TcpClientPtr GetClient() const;
+			TcpClientChannelPtr& GetChannel();
 			Msg* GetMsg() const;
 
-			void SetClient(const TcpClientPtr &client);
+			void SetChannel(const TcpClientChannelPtr &client);
 			void SetMsg(Msg* msg);
 		private:
-			TcpClientPtr m_client = nullptr;
+			TcpClientChannelPtr m_channel = nullptr;
 			Msg* m_msg = nullptr;
 		};
 	}

@@ -34,7 +34,7 @@ namespace System
 			delete[] m_recv_buff;
 		}
 
-		bool TcpClientChannel::Read()
+		bool TcpClientChannel::ProduceRead()
 		{
 			char* szRecv = m_recv_buff + m_read_pos;
 			int length = m_client->GetClient()->Receive(szRecv, RECV_BUFF_SIZE);
@@ -64,65 +64,53 @@ namespace System
 					break;
 				}
 			}
+			if (!msgs.empty())
 			{
 				std::lock_guard<std::mutex> lock(m_recv_mutex);
 				for (auto msg : msgs)
 				{
-					m_recv_msgs.push(msg);
+					m_recv_msgs.push_back(msg);
 				}
 			}
 			return true;
 		}
 
-		void TcpClientChannel::Read(Msg* msg)
+		bool TcpClientChannel::ConsumeRead()
 		{
+			std::vector<Msg*> msgs;
 			if (!m_recv_msgs.empty())
 			{
 				std::lock_guard<std::mutex> lock(m_recv_mutex);
-				if (m_recv_msgs.empty())
-				{
-					msg = nullptr;
-					return;
-				}
-				msg = m_recv_msgs.front();
-				m_recv_msgs.pop();
+				msgs.swap(m_recv_msgs);
 			}
-			if (msg)
+			for (auto msg: msgs)
 			{
 				//TODO another thread to handle OnReceive
 				TcpReceiveEventArgs args = m_recv_event_pool->Allocate();
-				args.SetClient(m_client);
+				args.SetChannel(TcpClientChannelPtr(this));
 				args.SetMsg(msg);
 				this->OnReceive(args);
 				m_recv_event_pool->Release(args);
 			}
+			return true;
 		}
 
-		void TcpClientChannel::Write(Msg * msg)
+		void TcpClientChannel::ProduceWrite(Msg * msg)
 		{
 			std::lock_guard<std::mutex> lock(m_send_mutex);
-			m_send_msgs.push(msg);
+			m_send_msgs.push_back(msg);
 		}
 
-		bool TcpClientChannel::Write()
+		bool TcpClientChannel::ConsumeWrite()
 		{
-			//TODO send to buffer, and timer expire to send data
-			while (true)
+			std::vector<Msg*> msgs;
+			if (!m_send_msgs.empty())
 			{
-				Msg* msg = nullptr;
-				if (!m_send_msgs.empty())
-				{
-					std::lock_guard<std::mutex> lock(m_send_mutex);
-					if (!m_send_msgs.empty())
-					{
-						msg = m_send_msgs.front();
-						m_send_msgs.pop();
-					}
-				}
-				if (!msg)
-				{
-					break;
-				}
+				std::lock_guard<std::mutex> lock(m_send_mutex);
+				msgs.swap(m_send_msgs);
+			}
+			for (auto msg : msgs)
+			{
 				const char* data = (const char*)msg;
 				int send_length = msg->GetLength();
 				while (true)

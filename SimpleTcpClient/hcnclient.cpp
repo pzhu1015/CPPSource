@@ -50,12 +50,13 @@ void SendMsg(int idx)
 		channels.push_back(channel);
 	}
 	//TODO start thread send msg
+	Thread::Sleep(10);
 	TestMsg msg;
 	while (true)
 	{
 		for (auto channel : channels)
 		{
-			channel->Write((Msg*)&msg);
+			channel->ProduceWrite(&msg);
 		}
 	}
 }
@@ -138,12 +139,6 @@ int main(int args, char** argv)
 		threads[i]->Start();
 	}
 
-	for (auto p : g_io_processor)
-	{
-		g_stopread_sem->wait();
-		g_stopwrite_sem->wait();
-	}
-
 	while (true)
 	{
 		int64_t crt_t = GetTimestamp();
@@ -156,6 +151,12 @@ int main(int args, char** argv)
 			g_send_msgs = 0;
 		}
 		Thread::Sleep(1);
+	}
+
+	for (auto p : g_io_processor)
+	{
+		g_stopread_sem->wait();
+		g_stopwrite_sem->wait();
 	}
 	return 0;
 }

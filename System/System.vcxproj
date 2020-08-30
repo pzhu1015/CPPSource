@@ -225,6 +225,8 @@
     <ClInclude Include="IO\Ptrs.h" />
     <ClInclude Include="IO\SeekOrigin.h" />
     <ClInclude Include="IO\Stream.h" />
+    <ClInclude Include="Jsons\cJSON.h" />
+    <ClInclude Include="Jsons\CJsonObject.hpp" />
     <ClInclude Include="Logger\CLogger.h" />
     <ClInclude Include="Memory\MemoryPool.h" />
     <ClInclude Include="Memory\ObjectPool.h" />
@@ -251,6 +253,8 @@
     <ClInclude Include="Net\TcpListener.h" />
     <ClInclude Include="NoCopy.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Reflections\Property.h" />
+    <ClInclude Include="Serializers\JsonSerialize.h" />
     <ClInclude Include="Threading\Ptrs.h" />
     <ClInclude Include="Threading\Runnable.h" />
     <ClInclude Include="Threading\Semaphore.h" />
@@ -290,6 +294,8 @@
     <ClCompile Include="IO\FileStream.cpp" />
     <ClCompile Include="IO\FileSystemInfo.cpp" />
     <ClCompile Include="IO\Stream.cpp" />
+    <ClCompile Include="Jsons\cJSON.c" />
+    <ClCompile Include="Jsons\CJsonObject.cpp" />
     <ClCompile Include="Logger\CLogger.cpp" />
     <ClCompile Include="Net\IPAddress.cpp" />
     <ClCompile Include="Net\IPEndPoint.cpp" />
@@ -300,6 +306,7 @@
     <ClCompile Include="Net\Sockets\SocketAsyncEventArgs.cpp" />
     <ClCompile Include="Net\TcpClient.cpp" />
     <ClCompile Include="Net\TcpListener.cpp" />
+    <ClCompile Include="Serializers\JsonSerialize.cpp" />
     <ClCompile Include="Threading\Semaphore.cpp" />
     <ClCompile Include="Threading\Thread.cpp" />
     <ClCompile Include="Threading\ThreadPool.cpp" />

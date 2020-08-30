@@ -38,6 +38,8 @@ namespace System
 			virtual void OnIOProcessWriteStop(const IOProcessWriteStopEventArgs& e);
 
 			void AsyncAccept(const TcpClientPtr &client, size_t idx);
+
+			void ConsumeRead();
 		protected:
 			virtual void OnStart(const TcpStartEventArgs& e);
 			virtual void OnStop(const TcpStopEventArgs& e);

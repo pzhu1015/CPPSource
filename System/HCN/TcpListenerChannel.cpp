@@ -140,5 +140,12 @@ namespace System
 			TcpClientChannelPtr channel = std::make_shared<TcpClientChannel>(client);
 			io_process->AddClient(channel);
 		}
+		void TcpListenerChannel::ConsumeRead()
+		{
+			for (auto io_processor : m_io_processor)
+			{
+				io_processor->ConsumeRead();
+			}
+		}
 	}
 }

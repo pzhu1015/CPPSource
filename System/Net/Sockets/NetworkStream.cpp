@@ -196,17 +196,17 @@ namespace System
 
 			int64_t NetworkStream::GetLength() const
 			{
-				throw NotSupportedException(__func__);
+				throw NotSupportedException(__FUNCTION__);
 			}
 
 			int64_t NetworkStream::GetPosition() const
 			{
-				throw NotSupportedException(__func__);
+				throw NotSupportedException(__FUNCTION__);
 			}
 
 			void NetworkStream::SetPosition(int64_t pos)
 			{
-				throw NotSupportedException(__func__);
+				throw NotSupportedException(__FUNCTION__);
 			}
 
 			bool NetworkStream::GetCanSeek() const
@@ -216,17 +216,17 @@ namespace System
 
 			void NetworkStream::Flush()
 			{
-				throw NotSupportedException(__func__);
+				throw NotSupportedException(__FUNCTION__);
 			}
 
 			int64_t NetworkStream::Seek(int64_t offset, SeekOrigin origin)
 			{
-				throw NotSupportedException(__func__);
+				throw NotSupportedException(__FUNCTION__);
 			}
 
 			void NetworkStream::SetLength(int64_t value)
 			{
-				throw NotSupportedException(__func__);
+				throw NotSupportedException(__FUNCTION__);
 			}
 
 			void NetworkStream::Dispose(bool disposing)

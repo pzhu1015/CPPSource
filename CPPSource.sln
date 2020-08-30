@@ -30,6 +30,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Redis", "Redis\Redis.vcxproj", "{70392FDA-01F9-4343-B244-B589BCA0CC40}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AlgorithmTester", "AlgorithmTester\AlgorithmTester.vcxproj", "{4AEEBCFB-70CC-4579-9EA8-FFE949077FFE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SimpleTcpListener", "SimpleTcpListener\SimpleTcpListener.vcxproj", "{7316FF0C-5638-4FA7-AB92-0DCB439926EB}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -46,6 +49,26 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{485F6363-FE32-46DE-A1CD-536333869F60}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Debug", "x64.Debug", "{A6E99907-5B27-4C35-BC9E-2008D3F477E7}"
+	ProjectSection(SolutionItems) = preProject
+		Library\x64.Debug\hiredis.lib = Library\x64.Debug\hiredis.lib
+		Library\x64.Debug\libeay32.dll = Library\x64.Debug\libeay32.dll
+		Library\x64.Debug\libeay32.lib = Library\x64.Debug\libeay32.lib
+		Library\x64.Debug\libevent.lib = Library\x64.Debug\libevent.lib
+		Library\x64.Debug\libevent_core.lib = Library\x64.Debug\libevent_core.lib
+		Library\x64.Debug\libevent_extras.lib = Library\x64.Debug\libevent_extras.lib
+		Library\x64.Debug\librdkafka.dll = Library\x64.Debug\librdkafka.dll
+		Library\x64.Debug\librdkafka.lib = Library\x64.Debug\librdkafka.lib
+		Library\x64.Debug\librdkafkacpp.dll = Library\x64.Debug\librdkafkacpp.dll
+		Library\x64.Debug\librdkafkacpp.lib = Library\x64.Debug\librdkafkacpp.lib
+		Library\x64.Debug\libzstd.dll = Library\x64.Debug\libzstd.dll
+		Library\x64.Debug\log4cplusD.dll = Library\x64.Debug\log4cplusD.dll
+		Library\x64.Debug\log4cplusD.lib = Library\x64.Debug\log4cplusD.lib
+		Library\x64.Debug\log4cplusSD.lib = Library\x64.Debug\log4cplusSD.lib
+		Library\x64.Debug\ssleay32.dll = Library\x64.Debug\ssleay32.dll
+		Library\x64.Debug\ssleay32.lib = Library\x64.Debug\ssleay32.lib
+		Library\x64.Debug\Win32_Interop.lib = Library\x64.Debug\Win32_Interop.lib
+		Library\x64.Debug\zlibd.dll = Library\x64.Debug\zlibd.dll
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Release", "x64.Release", "{198FA059-ED73-46CA-A61C-1F449A914E87}"
 	ProjectSection(SolutionItems) = preProject
@@ -53,6 +76,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Release", "x64.Release"
 		Library\x64.Release\jemalloc.lib = Library\x64.Release\jemalloc.lib
 		Library\x64.Release\jemallocso.dll = Library\x64.Release\jemallocso.dll
 		Library\x64.Release\jemallocso.lib = Library\x64.Release\jemallocso.lib
+		Library\x64.Release\lib_json.dll = Library\x64.Release\lib_json.dll
+		Library\x64.Release\lib_json.lib = Library\x64.Release\lib_json.lib
 		Library\x64.Release\libeay32.dll = Library\x64.Release\libeay32.dll
 		Library\x64.Release\libeay32.lib = Library\x64.Release\libeay32.lib
 		Library\x64.Release\libevent.lib = Library\x64.Release\libevent.lib

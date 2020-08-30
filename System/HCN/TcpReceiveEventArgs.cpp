@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/HCN/TcpReceiveEventArgs.h"
+#include "System/HCN/TcpClientChannel.h"
 namespace System
 {
 	namespace HCN
@@ -14,25 +15,25 @@ namespace System
 		TcpReceiveEventArgs::TcpReceiveEventArgs()
 		{
 		}
-		TcpReceiveEventArgs::TcpReceiveEventArgs(const TcpClientPtr & client, Msg * msg)
+		TcpReceiveEventArgs::TcpReceiveEventArgs(const TcpClientChannelPtr & channel, Msg * msg)
 		{
-			m_client = client;
+			m_channel = channel;
 			m_msg = msg;
 		}
 		TcpReceiveEventArgs::~TcpReceiveEventArgs()
 		{
 		}
-		TcpClientPtr TcpReceiveEventArgs::GetClient() const
+		TcpClientChannelPtr& TcpReceiveEventArgs::GetChannel()
 		{
-			return m_client;
+			return m_channel;
 		}
 		Msg * TcpReceiveEventArgs::GetMsg() const
 		{
 			return m_msg;
 		}
-		void TcpReceiveEventArgs::SetClient(const TcpClientPtr & client)
+		void TcpReceiveEventArgs::SetChannel(const TcpClientChannelPtr & channel)
 		{
-			m_client = client;
+			m_channel = channel;
 		}
 		void TcpReceiveEventArgs::SetMsg(Msg * msg)
 		{

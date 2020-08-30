@@ -253,6 +253,18 @@
     <ClInclude Include="HCN\IOProcessWriteStopEventArgs.h">
       <Filter>HCN\Events</Filter>
     </ClInclude>
+    <ClInclude Include="Jsons\cJSON.h">
+      <Filter>Jsons</Filter>
+    </ClInclude>
+    <ClInclude Include="Jsons\CJsonObject.hpp">
+      <Filter>Jsons</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflections\Property.h">
+      <Filter>Reflections</Filter>
+    </ClInclude>
+    <ClInclude Include="Serializers\JsonSerialize.h">
+      <Filter>Serializers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -390,6 +402,15 @@
     <ClCompile Include="HCN\SelectTcpListenerChannel.cpp">
       <Filter>HCN</Filter>
     </ClCompile>
+    <ClCompile Include="Jsons\cJSON.c">
+      <Filter>Jsons</Filter>
+    </ClCompile>
+    <ClCompile Include="Jsons\CJsonObject.cpp">
+      <Filter>Jsons</Filter>
+    </ClCompile>
+    <ClCompile Include="Serializers\JsonSerialize.cpp">
+      <Filter>Serializers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
@@ -436,6 +457,15 @@
     </Filter>
     <Filter Include="Memory">
       <UniqueIdentifier>{1079d8b5-4ef3-4319-b84a-01cf1231ea8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jsons">
+      <UniqueIdentifier>{2c9e39a9-a650-4dd9-952a-803f234466c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Serializers">
+      <UniqueIdentifier>{7d60d12d-ad9e-4915-8b47-614942a4d5bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reflections">
+      <UniqueIdentifier>{462bac88-87d3-425f-82af-93730a590067}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

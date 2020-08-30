@@ -11,8 +11,9 @@
 #include "System/DllExport.h"
 #include "System/Net/Ptrs.h"
 #include "System/HCN/Events.h"
+#include "System/HCN/Ptrs.h"
 
-#include <queue>
+#include <vector>
 #include <mutex>
 using namespace System::Net;
 namespace System
@@ -35,11 +36,11 @@ namespace System
 			TcpClientChannel(const TcpClientPtr& client);
 			~TcpClientChannel();
 
-			bool Read();
-			void  Read(Msg* msg);
+			bool ProduceRead();
+			bool ConsumeRead();
 			
-			bool Write();
-			void Write(Msg* msg);
+			void ProduceWrite(Msg* msg);
+			bool ConsumeWrite();
 
 			void Connect(const std::string &ip, int port);
 
@@ -60,8 +61,8 @@ namespace System
 			static const int SEND_BUFF_SIZE = 10240 * 5;
 			std::mutex m_send_mutex;
 			std::mutex m_recv_mutex;
-			std::queue<Msg*> m_recv_msgs;
-			std::queue<Msg*> m_send_msgs;
+			std::vector<Msg*> m_recv_msgs;
+			std::vector<Msg*> m_send_msgs;
 			ObjectPool<TcpReceiveEventArgs>* m_recv_event_pool = nullptr;
 			ObjectPool<TcpSendEventArgs>* m_send_event_pool = nullptr;
 			TcpClientPtr m_client = nullptr;

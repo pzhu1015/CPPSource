@@ -88,7 +88,7 @@ namespace System
 					{
 						SOCKET sock = checkRead.fd_array[i];
 						auto itr = m_clients.find(sock);
-						bool rslt = (itr->second)->Read();
+						bool rslt = (itr->second)->ProduceRead();
 						if (!rslt)
 						{
 							m_change = true;
@@ -114,10 +114,10 @@ namespace System
 						continue;
 					}
 				}
-
+				Thread::Sleep(10);
 				for (auto itr : m_clients)
 				{
-					itr.second->Write();
+					itr.second->ConsumeWrite();
 				}
 			}
 		}

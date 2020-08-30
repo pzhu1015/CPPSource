@@ -45,7 +45,10 @@ namespace System
 			void Stop();
 			size_t GetClients() const;
 
+			void ConsumeRead();
+
 			virtual void AddClient(const TcpClientChannelPtr& client) = 0;
+
 		protected:
 			virtual void OnReadStart(const IOProcessReadStartEventArgs& e);
 			virtual void OnReadStop(const IOProcessReadStopEventArgs& e);
@@ -80,7 +83,7 @@ namespace System
 			std::condition_variable m_cond;
 			ThreadPtr m_read_thread;
 			ThreadPtr m_write_thread;
-			std::vector<TcpClientPtr> m_tcpclients;
+			//std::vector<TcpClientPtr> m_tcpclients;
 			std::unordered_map<SOCKET, TcpClientChannelPtr> m_clients;
 			ObjectPool<TcpReceiveEventArgs>* m_recv_event_pool = nullptr;
 			ObjectPool<TcpSendEventArgs>* m_send_event_pool = nullptr;

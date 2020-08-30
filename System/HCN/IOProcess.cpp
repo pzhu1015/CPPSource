@@ -17,6 +17,7 @@
 #include "System/HCN/TcpSelectErrorEventArgs.h"
 #include "System/HCN/TcpReceiveEventArgs.h"
 #include "System/HCN/TcpSendEventArgs.h"
+#include "System/HCN/TcpClientChannel.h"
 #include "System/Memory/ObjectPool.h"
 #include "System/Threading/Thread.h"
 
@@ -31,8 +32,7 @@ namespace System
 
 		IOProcess::~IOProcess()
 		{
-			delete t_recv_event_pool;
-			delete t_send_event_pool;
+
 		}
 
 		void IOProcess::Start()
@@ -48,6 +48,14 @@ namespace System
 		size_t IOProcess::GetClients() const
 		{
 			return m_clients.size();
+		}
+
+		void IOProcess::ConsumeRead()
+		{
+			for (auto itr : m_clients)
+			{
+				(itr.second)->ConsumeRead();
+			}
 		}
 
 		void IOProcess::Stop()
@@ -119,16 +127,18 @@ namespace System
 			this->OnReadStart(IOProcessReadStartEventArgs());
 			IOReadHandle();
 			this->OnReadStop(IOProcessReadStopEventArgs());
+			delete t_recv_event_pool;
 		}
 
 		void IOProcess::AsyncStartWrite()
 		{
 			t_send_event_pool = new ObjectPool<TcpSendEventArgs>(250000);
 			m_send_event_pool = t_send_event_pool;
-			m_is_start = true;
+
 			this->OnWriteStart(IOProcessWriteStartEventArgs());
 			IOWriteHandle();
 			this->OnWriteStop(IOProcessWriteStopEventArgs());
+			delete t_send_event_pool;
 		}
 	}
 }
