@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_TCPOFFLINEEVENTARGS_H
 #define SYSTEM_HCN_TCPOFFLINEEVENTARGS_H
-#include "System/EventArgs.h"
+#include "System/Base/EventArgs.h"
 #include "System/Net/Ptrs.h"
 
 using namespace System::Net;

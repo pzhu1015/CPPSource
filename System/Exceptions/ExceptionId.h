@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_EXCEPTIONID_H
 #define SYSTEM_EXCEPTIONID_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include <string>
 namespace System
 {
@@ -23,7 +23,9 @@ namespace System
 			ArgumentOutOfRange,
 			ArgumentNull,
 			InvalidOperation,
-			Socket
+			Socket,
+			MySql,
+			Redis
 		};
 
 		SYSTEM_API ExceptionId GetExceptionId(const std::string& str);

@@ -9,7 +9,7 @@
 #ifndef SYSTEM_DATETIMES_TIMESTAMP_H
 #define SYSTEM_DATETIMES_TIMESTAMP_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 
 namespace System
 {

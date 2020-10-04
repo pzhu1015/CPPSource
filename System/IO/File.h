@@ -9,7 +9,7 @@
 #ifndef SYSTEM_IO_FILE_H
 #define SYSTEM_IO_FILE_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/IO/FileMode.h"
 #include "System/IO/FileAccess.h"
 #include "System/IO/Ptrs.h"

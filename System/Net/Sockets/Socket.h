@@ -9,8 +9,8 @@
 #ifndef SYSTEM_NET_SOCKET_H
 #define SYSTEM_NET_SOCKET_H
 
-#include "System/DllExport.h"
-#include "System/IDisposable.h"
+#include "System/Base/DllExport.h"
+#include "System/Base/IDisposable.h"
 #include "System/Net/Sockets/AddressFamily.h"
 #include "System/Net/Sockets/ProtocolType.h"
 #include "System/Net/Sockets/SocketType.h"

@@ -30,6 +30,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -37,12 +38,14 @@
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -50,6 +53,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -95,17 +99,20 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_AFXEXT;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -114,17 +121,20 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_AFXEXT;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -135,9 +145,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_AFXEXT;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -146,7 +157,9 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,9 +170,10 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_AFXEXT;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -168,19 +182,42 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h" />
+    <ClInclude Include="Applications\Application.h" />
+    <ClInclude Include="Base\DllExport.h" />
+    <ClInclude Include="Base\EventArgs.h" />
+    <ClInclude Include="Base\EventHandler.h" />
+    <ClInclude Include="Base\IDisposable.h" />
+    <ClInclude Include="Base\NoCopy.h" />
+    <ClInclude Include="Base\Object.h" />
+    <ClInclude Include="Base\Ptrs.h" />
+    <ClInclude Include="Configurations\Configuration.h" />
+    <ClInclude Include="Configurations\Ptrs.h" />
+    <ClInclude Include="Configurations\SimpleIni.h" />
+    <ClInclude Include="Data\ADO.h" />
+    <ClInclude Include="Data\DbCommand.h" />
+    <ClInclude Include="Data\DbConnection.h" />
+    <ClInclude Include="Data\DbTransaction.h" />
+    <ClInclude Include="Data\DbDataReader.h" />
+    <ClInclude Include="Data\DbDataParameter.h" />
+    <ClInclude Include="Data\MySqlCommand.h" />
+    <ClInclude Include="Data\MySqlConnection.h" />
+    <ClInclude Include="Data\MySqlDataReader.h" />
+    <ClInclude Include="Data\MySqlParameter.h" />
+    <ClInclude Include="Data\MySqlTransaction.h" />
+    <ClInclude Include="Data\Ptrs.h" />
+    <ClInclude Include="Data\StateChangeEventArgs.h" />
     <ClInclude Include="DateTimes\Date.h" />
     <ClInclude Include="DateTimes\Duration.h" />
     <ClInclude Include="DateTimes\DateTime.h" />
     <ClInclude Include="DateTimes\Ptrs.h" />
     <ClInclude Include="DateTimes\Time.h" />
     <ClInclude Include="DateTimes\Timestamp.h" />
-    <ClInclude Include="EventArgs.h" />
-    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Exceptions\ArgumentException.h" />
     <ClInclude Include="Exceptions\ArgumentNullException.h" />
     <ClInclude Include="Exceptions\ArgumentOutOfRangeException.h" />
@@ -188,7 +225,9 @@
     <ClInclude Include="Exceptions\ExceptionId.h" />
     <ClInclude Include="Exceptions\InvalidOperationException.h" />
     <ClInclude Include="Exceptions\IOException.h" />
+    <ClInclude Include="Exceptions\MySqlException.h" />
     <ClInclude Include="Exceptions\NotSupportedException.h" />
+    <ClInclude Include="Exceptions\RedisException.h" />
     <ClInclude Include="Exceptions\SocketException.h" />
     <ClInclude Include="HCN\IOProcessReadStopEventArgs.h" />
     <ClInclude Include="HCN\Events.h" />
@@ -210,7 +249,6 @@
     <ClInclude Include="HCN\TcpClientChannel.h" />
     <ClInclude Include="HCN\TcpStartEventArgs.h" />
     <ClInclude Include="HCN\TcpStopEventArgs.h" />
-    <ClInclude Include="IDisposable.h" />
     <ClInclude Include="IO\BufferedStream.h" />
     <ClInclude Include="IO\Directory.h" />
     <ClInclude Include="IO\DirectoryInfo.h" />
@@ -220,7 +258,6 @@
     <ClInclude Include="IO\FileInfo.h" />
     <ClInclude Include="IO\FileMode.h" />
     <ClInclude Include="IO\FileStream.h" />
-    <ClInclude Include="DllExport.h" />
     <ClInclude Include="IO\FileSystemInfo.h" />
     <ClInclude Include="IO\Ptrs.h" />
     <ClInclude Include="IO\SeekOrigin.h" />
@@ -251,8 +288,8 @@
     <ClInclude Include="Net\Sockets\SocketType.h" />
     <ClInclude Include="Net\TcpClient.h" />
     <ClInclude Include="Net\TcpListener.h" />
-    <ClInclude Include="NoCopy.h" />
-    <ClInclude Include="Object.h" />
+    <ClInclude Include="Redis\RedisClientPool.h" />
+    <ClInclude Include="Redis\RedisMgr.h" />
     <ClInclude Include="Reflections\Property.h" />
     <ClInclude Include="Serializers\JsonSerialize.h" />
     <ClInclude Include="Threading\Ptrs.h" />
@@ -262,7 +299,16 @@
     <ClInclude Include="Threading\ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Applications\Application.cpp" />
+    <ClCompile Include="Configurations\Configuration.cpp" />
+    <ClCompile Include="Data\DbConnection.cpp" />
+    <ClCompile Include="Data\DbTransaction.cpp" />
+    <ClCompile Include="Data\MySqlCommand.cpp" />
+    <ClCompile Include="Data\MySqlConnection.cpp" />
+    <ClCompile Include="Data\MySqlDataReader.cpp" />
+    <ClCompile Include="Data\MySqlParameter.cpp" />
+    <ClCompile Include="Data\MySqlTransaction.cpp" />
+    <ClCompile Include="Data\StateChangeEventArgs.cpp" />
     <ClCompile Include="DateTimes\Date.cpp" />
     <ClCompile Include="DateTimes\DateTime.cpp" />
     <ClCompile Include="DateTimes\Time.cpp" />
@@ -273,7 +319,9 @@
     <ClCompile Include="Exceptions\ExceptionId.cpp" />
     <ClCompile Include="Exceptions\InvalidOperationException.cpp" />
     <ClCompile Include="Exceptions\IOException.cpp" />
+    <ClCompile Include="Exceptions\MySqlException.cpp" />
     <ClCompile Include="Exceptions\NotSupportedException.cpp" />
+    <ClCompile Include="Exceptions\RedisException.cpp" />
     <ClCompile Include="Exceptions\SocketException.cpp" />
     <ClCompile Include="HCN\SelectIOProcess.cpp" />
     <ClCompile Include="HCN\SelectTcpListenerChannel.cpp" />
@@ -306,6 +354,8 @@
     <ClCompile Include="Net\Sockets\SocketAsyncEventArgs.cpp" />
     <ClCompile Include="Net\TcpClient.cpp" />
     <ClCompile Include="Net\TcpListener.cpp" />
+    <ClCompile Include="Redis\RedisClientPool.cpp" />
+    <ClCompile Include="Redis\RedisMgr.cpp" />
     <ClCompile Include="Serializers\JsonSerialize.cpp" />
     <ClCompile Include="Threading\Semaphore.cpp" />
     <ClCompile Include="Threading\Thread.cpp" />

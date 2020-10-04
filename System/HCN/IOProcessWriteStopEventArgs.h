@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_IOPROCESSWRITESTOPEVENTARGS_H
 #define SYSTEM_HCN_IOPROCESSWRITESTOPEVENTARGS_H
-#include "System/EventArgs.h"
+#include "System/Base/EventArgs.h"
 namespace System
 {
 	namespace HCN

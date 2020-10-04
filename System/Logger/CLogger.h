@@ -9,7 +9,7 @@
 #ifndef SYSTEM_LOGGER_CLOGGER_H
 #define SYSTEM_LOGGER_CLOGGER_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include <string>
 #include <mutex>
 

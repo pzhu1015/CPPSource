@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IO_FILESYSTEMINFO_H
 #define SYSTEM_IO_FILESYSTEMINFO_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/DateTimes/Ptrs.h"
 #include <string>
 

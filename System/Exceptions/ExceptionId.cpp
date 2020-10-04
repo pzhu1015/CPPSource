@@ -35,6 +35,10 @@ namespace System
 				return "InvalidOperationException";
 			case ExceptionId::Socket:
 				return "SocketException";
+			case ExceptionId::MySql:
+				return "MySqlException";
+			case ExceptionId::Redis:
+				return "RedisException";
 			default:
 				return "Exception";
 			}

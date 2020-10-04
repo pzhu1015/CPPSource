@@ -18,7 +18,7 @@ namespace System
 		{\
 			this->##value = value;\
 		}\
-		inline decltype(value)& get_##value()\
+		inline const decltype(value)& get_##value() const\
 		{\
 			return this->##value;\
 		}

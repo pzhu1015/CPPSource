@@ -97,21 +97,6 @@
     <ClInclude Include="Net\Sockets\SocketAsyncEventArgs.h">
       <Filter>Net\Sockets</Filter>
     </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="EventArgs.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="IDisposable.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandler.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="DateTimes\Date.h">
       <Filter>DateTimes</Filter>
     </ClInclude>
@@ -129,9 +114,6 @@
     </ClInclude>
     <ClInclude Include="IO\FileSystemInfo.h">
       <Filter>IO</Filter>
-    </ClInclude>
-    <ClInclude Include="DllExport.h">
-      <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="IO\BufferedStream.h">
       <Filter>IO</Filter>
@@ -226,9 +208,6 @@
     <ClInclude Include="Memory\Ptrs.h">
       <Filter>Memory</Filter>
     </ClInclude>
-    <ClInclude Include="NoCopy.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="HCN\SelectIOProcess.h">
       <Filter>HCN</Filter>
     </ClInclude>
@@ -264,6 +243,90 @@
     </ClInclude>
     <ClInclude Include="Serializers\JsonSerialize.h">
       <Filter>Serializers</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\Ptrs.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\MySqlConnection.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\DllExport.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\EventArgs.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\EventHandler.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\IDisposable.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\NoCopy.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Object.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Applications\Application.h">
+      <Filter>Applications</Filter>
+    </ClInclude>
+    <ClInclude Include="Configurations\SimpleIni.h">
+      <Filter>Configurations</Filter>
+    </ClInclude>
+    <ClInclude Include="Configurations\Configuration.h">
+      <Filter>Configurations</Filter>
+    </ClInclude>
+    <ClInclude Include="Configurations\Ptrs.h">
+      <Filter>Configurations</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DbConnection.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DbTransaction.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DbCommand.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\StateChangeEventArgs.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DbDataParameter.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\MySqlTransaction.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\MySqlCommand.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DbDataReader.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\Ptrs.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\MySqlException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\ADO.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\MySqlDataReader.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\MySqlParameter.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Redis\RedisClientPool.h">
+      <Filter>Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\RedisException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Redis\RedisMgr.h">
+      <Filter>Redis</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -317,9 +380,6 @@
     </ClCompile>
     <ClCompile Include="Net\Sockets\NetworkStream.cpp">
       <Filter>Net\Sockets</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>System</Filter>
     </ClCompile>
     <ClCompile Include="Net\TcpListener.cpp">
       <Filter>Net</Filter>
@@ -411,6 +471,48 @@
     <ClCompile Include="Serializers\JsonSerialize.cpp">
       <Filter>Serializers</Filter>
     </ClCompile>
+    <ClCompile Include="Applications\Application.cpp">
+      <Filter>Applications</Filter>
+    </ClCompile>
+    <ClCompile Include="Configurations\Configuration.cpp">
+      <Filter>Configurations</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\MySqlConnection.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\DbConnection.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\DbTransaction.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\StateChangeEventArgs.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\MySqlTransaction.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\MySqlCommand.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\MySqlException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\MySqlDataReader.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\MySqlParameter.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Redis\RedisClientPool.cpp">
+      <Filter>Redis</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\RedisException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Redis\RedisMgr.cpp">
+      <Filter>Redis</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
@@ -440,9 +542,6 @@
     <Filter Include="Net\Sockets">
       <UniqueIdentifier>{e07f9da8-a028-466e-8606-c77d6c8ea960}</UniqueIdentifier>
     </Filter>
-    <Filter Include="System">
-      <UniqueIdentifier>{ec560d9a-8ad7-42fd-ad55-f326df71dd91}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DateTimes">
       <UniqueIdentifier>{6a79569a-96ae-4f6e-9b14-a6e4654b4057}</UniqueIdentifier>
     </Filter>
@@ -466,6 +565,18 @@
     </Filter>
     <Filter Include="Reflections">
       <UniqueIdentifier>{462bac88-87d3-425f-82af-93730a590067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Applications">
+      <UniqueIdentifier>{43bc3b33-ef86-40a7-a002-813d5ebe4b5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{7004f33f-bc37-4118-80b4-7e6128b4787b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Configurations">
+      <UniqueIdentifier>{c64e48b6-072e-4043-bc06-0f119b329519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Redis">
+      <UniqueIdentifier>{72aea8c2-167b-4560-aef6-ec639a3b557c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

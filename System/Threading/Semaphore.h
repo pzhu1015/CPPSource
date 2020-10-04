@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_THREADING_SEMAPHORE_H
 #define SYSTEM_THREADING_SEMAPHORE_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include <mutex>
 #include <condition_variable>
 namespace System

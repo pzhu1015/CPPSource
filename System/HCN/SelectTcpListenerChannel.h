@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_SELECTTCPLISTENERCHANNEL_H
 #define SYSTEM_HCN_SELECTTCPLISTENERCHANNEL_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/HCN/TcpListenerChannel.h"
 
 namespace System

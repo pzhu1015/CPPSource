@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HNC_IOPROCESS_H
 #define SYSTEM_HNC_IOPROCESS_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/HCN/Events.h"
 #include "System/HCN/Ptrs.h"
 #include "System/Net/Sockets/SocketInclude.h"

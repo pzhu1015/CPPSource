@@ -9,9 +9,9 @@
 #ifndef SYSTEM_IO_STREAM_H
 #define SYSTEM_IO_STREAM_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/IO/SeekOrigin.h"
-#include "System/IDisposable.h"
+#include "System/Base/IDisposable.h"
 #include "System/IO/Ptrs.h"
 #include <stdint.h>
 

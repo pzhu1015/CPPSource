@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_MSG_H
 #define SYSTEM_HCN_MSG_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 namespace System
 {
 	namespace HCN

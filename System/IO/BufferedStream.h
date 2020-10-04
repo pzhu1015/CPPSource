@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IO_BUFFEREDSTREAM_H
 #define SYSTEM_IO_BUFFEREDSTREAM_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/IO/Stream.h"
 #include "System/IO/Ptrs.h"
 namespace System

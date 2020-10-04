@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_SELECTIOPROCESS_H
 #define SYSTEM_HCN_SELECTIOPROCESS_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/HCN/IOProcess.h"
 #include <atomic>
 namespace System

@@ -10,7 +10,7 @@
 #include "System/IO/FileInfo.h"
 #include "System/IO/File.h"
 #include "System/IO/Directory.h"
-#include "System/Application.h"
+#include "System/Applications/Application.h"
 
 #ifdef _WIN32
 #include <direct.h>

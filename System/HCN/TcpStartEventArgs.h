@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_TCPSTARTEVENTARGS_H
 #define SYSTEM_HCN_TCPSTARTEVENTARGS_H
-#include "System/EventArgs.h"
+#include "System/Base/EventArgs.h"
 
 namespace System
 {

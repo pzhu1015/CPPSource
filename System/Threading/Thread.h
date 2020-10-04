@@ -9,7 +9,7 @@
 #ifndef THREADING_THREAD_H
 #define THREADING_THREAD_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/Threading/Ptrs.h"
 #include <thread>
 #include <functional>

@@ -8,10 +8,10 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_NET_IPENDPOINT_H
 #define SYSTEM_NET_IPENDPOINT_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/Net/EndPoint.h"
 #include "System/Net/Ptrs.h"
-
+#include <string>
 namespace System
 {
 	namespace Net
@@ -30,7 +30,7 @@ namespace System
 			IPAddressPtr GetIPAddress() const;	
 			IPEndPoint& operator = (const IPEndPoint &endpoint);
 			virtual AddressFamily GetAddressFamily() override;
-			virtual std::string ToString() override;
+			std::string ToString();
 		private:
 			IPAddressPtr m_ip;
 			int m_port;

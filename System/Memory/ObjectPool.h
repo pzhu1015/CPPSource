@@ -8,8 +8,8 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_MEMORY_OBJECTPOOL_H
 #define SYSTEM_MEMORY_OBJECTPOOL_H
-#include "System/DllExport.h"
-#include "System/NoCopy.h"
+#include "System/Base/DllExport.h"
+#include "System/Base/NoCopy.h"
 #include "System/Exceptions/ArgumentOutOfRangeException.h"
 #include <assert.h>
 #include <queue>

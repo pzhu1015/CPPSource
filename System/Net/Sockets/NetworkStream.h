@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_NET_SOCKETS_NETWORKSTREAM_H
 #define SYSTEM_NET_SOCKETS_NETWORKSTREAM_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/IO/Stream.h"
 #include "System/IO/FileAccess.h"
 #include "System/Net/Sockets/Ptrs.h"

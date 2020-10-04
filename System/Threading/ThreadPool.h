@@ -9,8 +9,8 @@
 #ifndef SYSTEM_THREADING_THREADPOOL_H
 #define SYSTEM_THREADING_THREADPOOL_H
 
-#include "System/DllExport.h"
-#include "System/NoCopy.h"
+#include "System/Base/DllExport.h"
+#include "System/Base/NoCopy.h"
 #include "System/Threading/Ptrs.h"
 #include <functional>
 #include <mutex>

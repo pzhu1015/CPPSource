@@ -10,7 +10,7 @@
 #include "System/IO/File.h"
 #include "System/IO/DirectoryInfo.h"
 #include "System/IO/FileStream.h"
-#include "System/Application.h"
+#include "System/Applications/Application.h"
 #include <sys/stat.h>
 
 namespace System

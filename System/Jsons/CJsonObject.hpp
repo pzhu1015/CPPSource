@@ -11,7 +11,7 @@
 #ifndef CJSONOBJECT_HPP_
 #define CJSONOBJECT_HPP_
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include <stdio.h>
 #include <stddef.h>
 #include <malloc.h>

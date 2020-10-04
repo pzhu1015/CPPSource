@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_EXCEPTIONS_EXCEPTION_H
 #define SYSTEM_EXCEPTIONS_EXCEPTION_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/Exceptions/ExceptionId.h"
 #include <string>
 

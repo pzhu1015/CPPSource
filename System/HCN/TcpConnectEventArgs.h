@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_TCPCONNECTEVENTARGS_H
 #define SYSTEM_HCN_TCPCONNECTEVENTARGS_H
-#include "System/EventArgs.h"
+#include "System/Base/EventArgs.h"
 #include "System/Net/Ptrs.h"
 using namespace System::Net;
 namespace System

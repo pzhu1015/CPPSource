@@ -9,7 +9,7 @@
 #ifndef SYSTEM_THREADING_RUNNABLE_H
 #define SYSTEM_THREADING_RUNNABLE_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 
 namespace System
 {

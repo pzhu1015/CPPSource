@@ -8,10 +8,10 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_NET_SOCKETASYNCEVENTARGS_H
 #define SYSTEM_NET_SOCKETASYNCEVENTARGS_H
-#include "System/DllExport.h"
-#include "System/IDisposable.h"
-#include "System/EventArgs.h"
-#include "System/EventHandler.h"
+#include "System/Base/DllExport.h"
+#include "System/Base/IDisposable.h"
+#include "System/Base/EventArgs.h"
+#include "System/Base/EventHandler.h"
 #include "System/Net/EndPoint.h"
 #include "System/Net/Sockets/Socket.h"
 

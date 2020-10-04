@@ -9,7 +9,7 @@
 #ifndef SYSTEM_DATETIMES_DURATION_H
 #define SYSTEM_DATETIMES_DIRATION_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 
 namespace System
 {

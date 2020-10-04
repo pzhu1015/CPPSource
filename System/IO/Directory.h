@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_IO_DIRECTORY_H
 #define SYSTEM_IO_DIRECTORY_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/IO/Ptrs.h"
 #include "System/DateTimes/Ptrs.h"
 #include <string>

@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_TCPSTOPEVENTARGS_H
 #define SYSTEM_HCN_TCPSTOPEVENTARGS_H
-#include "System/EventArgs.h"
+#include "System/Base/EventArgs.h"
 
 namespace System
 {

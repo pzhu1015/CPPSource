@@ -8,8 +8,8 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_MEMORY_MEMORYPOOL_H
 #define SYSTEM_MEMORY_MEMORYPOOL_H
-#include "System/DllExport.h"
-#include "System/NoCopy.h"
+#include "System/Base/DllExport.h"
+#include "System/Base/NoCopy.h"
 namespace System
 {
 	namespace Memory

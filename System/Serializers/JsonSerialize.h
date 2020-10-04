@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_SERIALIZERS_JSONSERIALIZE_H
 #define SYSTEM_SERIALIZERS_JSONSERIALIZE_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/Jsons/CJsonObject.hpp"
 #include <type_traits>
 #include <string>
@@ -710,7 +710,6 @@ namespace System
 
 			template <class T, class = typename std::enable_if<
 				std::is_same<T, std::vector<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeTo))>::value
 				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
 			>::type>
 				static void SerializeFromVector(CJsonObject &json, const std::string &name, T & value)
@@ -733,11 +732,10 @@ namespace System
 				}
 			}
 
-			template <class T, class = typename std::enable_if<
-				std::is_same<T, std::list<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeTo))>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
-			>::type>
+				template <class T, class = typename std::enable_if<
+					std::is_same<T, std::list<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
+					&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
+				>::type>
 				static void SerializeFromList(CJsonObject &json, const std::string &name, T & value)
 			{
 				std::cout << typeid(T).name() << std::endl;
@@ -759,7 +757,6 @@ namespace System
 
 			template <class T, class = typename std::enable_if<
 				std::is_same<T, std::set<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeTo))>::value
 				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
 			>::type>
 				static void SerializeFromSet(CJsonObject &json, const std::string &name, T & value)

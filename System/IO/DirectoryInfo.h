@@ -9,7 +9,7 @@
 #ifndef SYSTEM_IO_DIRECTORYINFO_H
 #define SYSTEM_IO_DIRECTORYINFO_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/IO/FileSystemInfo.h"
 #include "System/IO/Ptrs.h"
 #include <string>

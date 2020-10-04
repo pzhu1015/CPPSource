@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_DATETIMES_TIME_H
 #define SYSTEM_DATETIMES_TIME_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include <string>
 
 namespace System

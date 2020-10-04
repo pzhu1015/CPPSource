@@ -9,7 +9,7 @@
 #ifndef SYSTEM_IO_ENCODING_H
 #define SYSTEM_IO_ENCODING_H
 
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 
 namespace System
 {

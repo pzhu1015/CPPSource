@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_TCPCLIENTCHANNEL_H
 #define SYSTEM_HCN_TCPCLIENTCHANNEL_H
-#include "System/DllExport.h"
+#include "System/Base/DllExport.h"
 #include "System/Net/Ptrs.h"
 #include "System/HCN/Events.h"
 #include "System/HCN/Ptrs.h"

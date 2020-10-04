@@ -9,7 +9,7 @@
 #include "SYSTEM/Logger/CLogger.h"
 #include "System/IO/Directory.h"
 #include "System/DateTimes/DateTime.h"
-#include "System/Application.h"
+#include "System/Applications/Application.h"
 #include "System/Threading/Thread.h"
 
 #ifdef _WIN32
@@ -75,7 +75,7 @@ namespace System
 			m_log_name = log_name;
 			if (m_log_dir_path.empty())
 			{
-				m_log_dir_path = Application::GetStartupPath();
+				m_log_dir_path = Application::GetInstance().GetStartupPath();
 			}
 
 			if (m_log_dir_path[m_log_dir_path.length() - 1] != '\\')

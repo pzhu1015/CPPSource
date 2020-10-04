@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
 #define SYSTEM_HCN_TCPRECEIVEEVENTARGS_H
-#include "System/EventArgs.h"
+#include "System/Base/EventArgs.h"
 #include "System/HCN/Ptrs.h"
 #include "System/HCN/Msg.h"
 
