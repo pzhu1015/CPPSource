@@ -6,8 +6,8 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_DATA_MYSQLCOMMAND_H
-#define SYSTEM_DATA_MYSQLCOMMAND_H
+#ifndef SYSTEM_DATA_SQLCOMMAND_H
+#define SYSTEM_DATA_SQLCOMMAND_H
 #include "System/Data/DbCommand.h"
 #include "System/Data/Ptrs.h"
 
@@ -15,13 +15,13 @@ namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API MySqlCommand : public DbCommand, public std::enable_shared_from_this<MySqlCommand>
+		class SYSTEM_API SqlCommand : public DbCommand, public std::enable_shared_from_this<SqlCommand>
 		{
 		public:
-			MySqlCommand();
-			MySqlCommand(const MySqlConnectionPtr &connection);
-			MySqlCommand(const std::string &command_text, const MySqlConnectionPtr &connection);
-			virtual ~MySqlCommand();
+			SqlCommand();
+			SqlCommand(const SqlConnectionPtr &connection);
+			SqlCommand(const std::string &command_text, const SqlConnectionPtr &connection);
+			virtual ~SqlCommand();
 
 			virtual DbConnectionPtr GetConnection() override;
 			virtual void SetConnection(const DbConnectionPtr &connection) override;
@@ -39,14 +39,17 @@ namespace System
 			virtual _variant_t ExecuteScalar() override;
 			virtual DbDataReaderPtr ExecuteReader() override;
 			virtual DbDataParameterPtr CreateParameter() override;
-			virtual std::vector<DbDataParameterPtr>& GetParameters();
-			virtual void SetParameters(const std::vector<DbDataParameterPtr> &params);
+			virtual DbDataParameterPtr CreateParameter(const std::string &name, DataTypeEnum type, const _variant_t &value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput) override;
+			virtual std::vector<DbDataParameterPtr>& GetParameters() override;
+			virtual void SetParameters(const std::vector<DbDataParameterPtr> &params) override;
 		private:
-			MySqlConnectionPtr m_connection;
-			MySqlTransactionPtr m_transaction;
+			void AppendParameters();
+		private:
+			SqlConnectionPtr m_connection;
+			SqlTransactionPtr m_transaction;
 			std::vector<DbDataParameterPtr> m_parameters;
 			_CommandPtr m_command;
 		};
 	}
 }
-#endif // !SYSTEM_DATA_MYSQLCOMMAND_H
+#endif // !SYSTEM_DATA_SQLCOMMAND_H

@@ -6,41 +6,41 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/Data/MySqlTransaction.h"
+#include "System/Data/SqlTransaction.h"
 #include "System/Data/DbConnection.h"
-#include "System/Data/MySqlConnection.h"
-#include "System/Exceptions/MySqlException.h"
+#include "System/Data/SqlConnection.h"
+#include "System/Exceptions/SqlException.h"
 using namespace System::Exceptions;
 namespace System
 {
 	namespace Data
 	{
-		MySqlTransaction::MySqlTransaction()
+		SqlTransaction::SqlTransaction()
 		{
 		}
 
-		MySqlTransaction::MySqlTransaction(const MySqlConnectionPtr & connection)
+		SqlTransaction::SqlTransaction(const SqlConnectionPtr & connection)
 		{
 			m_connection = connection;
 		}
 
-		MySqlTransaction::~MySqlTransaction()
+		SqlTransaction::~SqlTransaction()
 		{
 			m_connection = nullptr;
 		}
 
-		DbConnectionPtr MySqlTransaction::GetConnection()
+		DbConnectionPtr SqlTransaction::GetConnection()
 		{
 			return m_connection;
 		}
 
-		IsolationLevelEnum MySqlTransaction::GetIsolationLevel()
+		IsolationLevelEnum SqlTransaction::GetIsolationLevel()
 		{
 			assert(m_connection);
 			return m_connection->GetConnection()->GetIsolationLevel();
 		}
 
-		bool MySqlTransaction::Commit()
+		bool SqlTransaction::Commit()
 		{
 			try
 			{
@@ -51,12 +51,12 @@ namespace System
 			}
 			catch (_com_error &e)
 			{
-				throw MySqlException(e);
+				throw SqlException(e);
 			}
 			return false;
 		}
 
-		bool MySqlTransaction::Rollback()
+		bool SqlTransaction::Rollback()
 		{
 			try
 			{
@@ -67,7 +67,7 @@ namespace System
 			}
 			catch (_com_error &e)
 			{
-				throw MySqlException(e);
+				throw SqlException(e);
 			}
 			return false;
 		}

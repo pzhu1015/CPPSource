@@ -6,22 +6,23 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_DATA_MYSQLPARAMETER_H
-#define SYSTEM_DATA_MYSQLPARAMETER_H
+#ifndef SYSTEM_DATA_SQLPARAMETER_H
+#define SYSTEM_DATA_SQLPARAMETER_H
 #include "System/Data/DbDataParameter.h"
 #include "System/Data/Ptrs.h"
 namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API MySqlParameter : public DbDataParameter
+		class SYSTEM_API SqlParameter : public DbDataParameter
 		{
 		public:
-			MySqlParameter();
-			MySqlParameter(const char* &name, const _variant_t &value = vtMissing);
-			MySqlParameter(const std::string &name, const _variant_t &value = vtMissing);
-			MySqlParameter(const _ParameterPtr &param);
-			virtual ~MySqlParameter();
+			SqlParameter();
+			SqlParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput);
+			SqlParameter(const char* &name, const _variant_t &value);
+			SqlParameter(const std::string &name, const _variant_t &value);
+			SqlParameter(const _ParameterPtr &param);
+			virtual ~SqlParameter();
 			virtual DataTypeEnum GetDbType() override;
 			virtual void SetDbType(DataTypeEnum type) override;
 			virtual bool IsNullable() override;
@@ -38,11 +39,13 @@ namespace System
 			virtual ParameterDirectionEnum GetDirection() override;
 			virtual void SetDirection(ParameterDirectionEnum direction) override;
 			const _ParameterPtr &GetParameter() const;
-			static _ParameterPtr CreateParameter(const std::string &name, const _variant_t &value = vtMissing);
+			static _ParameterPtr CreateParameter(const std::string &name, const _variant_t &value, ParameterDirectionEnum direction);
+			static _ParameterPtr CreateParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction);
+
 		private:
-			MySqlCommandPtr m_command;
+			SqlCommandPtr m_command;
 			_ParameterPtr m_parameter;
 		};
 	}
 }
-#endif // !SYSTEM_DATA_MYSQLPARAMETER_H
+#endif // !SYSTEM_DATA_SQLPARAMETER_H

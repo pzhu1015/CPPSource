@@ -6,28 +6,28 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/Data/MySqlCommand.h"
+#include "System/Data/SqlCommand.h"
 #include "System/Data/DbConnection.h"
 #include "System/Data/DbTransaction.h"
-#include "System/Data/MySqlConnection.h"
-#include "System/Data/MySqlTransaction.h"
-#include "System/Data/MySqlDataReader.h"
-#include "System/Data/MySqlParameter.h"
-#include "System/Exceptions/MySqlException.h"
+#include "System/Data/SqlConnection.h"
+#include "System/Data/SqlTransaction.h"
+#include "System/Data/SqlDataReader.h"
+#include "System/Data/SqlParameter.h"
+#include "System/Exceptions/SqlException.h"
 #include "System/Base/Object.h"
 using namespace System::Exceptions;
 namespace System
 {
 	namespace Data
 	{
-		MySqlCommand::MySqlCommand()
+		SqlCommand::SqlCommand()
 		{
 			m_command.CreateInstance(__uuidof(Command));
 			assert(m_command);
 			m_command->PutCommandType(CommandTypeEnum::adCmdUnspecified);
 		}
 
-		MySqlCommand::MySqlCommand(const MySqlConnectionPtr & connection)
+		SqlCommand::SqlCommand(const SqlConnectionPtr & connection)
 		{
 			m_command.CreateInstance(__uuidof(Command));
 			assert(m_command);
@@ -36,7 +36,7 @@ namespace System
 			m_connection = connection;
 		}
 
-		MySqlCommand::MySqlCommand(const std::string & command_text, const MySqlConnectionPtr & connection)
+		SqlCommand::SqlCommand(const std::string & command_text, const SqlConnectionPtr & connection)
 		{
 			m_command.CreateInstance(__uuidof(Command));
 			assert(m_command);
@@ -46,71 +46,71 @@ namespace System
 			m_connection = connection;
 		}
 
-		MySqlCommand::~MySqlCommand()
+		SqlCommand::~SqlCommand()
 		{
 			m_connection = nullptr;
 			m_transaction = nullptr;
 		}
 
-		DbConnectionPtr MySqlCommand::GetConnection()
+		DbConnectionPtr SqlCommand::GetConnection()
 		{
 			return m_connection;
 		}
 
-		void MySqlCommand::SetConnection(const DbConnectionPtr & connection)
+		void SqlCommand::SetConnection(const DbConnectionPtr & connection)
 		{
-			m_connection = std::dynamic_pointer_cast<MySqlConnection>(connection);
+			m_connection = std::dynamic_pointer_cast<SqlConnection>(connection);
 			assert(m_command);
 			m_command->ActiveConnection = m_connection->GetConnection();
 		}
 
-		DbTransactionPtr MySqlCommand::GetTransaction()
+		DbTransactionPtr SqlCommand::GetTransaction()
 		{
 			return m_transaction;
 		}
 
-		void MySqlCommand::SetTransaction(const DbTransactionPtr & transaction)
+		void SqlCommand::SetTransaction(const DbTransactionPtr & transaction)
 		{
-			m_transaction = std::dynamic_pointer_cast<MySqlTransaction>(transaction);
+			m_transaction = std::dynamic_pointer_cast<SqlTransaction>(transaction);
 		}
 
-		std::string MySqlCommand::GetCommandText()
+		std::string SqlCommand::GetCommandText()
 		{
 			assert(m_command);
 			return (char*)m_command->GetCommandText();
 		}
 
-		void MySqlCommand::SetCommandText(const std::string & command)
+		void SqlCommand::SetCommandText(const std::string & command)
 		{
 			assert(m_command);
 			m_command->PutCommandText(command.data());
 		}
 
-		int MySqlCommand::GetTimeout()
+		int SqlCommand::GetTimeout()
 		{
 			assert(m_command);
 			return m_command->GetCommandTimeout();
 		}
 
-		void MySqlCommand::SetTimeout(int timeout)
+		void SqlCommand::SetTimeout(int timeout)
 		{
 			assert(m_command);
 			m_command->PutCommandTimeout(timeout);
 		}
 
-		CommandTypeEnum MySqlCommand::GetCommandType()
+		CommandTypeEnum SqlCommand::GetCommandType()
 		{
 			assert(m_command);
 			return m_command->GetCommandType();
 		}
 
-		void MySqlCommand::SetCommandType(CommandTypeEnum type)
+		void SqlCommand::SetCommandType(CommandTypeEnum type)
 		{
 			assert(m_command);
 			m_command->PutCommandType(type);
 		}
 
-		bool MySqlCommand::Prepare()
+		bool SqlCommand::Prepare()
 		{
 			try
 			{
@@ -119,12 +119,12 @@ namespace System
 			}
 			catch (_com_error &e)
 			{
-				throw MySqlException(e);
+				throw SqlException(e);
 			}
 			return false;
 		}
 
-		bool MySqlCommand::Cancel()
+		bool SqlCommand::Cancel()
 		{
 			try
 			{
@@ -135,29 +135,30 @@ namespace System
 			}
 			catch (_com_error &e)
 			{
-				throw MySqlException(e);
+				throw SqlException(e);
 			}
 			return false;
 		}
 
-		int MySqlCommand::ExecuteNoQuery()
+		int SqlCommand::ExecuteNoQuery()
 		{
 			try
 			{
 				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				assert(m_command);
+				AppendParameters();
 				_variant_t rows;
 				m_command->Execute(&rows, nullptr, GetCommandType());
 				return rows.intVal;
 			}
 			catch (_com_error &e)
 			{
-				throw MySqlException(e);
+				throw SqlException(e);
 			}
 			return -1;
 		}
 
-		_variant_t MySqlCommand::ExecuteScalar()
+		_variant_t SqlCommand::ExecuteScalar()
 		{
 			try
 			{
@@ -165,6 +166,7 @@ namespace System
 				var.vt = VARENUM::VT_EMPTY;
 				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				assert(m_command);
+				AppendParameters();
 				_variant_t rows;
 				_RecordsetPtr record = m_command->Execute(&rows, nullptr, GetCommandType());
 				if (!record) return var;
@@ -176,49 +178,58 @@ namespace System
 			}
 			catch (_com_error &e)
 			{
-				throw MySqlException(e);
+				throw SqlException(e);
 			}
 			return _variant_t();
 		}
 
-		DbDataReaderPtr MySqlCommand::ExecuteReader()
+		DbDataReaderPtr SqlCommand::ExecuteReader()
 		{
 			try
 			{
 				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				assert(m_command);
-				for (auto &item : m_parameters)
-				{
-					auto mysql_param = std::dynamic_pointer_cast<MySqlParameter>(item);
-					m_command->Parameters->Append(mysql_param->GetParameter());
-				}
+				AppendParameters();
 				_variant_t rows;
 				_RecordsetPtr record = m_command->Execute(&rows, nullptr, GetCommandType());
 				if (!record) return nullptr;
-				return std::make_shared<MySqlDataReader>(record);
+				return std::make_shared<SqlDataReader>(record);
 			}
 			catch (_com_error &e)
 			{
-				throw MySqlException(e);
+				throw SqlException(e);
 			}
 			return nullptr;
 		}
 
-		DbDataParameterPtr MySqlCommand::CreateParameter()
+		DbDataParameterPtr SqlCommand::CreateParameter()
 		{
-			_ParameterPtr param = MySqlParameter::CreateParameter("");
-			return std::make_shared<MySqlParameter>(param);
+			_ParameterPtr param = SqlParameter::CreateParameter("", _variant_t(), ParameterDirectionEnum::adParamInput);
+			return std::make_shared<SqlParameter>(param);
 		}
 
-		std::vector<DbDataParameterPtr>& MySqlCommand::GetParameters()
+		DbDataParameterPtr SqlCommand::CreateParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction)
+		{
+			_ParameterPtr param = SqlParameter::CreateParameter(name, type, value, direction);
+			return std::make_shared<SqlParameter>(param);
+		}
+
+		std::vector<DbDataParameterPtr>& SqlCommand::GetParameters()
 		{
 			return m_parameters;
 		}
 
-		void MySqlCommand::SetParameters(const std::vector<DbDataParameterPtr>& params)
+		void SqlCommand::SetParameters(const std::vector<DbDataParameterPtr>& params)
 		{
-			m_parameters = params;
-			
+			m_parameters = params;	
+		}
+		void SqlCommand::AppendParameters()
+		{
+			for (auto &item : m_parameters)
+			{
+				auto param = std::dynamic_pointer_cast<SqlParameter>(item);
+				m_command->Parameters->Append(param->GetParameter());
+			}
 		}
 	}
 }

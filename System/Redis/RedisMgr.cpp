@@ -10,6 +10,7 @@
 #include "System/Redis/RedisClientPool.h"
 #include "System/Exceptions/RedisException.h"
 #include <assert.h>
+#include <cpp_redis/core/client.hpp>
 using namespace System::Exceptions;
 
 namespace System
@@ -41,6 +42,7 @@ namespace System
 			}
 			catch (std::exception &ex)
 			{
+				cpp_redis;
 				throw RedisException(ex.what());
 			}
 			return false;

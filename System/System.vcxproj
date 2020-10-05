@@ -205,11 +205,11 @@
     <ClInclude Include="Data\DbTransaction.h" />
     <ClInclude Include="Data\DbDataReader.h" />
     <ClInclude Include="Data\DbDataParameter.h" />
-    <ClInclude Include="Data\MySqlCommand.h" />
-    <ClInclude Include="Data\MySqlConnection.h" />
-    <ClInclude Include="Data\MySqlDataReader.h" />
-    <ClInclude Include="Data\MySqlParameter.h" />
-    <ClInclude Include="Data\MySqlTransaction.h" />
+    <ClInclude Include="Data\SqlCommand.h" />
+    <ClInclude Include="Data\SqlConnection.h" />
+    <ClInclude Include="Data\SqlDataReader.h" />
+    <ClInclude Include="Data\SqlParameter.h" />
+    <ClInclude Include="Data\SqlTransaction.h" />
     <ClInclude Include="Data\Ptrs.h" />
     <ClInclude Include="Data\StateChangeEventArgs.h" />
     <ClInclude Include="DateTimes\Date.h" />
@@ -225,7 +225,7 @@
     <ClInclude Include="Exceptions\ExceptionId.h" />
     <ClInclude Include="Exceptions\InvalidOperationException.h" />
     <ClInclude Include="Exceptions\IOException.h" />
-    <ClInclude Include="Exceptions\MySqlException.h" />
+    <ClInclude Include="Exceptions\SqlException.h" />
     <ClInclude Include="Exceptions\NotSupportedException.h" />
     <ClInclude Include="Exceptions\RedisException.h" />
     <ClInclude Include="Exceptions\SocketException.h" />
@@ -301,13 +301,11 @@
   <ItemGroup>
     <ClCompile Include="Applications\Application.cpp" />
     <ClCompile Include="Configurations\Configuration.cpp" />
-    <ClCompile Include="Data\DbConnection.cpp" />
-    <ClCompile Include="Data\DbTransaction.cpp" />
-    <ClCompile Include="Data\MySqlCommand.cpp" />
-    <ClCompile Include="Data\MySqlConnection.cpp" />
-    <ClCompile Include="Data\MySqlDataReader.cpp" />
-    <ClCompile Include="Data\MySqlParameter.cpp" />
-    <ClCompile Include="Data\MySqlTransaction.cpp" />
+    <ClCompile Include="Data\SqlCommand.cpp" />
+    <ClCompile Include="Data\SqlConnection.cpp" />
+    <ClCompile Include="Data\SqlDataReader.cpp" />
+    <ClCompile Include="Data\SqlParameter.cpp" />
+    <ClCompile Include="Data\SqlTransaction.cpp" />
     <ClCompile Include="Data\StateChangeEventArgs.cpp" />
     <ClCompile Include="DateTimes\Date.cpp" />
     <ClCompile Include="DateTimes\DateTime.cpp" />
@@ -319,7 +317,7 @@
     <ClCompile Include="Exceptions\ExceptionId.cpp" />
     <ClCompile Include="Exceptions\InvalidOperationException.cpp" />
     <ClCompile Include="Exceptions\IOException.cpp" />
-    <ClCompile Include="Exceptions\MySqlException.cpp" />
+    <ClCompile Include="Exceptions\SqlException.cpp" />
     <ClCompile Include="Exceptions\NotSupportedException.cpp" />
     <ClCompile Include="Exceptions\RedisException.cpp" />
     <ClCompile Include="Exceptions\SocketException.cpp" />

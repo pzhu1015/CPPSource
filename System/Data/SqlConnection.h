@@ -6,8 +6,8 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_DATA_MYSQLCONNECTION_H
-#define SYSTEM_DATA_MYSQLCONNECTION_H
+#ifndef SYSTEM_DATA_SQLCONNECTION_H
+#define SYSTEM_DATA_SQLCONNECTION_H
 //#include "System/stdafx.h"
 #include "System/Base/DllExport.h"
 #include "System/Data/DbConnection.h"
@@ -17,11 +17,11 @@ namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API MySqlConnection : public DbConnection
+		class SYSTEM_API SqlConnection : public DbConnection
 		{
 		public:
-			MySqlConnection(const std::string &connection_str);
-			virtual ~MySqlConnection();
+			SqlConnection(const std::string &connection_str);
+			virtual ~SqlConnection();
 			virtual std::string GetConnectionString() override;
 			virtual void SetConnectionString(const std::string &str) override;
 			virtual int GetConnectionTimeout() override;
@@ -35,9 +35,9 @@ namespace System
 			virtual DbCommandPtr CreateCommand() override;
 
 			template <class T>
-			typename std::enable_if<std::is_same<T, MySqlCommandPtr>::value, T>::type CreateCommand()
+			typename std::enable_if<std::is_same<T, SqlCommandPtr>::value, T>::type CreateCommand()
 			{
-				return std::make_shared<MySqlCommand>(std::dynamic_pointer_cast<MySqlConnection>(shared_from_this()));
+				return std::make_shared<SqlCommand>(std::dynamic_pointer_cast<SqlConnection>(shared_from_this()));
 			}
 
 			const _ConnectionPtr& GetConnection() const;
@@ -46,4 +46,4 @@ namespace System
 		};
 	}
 }
-#endif // !SYSTEM_DATA_MYSQLCONNECTION_H
+#endif // !SYSTEM_DATA_SQLCONNECTION_H

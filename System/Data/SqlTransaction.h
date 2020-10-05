@@ -6,27 +6,27 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_DATA_MYSQLTRANSACTION_H
-#define SYSTEM_DATA_MYSQLTRANSACTION_H
+#ifndef SYSTEM_DATA_SQLTRANSACTION_H
+#define SYSTEM_DATA_SQLTRANSACTION_H
 #include "System/Data/DbTransaction.h"
 
 namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API MySqlTransaction : public DbTransaction
+		class SYSTEM_API SqlTransaction : public DbTransaction
 		{
 		public:
-			MySqlTransaction();
-			MySqlTransaction(const MySqlConnectionPtr &connection);
-			virtual ~MySqlTransaction();
+			SqlTransaction();
+			SqlTransaction(const SqlConnectionPtr &connection);
+			virtual ~SqlTransaction();
 			virtual DbConnectionPtr GetConnection() override;
 			virtual IsolationLevelEnum GetIsolationLevel() override;
 			virtual bool Commit() override;
 			virtual bool Rollback() override;
 		private:
-			MySqlConnectionPtr m_connection;
+			SqlConnectionPtr m_connection;
 		};
 	}
 }
-#endif // !SYSTEM_DATA_MYSQLDBTRANSACTION_H
+#endif // !SYSTEM_DATA_SQLDBTRANSACTION_H

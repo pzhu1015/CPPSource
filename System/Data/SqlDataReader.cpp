@@ -6,7 +6,7 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/Data/MySqlDataReader.h"
+#include "System/Data/SqlDataReader.h"
 namespace System
 {
 	/*
@@ -52,23 +52,23 @@ namespace System
 	*/
 	namespace Data
 	{
-		MySqlDataReader::MySqlDataReader()
+		SqlDataReader::SqlDataReader()
 		{
 		}
-		MySqlDataReader::MySqlDataReader(const _RecordsetPtr & record)
+		SqlDataReader::SqlDataReader(const _RecordsetPtr & record)
 		{
 			m_record = record;
 		}
-		MySqlDataReader::~MySqlDataReader()
+		SqlDataReader::~SqlDataReader()
 		{
 			Close();
 		}
-		bool MySqlDataReader::HasRows()
+		bool SqlDataReader::HasRows()
 		{
 			assert(m_record);
-			return m_record->GetadoEOF();
+			return !m_record->GetadoEOF();
 		}
-		int MySqlDataReader::FieldCount()
+		int SqlDataReader::FieldCount()
 		{
 			assert(m_record);
 			FieldsPtr fields = m_record->GetFields();
@@ -76,39 +76,39 @@ namespace System
 			return fields->GetCount();
 		}
 
-		bool MySqlDataReader::IsClosed()
+		bool SqlDataReader::IsClosed()
 		{
 			assert(m_record);
 			return m_record->GetState() == ObjectStateEnum::adStateClosed;
 		}
 
-		int MySqlDataReader::RecordsAffected()
+		int SqlDataReader::RecordsAffected()
 		{
 			assert(m_record);
 			return -1;
 		}
 
-		void MySqlDataReader::Close()
+		void SqlDataReader::Close()
 		{
 			assert(m_record);
 			m_record->Close();
 			m_record = nullptr;
 		}
 
-		bool MySqlDataReader::Read()
+		bool SqlDataReader::Read()
 		{
 			assert(m_record);
 			return !m_record->GetadoEOF();
 		}
 
-		bool MySqlDataReader::NextResult()
+		bool SqlDataReader::NextResult()
 		{
 			assert(m_record);
 			HRESULT hr = m_record->MoveNext();
 			return !FAILED(hr);
 		}
 
-		bool MySqlDataReader::GetBool(int ordinal)
+		bool SqlDataReader::GetBool(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -116,7 +116,7 @@ namespace System
 			return var.boolVal;
 		}
 
-		char MySqlDataReader::GetChar(int ordinal)
+		char SqlDataReader::GetChar(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -124,7 +124,7 @@ namespace System
 			return var.cVal;
 		}
 
-		double MySqlDataReader::GetDouble(int ordinal)
+		double SqlDataReader::GetDouble(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -132,7 +132,7 @@ namespace System
 			return var.dblVal;
 		}
 
-		float MySqlDataReader::GetFloat(int ordinal)
+		float SqlDataReader::GetFloat(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -140,7 +140,7 @@ namespace System
 			return var.fltVal;
 		}
 
-		short MySqlDataReader::GetInt16(int ordinal)
+		short SqlDataReader::GetInt16(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -148,15 +148,15 @@ namespace System
 			return var.iVal;
 		}
 
-		int MySqlDataReader::GetInt(int ordinal)
+		int SqlDataReader::GetInt(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_I4);
+			assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
 			return var.intVal;
 		}
 
-		int64_t MySqlDataReader::GetInt64(int ordinal)
+		int64_t SqlDataReader::GetInt64(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -164,7 +164,7 @@ namespace System
 			return var.llVal;
 		}
 
-		unsigned short MySqlDataReader::GetUInt16(int ordinal)
+		unsigned short SqlDataReader::GetUInt16(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -172,15 +172,15 @@ namespace System
 			return var.uiVal;
 		}
 
-		unsigned int MySqlDataReader::GetUInt(int ordinal)
+		unsigned int SqlDataReader::GetUInt(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_UINT);
+			assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
 			return var.uintVal;
 		}
 
-		uint64_t MySqlDataReader::GetUInt64(int ordinal)
+		uint64_t SqlDataReader::GetUInt64(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
@@ -188,7 +188,7 @@ namespace System
 			return var.ullVal;
 		}
 
-		std::string MySqlDataReader::GetString(int ordinal)
+		std::string SqlDataReader::GetString(int ordinal)
 		{
 			bool eof = m_record->adoEOF;
 			assert(m_record);
@@ -197,14 +197,14 @@ namespace System
 			return (const char*)_bstr_t(var);
 		}
 
-		bool MySqlDataReader::IsDBNull(int ordinal)
+		bool SqlDataReader::IsDBNull(int ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect((long)ordinal);
 			return (var.vt == VARENUM::VT_NULL);
 		}
 		
-		bool MySqlDataReader::GetBool(const std::string & ordinal)
+		bool SqlDataReader::GetBool(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -212,7 +212,7 @@ namespace System
 			return var.boolVal;
 		}
 
-		char MySqlDataReader::GetChar(const std::string & ordinal)
+		char SqlDataReader::GetChar(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -220,7 +220,7 @@ namespace System
 			return var.cVal;
 		}
 
-		double MySqlDataReader::GetDouble(const std::string & ordinal)
+		double SqlDataReader::GetDouble(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -228,7 +228,7 @@ namespace System
 			return var.dblVal;
 		}
 
-		float MySqlDataReader::GetFloat(const std::string & ordinal)
+		float SqlDataReader::GetFloat(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -236,7 +236,7 @@ namespace System
 			return var.fltVal;
 		}
 
-		short MySqlDataReader::GetInt16(const std::string & ordinal)
+		short SqlDataReader::GetInt16(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -244,15 +244,15 @@ namespace System
 			return var.iVal;
 		}
 
-		int MySqlDataReader::GetInt(const std::string & ordinal)
+		int SqlDataReader::GetInt(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_I4);
+			assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
 			return var.intVal;
 		}
 
-		int64_t MySqlDataReader::GetInt64(const std::string & ordinal)
+		int64_t SqlDataReader::GetInt64(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -260,7 +260,7 @@ namespace System
 			return var.llVal;
 		}
 
-		unsigned short MySqlDataReader::GetUInt16(const std::string & ordinal)
+		unsigned short SqlDataReader::GetUInt16(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -268,15 +268,15 @@ namespace System
 			return var.uiVal;
 		}
 
-		unsigned int MySqlDataReader::GetUInt(const std::string & ordinal)
+		unsigned int SqlDataReader::GetUInt(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_UI4);
+			assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
 			return var.uintVal;
 		}
 
-		uint64_t MySqlDataReader::GetUInt64(const std::string & ordinal)
+		uint64_t SqlDataReader::GetUInt64(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());
@@ -284,7 +284,7 @@ namespace System
 			return var.ullVal;
 		}
 
-		std::string MySqlDataReader::GetString(const std::string & ordinal)
+		std::string SqlDataReader::GetString(const std::string & ordinal)
 		{
 			bool eof = m_record->adoEOF;
 			assert(m_record);
@@ -293,7 +293,7 @@ namespace System
 			return (const char*)_bstr_t(var);
 		}
 
-		bool MySqlDataReader::IsDBNull(const std::string & ordinal)
+		bool SqlDataReader::IsDBNull(const std::string & ordinal)
 		{
 			assert(m_record);
 			auto var = m_record->GetCollect(ordinal.data());

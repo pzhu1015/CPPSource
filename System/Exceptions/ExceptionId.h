@@ -24,7 +24,7 @@ namespace System
 			ArgumentNull,
 			InvalidOperation,
 			Socket,
-			MySql,
+			Sql,
 			Redis
 		};
 

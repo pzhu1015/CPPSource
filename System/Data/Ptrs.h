@@ -18,17 +18,17 @@ namespace System
 		class DbTransaction;
 		class DbDataReader;
 		class DbDataParameter;
-		class MySqlConnection;
-		class MySqlTransaction;
-		class MySqlCommand;
+		class SqlConnection;
+		class SqlTransaction;
+		class SqlCommand;
 		typedef std::shared_ptr<DbConnection> DbConnectionPtr;
 		typedef std::shared_ptr<DbCommand> DbCommandPtr;
 		typedef std::shared_ptr<DbTransaction> DbTransactionPtr;
 		typedef std::shared_ptr<DbDataReader> DbDataReaderPtr;
 		typedef std::shared_ptr<DbDataParameter> DbDataParameterPtr;
-		typedef std::shared_ptr<MySqlConnection> MySqlConnectionPtr;
-		typedef std::shared_ptr<MySqlTransaction> MySqlTransactionPtr;
-		typedef std::shared_ptr<MySqlCommand> MySqlCommandPtr;
+		typedef std::shared_ptr<SqlConnection> SqlConnectionPtr;
+		typedef std::shared_ptr<SqlTransaction> SqlTransactionPtr;
+		typedef std::shared_ptr<SqlCommand> SqlCommandPtr;
 	}
 }
 #endif // !SYSTEM_DATA_PTRS_H

@@ -6,19 +6,19 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_DATA_MYSQLDATAREADER_H
-#define SYSTEM_DATA_MYSQLDATAREADER_H
+#ifndef SYSTEM_DATA_SQLDATAREADER_H
+#define SYSTEM_DATA_SQLDATAREADER_H
 #include "System/Data/DbDataReader.h"
 namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API MySqlDataReader : public DbDataReader
+		class SYSTEM_API SqlDataReader : public DbDataReader
 		{
 		public:
-			MySqlDataReader();
-			MySqlDataReader(const _RecordsetPtr &record);
-			virtual ~MySqlDataReader();
+			SqlDataReader();
+			SqlDataReader(const _RecordsetPtr &record);
+			virtual ~SqlDataReader();
 			virtual bool HasRows() override;
 			virtual int FieldCount() override;
 			virtual bool IsClosed() override;
@@ -57,4 +57,4 @@ namespace System
 		};
 	}
 }
-#endif // !SYSTEM_DATA_MYSQLDATAREADER_H
+#endif // !SYSTEM_DATA_SQLDATAREADER_H

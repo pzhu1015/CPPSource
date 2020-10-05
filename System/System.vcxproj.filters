@@ -247,9 +247,6 @@
     <ClInclude Include="Data\Ptrs.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="Data\MySqlConnection.h">
-      <Filter>Data</Filter>
-    </ClInclude>
     <ClInclude Include="Base\DllExport.h">
       <Filter>Base</Filter>
     </ClInclude>
@@ -295,28 +292,13 @@
     <ClInclude Include="Data\DbDataParameter.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="Data\MySqlTransaction.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Data\MySqlCommand.h">
-      <Filter>Data</Filter>
-    </ClInclude>
     <ClInclude Include="Data\DbDataReader.h">
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="Base\Ptrs.h">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="Exceptions\MySqlException.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="Data\ADO.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Data\MySqlDataReader.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Data\MySqlParameter.h">
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="Redis\RedisClientPool.h">
@@ -327,6 +309,24 @@
     </ClInclude>
     <ClInclude Include="Redis\RedisMgr.h">
       <Filter>Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\SqlCommand.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\SqlConnection.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\SqlDataReader.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\SqlParameter.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\SqlTransaction.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\SqlException.h">
+      <Filter>Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -477,31 +477,7 @@
     <ClCompile Include="Configurations\Configuration.cpp">
       <Filter>Configurations</Filter>
     </ClCompile>
-    <ClCompile Include="Data\MySqlConnection.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="Data\DbConnection.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="Data\DbTransaction.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
     <ClCompile Include="Data\StateChangeEventArgs.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="Data\MySqlTransaction.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="Data\MySqlCommand.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="Exceptions\MySqlException.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
-    <ClCompile Include="Data\MySqlDataReader.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="Data\MySqlParameter.cpp">
       <Filter>Data</Filter>
     </ClCompile>
     <ClCompile Include="Redis\RedisClientPool.cpp">
@@ -512,6 +488,24 @@
     </ClCompile>
     <ClCompile Include="Redis\RedisMgr.cpp">
       <Filter>Redis</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\SqlCommand.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\SqlConnection.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\SqlDataReader.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\SqlParameter.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\SqlTransaction.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\SqlException.cpp">
+      <Filter>Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

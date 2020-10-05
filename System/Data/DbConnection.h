@@ -35,7 +35,13 @@ namespace System
 		public:
 			StateChangeEventHandler StateChange;
 		protected:
-			virtual void OnStateChange(StateChangeEventArgs e);
+			virtual void OnStateChange(StateChangeEventArgs e)
+			{
+				if (StateChange != nullptr)
+				{
+					this->StateChange(e);
+				}
+			}
 		};
 	}
 }

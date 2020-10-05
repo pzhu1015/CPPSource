@@ -6,28 +6,28 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#include "System/Exceptions/MySqlException.h"
+#include "System/Exceptions/SqlException.h"
 namespace System
 {
 	namespace Exceptions
 	{
-		MySqlException::MySqlException()
+		SqlException::SqlException()
 			:
-			Exception(ExceptionId::MySql)
+			Exception(ExceptionId::Sql)
 		{
 		}
-		MySqlException::MySqlException(const _com_error & e) 
+		SqlException::SqlException(const _com_error & e) 
 			:
-			Exception(ExceptionId::MySql)
+			Exception(ExceptionId::Sql)
 		{
 			this->m_msg = (char*)e.Description();
 		}
-		MySqlException::MySqlException(const std::string & msg)
+		SqlException::SqlException(const std::string & msg)
 			:
-			Exception(msg, ExceptionId::MySql)
+			Exception(msg, ExceptionId::Sql)
 		{
 		}
-		MySqlException::~MySqlException()
+		SqlException::~SqlException()
 		{
 		}
 	}

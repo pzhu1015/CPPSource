@@ -6,8 +6,8 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_EXCEPTIONS_MYSQLEXCEPTION_H
-#define SYSTEM_EXCEPTIONS_MYSQLEXCEPTION_H
+#ifndef SYSTEM_EXCEPTIONS_SQLEXCEPTION_H
+#define SYSTEM_EXCEPTIONS_SQLEXCEPTION_H
 #include "System/Data/ADO.h"
 #include "System/Exceptions/Exception.h"
 
@@ -15,14 +15,14 @@ namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API MySqlException : public Exception
+		class SYSTEM_API SqlException : public Exception
 		{
 		public:
-			MySqlException();
-			MySqlException(const _com_error &e);
-			MySqlException(const std::string &msg);
-			virtual ~MySqlException();
+			SqlException();
+			SqlException(const _com_error &e);
+			SqlException(const std::string &msg);
+			virtual ~SqlException();
 		};
 	}
 }
-#endif // !SYSTEM_EXCEPTIONS_MYSQLEXCEPTION_H
+#endif // !SYSTEM_EXCEPTIONS_SQLEXCEPTION_H
