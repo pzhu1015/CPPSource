@@ -7,67 +7,34 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Data/SqlDataReader.h"
+#include "System/Exceptions/SqlException.h"
+#include "System/Exceptions/NotSupportedException.h"
+#include <ATLComTime.h>
+using namespace System::Exceptions;
 namespace System
 {
-	/*
-	Byte bVal;							// VT_UI1.
-	Short iVal;							// VT_I2.
-	long lVal;							// VT_I4.
-	float fltVal;						// VT_R4.
-	double dblVal;						// VT_R8.
-	VARIANT_BOOL boolVal;				// VT_BOOL.
-	SCODE scode;						// VT_ERROR.
-	CY cyVal;							// VT_CY.
-	DATE date;							// VT_DATE.
-	BSTR bstrVal;						// VT_BSTR.
-	DECIMAL FAR* pdecVal				// VT_BYREF|VT_DECIMAL.
-	IUnknown FAR* punkVal;				// VT_UNKNOWN.
-	IDispatch FAR* pdispVal;			// VT_DISPATCH.
-	SAFEARRAY FAR* parray;				// VT_ARRAY|*.
-	Byte FAR* pbVal;					// VT_BYREF|VT_UI1.
-	short FAR* piVal;					// VT_BYREF|VT_I2.
-	long FAR* plVal;					// VT_BYREF|VT_I4.
-	float FAR* pfltVal;					// VT_BYREF|VT_R4.
-	double FAR* pdblVal;				// VT_BYREF|VT_R8.
-	VARIANT_BOOL FAR* pboolVal;			// VT_BYREF|VT_BOOL.
-	SCODE FAR* pscode;					// VT_BYREF|VT_ERROR.
-	CY FAR* pcyVal;						// VT_BYREF|VT_CY.
-	DATE FAR* pdate;					// VT_BYREF|VT_DATE.
-	BSTR FAR* pbstrVal;					// VT_BYREF|VT_BSTR.
-	IUnknown FAR* FAR* ppunkVal;		// VT_BYREF|VT_UNKNOWN.
-	IDispatch FAR* FAR* ppdispVal;		// VT_BYREF|VT_DISPATCH.
-	SAFEARRAY FAR* FAR* pparray;		// VT_ARRAY|*.
-	VARIANT FAR* pvarVal;				// VT_BYREF|VT_VARIANT.
-	void FAR* byref;					// Generic ByRef.
-	char cVal;							// VT_I1.
-	unsigned short uiVal;				// VT_UI2.
-	unsigned long ulVal;				// VT_UI4.
-	int intVal;							// VT_INT.
-	unsigned int uintVal;				// VT_UINT.
-	char FAR * pcVal;					// VT_BYREF|VT_I1.
-	unsigned short FAR * puiVal;		// VT_BYREF|VT_UI2.
-	unsigned long FAR * pulVal;			// VT_BYREF|VT_UI4.
-	int FAR * pintVal;					// VT_BYREF|VT_INT.
-	unsigned int FAR * puintVal;		//VT_BYREF|VT_UINT.
-	*/
 	namespace Data
 	{
 		SqlDataReader::SqlDataReader()
 		{
 		}
+
 		SqlDataReader::SqlDataReader(const _RecordsetPtr & record)
 		{
 			m_record = record;
 		}
+
 		SqlDataReader::~SqlDataReader()
 		{
 			Close();
 		}
+
 		bool SqlDataReader::HasRows()
 		{
 			assert(m_record);
 			return !m_record->GetadoEOF();
 		}
+
 		int SqlDataReader::FieldCount()
 		{
 			assert(m_record);
@@ -84,15 +51,16 @@ namespace System
 
 		int SqlDataReader::RecordsAffected()
 		{
-			assert(m_record);
-			return -1;
+			throw NotSupportedException(__func__);
 		}
 
 		void SqlDataReader::Close()
 		{
-			assert(m_record);
-			m_record->Close();
-			m_record = nullptr;
+			if (m_record)
+			{
+				m_record->Close();
+				m_record = nullptr;
+			}
 		}
 
 		bool SqlDataReader::Read()
@@ -108,196 +76,708 @@ namespace System
 			return !FAILED(hr);
 		}
 
-		bool SqlDataReader::GetBool(int ordinal)
+		bool SqlDataReader::GetBool(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_BOOL);
-			return var.boolVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8
+				);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8
+					)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_BOOL);
+					return var.boolVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_BOOL);
+					return var.boolVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return bool();
 		}
 
-		char SqlDataReader::GetChar(int ordinal)
+		DECIMAL SqlDataReader::GetDecimal(const _variant_t & ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_I1);
-			return var.cVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_DECIMAL);
+					return var;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_DECIMAL);
+					return var;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return DECIMAL();
 		}
 
-		double SqlDataReader::GetDouble(int ordinal)
+		byte SqlDataReader::GetByte(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_R8);
-			return var.dblVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_UI1);
+					return var.bVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_UI1);
+					return var.bVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return byte();
 		}
 
-		float SqlDataReader::GetFloat(int ordinal)
+		double SqlDataReader::GetDouble(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_R4);
-			return var.fltVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_R8);
+					return var.dblVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_R8);
+					return var.dblVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return double();
 		}
 
-		short SqlDataReader::GetInt16(int ordinal)
+		float SqlDataReader::GetFloat(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_I2);
-			return var.iVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_R4);
+					return var.fltVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_R4);
+					return var.fltVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return float();
 		}
 
-		int SqlDataReader::GetInt(int ordinal)
+		__int8 SqlDataReader::GetInt8(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
-			return var.intVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_I2);
+					return var.cVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_I2);
+					return var.cVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return char();
 		}
 
-		int64_t SqlDataReader::GetInt64(int ordinal)
+		__int16 SqlDataReader::GetInt16(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_I8);
-			return var.llVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_I2);
+					return var.iVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_I2);
+					return var.iVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return short();
 		}
 
-		unsigned short SqlDataReader::GetUInt16(int ordinal)
+		__int32 SqlDataReader::GetInt32(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_UI2);
-			return var.uiVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
+					return var.intVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
+					return var.intVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return int();
 		}
 
-		unsigned int SqlDataReader::GetUInt(int ordinal)
+		__int64 SqlDataReader::GetInt64(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
-			return var.uintVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_DECIMAL);
+					return var.decVal.Lo64;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_DECIMAL);
+					return var.decVal.Lo64;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return int64_t();
 		}
 
-		uint64_t SqlDataReader::GetUInt64(int ordinal)
+		unsigned __int8 SqlDataReader::GetUInt8(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_UI8);
-			return var.ullVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_UI2);
+					return var.cVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_UI2);
+					return var.cVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return unsigned char();
 		}
 
-		std::string SqlDataReader::GetString(int ordinal)
+		unsigned __int16 SqlDataReader::GetUInt16(const _variant_t &ordinal)
 		{
-			bool eof = m_record->adoEOF;
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			assert(var.vt == VARENUM::VT_BSTR);
-			return (const char*)_bstr_t(var);
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_UI2);
+					return var.uiVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_UI2);
+					return var.uiVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return unsigned short();
 		}
 
-		bool SqlDataReader::IsDBNull(int ordinal)
+		unsigned __int32 SqlDataReader::GetUInt32(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect((long)ordinal);
-			return (var.vt == VARENUM::VT_NULL);
-		}
-		
-		bool SqlDataReader::GetBool(const std::string & ordinal)
-		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_BOOL);
-			return var.boolVal;
-		}
-
-		char SqlDataReader::GetChar(const std::string & ordinal)
-		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_I1);
-			return var.cVal;
-		}
-
-		double SqlDataReader::GetDouble(const std::string & ordinal)
-		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_R8);
-			return var.dblVal;
-		}
-
-		float SqlDataReader::GetFloat(const std::string & ordinal)
-		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_R4);
-			return var.fltVal;
-		}
-
-		short SqlDataReader::GetInt16(const std::string & ordinal)
-		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_I2);
-			return var.iVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
+					return var.uintVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
+					return var.uintVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return unsigned int();
 		}
 
-		int SqlDataReader::GetInt(const std::string & ordinal)
+		unsigned __int64 SqlDataReader::GetUInt64(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
-			return var.intVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_UI8);
+					return var.ullVal;
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_UI8);
+					return var.ullVal;
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return uint64_t();
 		}
 
-		int64_t SqlDataReader::GetInt64(const std::string & ordinal)
+		std::string SqlDataReader::GetString(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_I8);
-			return var.llVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR || 
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_BSTR);
+					return (const char*)_bstr_t(var);
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_BSTR);
+					return (const char*)_bstr_t(var);
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return std::string();
 		}
 
-		unsigned short SqlDataReader::GetUInt16(const std::string & ordinal)
+		COleDateTime SqlDataReader::GetDateTime(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_UI2);
-			return var.uiVal;
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_DATE);
+					return COleDateTime(var.date);
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					assert(var.vt == VARENUM::VT_DATE);
+					return COleDateTime(var.date);
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return COleDateTime();
 		}
 
-		unsigned int SqlDataReader::GetUInt(const std::string & ordinal)
+		bool SqlDataReader::IsDBNull(const _variant_t &ordinal)
 		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
-			return var.uintVal;
-		}
-
-		uint64_t SqlDataReader::GetUInt64(const std::string & ordinal)
-		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_UI8);
-			return var.ullVal;
-		}
-
-		std::string SqlDataReader::GetString(const std::string & ordinal)
-		{
-			bool eof = m_record->adoEOF;
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			assert(var.vt == VARENUM::VT_BSTR);
-			return (const char*)_bstr_t(var);
-		}
-
-		bool SqlDataReader::IsDBNull(const std::string & ordinal)
-		{
-			assert(m_record);
-			auto var = m_record->GetCollect(ordinal.data());
-			return (var.vt == VARENUM::VT_NULL);
+			try
+			{
+				assert(m_record);
+				assert(ordinal.vt == VARENUM::VT_BSTR ||
+					ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8);
+				if (ordinal.vt == VARENUM::VT_I1 ||
+					ordinal.vt == VARENUM::VT_I2 ||
+					ordinal.vt == VARENUM::VT_INT ||
+					ordinal.vt == VARENUM::VT_I4 ||
+					ordinal.vt == VARENUM::VT_I8 ||
+					ordinal.vt == VARENUM::VT_UI1 ||
+					ordinal.vt == VARENUM::VT_UI2 ||
+					ordinal.vt == VARENUM::VT_UI4 ||
+					ordinal.vt == VARENUM::VT_UI8)
+				{
+					assert((long)ordinal >= 0);
+					auto var = m_record->GetCollect((long)ordinal);
+					return (var.vt == VARENUM::VT_NULL);
+				}
+				else
+				{
+					auto var = m_record->GetCollect(ordinal);
+					return (var.vt == VARENUM::VT_NULL);
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return false;
 		}
 	}
 }

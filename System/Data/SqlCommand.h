@@ -39,9 +39,16 @@ namespace System
 			virtual _variant_t ExecuteScalar() override;
 			virtual DbDataReaderPtr ExecuteReader() override;
 			virtual DbDataParameterPtr CreateParameter() override;
-			virtual DbDataParameterPtr CreateParameter(const std::string &name, DataTypeEnum type, const _variant_t &value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput) override;
+			virtual DbDataParameterPtr CreateParameter(const std::string &name, DataTypeEnum type, _variant_t &value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput) override;
 			virtual std::vector<DbDataParameterPtr>& GetParameters() override;
 			virtual void SetParameters(const std::vector<DbDataParameterPtr> &params) override;
+
+			template <class T>
+			typename std::enable_if<std::is_same<T, SqlDataReaderPtr>::value, T>::type ExecuteReader()
+			{
+				DbDataReaderPtr reader = ExecuteReader();
+				return std::dynamic_pointer_cast<SqlDataReader>(reader);
+			}
 		private:
 			void AppendParameters();
 		private:

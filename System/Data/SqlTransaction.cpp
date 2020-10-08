@@ -44,8 +44,7 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection);
-				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
+				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				HRESULT hr = m_connection->GetConnection()->CommitTrans();
 				return !FAILED(hr);
 			}
@@ -60,8 +59,7 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection);
-				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
+				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				HRESULT hr = m_connection->GetConnection()->RollbackTrans();
 				return !FAILED(hr);
 			}

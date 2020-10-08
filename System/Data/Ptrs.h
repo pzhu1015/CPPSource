@@ -21,6 +21,7 @@ namespace System
 		class SqlConnection;
 		class SqlTransaction;
 		class SqlCommand;
+		class SqlDataReader;
 		typedef std::shared_ptr<DbConnection> DbConnectionPtr;
 		typedef std::shared_ptr<DbCommand> DbCommandPtr;
 		typedef std::shared_ptr<DbTransaction> DbTransactionPtr;
@@ -29,6 +30,7 @@ namespace System
 		typedef std::shared_ptr<SqlConnection> SqlConnectionPtr;
 		typedef std::shared_ptr<SqlTransaction> SqlTransactionPtr;
 		typedef std::shared_ptr<SqlCommand> SqlCommandPtr;
+		typedef std::shared_ptr<SqlDataReader> SqlDataReaderPtr;
 	}
 }
 #endif // !SYSTEM_DATA_PTRS_H

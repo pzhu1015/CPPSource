@@ -42,7 +42,6 @@ namespace System
 			}
 			catch (std::exception &ex)
 			{
-				cpp_redis;
 				throw RedisException(ex.what());
 			}
 			return false;

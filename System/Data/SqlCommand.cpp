@@ -114,7 +114,8 @@ namespace System
 		{
 			try
 			{
-				//TODO: Prepare()
+				assert(m_command);
+				m_command->PutPrepared(true);
 				return true;
 			}
 			catch (_com_error &e)
@@ -144,7 +145,7 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
+				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				assert(m_command);
 				AppendParameters();
 				_variant_t rows;
@@ -162,12 +163,10 @@ namespace System
 		{
 			try
 			{
-				_variant_t var;
-				var.vt = VARENUM::VT_EMPTY;
-				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
+				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				assert(m_command);
 				AppendParameters();
-				_variant_t rows;
+				_variant_t rows, var;
 				_RecordsetPtr record = m_command->Execute(&rows, nullptr, GetCommandType());
 				if (!record) return var;
 				if (!record->GetadoEOF())
@@ -187,7 +186,7 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection->GetState() == ObjectStateEnum::adStateOpen);
+				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
 				assert(m_command);
 				AppendParameters();
 				_variant_t rows;
@@ -204,14 +203,12 @@ namespace System
 
 		DbDataParameterPtr SqlCommand::CreateParameter()
 		{
-			_ParameterPtr param = SqlParameter::CreateParameter("", _variant_t(), ParameterDirectionEnum::adParamInput);
-			return std::make_shared<SqlParameter>(param);
+			return std::make_shared<SqlParameter>("", DataTypeEnum::adEmpty, "");
 		}
 
-		DbDataParameterPtr SqlCommand::CreateParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction)
+		DbDataParameterPtr SqlCommand::CreateParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction)
 		{
-			_ParameterPtr param = SqlParameter::CreateParameter(name, type, value, direction);
-			return std::make_shared<SqlParameter>(param);
+			return std::make_shared<SqlParameter>(name, type, value, direction);
 		}
 
 		std::vector<DbDataParameterPtr>& SqlCommand::GetParameters()
@@ -223,6 +220,7 @@ namespace System
 		{
 			m_parameters = params;	
 		}
+
 		void SqlCommand::AppendParameters()
 		{
 			for (auto &item : m_parameters)

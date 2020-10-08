@@ -26,9 +26,9 @@ namespace System
 			virtual void SetParameterName(const std::string &name) = 0;
 			virtual std::string GetSourceColumn() = 0;
 			virtual void SetSourceColumn() = 0;
-			virtual char GetPrecision() = 0;
+			virtual __int8 GetPrecision() = 0;
 			virtual void SetPrecision(char precision) = 0;
-			virtual char GetScale() = 0;
+			virtual __int8 GetScale() = 0;
 			virtual void SetScale(char scale) = 0;
 			virtual _variant_t GetValue() = 0;
 			virtual void SetValue(const _variant_t & value) = 0;

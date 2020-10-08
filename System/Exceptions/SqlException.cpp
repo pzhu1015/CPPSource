@@ -20,6 +20,7 @@ namespace System
 			:
 			Exception(ExceptionId::Sql)
 		{
+			CString str = e.ErrorMessage();
 			this->m_msg = (char*)e.Description();
 		}
 		SqlException::SqlException(const std::string & msg)

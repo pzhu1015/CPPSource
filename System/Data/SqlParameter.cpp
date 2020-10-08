@@ -8,28 +8,20 @@
 ///////////////////////////////////////////////////////////////////
 #include "System/Data/SqlParameter.h"
 #include "System/Base/Object.h"
+#include "System/Exceptions/NotSupportedException.h"
+using namespace System::Exceptions;
 namespace System
 {
 	namespace Data
 	{
 		SqlParameter::SqlParameter()
 		{
-			m_parameter = CreateParameter("", _variant_t(), ParameterDirectionEnum::adParamInput);
+			m_parameter = CreateParameter("", DataTypeEnum::adEmpty, _variant_t(), ParameterDirectionEnum::adParamInput);
 		}
 
-		SqlParameter::SqlParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction)
+		SqlParameter::SqlParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction)
 		{
 			m_parameter = CreateParameter(name, type, value, direction);
-		}
-
-		SqlParameter::SqlParameter(const char *& name, const _variant_t & value)
-		{
-			m_parameter = CreateParameter(name, value, ParameterDirectionEnum::adParamInput);
-		}
-
-		SqlParameter::SqlParameter(const std::string & name, const _variant_t & value)
-		{
-			m_parameter = CreateParameter(name, value, ParameterDirectionEnum::adParamInput);
 		}
 
 		SqlParameter::SqlParameter(const _ParameterPtr &param)
@@ -39,6 +31,7 @@ namespace System
 
 		SqlParameter::~SqlParameter()
 		{
+			m_command = nullptr;
 		}
 
 		DataTypeEnum SqlParameter::GetDbType()
@@ -55,8 +48,7 @@ namespace System
 
 		bool SqlParameter::IsNullable()
 		{
-			assert(m_parameter);
-			return false;
+			throw NotSupportedException(__func__);
 		}
 
 		std::string SqlParameter::GetParameterName()
@@ -73,16 +65,15 @@ namespace System
 
 		std::string SqlParameter::GetSourceColumn()
 		{
-			assert(m_parameter);
-			return "";
+			throw NotSupportedException(__func__);
 		}
 
 		void SqlParameter::SetSourceColumn()
 		{
-			assert(m_parameter);
+			throw NotSupportedException(__func__);
 		}
 
-		char SqlParameter::GetPrecision()
+		__int8 SqlParameter::GetPrecision()
 		{
 			assert(m_parameter);
 			return m_parameter->GetPrecision();
@@ -94,7 +85,7 @@ namespace System
 			m_parameter->PutPrecision(precision);
 		}
 
-		char SqlParameter::GetScale()
+		__int8 SqlParameter::GetScale()
 		{
 			assert(m_parameter);
 			return m_parameter->GetNumericScale();
@@ -135,119 +126,71 @@ namespace System
 			return m_parameter;
 		}
 
-		_ParameterPtr SqlParameter::CreateParameter(const std::string & name, const _variant_t & value, ParameterDirectionEnum direction)
+		_ParameterPtr SqlParameter::CreateParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction)
 		{
 			long size = 0;
 			_CommandPtr command;
 			command.CreateInstance(__uuidof(Command));
 			assert(command);
-			DataTypeEnum type = DataTypeEnum::adEmpty;
-			switch (value.vt)
+			switch (type)
 			{
-			case VARENUM::VT_I1:
+			case DataTypeEnum::adBoolean:
 				size = sizeof(char);
-				type = DataTypeEnum::adTinyInt;
+				value.vt = VARENUM::VT_BOOL;
 				break;
-			case VARENUM::VT_I2:
+			case DataTypeEnum::adTinyInt:
+				size = sizeof(char);
+				value.vt = VARENUM::VT_I1;
+				break;
+			case DataTypeEnum::adSmallInt:
 				size = sizeof(short);
-				type = DataTypeEnum::adSmallInt;
+				value.vt = VARENUM::VT_I2;
 				break;
-			case VARENUM::VT_I4:
-			case VARENUM::VT_INT:
+			case DataTypeEnum::adInteger:
 				size = sizeof(int);
-				type = DataTypeEnum::adInteger;
+				value.vt = VARENUM::VT_I4;
 				break;
-			case VARENUM::VT_I8:
+			case DataTypeEnum::adBigInt:
 				size = sizeof(int64_t);
-				type = DataTypeEnum::adBigInt;
+				value.vt = VT_I8;
 				break;
-			case VARENUM::VT_UI1:
+			case DataTypeEnum::adUnsignedTinyInt:
 				size = sizeof(unsigned char);
-				type = DataTypeEnum::adUnsignedTinyInt;
+				value.vt = VARENUM::VT_UI1;
 				break;
-			case VARENUM::VT_UI2:
+			case DataTypeEnum::adUnsignedSmallInt:
 				size = sizeof(unsigned short);
-				type = DataTypeEnum::adUnsignedSmallInt;
+				value.vt = VARENUM::VT_UI2;
 				break;
-			case VARENUM::VT_UI4:
-			case VARENUM::VT_UINT:
+			case DataTypeEnum::adUnsignedInt:
 				size = sizeof(unsigned int);
-				type = DataTypeEnum::adUnsignedInt;
+				value.vt = VARENUM::VT_UI4;
 				break;
-			case VARENUM::VT_UI8:
-				size = sizeof(uint64_t);
-				type = DataTypeEnum::adUnsignedBigInt;
+			case DataTypeEnum::adUnsignedBigInt:
+				size = sizeof(int64_t);
+				value.vt = VT_UI8;
 				break;
-			case VARENUM::VT_R4:
-				size = sizeof(float);
-				type = DataTypeEnum::adDecimal;
+			case DataTypeEnum::adDecimal:
+				throw NotSupportedException(__func__);
 				break;
-			case VARENUM::VT_R8:
+			case DataTypeEnum::adDouble:
 				size = sizeof(double);
-				type = DataTypeEnum::adDouble;
+				value.vt = VARENUM::VT_R8;
 				break;
-			case VARENUM::VT_BOOL:
-				size = sizeof(bool);
-				type = DataTypeEnum::adBoolean;
+			case DataTypeEnum::adVarChar:
+			case DataTypeEnum::adBSTR:
+			case DataTypeEnum::adVarWChar:
+			case DataTypeEnum::adWChar:
+				size = wcslen(value.bstrVal);
+				value.vt = VARENUM::VT_BSTR;
 				break;
-			case VARENUM::VT_BSTR:
-				type = DataTypeEnum::adBSTR;
+			case DataTypeEnum::adDate:
+			case DataTypeEnum::adDBDate:
+			case DataTypeEnum::adDBTimeStamp:
+				throw NotSupportedException(__func__);
 				break;
 			default:
-				type = DataTypeEnum::adEmpty;
-				break;
-			}
-			_ParameterPtr parameter = command->CreateParameter(name.data(), type, direction, size, value);
-			assert(parameter);
-			return parameter;
-		}
-
-		_ParameterPtr SqlParameter::CreateParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction)
-		{
-			long size = 0;
-			_CommandPtr command;
-			command.CreateInstance(__uuidof(Command));
-			assert(command);
-			switch (value.vt)
-			{
-			case VARENUM::VT_I1:
-				size = sizeof(char);
-				break;
-			case VARENUM::VT_I2:
-				size = sizeof(short);
-				break;
-			case VARENUM::VT_I4:
-			case VARENUM::VT_INT:
-				size = sizeof(int);
-				break;
-			case VARENUM::VT_I8:
-				size = sizeof(int64_t);
-				break;
-			case VARENUM::VT_UI1:
-				size = sizeof(unsigned char);
-				break;
-			case VARENUM::VT_UI2:
-				size = sizeof(unsigned short);
-				break;
-			case VARENUM::VT_UI4:
-			case VARENUM::VT_UINT:
-				size = sizeof(unsigned int);
-				break;
-			case VARENUM::VT_UI8:
-				size = sizeof(uint64_t);
-				break;
-			case VARENUM::VT_R4:
-				size = sizeof(float);
-				break;
-			case VARENUM::VT_R8:
-				size = sizeof(double);
-				break;
-			case VARENUM::VT_BOOL:
-				size = sizeof(bool);
-				break;
-			case VARENUM::VT_BSTR:
-				break;
-			default:
+				throw NotSupportedException(__func__);
 				break;
 			}
 			_ParameterPtr parameter = command->CreateParameter(name.data(), type, direction, size, value);
