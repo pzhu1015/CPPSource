@@ -9,6 +9,7 @@
 #ifndef SYSTEM_DATA_SQLDATAREADER_H
 #define SYSTEM_DATA_SQLDATAREADER_H
 #include "System/Data/DbDataReader.h"
+#include <unordered_set>
 namespace System
 {
 	namespace Data
@@ -198,6 +199,7 @@ namespace System
 			*/
 		private:
 			_RecordsetPtr m_record;
+			bool m_first = true;
 		};
 	}
 }

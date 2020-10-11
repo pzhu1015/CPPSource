@@ -39,7 +39,6 @@ namespace System
 			virtual _variant_t ExecuteScalar() override;
 			virtual DbDataReaderPtr ExecuteReader() override;
 			virtual DbDataParameterPtr CreateParameter() override;
-			virtual DbDataParameterPtr CreateParameter(const std::string &name, DataTypeEnum type, _variant_t &value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput) override;
 			virtual std::vector<DbDataParameterPtr>& GetParameters() override;
 			virtual void SetParameters(const std::vector<DbDataParameterPtr> &params) override;
 

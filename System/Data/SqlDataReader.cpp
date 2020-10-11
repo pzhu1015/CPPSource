@@ -51,29 +51,71 @@ namespace System
 
 		int SqlDataReader::RecordsAffected()
 		{
-			throw NotSupportedException(__func__);
+			assert(m_record);
+			return m_record->GetRecordCount();
 		}
 
 		void SqlDataReader::Close()
 		{
-			if (m_record)
+			try
 			{
-				m_record->Close();
-				m_record = nullptr;
+				if (m_record != nullptr)
+				{
+					if (!IsClosed())
+					{
+						m_record->Close();
+						m_record = nullptr;
+					}
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
 			}
 		}
 
 		bool SqlDataReader::Read()
 		{
-			assert(m_record);
-			return !m_record->GetadoEOF();
+			try
+			{
+				assert(m_record);
+				if (m_first)
+				{
+					HRESULT hr = m_record->MoveFirst();
+					assert(!FAILED(hr));
+					m_first = false;
+				}
+				else
+				{
+					HRESULT hr = m_record->MoveNext();
+					assert(!FAILED(hr));
+				}
+				return HasRows();
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return false;
 		}
 
 		bool SqlDataReader::NextResult()
 		{
-			assert(m_record);
-			HRESULT hr = m_record->MoveNext();
-			return !FAILED(hr);
+			try
+			{
+				_variant_t rows;
+				auto record = m_record->NextRecordset(&rows);
+				if (!record) return false;
+				Close();
+				m_record = record;
+				m_first = true;
+				return true;
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return false;
 		}
 
 		bool SqlDataReader::GetBool(const _variant_t &ordinal)
@@ -325,13 +367,13 @@ namespace System
 				{
 					assert((long)ordinal >= 0);
 					auto var = m_record->GetCollect((long)ordinal);
-					assert(var.vt == VARENUM::VT_I2);
+					assert(var.vt == VARENUM::VT_I2 || var.vt == VARENUM::VT_I1);
 					return var.cVal;
 				}
 				else
 				{
 					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_I2);
+					assert(var.vt == VARENUM::VT_I2 || var.vt == VARENUM::VT_I1);
 					return var.cVal;
 				}
 			}

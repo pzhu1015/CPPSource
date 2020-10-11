@@ -17,7 +17,7 @@
 using namespace System;
 using namespace System::Data;
 using namespace System::Exceptions;
-#define MYSQL_CONNECTION_STRING "Provider = MSDASQL.1; Persist Security Info = True; Extended Properties = 'Driver=MySQL ODBC 8.0 Unicode Driver;SERVER=192.168.1.10;UID=root;PWD=12345;DATABASE=bigdata;PORT=3306'"
+#define MYSQL_CONNECTION_STRING "Provider = MSDASQL.1; Persist Security Info = True; Extended Properties = 'Driver=MySQL ODBC 8.0 Unicode Driver;SERVER=192.168.1.10;UID=root;PWD=12345;DATABASE=bigdata;PORT=3306;OPTION=67108864'"
 #define SQLSERVER_CONNECTION_STRING "Provider = SQLOLEDB.1;Persist Security Info = true; User ID = sa; Password = 12345;initial Catalog = sqlserver_test;Data Source = 192.168.1.4"
 #define ORACLE_CONNECTION_STRING "Provider=MSDAORA.1;User ID=root;Password=123456;Data Source=192.168.1.5;Persist Security Info = False"
 
@@ -64,7 +64,6 @@ void TestSQLServer()
 			f2 = reader->GetString((int)1);
 			f3 = reader->GetString((char)2);
 			std::cout << f1 << "\t" << f2 << "\t" << f3 << std::endl;
-			reader->NextResult();
 		}
 
 		command = connection->CreateCommand();
@@ -90,7 +89,6 @@ void TestSQLServer()
 			f2 = reader->GetString((long long)1);
 			f3 = reader->GetString(2);
 			std::cout << f1 << "\t" << f2 << "\t" << f3 << std::endl;
-			reader->NextResult();
 		}
 		reader->Close();
 		command = connection->CreateCommand();
@@ -113,7 +111,6 @@ void TestSQLServer()
 			f2 = reader->GetString(1);
 			f3 = reader->GetString(2);
 			std::cout << f1 << "\t" << f2 << "\t" << f3 << std::endl;
-			reader->NextResult();
 		}
 		reader->Close();
 		command = connection->CreateCommand();
@@ -131,7 +128,6 @@ void TestSQLServer()
 			f3 = reader->GetString(2);
 			f4 = reader->GetString(3);
 			std::cout << f1 << "\t" << f2 << "\t" << f3 << "\t" << f4 << std::endl;
-			reader->NextResult();
 		}
 		reader->Close();
 		command = connection->CreateCommand();
@@ -199,40 +195,48 @@ void TestMySql()
 		rwos = command->ExecuteNoQuery();
 		//select
 		command = connection->CreateCommand();
-		command->SetCommandText("select * from tb_test");
+		command->SetCommandText("select count(*) from tb_test");
+		int count = command->ExecuteScalar();
+		//multi select
+		command = connection->CreateCommand();
+		command->SetCommandText("select * from tb_test;select * from tb_test where f0=11;");
 		reader = command->ExecuteReader();
-		bool has = reader->HasRows();
-		int fields = reader->FieldCount();
-		while (reader->Read())
+		do
 		{
-			int f0 = reader->GetInt32("f0");
-			std::string f1 = reader->GetString("f1");
-			char f2 = reader->GetInt8("f2");
-			short f3 = reader->GetInt16("f3");
-			bool f4 = reader->GetBool("f4");
-			int64_t f5 = reader->GetInt64("f5");
-			float f6 = reader->GetFloat("f6");
-			double f7 = reader->GetDouble("f7");
-			DECIMAL f8 = reader->GetDecimal("f8");
-			COleDateTime f9 = reader->GetDateTime("f9");
-			COleDateTime f10 = reader->GetDateTime("f10");
-			COleDateTime f11 = reader->GetDateTime("f11");
-			std::cout
-				<< f0 << "\t"
-				<< f1 << "\t"
-				<< (int)f2 << "\t"
-				<< f3 << "\t"
-				<< f4 << "\t"
-				<< f5 << "\t"
-				<< f6 << "\t"
-				<< f7 << "\t"
-				<< f8.Lo32 << "\t"
-				<< CT2A(f9.Format(_T("%Y-%m-%d %H:%M:%S")).GetString()) << "\t"
-				<< CT2A(f10.Format(_T("%Y-%m-%d")).GetString()) << "\t"
-				<< CT2A(f11.Format(_T("%Y-%m-%d %H:%M:%S")).GetString())
-				<< std::endl;
-			reader->NextResult();
-		}
+			bool has = reader->HasRows();
+			int fields = reader->FieldCount();
+			bool is_closed = reader->IsClosed();
+			rows = reader->RecordsAffected();
+			while (reader->Read())
+			{
+				int f0 = reader->GetInt32("f0");
+				std::string f1 = reader->GetString("f1");
+				char f2 = reader->GetInt8("f2");
+				short f3 = reader->GetInt16("f3");
+				bool f4 = reader->GetBool("f4");
+				int64_t f5 = reader->GetInt64("f5");
+				float f6 = reader->GetFloat("f6");
+				double f7 = reader->GetDouble("f7");
+				DECIMAL f8 = reader->GetDecimal("f8");
+				COleDateTime f9 = reader->GetDateTime("f9");
+				COleDateTime f10 = reader->GetDateTime("f10");
+				COleDateTime f11 = reader->GetDateTime("f11");
+				std::cout
+					<< f0 << "\t"
+					<< f1 << "\t"
+					<< (int)f2 << "\t"
+					<< f3 << "\t"
+					<< f4 << "\t"
+					<< f5 << "\t"
+					<< f6 << "\t"
+					<< f7 << "\t"
+					<< f8.Lo32 << "\t"
+					<< CT2A(f9.Format(_T("%Y-%m-%d %H:%M:%S")).GetString()) << "\t"
+					<< CT2A(f10.Format(_T("%Y-%m-%d")).GetString()) << "\t"
+					<< CT2A(f11.Format(_T("%Y-%m-%d %H:%M:%S")).GetString())
+					<< std::endl;
+			}
+		} while (reader->NextResult());
 		reader->Close();
 
 		//update
@@ -283,7 +287,6 @@ void TestMySql()
 				<< CT2A(f10.Format(_T("%Y-%m-%d")).GetString()) << "\t"
 				<< CT2A(f11.Format(_T("%Y-%m-%d %H:%M:%S")).GetString())
 				<< std::endl;
-			sql_reader->NextResult();
 		}
 		sql_reader->Close();
 	}

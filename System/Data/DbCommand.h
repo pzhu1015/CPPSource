@@ -36,7 +36,6 @@ namespace System
 			virtual _variant_t ExecuteScalar() = 0;
 			virtual DbDataReaderPtr ExecuteReader() = 0;
 			virtual DbDataParameterPtr CreateParameter() = 0;
-			virtual DbDataParameterPtr CreateParameter(const std::string &name, DataTypeEnum type, _variant_t &value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput) = 0;
 			virtual std::vector<DbDataParameterPtr>& GetParameters() = 0;
 			virtual void SetParameters(const std::vector<DbDataParameterPtr> &params) = 0;
 		};

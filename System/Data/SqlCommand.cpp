@@ -50,6 +50,7 @@ namespace System
 		{
 			m_connection = nullptr;
 			m_transaction = nullptr;
+			m_command = nullptr;
 		}
 
 		DbConnectionPtr SqlCommand::GetConnection()
@@ -203,12 +204,7 @@ namespace System
 
 		DbDataParameterPtr SqlCommand::CreateParameter()
 		{
-			return std::make_shared<SqlParameter>("", DataTypeEnum::adEmpty, "");
-		}
-
-		DbDataParameterPtr SqlCommand::CreateParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction)
-		{
-			return std::make_shared<SqlParameter>(name, type, value, direction);
+			return std::make_shared<SqlParameter>();
 		}
 
 		std::vector<DbDataParameterPtr>& SqlCommand::GetParameters()

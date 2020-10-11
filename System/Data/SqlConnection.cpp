@@ -22,6 +22,7 @@ namespace System
 			hr = m_connection.CreateInstance(__uuidof(Connection));
 			assert(!FAILED(hr));
 			m_connection->PutConnectionString(connection_str.data());
+			m_connection->PutCursorLocation(CursorLocationEnum::adUseClient);
 		}
 
 		SqlConnection::~SqlConnection()
