@@ -10,22 +10,34 @@
 #define SYSTEM_SERIALIZERS_JSONSERIALIZE_H
 #include "System/Base/DllExport.h"
 #include "System/Jsons/CJsonObject.hpp"
+#include "System/Exceptions/OverflowException.h"
+#include "System/Reflections/Reflection.h"
 #include <type_traits>
 #include <string>
 #include <vector>
 #include <list>
 #include <set>
-#include <assert.h>
-#include <iostream>
+#include <memory>
 using namespace System::Jsons;
+using namespace System::Exceptions;
+using namespace System::Reflections;
 
 #define SERIALIZE_TO(json, name) JsonSerialize::SerializeTo(json, #name, name);
 #define SERIALIZE_FROM(json, name) JsonSerialize::SerializeFrom(json, #name, name);
-#define SERIALIZE_FROM_VECTOR(json, name) JsonSerialize::SerializeFromVector(json, #name, name);
-#define SERIALIZE_FROM_LIST(json, name) JsonSerialize::SerializeFromList(json, #name, name);
-#define SERIALIZE_FROM_SET(json, name) JsonSerialize::SerializeFromSet(json, #name, name);
 namespace System
 {
+	template <typename T>
+	struct is_optional : std::false_type {};
+
+	template <typename T>
+	struct is_optional<std::unique_ptr<T>> : std::true_type {};
+
+	template <typename T>
+	constexpr bool is_optional_v = is_optional<std::decay_t<T>>::value;
+
+	template <typename T>
+	constexpr bool has_schema = std::tuple_size<decltype(StructSchema<T>())>::value;
+
 	namespace Serializers
 	{
 		class SYSTEM_API JsonSerialize
@@ -36,346 +48,148 @@ namespace System
 			virtual void SerializeFrom(CJsonObject &json) = 0;
 
 			//single type
-			static void SerializeTo(CJsonObject &json, const std::string &name, char* value)
+			static void SerializeTo(CJsonObject &json, const std::string &name, __int8 &value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, char &value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, __int16 &value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, int & value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, __int32 & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, uint32_t & value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, __int64 & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, int64_t & value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, unsigned __int8 &value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
+				json.Add(name, (unsigned __int32)value);
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, unsigned __int16 &value)
+			{
+				json.Add(name, (unsigned __int32)value);
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, unsigned __int32 & value)
+			{
 				json.Add(name, value);
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, uint64_t & value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, unsigned __int64 & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
+
 			static void SerializeTo(CJsonObject &json, const std::string &name, bool & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
+
 			static void SerializeTo(CJsonObject &json, const std::string &name, float & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
+
 			static void SerializeTo(CJsonObject &json, const std::string &name, double & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
+
 			static void SerializeTo(CJsonObject &json, const std::string &name, std::string & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Add(name, value);
 			}
+
 			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
 			static void SerializeTo(CJsonObject &json, const std::string &name, T & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.AddEmptySubObject(name);
 				value.SerializeTo(json[name]);
 			}
+
 			//vector type
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<int> & value)
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<__int8> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.AddEmptySubArray(name);
 				for (auto &item : value)
 				{
 					json[name].Add(item);
 				}
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<uint32_t> & value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<__int16> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.AddEmptySubArray(name);
 				for (auto &item : value)
 				{
 					json[name].Add(item);
 				}
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<int64_t> & value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<__int32> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.AddEmptySubArray(name);
 				for (auto &item : value)
 				{
 					json[name].Add(item);
 				}
 			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<uint64_t> & value)
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<__int64> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.AddEmptySubArray(name);
 				for (auto &item : value)
 				{
 					json[name].Add(item);
 				}
 			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<unsigned __int8> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add((unsigned __int32)item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<unsigned __int16> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add((unsigned __int32)item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<unsigned __int32> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<unsigned __int64> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
 			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<bool> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<float> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<double> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<std::string> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			//list type
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<int> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<uint32_t> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<int64_t> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<uint64_t> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<bool> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<float> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<double> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<std::string> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			//set type
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<int> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<uint32_t> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<int64_t> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<uint64_t> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<bool> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<float> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<double> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
-				json.AddEmptySubArray(name);
-				for (auto &item : value)
-				{
-					json[name].Add(item);
-				}
-			}
-			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<std::string> & value)
-			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.AddEmptySubArray(name);
 				for (auto item : value)
 				{
@@ -383,19 +197,278 @@ namespace System
 				}
 			}
 
-			template <class T, class = typename std::enable_if<
-				std::is_same<T, std::vector<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				|| std::is_same<T, std::list<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				|| std::is_same<T, std::set<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeTo))>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
-				&& std::is_base_of<JsonSerialize, std::decay<decltype(*(std::declval<T>().begin()))>::type>::value
-			>::type>
-				static void SerializeTo(CJsonObject &json, const std::string &name, T & value)
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<float> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(T).name() << std::endl;
-#endif
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<double> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<std::string> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			//list type
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<__int8> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<__int16> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<__int32> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<__int64> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<unsigned __int8> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add((unsigned __int32)item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<unsigned __int16> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add((unsigned __int32)item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<unsigned __int32> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<unsigned __int64> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<bool> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<float> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<double> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<std::string> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			//set type
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<__int8> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<__int16> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<__int32> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<__int64> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<unsigned __int8> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add((unsigned __int32)item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<unsigned __int16> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add((unsigned __int32)item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<unsigned __int32> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<unsigned __int64> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<bool> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<float> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<double> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<std::string> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto item : value)
+				{
+					json[name].Add(item);
+				}
+			}
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<T> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					CJsonObject json_obj;
+					item.SerializeTo(json_obj);
+					json[name].Add(json_obj);
+				}
+			}
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<T> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					CJsonObject json_obj;
+					item.SerializeTo(json_obj);
+					json[name].Add(json_obj);
+				}
+			}
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<T> & value)
+			{
 				json.AddEmptySubArray(name);
 				for (auto item : value)
 				{
@@ -404,172 +477,284 @@ namespace System
 					json[name].Add(json_obj);
 				}
 			}
-			///////////////////////////////////////////////////////////////////////////////
 
-			//single type
-			static void SerializeFrom(CJsonObject &json, const std::string &name, char* value)
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::vector<std::shared_ptr<T>> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl; 
-#endif
-				//TODO: be careful, if value's memory space is not enough, may be crash.
-				if (value != nullptr)
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
 				{
-					std::string v;
-					json.Get(name, v);
-					strcpy(value, v.data());
+					CJsonObject json_obj;
+					item->SerializeTo(json_obj);
+					json[name].Add(json_obj);
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, char & value)
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::list<std::shared_ptr<T>> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					CJsonObject json_obj;
+					item->SerializeTo(json_obj);
+					json[name].Add(json_obj);
+				}
+			}
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeTo(CJsonObject &json, const std::string &name, std::set<std::shared_ptr<T>> & value)
+			{
+				json.AddEmptySubArray(name);
+				for (auto &item : value)
+				{
+					CJsonObject json_obj;
+					item->SerializeTo(json_obj);
+					json[name].Add(json_obj);
+				}
+			}
+			///////////////////////////////////////////////////////////////////////////////
+			static void SerializeFrom(CJsonObject &json, const std::string &name, __int8 & value)
+			{
 				if (!json.IsNull(name))
 				{
-					int v = 0;
+					__int32 v = 0;
 					json.Get(name, v);
-					value = (char)v;
+					if (v > INT8_MAX || v < INT8_MIN)
+					{
+						throw OverflowException("__int32 conver to __int8 " + v);
+					}
+					value = (__int8)v;
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, int & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, __int16 & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
+				if (!json.IsNull(name))
+				{
+					__int32 v = 0;
+					json.Get(name, v);
+					if (v > INT16_MAX || v < INT16_MIN)
+					{
+						throw OverflowException("__int32 conver to __int16 " + v);
+					}
+					value = (__int16)v;
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, __int32 & value)
+			{
 				json.Get(name, value);
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, uint32_t & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, __int64 & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Get(name, value);
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, int64_t & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, unsigned __int8 & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
+				if (!json.IsNull(name))
+				{
+					unsigned __int32 v = 0;
+					json.Get(name, v);
+					if (v > UINT8_MAX)
+					{
+						throw OverflowException("unsigned __int32 conver to unsigned __int8 " + v);
+					}
+					value = (unsigned __int8)v;
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, unsigned __int16 & value)
+			{
+				if (!json.IsNull(name))
+				{
+					unsigned __int32 v = 0;
+					json.Get(name, v);
+					if (v > UINT16_MAX)
+					{
+						throw OverflowException("unsigned __int32 conver to unsigned __int16 " + v);
+					}
+					value = (unsigned __int16)v;
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, unsigned __int32 & value)
+			{
 				json.Get(name, value);
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, uint64_t & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, unsigned __int64 & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Get(name, value);
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, bool & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Get(name, value);
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, float & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Get(name, value);
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, double & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Get(name, value);
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::string & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				json.Get(name, value);
 			}
+
 			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
 			static void SerializeFrom(CJsonObject &json, const std::string &name, T & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (!json.IsNull(name))
 				{
 					value.SerializeFrom(json[name]);
 				}
 			}
+
 			//vector type
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<int> & value)
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<__int8> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
+					{
+						__int32 v = 0;
+						json[name].Get(i, v);
+						if (v > INT8_MAX || v < INT8_MIN)
+						{
+							throw OverflowException("__int32 conver to __int8 " + v);
+						}
+						value[i] = (__int8)v;
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<__int16> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					value.resize(size);
+					for (__int32 i = 0; i < size; i++)
+					{
+						__int32 v = 0;
+						json[name].Get(i, v);
+						if (v > INT16_MAX || v < INT16_MIN)
+						{
+							throw OverflowException("__int32 conver to __int16 " + v);
+						}
+						value[i] = (__int16)v;
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<__int32> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					value.resize(size);
+					for (__int32 i = 0; i < size; i++)
 					{
 						json[name].Get(i, value[i]);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<uint32_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<__int64> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
 					{
 						json[name].Get(i, value[i]);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<int64_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<unsigned __int8> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
+					{
+						unsigned __int32 v = 0;
+						json[name].Get(i, v);
+						if (v > UINT8_MAX)
+						{
+							throw OverflowException("unsigned __int32 conver to unsigned __int8 " + v);
+						}
+						value[i] = (unsigned __int8)v;
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<unsigned __int16> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					value.resize(size);
+					for (__int32 i = 0; i < size; i++)
+					{
+						unsigned __int32 v = 0;
+						json[name].Get(i, v);
+						if (v > UINT16_MAX)
+						{
+							throw OverflowException("unsigned __int32 conver to unsigned __int16 " + v);
+						}
+						value[i] = (unsigned __int16)v;
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<unsigned __int32> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					value.resize(size);
+					for (__int32 i = 0; i < size; i++)
 					{
 						json[name].Get(i, value[i]);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<uint64_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<unsigned __int64> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
 					{
 						json[name].Get(i, value[i]);
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<bool> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
 					{
 						bool v;
 						json[name].Get(i, v);
@@ -577,125 +762,181 @@ namespace System
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<float> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
 					{
 						json[name].Get(i, value[i]);
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<double> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
 					{
 						json[name].Get(i, value[i]);
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<std::string> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
+					__int32 size = json[name].GetArraySize();
 					value.resize(size);
-					for (int i = 0; i < size; i++)
+					for (__int32 i = 0; i < size; i++)
 					{
 						json[name].Get(i, value[i]);
 					}
 				}
 			}
+
 			//list type
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<int> & value)
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<__int8> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						int v;
+						__int32 v;
+						json[name].Get(i, v);
+						if (v > INT8_MAX || v < INT8_MIN)
+						{
+							throw OverflowException("__int32 conver to __int8 " + v);
+						}
+						value.push_back((__int8)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<__int16> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						__int32 v;
+						json[name].Get(i, v);
+						if (v > INT16_MAX || v < INT16_MIN)
+						{
+							throw OverflowException("__int32 conver to __int16 " + v);
+						}
+						value.push_back((__int16)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<__int32> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						__int32 v;
 						json[name].Get(i, v);
 						value.push_back(v);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<uint32_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<__int64> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						uint32_t v;
+						__int64 v;
 						json[name].Get(i, v);
 						value.push_back(v);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<int64_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<unsigned __int8> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						int64_t v;
+						unsigned __int32 v;
+						json[name].Get(i, v);
+						if (v > UINT8_MAX)
+						{
+							throw OverflowException("unsigned __int32 conver to unsigned __int8 " + v);
+						}
+						value.push_back((unsigned __int8)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<unsigned __int16> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						unsigned __int32 v;
+						json[name].Get(i, v);
+						if (v > UINT16_MAX)
+						{
+							throw OverflowException("unsigned __int32 conver to unsigned __int16 " + v);
+						}
+						value.push_back((unsigned __int16)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<unsigned __int32> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						unsigned __int32 v;
 						json[name].Get(i, v);
 						value.push_back(v);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<uint64_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<unsigned __int64> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						uint64_t v;
+						unsigned __int64 v;
 						json[name].Get(i, v);
 						value.push_back(v);
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<bool> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						bool v;
 						json[name].Get(i, v);
@@ -703,15 +944,13 @@ namespace System
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<float> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						float v;
 						json[name].Get(i, v);
@@ -719,15 +958,13 @@ namespace System
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<double> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						double v;
 						json[name].Get(i, v);
@@ -735,15 +972,13 @@ namespace System
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<std::string> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						std::string v;
 						json[name].Get(i, v);
@@ -752,79 +987,140 @@ namespace System
 				}
 			}
 			//set type
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<int> & value)
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<__int8> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						int v;
+						__int32 v;
+						json[name].Get(i, v);
+						if (v > INT8_MAX || v < INT8_MIN)
+						{
+							throw OverflowException("__int32 conver to __int8 " + v);
+						}
+						value.insert((__int8)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<__int16> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						__int32 v;
+						json[name].Get(i, v);
+						if (v > INT16_MAX || v < INT16_MIN)
+						{
+							throw OverflowException("__int32 conver to __int16 " + v);
+						}
+						value.insert((__int16)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<__int32> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						__int32 v;
 						json[name].Get(i, v);
 						value.insert(v);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<uint32_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<__int64> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						uint32_t v;
+						__int64 v;
 						json[name].Get(i, v);
 						value.insert(v);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<int64_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<unsigned __int8> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						int64_t v;
+						unsigned __int32 v;
+						json[name].Get(i, v);
+						if (v > UINT8_MAX)
+						{
+							throw OverflowException("unsigned __int32 conver to unsigned __int8 " + v);
+						}
+						value.insert((unsigned __int8)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<unsigned __int16> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						unsigned __int32 v;
+						json[name].Get(i, v);
+						if (v > UINT16_MAX)
+						{
+							throw OverflowException("unsigned __int32 conver to unsigned __int16 " + v);
+						}
+						value.insert((unsigned __int16)v);
+					}
+				}
+			}
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<unsigned __int32> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						unsigned __int32 v;
 						json[name].Get(i, v);
 						value.insert(v);
 					}
 				}
 			}
-			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<uint64_t> & value)
+
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<unsigned __int64> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
-						uint64_t v;
+						unsigned __int64 v;
 						json[name].Get(i, v);
 						value.insert(v);
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<bool> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						bool v;
 						json[name].Get(i, v);
@@ -832,15 +1128,13 @@ namespace System
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<float> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						float v;
 						json[name].Get(i, v);
@@ -848,15 +1142,13 @@ namespace System
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<double> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						double v;
 						json[name].Get(i, v);
@@ -864,15 +1156,13 @@ namespace System
 					}
 				}
 			}
+
 			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<std::string> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(value).name() << std::endl;
-#endif
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						std::string v;
 						json[name].Get(i, v);
@@ -881,25 +1171,17 @@ namespace System
 				}
 			}
 
-			template <class T, class = typename std::enable_if<
-				std::is_same<T, std::vector<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
-			>::type>
-				static void SerializeFromVector(CJsonObject &json, const std::string &name, T & value)
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<T> & value)
 			{				
-#ifdef _DEBUG 
-				std::cout << typeid(T).name() << std::endl;
-				std::cout << typeid(decltype(*(std::declval<T>().begin()))).name() << std::endl;
-#endif		
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					//assert(std::is_same<T, std::vector<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value);
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						CJsonObject json_obj;
 						json[name].Get(i, json_obj);
-						std::decay<decltype(*(std::declval<T>().begin()))>::type obj;
+						T obj;
 						obj.SerializeFrom(json_obj);
 						value.push_back(obj);
 					}
@@ -907,50 +1189,86 @@ namespace System
 				}
 			}
 
-				template <class T, class = typename std::enable_if<
-					std::is_same<T, std::list<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-					&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
-				>::type>
-				static void SerializeFromList(CJsonObject &json, const std::string &name, T & value)
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<T> & value)
 			{
-#ifdef _DEBUG 
-					std::cout << typeid(T).name() << std::endl;
-					std::cout << typeid(decltype(*(std::declval<T>().begin()))).name() << std::endl;
-#endif	
-					if (json[name].IsArray())
+				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					//assert(std::is_same<T, std::list<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value);
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						CJsonObject json_obj;
 						json[name].Get(i, json_obj);
-						std::decay<decltype(*(std::declval<T>().begin()))>::type obj;
+						T obj;
 						obj.SerializeFrom(json_obj);
 						value.push_back(obj);
 					}
 				}
 			}
 
-			template <class T, class = typename std::enable_if<
-				std::is_same<T, std::set<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value
-				&& std::is_member_function_pointer<decltype(&(std::decay<decltype(*(std::declval<T>().begin()))>::type::SerializeFrom))>::value
-			>::type>
-				static void SerializeFromSet(CJsonObject &json, const std::string &name, T & value)
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<T> & value)
 			{
-#ifdef _DEBUG 
-				std::cout << typeid(T).name() << std::endl;
-				std::cout << typeid(decltype(*(std::declval<T>().begin()))).name() << std::endl;
-#endif	
 				if (json[name].IsArray())
 				{
-					int size = json[name].GetArraySize();
-					//assert(std::is_same<T, std::set<std::decay<decltype(*(std::declval<T>().begin()))>::type>>::value);
-					for (int i = 0; i < size; i++)
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
 					{
 						CJsonObject json_obj;
 						json[name].Get(i, json_obj);
-						std::decay<decltype(*(std::declval<T>().begin()))>::type obj;
+						T obj;
+						obj.SerializeFrom(json_obj);
+						value.insert(obj);
+					}
+				}
+			}
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::vector<std::shared_ptr<T>> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						CJsonObject json_obj;
+						json[name].Get(i, json_obj);
+						std::shared_ptr<T> obj = std::make_shared<T>();
+						obj.SerializeFrom(json_obj);
+						value.push_back(obj);
+					}
+
+				}
+			}
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::list<std::shared_ptr<T>> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						CJsonObject json_obj;
+						json[name].Get(i, json_obj);
+						std::shared_ptr<T> obj = std::make_shared<T>();
+						obj.SerializeFrom(json_obj);
+						value.push_back(obj);
+					}
+				}
+			}
+
+			template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+			static void SerializeFrom(CJsonObject &json, const std::string &name, std::set<std::shared_ptr<T>> & value)
+			{
+				if (json[name].IsArray())
+				{
+					__int32 size = json[name].GetArraySize();
+					for (__int32 i = 0; i < size; i++)
+					{
+						CJsonObject json_obj;
+						json[name].Get(i, json_obj);
+						std::shared_ptr<T> obj = std::make_shared<T>();
 						obj.SerializeFrom(json_obj);
 						value.insert(obj);
 					}
@@ -958,6 +1276,53 @@ namespace System
 			}
 
 		};
+
+		template <class T, class B = JsonSerialize, class = typename std::enable_if<std::is_base_of<B, T>::value>::type>
+		struct adl_serializer
+		{
+			template <typename BasicJsonType>
+			static void to_json(BasicJsonType& json, const T& value)
+			{
+				ForEachField(value, [&json](auto&& field, auto&& name) 
+				{ 
+					JsonSerialize::SerializeFrom(json, name, field);
+				});
+			}
+
+			template <typename BasicJsonType>
+			static void from_json(const BasicJsonType& json, T& value) {
+				ForEachField(value, [&json](auto&& field, auto&& name) 
+				{
+					JsonSerialize::SerializeTo(json, name, field);
+				});
+			}
+		};
+
+		
+
+		struct SYSTEM_API SimpleStruct : public JsonSerialize 
+		{
+			bool bool_;
+			int int_;
+			double double_;
+			std::string string_;
+			virtual void SerializeTo(CJsonObject &json)
+			{
+
+			}
+
+			virtual void SerializeFrom(CJsonObject &json)
+			{
+
+			}
+		};
+
+		DEFINE_STRUCT_SCHEMA(SimpleStruct,
+			DEFINE_STRUCT_FIELD(bool_),
+			DEFINE_STRUCT_FIELD(int_),
+			DEFINE_STRUCT_FIELD(double_),
+			DEFINE_STRUCT_FIELD(string_)
+		);
 	}
 }
 #endif // !SYSTEM_SERIALIZERS_JSONSERIALIZE_H

@@ -223,8 +223,11 @@
     <ClInclude Include="Exceptions\ArgumentOutOfRangeException.h" />
     <ClInclude Include="Exceptions\Exception.h" />
     <ClInclude Include="Exceptions\ExceptionId.h" />
+    <ClInclude Include="Exceptions\IndexOutOfRangeException.h" />
     <ClInclude Include="Exceptions\InvalidOperationException.h" />
     <ClInclude Include="Exceptions\IOException.h" />
+    <ClInclude Include="Exceptions\NullReferenceException.h" />
+    <ClInclude Include="Exceptions\OverflowException.h" />
     <ClInclude Include="Exceptions\SqlException.h" />
     <ClInclude Include="Exceptions\NotSupportedException.h" />
     <ClInclude Include="Exceptions\RedisException.h" />
@@ -291,6 +294,7 @@
     <ClInclude Include="Redis\RedisClientPool.h" />
     <ClInclude Include="Redis\RedisMgr.h" />
     <ClInclude Include="Reflections\Property.h" />
+    <ClInclude Include="Reflections\Reflection.h" />
     <ClInclude Include="Serializers\JsonSerialize.h" />
     <ClInclude Include="Threading\Ptrs.h" />
     <ClInclude Include="Threading\Runnable.h" />
@@ -315,8 +319,11 @@
     <ClCompile Include="Exceptions\ArgumentOutOfRangeException.cpp" />
     <ClCompile Include="Exceptions\Exception.cpp" />
     <ClCompile Include="Exceptions\ExceptionId.cpp" />
+    <ClCompile Include="Exceptions\IndexOutOfRangeException.cpp" />
     <ClCompile Include="Exceptions\InvalidOperationException.cpp" />
     <ClCompile Include="Exceptions\IOException.cpp" />
+    <ClCompile Include="Exceptions\NullReferenceException.cpp" />
+    <ClCompile Include="Exceptions\OverflowException.cpp" />
     <ClCompile Include="Exceptions\SqlException.cpp" />
     <ClCompile Include="Exceptions\NotSupportedException.cpp" />
     <ClCompile Include="Exceptions\RedisException.cpp" />

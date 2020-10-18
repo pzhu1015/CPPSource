@@ -29,12 +29,18 @@ namespace System
 				return "ArgumentException";
 			case ExceptionId::ArgumentOutOfRange:
 				return "ArgumentOutOfRangeException";
+			case ExceptionId::IndexOutOfRange:
+				return "IndexOutOfRangeException";
 			case ExceptionId::ArgumentNull:
 				return "ArgumentNullException";
 			case ExceptionId::InvalidOperation:
 				return "InvalidOperationException";
+			case ExceptionId::NullReference:
+				return "NullReferenceException";
 			case ExceptionId::Socket:
 				return "SocketException";
+			case ExceptionId::Overflow:
+				return "OverflowException";
 			case ExceptionId::Sql:
 				return "SqlException";
 			case ExceptionId::Redis:

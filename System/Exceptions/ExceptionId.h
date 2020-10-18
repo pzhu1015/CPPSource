@@ -22,7 +22,10 @@ namespace System
 			Argument,
 			ArgumentOutOfRange,
 			ArgumentNull,
+			IndexOutOfRange,
 			InvalidOperation,
+			NullReference,
+			Overflow,
 			Socket,
 			Sql,
 			Redis

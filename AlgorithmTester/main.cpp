@@ -13,7 +13,7 @@ using namespace std;
 
 int main(int args, char** argv)
 {
-	{
+	/*{
 		Employee emp;
 		emp.set_id(110);
 		emp.set_name("彭志虎");
@@ -39,7 +39,16 @@ int main(int args, char** argv)
 		emp1.SerializeFrom(root);
 		str = root.ToFormattedString();
 		std::cout << str << std::endl;
-	}
-	system("pause");
+	}*/
+	SimpleStruct simple_struct;
+	simple_struct.bool_ = true;
+	simple_struct.int_ = 101;
+	simple_struct.double_ = 10.9;
+	simple_struct.string_ = "hello";
+	CJsonObject json;
+	adl_serializer<SimpleStruct>::to_json(json, simple_struct);
+	std::string str = json.ToString();
+	std::cout << str << std::endl;
+	::system("pause");
 	return 1;
 }

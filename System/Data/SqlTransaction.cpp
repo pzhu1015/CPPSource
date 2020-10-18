@@ -10,6 +10,8 @@
 #include "System/Data/DbConnection.h"
 #include "System/Data/SqlConnection.h"
 #include "System/Exceptions/SqlException.h"
+#include "System/Exceptions/NullReferenceException.h"
+#include "System/Exceptions/InvalidOperationException.h"
 using namespace System::Exceptions;
 namespace System
 {
@@ -36,7 +38,10 @@ namespace System
 
 		IsolationLevelEnum SqlTransaction::GetIsolationLevel()
 		{
-			assert(m_connection);
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			return m_connection->GetConnection()->GetIsolationLevel();
 		}
 
@@ -44,7 +49,14 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
+				if (m_connection == nullptr)
+				{
+					throw NullReferenceException("m_connection is nullptr");
+				}
+				if (m_connection->GetState() != ObjectStateEnum::adStateOpen)
+				{
+					throw InvalidOperationException("connection not open");
+				}
 				HRESULT hr = m_connection->GetConnection()->CommitTrans();
 				return !FAILED(hr);
 			}
@@ -59,7 +71,14 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
+				if (m_connection == nullptr)
+				{
+					throw NullReferenceException("m_connection is nullptr");
+				}
+				if (m_connection->GetState() != ObjectStateEnum::adStateOpen)
+				{
+					throw InvalidOperationException("connection not open");
+				}
 				HRESULT hr = m_connection->GetConnection()->RollbackTrans();
 				return !FAILED(hr);
 			}

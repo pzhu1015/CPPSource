@@ -31,13 +31,19 @@ namespace System
 
 		bool SqlDataReader::HasRows()
 		{
-			assert(m_record);
+			if (m_record == nullptr)
+			{
+				throw NullReferenceException("m_record is nullptr");
+			}
 			return !m_record->GetadoEOF();
 		}
 
 		int SqlDataReader::FieldCount()
 		{
-			assert(m_record);
+			if (m_record == nullptr)
+			{
+				throw NullReferenceException("m_record is nullptr");
+			}
 			FieldsPtr fields = m_record->GetFields();
 			if (!fields) return 0;
 			return fields->GetCount();
@@ -45,13 +51,19 @@ namespace System
 
 		bool SqlDataReader::IsClosed()
 		{
-			assert(m_record);
+			if (m_record == nullptr)
+			{
+				throw NullReferenceException("m_record is nullptr");
+			}
 			return m_record->GetState() == ObjectStateEnum::adStateClosed;
 		}
 
 		int SqlDataReader::RecordsAffected()
 		{
-			assert(m_record);
+			if (m_record == nullptr)
+			{
+				throw NullReferenceException("m_record is nullptr");
+			}
 			return m_record->GetRecordCount();
 		}
 
@@ -78,18 +90,21 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
+				if (m_record == nullptr)
+				{
+					throw NullReferenceException("m_record is nullptr");
+				}
+				HRESULT hr;
 				if (m_first)
 				{
-					HRESULT hr = m_record->MoveFirst();
-					assert(!FAILED(hr));
+					hr = m_record->MoveFirst();
 					m_first = false;
 				}
 				else
 				{
-					HRESULT hr = m_record->MoveNext();
-					assert(!FAILED(hr));
+					hr = m_record->MoveNext();
 				}
+				if (FAILED(hr)) return false;
 				return HasRows();
 			}
 			catch (_com_error &e)
@@ -122,39 +137,29 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8
-				);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8
-					)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_BOOL);
+					return var.boolVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
 					assert(var.vt == VARENUM::VT_BOOL);
 					return var.boolVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_BOOL);
-					return var.boolVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -168,37 +173,29 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					assert(var.vt == VARENUM::VT_DECIMAL);
+					return var;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
 					assert(var.vt == VARENUM::VT_DECIMAL);
 					return var;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_DECIMAL);
-					return var;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -212,37 +209,37 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return byte();
+					}
+					assert(var.vt == VARENUM::VT_UI1);
+					return var.bVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return byte();
+					}
 					assert(var.vt == VARENUM::VT_UI1);
 					return var.bVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_UI1);
-					return var.bVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -256,37 +253,37 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return double();
+					}
+					assert(var.vt == VARENUM::VT_R8);
+					return var.dblVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return double();
+					}
 					assert(var.vt == VARENUM::VT_R8);
 					return var.dblVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_R8);
-					return var.dblVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -300,37 +297,37 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return float();
+					}
+					assert(var.vt == VARENUM::VT_R4);
+					return var.fltVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return float();
+					}
 					assert(var.vt == VARENUM::VT_R4);
 					return var.fltVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_R4);
-					return var.fltVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -344,257 +341,257 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int8();
+					}
+					assert(var.vt == VARENUM::VT_I2 || var.vt == VARENUM::VT_I1);
+					return var.cVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int8();
+					}
 					assert(var.vt == VARENUM::VT_I2 || var.vt == VARENUM::VT_I1);
 					return var.cVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_I2 || var.vt == VARENUM::VT_I1);
-					return var.cVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
 			{
 				throw SqlException(e);
 			}
-			return char();
+			return __int8();
 		}
 
 		__int16 SqlDataReader::GetInt16(const _variant_t &ordinal)
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int16();
+					}
+					assert(var.vt == VARENUM::VT_I2);
+					return var.iVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int16();
+					}
 					assert(var.vt == VARENUM::VT_I2);
 					return var.iVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_I2);
-					return var.iVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
 			{
 				throw SqlException(e);
 			}
-			return short();
+			return __int16();
 		}
 
 		__int32 SqlDataReader::GetInt32(const _variant_t &ordinal)
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int32();
+					}
+					assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
+					return var.intVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int32();
+					}
 					assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
 					return var.intVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
-					return var.intVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
 			{
 				throw SqlException(e);
 			}
-			return int();
+			return __int32();
 		}
 
 		__int64 SqlDataReader::GetInt64(const _variant_t &ordinal)
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int64();
+					}
+					assert(var.vt == VARENUM::VT_DECIMAL);
+					return var.decVal.Lo64;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return __int16();
+					}
 					assert(var.vt == VARENUM::VT_DECIMAL);
 					return var.decVal.Lo64;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_DECIMAL);
-					return var.decVal.Lo64;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
 			{
 				throw SqlException(e);
 			}
-			return int64_t();
+			return __int64();
 		}
 
 		unsigned __int8 SqlDataReader::GetUInt8(const _variant_t &ordinal)
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int8();
+					}
+					assert(var.vt == VARENUM::VT_UI2);
+					return var.cVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int8();
+					}
 					assert(var.vt == VARENUM::VT_UI2);
 					return var.cVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_UI2);
-					return var.cVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
 			{
 				throw SqlException(e);
 			}
-			return unsigned char();
+			return unsigned __int8();
 		}
 
 		unsigned __int16 SqlDataReader::GetUInt16(const _variant_t &ordinal)
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int16();
+					}
+					assert(var.vt == VARENUM::VT_UI2);
+					return var.uiVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int16();
+					}
 					assert(var.vt == VARENUM::VT_UI2);
 					return var.uiVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_UI2);
-					return var.uiVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -608,125 +605,125 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int32();
+					}
+					assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
+					return var.uintVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int32();
+					}
 					assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
 					return var.uintVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
-					return var.uintVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
 			{
 				throw SqlException(e);
 			}
-			return unsigned int();
+			return unsigned __int32();
 		}
 
 		unsigned __int64 SqlDataReader::GetUInt64(const _variant_t &ordinal)
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int64();
+					}
+					assert(var.vt == VARENUM::VT_UI8);
+					return var.ullVal;
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return unsigned __int64();
+					}
 					assert(var.vt == VARENUM::VT_UI8);
 					return var.ullVal;
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_UI8);
-					return var.ullVal;
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
 			{
 				throw SqlException(e);
 			}
-			return uint64_t();
+			return unsigned __int64();
 		}
 
 		std::string SqlDataReader::GetString(const _variant_t &ordinal)
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR || 
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return std::string();
+					}
+					assert(var.vt == VARENUM::VT_BSTR);
+					return (const char*)_bstr_t(var);
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return std::string();
+					}
 					assert(var.vt == VARENUM::VT_BSTR);
 					return (const char*)_bstr_t(var);
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_BSTR);
-					return (const char*)_bstr_t(var);
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -740,37 +737,37 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return COleDateTime();
+					}
+					assert(var.vt == VARENUM::VT_DATE);
+					return COleDateTime(var.date);
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
+					if (var.vt == VARENUM::VT_NULL)
+					{
+						return COleDateTime();
+					}
 					assert(var.vt == VARENUM::VT_DATE);
 					return COleDateTime(var.date);
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_DATE);
-					return COleDateTime(var.date);
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)
@@ -784,35 +781,27 @@ namespace System
 		{
 			try
 			{
-				assert(m_record);
-				assert(ordinal.vt == VARENUM::VT_BSTR ||
-					ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8);
-				if (ordinal.vt == VARENUM::VT_I1 ||
-					ordinal.vt == VARENUM::VT_I2 ||
-					ordinal.vt == VARENUM::VT_INT ||
-					ordinal.vt == VARENUM::VT_I4 ||
-					ordinal.vt == VARENUM::VT_I8 ||
-					ordinal.vt == VARENUM::VT_UI1 ||
-					ordinal.vt == VARENUM::VT_UI2 ||
-					ordinal.vt == VARENUM::VT_UI4 ||
-					ordinal.vt == VARENUM::VT_UI8)
+				if (m_record == nullptr)
 				{
-					assert((long)ordinal >= 0);
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
 					auto var = m_record->GetCollect((long)ordinal);
+					return (var.vt == VARENUM::VT_NULL);
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					auto var = m_record->GetCollect(ordinal);
 					return (var.vt == VARENUM::VT_NULL);
 				}
 				else
 				{
-					auto var = m_record->GetCollect(ordinal);
-					return (var.vt == VARENUM::VT_NULL);
+					throw NotSupportedException("not support type");
 				}
 			}
 			catch (_com_error &e)

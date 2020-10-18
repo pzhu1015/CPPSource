@@ -14,7 +14,8 @@
 #include "System/Data/SqlDataReader.h"
 #include "System/Data/SqlParameter.h"
 #include "System/Exceptions/SqlException.h"
-#include "System/Base/Object.h"
+#include "System/Exceptions/NullReferenceException.h"
+#include "System/Exceptions/InvalidOperationException.h"
 using namespace System::Exceptions;
 namespace System
 {
@@ -23,14 +24,20 @@ namespace System
 		SqlCommand::SqlCommand()
 		{
 			m_command.CreateInstance(__uuidof(Command));
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			m_command->PutCommandType(CommandTypeEnum::adCmdUnspecified);
 		}
 
 		SqlCommand::SqlCommand(const SqlConnectionPtr & connection)
 		{
 			m_command.CreateInstance(__uuidof(Command));
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			m_command->ActiveConnection = connection->GetConnection();
 			m_command->PutCommandType(CommandTypeEnum::adCmdText);
 			m_connection = connection;
@@ -39,7 +46,10 @@ namespace System
 		SqlCommand::SqlCommand(const std::string & command_text, const SqlConnectionPtr & connection)
 		{
 			m_command.CreateInstance(__uuidof(Command));
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			m_command->ActiveConnection = connection->GetConnection();
 			m_command->PutCommandType(CommandTypeEnum::adCmdText);
 			m_command->PutCommandText(command_text.data());
@@ -61,7 +71,10 @@ namespace System
 		void SqlCommand::SetConnection(const DbConnectionPtr & connection)
 		{
 			m_connection = std::dynamic_pointer_cast<SqlConnection>(connection);
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			m_command->ActiveConnection = m_connection->GetConnection();
 		}
 
@@ -77,37 +90,55 @@ namespace System
 
 		std::string SqlCommand::GetCommandText()
 		{
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			return (char*)m_command->GetCommandText();
 		}
 
 		void SqlCommand::SetCommandText(const std::string & command)
 		{
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			m_command->PutCommandText(command.data());
 		}
 
 		int SqlCommand::GetTimeout()
 		{
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			return m_command->GetCommandTimeout();
 		}
 
 		void SqlCommand::SetTimeout(int timeout)
 		{
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			m_command->PutCommandTimeout(timeout);
 		}
 
 		CommandTypeEnum SqlCommand::GetCommandType()
 		{
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			return m_command->GetCommandType();
 		}
 
 		void SqlCommand::SetCommandType(CommandTypeEnum type)
 		{
-			assert(m_command);
+			if (m_command == nullptr)
+			{
+				throw NullReferenceException("m_command is nullptr");
+			}
 			m_command->PutCommandType(type);
 		}
 
@@ -115,7 +146,10 @@ namespace System
 		{
 			try
 			{
-				assert(m_command);
+				if (m_command == nullptr)
+				{
+					throw NullReferenceException("m_command is nullptr");
+				}
 				m_command->PutPrepared(true);
 				return true;
 			}
@@ -130,7 +164,10 @@ namespace System
 		{
 			try
 			{
-				assert(m_command);
+				if (m_command == nullptr)
+				{
+					throw NullReferenceException("m_command is nullptr");
+				}
 				HRESULT hr = m_command->Cancel();
 				if (FAILED(hr)) return false;
 				return true;
@@ -146,8 +183,18 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
-				assert(m_command);
+				if (m_connection == nullptr)
+				{
+					throw NullReferenceException("m_conneciton is nullptr");
+				}
+				if(m_connection->GetState() != ObjectStateEnum::adStateOpen)
+				{
+					throw InvalidOperationException("connection is not open");
+				}
+				if (m_command == nullptr)
+				{
+					throw NullReferenceException("m_command is nullptr");
+				}
 				AppendParameters();
 				_variant_t rows;
 				m_command->Execute(&rows, nullptr, GetCommandType());
@@ -164,8 +211,18 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
-				assert(m_command);
+				if (m_connection == nullptr)
+				{
+					throw NullReferenceException("m_conneciton is nullptr");
+				}
+				if (m_connection->GetState() != ObjectStateEnum::adStateOpen)
+				{
+					throw InvalidOperationException("connection is not open");
+				}
+				if (m_command == nullptr)
+				{
+					throw NullReferenceException("m_command is nullptr");
+				}
 				AppendParameters();
 				_variant_t rows, var;
 				_RecordsetPtr record = m_command->Execute(&rows, nullptr, GetCommandType());
@@ -187,8 +244,18 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection && m_connection->GetState() == ObjectStateEnum::adStateOpen);
-				assert(m_command);
+				if (m_connection == nullptr)
+				{
+					throw NullReferenceException("m_conneciton is nullptr");
+				}
+				if (m_connection->GetState() != ObjectStateEnum::adStateOpen)
+				{
+					throw InvalidOperationException("connection is not open");
+				}
+				if (m_command == nullptr)
+				{
+					throw NullReferenceException("m_command is nullptr");
+				}
 				AppendParameters();
 				_variant_t rows;
 				_RecordsetPtr record = m_command->Execute(&rows, nullptr, GetCommandType());

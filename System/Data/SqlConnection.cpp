@@ -10,6 +10,8 @@
 #include "System/Data/SqlTransaction.h"
 #include "System/Data/SqlCommand.h"
 #include "System/Exceptions/SqlException.h"
+#include "System/Exceptions/NullReferenceException.h"
+#include "System/Exceptions/InvalidOperationException.h"
 using namespace System::Exceptions;
 namespace System
 {
@@ -21,6 +23,10 @@ namespace System
 			assert(!FAILED(hr));
 			hr = m_connection.CreateInstance(__uuidof(Connection));
 			assert(!FAILED(hr));
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			m_connection->PutConnectionString(connection_str.data());
 			m_connection->PutCursorLocation(CursorLocationEnum::adUseClient);
 		}
@@ -32,37 +38,55 @@ namespace System
 
 		std::string SqlConnection::GetConnectionString()
 		{
-			assert(m_connection);
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			return (char*)m_connection->GetConnectionString();
 		}
 
 		void SqlConnection::SetConnectionString(const std::string & str)
 		{
-			assert(m_connection);
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			m_connection->PutConnectionString(str.data());
 		}
 
 		int SqlConnection::GetConnectionTimeout()
 		{
-			assert(m_connection);
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			return m_connection->GetConnectionTimeout();
 		}
 
 		std::string SqlConnection::GetDatabase()
 		{
-			assert(m_connection);
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			return (char*)m_connection->GetDefaultDatabase();
 		}
 
 		void SqlConnection::ChangeDatabase(const std::string & database)
 		{
-			assert(m_connection);
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			m_connection->PutDefaultDatabase(database.data());
 		}
 
 		ObjectStateEnum SqlConnection::GetState()
 		{
-			assert(m_connection);
+			if (m_connection == nullptr)
+			{
+				throw NullReferenceException("m_connection is nullptr");
+			}
 			return (ObjectStateEnum)m_connection->GetState();
 		}
 
@@ -93,7 +117,10 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection);
+				if (m_connection == nullptr)
+				{
+					throw NullReferenceException("m_connection is nullptr");
+				}
 				HRESULT hr = m_connection->Open(GetConnectionString().data(), "", "", 0);
 				return !FAILED(hr);
 			}
@@ -113,7 +140,10 @@ namespace System
 		{
 			try
 			{
-				assert(m_connection);
+				if (m_connection == nullptr)
+				{
+					throw NullReferenceException("m_connection is nullptr");
+				}
 				assert(GetState() == ObjectStateEnum::adStateOpen);
 				m_connection->PutIsolationLevel(level);
 				DbTransactionPtr trans = std::make_shared<SqlTransaction>(std::dynamic_pointer_cast<SqlConnection>(shared_from_this()));

@@ -9,6 +9,7 @@
 #include "System/Redis/RedisMgr.h"
 #include "System/Redis/RedisClientPool.h"
 #include "System/Exceptions/RedisException.h"
+#include "System/Exceptions/OverflowException.h"
 #include <assert.h>
 #include <cpp_redis/core/client.hpp>
 using namespace System::Exceptions;
@@ -82,7 +83,12 @@ namespace System
 				auto reply = future.get();
 				if (reply.ok())
 				{
-					return reply.as_integer();
+					int64_t result = reply.as_integer();
+					if (result > INT_MAX || result < INT_MIN)
+					{
+						throw OverflowException("result is " + result);
+					}
+					return (int)result;
 				}
 			}
 			catch (std::exception &ex)

@@ -9,7 +9,11 @@
 #ifndef SYSTEM_DATA_SQLDATAREADER_H
 #define SYSTEM_DATA_SQLDATAREADER_H
 #include "System/Data/DbDataReader.h"
+#include "System/Exceptions/NullReferenceException.h"
+#include "System/Exceptions/IndexOutOfRangeException.h"
+#include "System/Exceptions/NotSupportedException.h"
 #include <unordered_set>
+using namespace System::Exceptions;
 namespace System
 {
 	namespace Data
@@ -64,34 +68,35 @@ namespace System
 			{
 				try
 				{
-					assert(m_record);
-					assert(ordinal.vt == VARENUM::VT_BSTR ||
-						ordinal.vt == VARENUM::VT_I1 ||
-						ordinal.vt == VARENUM::VT_I2 ||
-						ordinal.vt == VARENUM::VT_INT ||
-						ordinal.vt == VARENUM::VT_I4 ||
-						ordinal.vt == VARENUM::VT_I8 ||
-						ordinal.vt == VARENUM::VT_UI1 ||
-						ordinal.vt == VARENUM::VT_UI2 ||
-						ordinal.vt == VARENUM::VT_UI4 ||
-						ordinal.vt == VARENUM::VT_UI8);
-					if (ordinal.vt == VARENUM::VT_I1 ||
-						ordinal.vt == VARENUM::VT_I2 ||
-						ordinal.vt == VARENUM::VT_INT ||
-						ordinal.vt == VARENUM::VT_I4 ||
-						ordinal.vt == VARENUM::VT_I8 ||
-						ordinal.vt == VARENUM::VT_UI1 ||
-						ordinal.vt == VARENUM::VT_UI2 ||
-						ordinal.vt == VARENUM::VT_UI4 ||
-						ordinal.vt == VARENUM::VT_UI8)
+					if (m_record == nullptr)
 					{
+						throw NullReferenceException("m_record is nullptr");
+					}
+					if (IsDigital(ordinal.vt))
+					{
+						if ((long)ordinal < 0)
+						{
+							throw IndexOutOfRangeException("index is " + (long)ordinal);
+						}
 						auto var = m_record->GetCollect((long)ordinal);
+						if (var.vt == VARENUM::VT_NULL)
+						{
+							return T();
+						}
+						return var;
+					}
+					else if (ordinal.vt == VARENUM::VT_BSTR)
+					{
+						auto var = m_record->GetCollect(ordinal);
+						if (var.vt == VARENUM::VT_NULL)
+						{
+							return T();
+						}
 						return var;
 					}
 					else
 					{
-						auto var = m_record->GetCollect(ordinal);
-						return var;
+						throw NotSupportedException("not support type");
 					}
 				}
 				catch (_com_error &e)
@@ -102,40 +107,44 @@ namespace System
 			}
 
 			template <class T>
-			typename std::enable_if<
-				std::is_same<T, COleDateTime>::value, T>::type
-				GetValue(const _variant_t &ordinal)
+			typename std::enable_if<std::is_same<T, COleDateTime>::value, T>::type
+			GetValue(const _variant_t &ordinal)
 			{
 				try
 				{
-					assert(m_record);
-					assert(ordinal.vt == VARENUM::VT_BSTR ||
-						ordinal.vt == VARENUM::VT_I1 ||
-						ordinal.vt == VARENUM::VT_I2 ||
-						ordinal.vt == VARENUM::VT_INT ||
-						ordinal.vt == VARENUM::VT_I4 ||
-						ordinal.vt == VARENUM::VT_I8 ||
-						ordinal.vt == VARENUM::VT_UI1 ||
-						ordinal.vt == VARENUM::VT_UI2 ||
-						ordinal.vt == VARENUM::VT_UI4 ||
-						ordinal.vt == VARENUM::VT_UI8);
-					if (ordinal.vt == VARENUM::VT_I1 ||
-						ordinal.vt == VARENUM::VT_I2 ||
-						ordinal.vt == VARENUM::VT_INT ||
-						ordinal.vt == VARENUM::VT_I4 ||
-						ordinal.vt == VARENUM::VT_I8 ||
-						ordinal.vt == VARENUM::VT_UI1 ||
-						ordinal.vt == VARENUM::VT_UI2 ||
-						ordinal.vt == VARENUM::VT_UI4 ||
-						ordinal.vt == VARENUM::VT_UI8)
+					if (m_record == nullptr)
 					{
+						throw NullReferenceException("m_record is nullptr");
+					}
+					if (IsDigital(ordinal.vt))
+					{
+						if ((long)ordinal < 0)
+						{
+							throw IndexOutOfRangeException("index is " + (long)ordinal);
+						}
 						auto var = m_record->GetCollect((long)ordinal);
+						if (var.vt == VARENUM::VT_NULL)
+						{
+							return T();
+						}
+						return T(var.date);
+					}
+					else if (ordinal.vt == VARENUM::VT_BSTR)
+					{
+						if ((long)ordinal < 0)
+						{
+							throw IndexOutOfRangeException("index is " + (long)ordinal);
+						}
+						auto var = m_record->GetCollect(ordinal);
+						if (var.vt == VARENUM::VT_NULL)
+						{
+							return T();
+						}
 						return T(var.date);
 					}
 					else
 					{
-						auto var = m_record->GetCollect(ordinal);
-						return T(var.date);
+						throw NotSupportedException("not support type");
 					}
 				}
 				catch (_com_error &e)
@@ -146,40 +155,40 @@ namespace System
 			}
 
 			template <class T>
-			typename std::enable_if<
-				std::is_same<T, std::string>::value, T>::type
-				GetValue(const _variant_t &ordinal)
+			typename std::enable_if<std::is_same<T, std::string>::value, T>::type
+			GetValue(const _variant_t &ordinal)
 			{
 				try
 				{
-					assert(m_record);
-					assert(ordinal.vt == VARENUM::VT_BSTR ||
-						ordinal.vt == VARENUM::VT_I1 ||
-						ordinal.vt == VARENUM::VT_I2 ||
-						ordinal.vt == VARENUM::VT_INT ||
-						ordinal.vt == VARENUM::VT_I4 ||
-						ordinal.vt == VARENUM::VT_I8 ||
-						ordinal.vt == VARENUM::VT_UI1 ||
-						ordinal.vt == VARENUM::VT_UI2 ||
-						ordinal.vt == VARENUM::VT_UI4 ||
-						ordinal.vt == VARENUM::VT_UI8);
-					if (ordinal.vt == VARENUM::VT_I1 ||
-						ordinal.vt == VARENUM::VT_I2 ||
-						ordinal.vt == VARENUM::VT_INT ||
-						ordinal.vt == VARENUM::VT_I4 ||
-						ordinal.vt == VARENUM::VT_I8 ||
-						ordinal.vt == VARENUM::VT_UI1 ||
-						ordinal.vt == VARENUM::VT_UI2 ||
-						ordinal.vt == VARENUM::VT_UI4 ||
-						ordinal.vt == VARENUM::VT_UI8)
+					if (m_record == nullptr)
 					{
+						throw NullReferenceException("m_record is nullptr");
+					}
+					if (IsDigital(ordinal.vt))
+					{
+						if ((long)ordinal < 0)
+						{
+							throw IndexOutOfRangeException("index is " + (long)ordinal);
+						}
 						auto var = m_record->GetCollect((long)ordinal);
+						if (var.vt == VARENUM::VT_NULL)
+						{
+							return T();
+						}
+						return (const char*)_bstr_t(var);
+					}
+					else if (ordinal.vt == VARENUM::VT_BSTR)
+					{
+						auto var = m_record->GetCollect(ordinal);
+						if (var.vt == VARENUM::VT_NULL)
+						{
+							return T();
+						}
 						return (const char*)_bstr_t(var);
 					}
 					else
 					{
-						auto var = m_record->GetCollect(ordinal);
-						return (const char*)_bstr_t(var);
+						throw NotSupportedException("not support type");
 					}
 				}
 				catch (_com_error &e)
@@ -197,6 +206,20 @@ namespace System
 			dbRowID *= (vt.decVal.sign == 128)? -1 : 1;
 			dbRowID /= pow(10.00, vt.decVal.scale);
 			*/
+		private:
+			inline bool IsDigital(VARTYPE type)
+			{
+				return (type == VARENUM::VT_I1 ||
+					type == VARENUM::VT_I2 ||
+					type == VARENUM::VT_INT ||
+					type == VARENUM::VT_I4 ||
+					type == VARENUM::VT_I8 ||
+					type == VARENUM::VT_UI1 ||
+					type == VARENUM::VT_UI2 ||
+					type == VARENUM::VT_UI4 ||
+					type == VARENUM::VT_UINT ||
+					type == VARENUM::VT_UI8);
+			}
 		private:
 			_RecordsetPtr m_record;
 			bool m_first = true;

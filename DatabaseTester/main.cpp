@@ -261,7 +261,7 @@ void TestMySql()
 		sql_reader = sql_command->ExecuteReader<SqlDataReaderPtr>();
 		while (sql_reader->Read())
 		{
-			auto f0 = sql_reader->GetValue<int>("f0");
+			auto f0 = sql_reader->GetValue<__int32>("f0");
 			auto f1 = sql_reader->GetValue<std::string>("f1");
 			auto f2 = sql_reader->GetValue<__int8>("f2");
 			auto f3 = sql_reader->GetValue<short>("f3");

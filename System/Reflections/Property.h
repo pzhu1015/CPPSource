@@ -6,8 +6,8 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef System_Reflections_Property_h
-#define System_Reflections_Property_h
+#ifndef SYSTEM_REFLECTIONS_PROPERTY_H
+#define SYSTEM_REFLECTIONS_PROPERTY_H
 
 namespace System
 {
@@ -25,4 +25,4 @@ namespace System
 	}
 }
 
-#endif // !System_Reflections_Property_h
+#endif // !SYSTEM_REFLECTIONS_PROPERTY_H

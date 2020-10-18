@@ -95,9 +95,9 @@ public:
 		SERIALIZE_FROM(json, id_list);
 		SERIALIZE_FROM(json, id_set);
 		SERIALIZE_FROM(json, dept);
-		SERIALIZE_FROM_VECTOR(json, dept_vector);
-		SERIALIZE_FROM_LIST(json, dept_list);
-		SERIALIZE_FROM_SET(json, dept_set);
+		SERIALIZE_FROM(json, dept_vector);
+		SERIALIZE_FROM(json, dept_list);
+		SERIALIZE_FROM(json, dept_set);
 	}
 private:
 	int id;
@@ -124,4 +124,5 @@ public:
 	PROPERTY(dept_list)
 	PROPERTY(dept_set)
 };
+
 #endif;

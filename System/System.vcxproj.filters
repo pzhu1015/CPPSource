@@ -328,6 +328,18 @@
     <ClInclude Include="Exceptions\SqlException.h">
       <Filter>Exceptions</Filter>
     </ClInclude>
+    <ClInclude Include="Exceptions\OverflowException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\NullReferenceException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\IndexOutOfRangeException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflections\Reflection.h">
+      <Filter>Reflections</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -505,6 +517,15 @@
       <Filter>Data</Filter>
     </ClCompile>
     <ClCompile Include="Exceptions\SqlException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\OverflowException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\NullReferenceException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\IndexOutOfRangeException.cpp">
       <Filter>Exceptions</Filter>
     </ClCompile>
   </ItemGroup>

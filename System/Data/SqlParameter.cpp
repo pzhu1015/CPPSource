@@ -9,6 +9,7 @@
 #include "System/Data/SqlParameter.h"
 #include "System/Base/Object.h"
 #include "System/Exceptions/NotSupportedException.h"
+#include "System/Exceptions/NullReferenceException.h"
 using namespace System::Exceptions;
 namespace System
 {
@@ -17,11 +18,19 @@ namespace System
 		SqlParameter::SqlParameter()
 		{
 			m_parameter = CreateParameter("", DataTypeEnum::adEmpty, _variant_t(), ParameterDirectionEnum::adParamInput);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 		}
 
 		SqlParameter::SqlParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction)
 		{
 			m_parameter = CreateParameter(name, type, value, direction);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 		}
 
 		SqlParameter::SqlParameter(const _ParameterPtr &param)
@@ -36,13 +45,19 @@ namespace System
 
 		DataTypeEnum SqlParameter::GetDbType()
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			return m_parameter->GetType();
 		}
 
 		void SqlParameter::SetDbType(DataTypeEnum type)
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			m_parameter->PutType(type);
 		}
 
@@ -53,13 +68,19 @@ namespace System
 
 		std::string SqlParameter::GetParameterName()
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			return (const char*)m_parameter->GetName();
 		}
 
 		void SqlParameter::SetParameterName(const std::string & name)
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			m_parameter->PutName(name.data());
 		}
 
@@ -75,49 +96,73 @@ namespace System
 
 		__int8 SqlParameter::GetPrecision()
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			return m_parameter->GetPrecision();
 		}
 
 		void SqlParameter::SetPrecision(char precision)
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			m_parameter->PutPrecision(precision);
 		}
 
 		__int8 SqlParameter::GetScale()
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			return m_parameter->GetNumericScale();
 		}
 
 		void SqlParameter::SetScale(char scale)
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			return m_parameter->PutNumericScale(scale);
 		}
 
 		_variant_t SqlParameter::GetValue()
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			return m_parameter->GetValue();
 		}
 
 		void SqlParameter::SetValue(const _variant_t & value)
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			m_parameter->PutValue(value);
 		}
 
 		ParameterDirectionEnum SqlParameter::GetDirection()
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			return m_parameter->GetDirection();
 		}
 
 		void SqlParameter::SetDirection(ParameterDirectionEnum direction)
 		{
-			assert(m_parameter);
+			if (m_parameter == nullptr)
+			{
+				throw NullReferenceException("m_parameter is nullptr");
+			}
 			m_parameter->PutDirection(direction);
 		}
 
@@ -131,7 +176,10 @@ namespace System
 			long size = 0;
 			_CommandPtr command;
 			command.CreateInstance(__uuidof(Command));
-			assert(command);
+			if (command == nullptr)
+			{
+				throw NullReferenceException("command is nullptr");
+			}
 			switch (type)
 			{
 			case DataTypeEnum::adBoolean:
@@ -182,6 +230,10 @@ namespace System
 			case DataTypeEnum::adVarWChar:
 			case DataTypeEnum::adWChar:
 				size = wcslen(value.bstrVal);
+				if (size == 0)
+				{
+					size = 1;
+				}
 				value.vt = VARENUM::VT_BSTR;
 				break;
 			case DataTypeEnum::adDate:
@@ -194,7 +246,10 @@ namespace System
 				break;
 			}
 			_ParameterPtr parameter = command->CreateParameter(name.data(), type, direction, size, value);
-			assert(parameter);
+			if (parameter == nullptr)
+			{
+				throw NullReferenceException("parameter is nullptr");
+			}
 			return parameter;
 		}
 	}
