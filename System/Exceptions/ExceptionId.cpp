@@ -21,6 +21,8 @@ namespace System
 		{
 			switch (id)
 			{
+			case ExceptionId::ArrayTypeMismatch:
+				return "ArrayTypeMismatchException";
 			case ExceptionId::IO:
 				return "IOException";
 			case ExceptionId::NotSupported:

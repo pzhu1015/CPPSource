@@ -34,9 +34,9 @@ namespace System
 
 			bool Stop();
 
-			RedisClientPtr AllocateClient(int timeout = 60);
+			RedisClientPtr Allocate(int timeout = 60);
 
-			void ReleaseClient(const RedisClientPtr &client);
+			void Release(const RedisClientPtr &client);
 
 		private:
 			RedisClientPtr CreateClient();
@@ -61,13 +61,13 @@ namespace System
 		public:
 			RedisClientGuard()
 			{
-				m_client = RedisClientPool::GetInstance().AllocateClient();
+				m_client = RedisClientPool::GetInstance().Allocate();
 			}
 			~RedisClientGuard()
 			{
 				if (m_client)
 				{
-					RedisClientPool::GetInstance().ReleaseClient(m_client);
+					RedisClientPool::GetInstance().Release(m_client);
 				}
 				m_client = nullptr;
 			}

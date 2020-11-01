@@ -167,7 +167,6 @@
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="Search.h" />
-    <ClInclude Include="Serialize.h" />
     <ClInclude Include="Sort.h" />
     <ClInclude Include="String.h" />
     <ClInclude Include="Swap.h" />

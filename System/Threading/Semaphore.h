@@ -9,26 +9,24 @@
 #ifndef SYSTEM_THREADING_SEMAPHORE_H
 #define SYSTEM_THREADING_SEMAPHORE_H
 #include "System/Base/DllExport.h"
-#include <mutex>
-#include <condition_variable>
+#include <Windows.h>
 namespace System
 {
 	namespace Threading
 	{
+		struct SemaphoreHandle;
 		class SYSTEM_API Semaphore final
 		{
 		public:
-			Semaphore(int value = 0);
+			Semaphore(const int &value = 0);
 			~Semaphore();
-			
-			void wait();
 
-			void signal();
+			void wait();                       // semaphore - 1
+			bool wait(const unsigned int &ms); // semaphore - 1 , timeout ms
+			void signal();                    // semaphore + 1
+
 		private:
-			int m_count = 0;
-			int m_wakeups = 0;
-			std::mutex m_mutex;
-			std::condition_variable m_condition;
+			SemaphoreHandle *semaphoreHandle;
 		};
 	}
 }

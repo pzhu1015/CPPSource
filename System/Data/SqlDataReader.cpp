@@ -9,6 +9,7 @@
 #include "System/Data/SqlDataReader.h"
 #include "System/Exceptions/SqlException.h"
 #include "System/Exceptions/NotSupportedException.h"
+#include "System/Exceptions/ArrayTypeMismatchException.h"
 #include <ATLComTime.h>
 using namespace System::Exceptions;
 namespace System
@@ -148,13 +149,19 @@ namespace System
 						throw IndexOutOfRangeException("index is " + (long)ordinal);
 					}
 					auto var = m_record->GetCollect((long)ordinal);
-					assert(var.vt == VARENUM::VT_BOOL);
+					if (var.vt != VARENUM::VT_BOOL)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_BOOL");
+					}
 					return var.boolVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
 				{
 					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_BOOL);
+					if (var.vt != VARENUM::VT_BOOL)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_BOOL");
+					}
 					return var.boolVal;
 				}
 				else
@@ -184,13 +191,19 @@ namespace System
 						throw IndexOutOfRangeException("index is " + (long)ordinal);
 					}
 					auto var = m_record->GetCollect((long)ordinal);
-					assert(var.vt == VARENUM::VT_DECIMAL);
+					if (var.vt != VARENUM::VT_DECIMAL)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_DECIMAL");
+					}
 					return var;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
 				{
 					auto var = m_record->GetCollect(ordinal);
-					assert(var.vt == VARENUM::VT_DECIMAL);
+					if (var.vt != VARENUM::VT_DECIMAL)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_DECIMAL");
+					}
 					return var;
 				}
 				else
@@ -224,7 +237,10 @@ namespace System
 					{
 						return byte();
 					}
-					assert(var.vt == VARENUM::VT_UI1);
+					if (var.vt != VARENUM::VT_UI1)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI1");
+					}
 					return var.bVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -234,7 +250,10 @@ namespace System
 					{
 						return byte();
 					}
-					assert(var.vt == VARENUM::VT_UI1);
+					if (var.vt != VARENUM::VT_UI1)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI1");
+					}
 					return var.bVal;
 				}
 				else
@@ -268,7 +287,10 @@ namespace System
 					{
 						return double();
 					}
-					assert(var.vt == VARENUM::VT_R8);
+					if (var.vt != VARENUM::VT_R8)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_R8");
+					}
 					return var.dblVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -278,7 +300,10 @@ namespace System
 					{
 						return double();
 					}
-					assert(var.vt == VARENUM::VT_R8);
+					if (var.vt != VARENUM::VT_R8)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_R8");
+					}
 					return var.dblVal;
 				}
 				else
@@ -312,7 +337,10 @@ namespace System
 					{
 						return float();
 					}
-					assert(var.vt == VARENUM::VT_R4);
+					if (var.vt != VARENUM::VT_R4)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_R4");
+					}
 					return var.fltVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -322,7 +350,10 @@ namespace System
 					{
 						return float();
 					}
-					assert(var.vt == VARENUM::VT_R4);
+					if (var.vt != VARENUM::VT_R4)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_R4");
+					}
 					return var.fltVal;
 				}
 				else
@@ -356,7 +387,10 @@ namespace System
 					{
 						return __int8();
 					}
-					assert(var.vt == VARENUM::VT_I2 || var.vt == VARENUM::VT_I1);
+					if (var.vt != VARENUM::VT_I2 && var.vt != VARENUM::VT_I1)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_I2 or VT_I1");
+					}
 					return var.cVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -366,7 +400,10 @@ namespace System
 					{
 						return __int8();
 					}
-					assert(var.vt == VARENUM::VT_I2 || var.vt == VARENUM::VT_I1);
+					if (var.vt != VARENUM::VT_I2 && var.vt != VARENUM::VT_I1)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_I2 or VT_I1");
+					}
 					return var.cVal;
 				}
 				else
@@ -400,7 +437,10 @@ namespace System
 					{
 						return __int16();
 					}
-					assert(var.vt == VARENUM::VT_I2);
+					if (var.vt != VARENUM::VT_I2)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_I2");
+					}
 					return var.iVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -410,7 +450,10 @@ namespace System
 					{
 						return __int16();
 					}
-					assert(var.vt == VARENUM::VT_I2);
+					if (var.vt != VARENUM::VT_I2)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_I2");
+					}
 					return var.iVal;
 				}
 				else
@@ -444,7 +487,10 @@ namespace System
 					{
 						return __int32();
 					}
-					assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
+					if (var.vt != VARENUM::VT_I4 && var.vt != VARENUM::VT_INT)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_I4 or VT_INT");
+					}
 					return var.intVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -454,7 +500,10 @@ namespace System
 					{
 						return __int32();
 					}
-					assert(var.vt == VARENUM::VT_I4 || var.vt == VARENUM::VT_INT);
+					if (var.vt != VARENUM::VT_I4 && var.vt != VARENUM::VT_INT)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_I4 or VT_INT");
+					}
 					return var.intVal;
 				}
 				else
@@ -488,7 +537,10 @@ namespace System
 					{
 						return __int64();
 					}
-					assert(var.vt == VARENUM::VT_DECIMAL);
+					if (var.vt != VARENUM::VT_DECIMAL)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_DECIMAL");
+					}
 					return var.decVal.Lo64;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -498,7 +550,10 @@ namespace System
 					{
 						return __int16();
 					}
-					assert(var.vt == VARENUM::VT_DECIMAL);
+					if (var.vt != VARENUM::VT_DECIMAL)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_DECIMAL");
+					}
 					return var.decVal.Lo64;
 				}
 				else
@@ -532,7 +587,10 @@ namespace System
 					{
 						return unsigned __int8();
 					}
-					assert(var.vt == VARENUM::VT_UI2);
+					if (var.vt != VARENUM::VT_UI2)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI2");
+					}
 					return var.cVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -542,7 +600,10 @@ namespace System
 					{
 						return unsigned __int8();
 					}
-					assert(var.vt == VARENUM::VT_UI2);
+					if (var.vt != VARENUM::VT_UI2)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI2");
+					}
 					return var.cVal;
 				}
 				else
@@ -576,7 +637,10 @@ namespace System
 					{
 						return unsigned __int16();
 					}
-					assert(var.vt == VARENUM::VT_UI2);
+					if (var.vt != VARENUM::VT_UI2)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI2");
+					}
 					return var.uiVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -586,7 +650,10 @@ namespace System
 					{
 						return unsigned __int16();
 					}
-					assert(var.vt == VARENUM::VT_UI2);
+					if (var.vt != VARENUM::VT_UI2)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI2");
+					}
 					return var.uiVal;
 				}
 				else
@@ -620,7 +687,10 @@ namespace System
 					{
 						return unsigned __int32();
 					}
-					assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
+					if (var.vt != VARENUM::VT_UI4 && var.vt != VARENUM::VT_UINT)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI4 or VT_UINT");
+					}
 					return var.uintVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -630,7 +700,10 @@ namespace System
 					{
 						return unsigned __int32();
 					}
-					assert(var.vt == VARENUM::VT_UI4 || var.vt == VARENUM::VT_UINT);
+					if (var.vt != VARENUM::VT_UI4 && var.vt != VARENUM::VT_UINT)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI4 or VT_UINT");
+					}
 					return var.uintVal;
 				}
 				else
@@ -664,7 +737,10 @@ namespace System
 					{
 						return unsigned __int64();
 					}
-					assert(var.vt == VARENUM::VT_UI8);
+					if (var.vt != VARENUM::VT_UI8)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI8");
+					}
 					return var.ullVal;
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -674,7 +750,10 @@ namespace System
 					{
 						return unsigned __int64();
 					}
-					assert(var.vt == VARENUM::VT_UI8);
+					if (var.vt != VARENUM::VT_UI8)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_UI8");
+					}
 					return var.ullVal;
 				}
 				else
@@ -708,7 +787,10 @@ namespace System
 					{
 						return std::string();
 					}
-					assert(var.vt == VARENUM::VT_BSTR);
+					if (var.vt != VARENUM::VT_BSTR)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_BSTR");
+					}
 					return (const char*)_bstr_t(var);
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -718,7 +800,10 @@ namespace System
 					{
 						return std::string();
 					}
-					assert(var.vt == VARENUM::VT_BSTR);
+					if (var.vt != VARENUM::VT_BSTR)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_BSTR");
+					}
 					return (const char*)_bstr_t(var);
 				}
 				else
@@ -752,7 +837,10 @@ namespace System
 					{
 						return COleDateTime();
 					}
-					assert(var.vt == VARENUM::VT_DATE);
+					if (var.vt != VARENUM::VT_DATE)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_DATE");
+					}
 					return COleDateTime(var.date);
 				}
 				else if (ordinal.vt == VARENUM::VT_BSTR)
@@ -762,7 +850,10 @@ namespace System
 					{
 						return COleDateTime();
 					}
-					assert(var.vt == VARENUM::VT_DATE);
+					if (var.vt != VARENUM::VT_DATE)
+					{
+						throw ArrayTypeMismatchException("current type is not VT_DATE");
+					}
 					return COleDateTime(var.date);
 				}
 				else

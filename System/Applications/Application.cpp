@@ -9,8 +9,11 @@
 #include "System/Applications/Application.h"
 #include "System/Configurations/Configuration.h"
 #include "System/IO/FileInfo.h"
+#include "System/Exceptions/NullReferenceException.h"
 #include <direct.h>
+#include <assert.h>
 using namespace System::IO;
+using namespace System::Exceptions;
 namespace System
 {
 	bool Application::Start(const std::string & name)
@@ -68,37 +71,55 @@ namespace System
 
 	const std::string& Application::GetCompanyName() const
 	{
-		assert(!m_company_name.empty());
+		if (m_company_name.empty())
+		{
+			throw NullReferenceException("m_company_name is empty");
+		}
 		return m_company_name;
 	}
 
 	const std::string& Application::GetProductName() const
 	{
-		assert(!m_product_name.empty());
+		if (m_product_name.empty())
+		{
+			throw NullReferenceException("m_product_name is empty");
+		}
 		return m_product_name;
 	}
 
 	const std::string& Application::GetProductVersion() const
 	{
-		assert(!m_product_version.empty());
+		if (m_product_version.empty())
+		{
+			throw NullReferenceException("m_product_version is empty");
+		}
 		return m_product_version;
 	}
 
 	const std::string& Application::GetStartupPath() const
 	{
-		assert(!m_startup_path.empty());
+		if (m_startup_path.empty())
+		{
+			throw NullReferenceException("m_startup_path is empty");
+		}
 		return m_startup_path;
 	}
 
 	const std::string& Application::GetExecutablePath() const
 	{
-		assert(!m_executable_path.empty());
+		if (m_executable_path.empty())
+		{
+			throw NullReferenceException("m_executable_path is empty");
+		}
 		return m_executable_path;
 	}
 
 	const std::string & Application::GetLogPath() const
 	{
-		assert(!m_log_path.empty());
+		if (m_log_path.empty())
+		{
+			throw NullReferenceException("m_log_path is empty");
+		}
 		return m_log_path;
 	}
 

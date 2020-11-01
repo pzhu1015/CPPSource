@@ -20,9 +20,15 @@ namespace System
 		SqlConnection::SqlConnection(const std::string & connection_str)
 		{	
 			HRESULT hr = ::CoInitialize(NULL);
-			assert(!FAILED(hr));
+			if (FAILED(hr))
+			{
+				throw InvalidOperationException("CoInitialize failed");
+			}
 			hr = m_connection.CreateInstance(__uuidof(Connection));
-			assert(!FAILED(hr));
+			if (FAILED(hr))
+			{
+				throw InvalidOperationException("m_connection.CreateInstance() failed");
+			}
 			if (m_connection == nullptr)
 			{
 				throw NullReferenceException("m_connection is nullptr");
@@ -96,7 +102,6 @@ namespace System
 			{
 				if (m_connection)
 				{
-					assert(m_connection);
 					if (GetState() == ObjectStateEnum::adStateOpen)
 					{
 						HRESULT hr = m_connection->Close();
@@ -144,7 +149,10 @@ namespace System
 				{
 					throw NullReferenceException("m_connection is nullptr");
 				}
-				assert(GetState() == ObjectStateEnum::adStateOpen);
+				if (GetState() == ObjectStateEnum::adStateOpen)
+				{
+					throw InvalidOperationException("m_connection is not open");
+				}
 				m_connection->PutIsolationLevel(level);
 				DbTransactionPtr trans = std::make_shared<SqlTransaction>(std::dynamic_pointer_cast<SqlConnection>(shared_from_this()));
 				HRESULT hr = m_connection->BeginTrans();

@@ -317,10 +317,10 @@ namespace System
 				{
 					throw InvalidOperationException("socket is connected");
 				}
-				assert(INVALID_SOCKET != m_sock);
-				assert(port <= IPEndPoint::MAXPORT && port > IPEndPoint::MINPORT);
-				assert(ip != "");
-				assert(!m_connected);
+				if (INVALID_SOCKET == m_sock);
+				{
+					return false;
+				}
 				sockaddr_in sin = {};
 				sin.sin_family = (int)m_address_family;
 				sin.sin_port = htons(port);
@@ -373,7 +373,6 @@ namespace System
 
 			int Socket::Receive(char * buffer, int length)
 			{
-				assert(INVALID_SOCKET != m_sock);
 				if (INVALID_SOCKET == m_sock)
 				{
 					return -1;
@@ -389,7 +388,6 @@ namespace System
 
 			int Socket::Send(char * buffer, int length)
 			{
-				assert(INVALID_SOCKET != m_sock);
 				if (INVALID_SOCKET == m_sock)
 				{
 					return -1;
@@ -425,7 +423,10 @@ namespace System
 
 			int Socket::SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, const char * optValue, int optLength)
 			{
-				assert(INVALID_SOCKET != m_sock);
+				if (INVALID_SOCKET == m_sock)
+				{
+					return -1;
+				}
 				return setsockopt(m_sock, (int)optionLevel, (int)optionName, optValue, optLength);
 			}
 
@@ -441,7 +442,10 @@ namespace System
 
 			int Socket::GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName) const
 			{
-				assert(INVALID_SOCKET != m_sock);
+				if (INVALID_SOCKET == m_sock)
+				{
+					return -1;
+				}
 				int result = 0;
 				int length = sizeof(result);
 				int ret = getsockopt(m_sock, (int)optionLevel, (int)optionName, (char*)&result, &length);

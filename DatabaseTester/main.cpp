@@ -212,7 +212,7 @@ void TestMySql()
 				int f0 = reader->GetInt32("f0");
 				std::string f1 = reader->GetString("f1");
 				char f2 = reader->GetInt8("f2");
-				short f3 = reader->GetInt16("f3");
+				__int16 f3 = reader->GetInt16("f3");
 				bool f4 = reader->GetBool("f4");
 				int64_t f5 = reader->GetInt64("f5");
 				float f6 = reader->GetFloat("f6");
@@ -264,7 +264,7 @@ void TestMySql()
 			auto f0 = sql_reader->GetValue<__int32>("f0");
 			auto f1 = sql_reader->GetValue<std::string>("f1");
 			auto f2 = sql_reader->GetValue<__int8>("f2");
-			auto f3 = sql_reader->GetValue<short>("f3");
+			auto f3 = sql_reader->GetValue<__int16>("f3");
 			auto f4 = sql_reader->GetValue<bool>("f4");
 			auto f5 = sql_reader->GetValue<__int64>("f5");
 			auto f6 = sql_reader->GetValue<float>("f6");

@@ -173,7 +173,7 @@
       <PreprocessorDefinitions>_AFXEXT;SYSTEM_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)Include;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -221,6 +221,7 @@
     <ClInclude Include="Exceptions\ArgumentException.h" />
     <ClInclude Include="Exceptions\ArgumentNullException.h" />
     <ClInclude Include="Exceptions\ArgumentOutOfRangeException.h" />
+    <ClInclude Include="Exceptions\ArrayTypeMismatchException.h" />
     <ClInclude Include="Exceptions\Exception.h" />
     <ClInclude Include="Exceptions\ExceptionId.h" />
     <ClInclude Include="Exceptions\IndexOutOfRangeException.h" />
@@ -276,8 +277,6 @@
     <ClInclude Include="Net\IPAddress.h" />
     <ClInclude Include="Net\IPEndPoint.h" />
     <ClInclude Include="Net\Ptrs.h" />
-    <ClInclude Include="Net\SimpleTcpClient.h" />
-    <ClInclude Include="Net\SimpleTcpListener.h" />
     <ClInclude Include="Net\Sockets\AddressFamily.h" />
     <ClInclude Include="Net\Sockets\NetworkStream.h" />
     <ClInclude Include="Net\Sockets\ProtocolType.h" />
@@ -293,10 +292,12 @@
     <ClInclude Include="Net\TcpListener.h" />
     <ClInclude Include="Redis\RedisClientPool.h" />
     <ClInclude Include="Redis\RedisMgr.h" />
+    <ClInclude Include="Reflections\MetaMacro.hpp" />
     <ClInclude Include="Reflections\Property.h" />
     <ClInclude Include="Reflections\Reflection.h" />
     <ClInclude Include="Serializers\JsonSerialize.h" />
     <ClInclude Include="Threading\Ptrs.h" />
+    <ClInclude Include="Threading\ReadWriteLock.h" />
     <ClInclude Include="Threading\Runnable.h" />
     <ClInclude Include="Threading\Semaphore.h" />
     <ClInclude Include="Threading\Thread.h" />
@@ -317,6 +318,7 @@
     <ClCompile Include="Exceptions\ArgumentException.cpp" />
     <ClCompile Include="Exceptions\ArgumentNullException.cpp" />
     <ClCompile Include="Exceptions\ArgumentOutOfRangeException.cpp" />
+    <ClCompile Include="Exceptions\ArrayTypeMismatchException.cpp" />
     <ClCompile Include="Exceptions\Exception.cpp" />
     <ClCompile Include="Exceptions\ExceptionId.cpp" />
     <ClCompile Include="Exceptions\IndexOutOfRangeException.cpp" />
@@ -352,8 +354,6 @@
     <ClCompile Include="Logger\CLogger.cpp" />
     <ClCompile Include="Net\IPAddress.cpp" />
     <ClCompile Include="Net\IPEndPoint.cpp" />
-    <ClCompile Include="Net\SimpleTcpClient.cpp" />
-    <ClCompile Include="Net\SimpleTcpListener.cpp" />
     <ClCompile Include="Net\Sockets\NetworkStream.cpp" />
     <ClCompile Include="Net\Sockets\Socket.cpp" />
     <ClCompile Include="Net\Sockets\SocketAsyncEventArgs.cpp" />
@@ -361,7 +361,9 @@
     <ClCompile Include="Net\TcpListener.cpp" />
     <ClCompile Include="Redis\RedisClientPool.cpp" />
     <ClCompile Include="Redis\RedisMgr.cpp" />
+    <ClCompile Include="Reflections\Reflection.cpp" />
     <ClCompile Include="Serializers\JsonSerialize.cpp" />
+    <ClCompile Include="Threading\ReadWriteLock.cpp" />
     <ClCompile Include="Threading\Semaphore.cpp" />
     <ClCompile Include="Threading\Thread.cpp" />
     <ClCompile Include="Threading\ThreadPool.cpp" />

@@ -9,10 +9,9 @@
 #ifndef SYSTEM_NET_TCPLISTENER_H
 #define SYSTEM_NET_TCPLISTENER_H
 #include "System/Base/DllExport.h"
-#include "System/Net/EndPoint.h"
 #include "System/Net/Ptrs.h"
 #include "System/Net/Sockets/Ptrs.h"
-
+using namespace System::Net::Sockets;
 namespace System
 {
 	namespace Net

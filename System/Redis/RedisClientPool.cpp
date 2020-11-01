@@ -10,6 +10,7 @@
 #include "System/Applications/Application.h"
 #include "System/Configurations/Configuration.h"
 #include "System/Exceptions/RedisException.h"
+#include "System/Exceptions/InvalidOperationException.h"
 #include "System/Threading/Thread.h"
 using namespace System::Exceptions;
 namespace System
@@ -22,7 +23,10 @@ namespace System
 			auto app_config = Application::GetInstance().GetConfiguration();
 			m_min_clients = app_config->GetValue("redis", "min_clients", min_clients);
 			m_max_clients = app_config->GetValue("redis", "max_clients", max_clients);
-			assert(m_min_clients > 0 && m_max_clients > 0 && m_min_clients <= m_max_clients);
+			if (m_min_clients <= 0 || m_max_clients <= 0 || m_min_clients > m_max_clients)
+			{
+				return false;
+			}
 			m_host = app_config->GetValue("redis", "host", "127.0.0.1");
 			m_port = app_config->GetValue("redis", "port", 6379);
 			m_database = app_config->GetValue("redis", "database", 0);
@@ -49,7 +53,7 @@ namespace System
 			return true;
 		}
 
-		RedisClientPtr RedisClientPool::AllocateClient(int timeout)
+		RedisClientPtr RedisClientPool::Allocate(int timeout)
 		{
 			std::unique_lock<std::mutex> lock(m_mutex);
 			while (m_waits.empty() && m_waits.size() + m_idles.size() >= m_max_clients)
@@ -76,11 +80,14 @@ namespace System
 			return client;
 		}
 
-		void RedisClientPool::ReleaseClient(const RedisClientPtr & client)
+		void RedisClientPool::Release(const RedisClientPtr & client)
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
 			auto itr = m_idles.find(client);
-			assert(itr != m_idles.end());
+			if (itr == m_idles.end())
+			{
+				throw InvalidOperationException("ReleaseClient faild");
+			}
 			m_idles.erase(itr);
 			m_waits.push_back(client);
 		}

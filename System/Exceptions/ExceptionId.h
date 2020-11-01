@@ -19,6 +19,7 @@ namespace System
 			Exception,
 			IO,
 			NotSupported,
+			ArrayTypeMismatch,
 			Argument,
 			ArgumentOutOfRange,
 			ArgumentNull,

@@ -8,77 +8,61 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_REFLECTIONS_REFLECTION_H
 #define SYSTEM_REFLECTIONS_REFLECTION_H
-#include <tuple>
 #include <type_traits>
-#include <memory>
-
-#define DEFINE_STRUCT_SCHEMA(Struct, ...)\
-	template <typename Struct>\
-	inline constexpr auto StructSchema()\
-	{\
-		using _Struct = Struct;\
-		return std::make_tuple(__VA_ARGS__);\
-	}
-
-#define DEFINE_STRUCT_FIELD(StructField)\
-	std::make_tuple(&_Struct::StructField, ##StructField)
+#include <utility>
+#include <cstddef>
+#include "System/Reflections/MetaMacro.hpp"
 
 namespace System
 {
 	namespace Reflections
 	{
-		template <typename Fn, typename Tuple, std::size_t... I>
-		inline constexpr void ForEachTuple(Tuple&& tuple, Fn&& fn, std::index_sequence<I...>) 
-		{
-			using Expander = int[];
-			(void)Expander {
-				0, ((void)fn(std::get<I>(std::forward<Tuple>(tuple))), 0)...
-			};
+
+#define FIELD_EACH(i, arg)                    \
+    PAIR(arg);                                \
+    template <typename T>                     \
+    struct FIELD<T, i> {                      \
+        T& obj;                               \
+        FIELD(T& obj): obj(obj) {}            \
+        auto value() -> decltype(auto) {      \
+            return (obj.STRIP(arg));          \
+        }                                     \
+        static constexpr const char* name() { \
+            return STRING(STRIP(arg));        \
+        }                                     \
+    };                                        \
+
+#define DEFINE_STRUCT(st, ...)                                              \
+    struct st {                                                             \
+        template <typename, size_t> struct FIELD;                           \
+        static constexpr size_t _field_count_ = GET_ARG_COUNT(__VA_ARGS__); \
+        PASTE(REPEAT_, GET_ARG_COUNT(__VA_ARGS__)) (FIELD_EACH, 0, __VA_ARGS__) \
+    };                                                                      \
+
+		template<typename T, typename = void>
+		struct IsRefected : std::false_type { };
+
+		template<typename T>
+		struct IsRefected<T,
+			std::void_t<decltype(&T::_field_count_)>>
+			: std::true_type { };
+
+		template<typename T>
+		constexpr static bool IsReflected_v =
+			IsRefected<T>::value;
+
+		template<typename T, typename F, size_t... Is>
+		inline constexpr void forEach(T&& obj, F&& f, std::index_sequence<Is...>) {
+			using TDECAY = std::decay_t<T>;
+			(void(f(typename TDECAY::template FIELD<TDECAY, Is>(obj).name(),
+				typename TDECAY::template FIELD<TDECAY, Is>(obj).value())), ...);
 		}
 
-		template <typename Fn, typename Tuple>
-		inline constexpr void ForEachTuple(Tuple&& tuple, Fn&& fn)
-		{
-			ForEachTuple(
-				std::forward<Tuple>(tuple), 
-				std::forward<Fn>(fn),
-				std::make_index_sequence<std::tuple_size<std::decay_t<Tuple>>::value>{});
-		}
-
-		template <typename T>
-		struct is_field_pointer : std::false_type {};
-
-		template <typename C, typename T>
-		struct is_field_pointer<T C::*> : std::true_type {};
-
-		template <typename T>
-		constexpr auto is_field_pointer_v = is_field_pointer<T>::value;
-
-		template <typename T>
-		inline constexpr auto StructSchema() 
-		{
-			return std::make_tuple();
-		}
-
-		template <typename T, typename Fn>
-		inline constexpr void ForEachField(T&& value, Fn&& fn)
-		{
-			/*constexpr auto struct_schema = StructSchema<std::decay_t<T>>();
-			static_assert(std::tuple_size<decltype(struct_schema)>::value != 0,
-				"StructSchema<T>() for type T should be specialized to return "
-				"FieldSchema tuples, like ((&T::field, field_name), ...)");
-
-			ForEachTuple(struct_schema, [&value, &fn](auto&& field_schema)
-			{
-				using FieldSchema = std::decay_t<decltype(field_schema)>;
-				static_assert(
-					std::tuple_size<FieldSchema>::value >= 2 &&
-					is_field_pointer_v<std::tuple_element_t<0, FieldSchema>>,
-					"FieldSchema tuple should be (&T::field, field_name)");
-
-				fn(value.*(std::get<0>(std::forward<decltype(field_schema)>(field_schema))),
-					std::get<1>(std::forward<decltype(field_schema)>(field_schema)));
-			});*/
+		template<typename T, typename F>
+		inline constexpr void forEach(T&& obj, F&& f) {
+			forEach(std::forward<T>(obj),
+				std::forward<F>(f),
+				std::make_index_sequence<std::decay_t<T>::_field_count_>{});
 		}
 	}
 }

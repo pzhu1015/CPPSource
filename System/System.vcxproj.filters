@@ -46,12 +46,6 @@
     <ClInclude Include="Net\IPEndPoint.h">
       <Filter>Net</Filter>
     </ClInclude>
-    <ClInclude Include="Net\SimpleTcpClient.h">
-      <Filter>Net</Filter>
-    </ClInclude>
-    <ClInclude Include="Net\SimpleTcpListener.h">
-      <Filter>Net</Filter>
-    </ClInclude>
     <ClInclude Include="Net\TcpClient.h">
       <Filter>Net</Filter>
     </ClInclude>
@@ -340,6 +334,15 @@
     <ClInclude Include="Reflections\Reflection.h">
       <Filter>Reflections</Filter>
     </ClInclude>
+    <ClInclude Include="Reflections\MetaMacro.hpp">
+      <Filter>Reflections</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\ArrayTypeMismatchException.h">
+      <Filter>Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Threading\ReadWriteLock.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -367,12 +370,6 @@
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\IPEndPoint.cpp">
-      <Filter>Net</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\SimpleTcpClient.cpp">
-      <Filter>Net</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\SimpleTcpListener.cpp">
       <Filter>Net</Filter>
     </ClCompile>
     <ClCompile Include="Logger\CLogger.cpp">
@@ -528,6 +525,15 @@
     <ClCompile Include="Exceptions\IndexOutOfRangeException.cpp">
       <Filter>Exceptions</Filter>
     </ClCompile>
+    <ClCompile Include="Reflections\Reflection.cpp">
+      <Filter>Reflections</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\ArrayTypeMismatchException.cpp">
+      <Filter>Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Threading\ReadWriteLock.cpp">
+      <Filter>Threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
@@ -592,6 +598,9 @@
     </Filter>
     <Filter Include="Redis">
       <UniqueIdentifier>{72aea8c2-167b-4560-aef6-ec639a3b557c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Encodings">
+      <UniqueIdentifier>{85db5ee5-0ad5-4c33-a681-1df813cc9779}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
