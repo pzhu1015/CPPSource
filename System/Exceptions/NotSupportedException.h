@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API NotSupportedException final : public Exception
 		{
 		public:
-			NotSupportedException();
-			NotSupportedException(const std::string &msg);
-			virtual ~NotSupportedException();
+			NotSupportedException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

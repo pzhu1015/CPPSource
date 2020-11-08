@@ -9,24 +9,48 @@
 #ifndef SYSTEM_EXCEPTIONS_EXCEPTION_H
 #define SYSTEM_EXCEPTIONS_EXCEPTION_H
 #include "System/Base/DllExport.h"
-#include "System/Exceptions/ExceptionId.h"
+#include <stdexcept>
 #include <string>
+#include <typeinfo>
 
+#define TYPE_NAME (typeid(std::remove_reference<decltype(*this)>::type).name())
 namespace System
 {
 	namespace Exceptions
 	{
-		class SYSTEM_API Exception
+		class SYSTEM_API Exception : public std::exception
 		{
 		public:
-			Exception(ExceptionId id = ExceptionId::Exception);
-			Exception(const std::string &msg, ExceptionId id = ExceptionId::Exception);
-			virtual ~Exception();
-			virtual std::string what() const;
+			Exception()
+			{
+				m_msg.append("throw ").append(TYPE_NAME).append(": ").append(std::exception::what());
+			}
+
+			Exception(const char* message)
+			{
+				m_msg.append("throw ").append(TYPE_NAME).append(": ").append(message);
+			}
+
+			Exception(const std::string& message)
+			{
+				m_msg.append("throw ").append(TYPE_NAME).append(": ").append(message);
+			}
+
+			Exception(const std::string & msg, const char* class_name)
+			{
+				m_msg.append("throw ").append(class_name).append(": ").append(msg.data());
+			}
+
+			~Exception()
+			{
+			}
+
+			const char* what() const noexcept
+			{
+				return m_msg.data();
+			}
 		protected:
 			std::string m_msg;
-			std::string m_name;
-			ExceptionId m_id;
 		};
 	}
 }

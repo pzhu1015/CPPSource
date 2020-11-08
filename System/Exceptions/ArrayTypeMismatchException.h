@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API ArrayTypeMismatchException final : public Exception
 		{
 		public:
-			ArrayTypeMismatchException();
-			ArrayTypeMismatchException(const std::string &msg);
-			virtual ~ArrayTypeMismatchException();
+			ArrayTypeMismatchException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

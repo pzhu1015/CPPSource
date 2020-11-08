@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API ArgumentException final : public Exception
 		{
 		public:
-			ArgumentException();
-			ArgumentException(const std::string &msg);
-			virtual ~ArgumentException();
+			ArgumentException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

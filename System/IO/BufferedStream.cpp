@@ -334,7 +334,7 @@ namespace System
 			assert(m_read_pos < m_read_length);
 			if (!m_stream->GetCanSeek())
 			{
-				throw NotSupportedException();
+				throw NotSupportedException(__func__);
 			}
 			FlushRead();
 		}

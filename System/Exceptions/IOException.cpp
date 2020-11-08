@@ -11,18 +11,5 @@ namespace System
 {
 	namespace Exceptions
 	{
-		IOException::IOException()
-			:
-			Exception(ExceptionId::IO)
-		{
-		}
-		IOException::IOException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::IO)
-		{
-		}
-		IOException::~IOException()
-		{
-		}
 	}
 }

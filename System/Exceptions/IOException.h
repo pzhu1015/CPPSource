@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API IOException final : public Exception
 		{
 		public:
-			IOException();
-			IOException(const std::string &msg);
-			virtual ~IOException();
+			IOException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

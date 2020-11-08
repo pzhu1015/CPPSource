@@ -11,25 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		SqlException::SqlException()
-			:
-			Exception(ExceptionId::Sql)
-		{
-		}
-		SqlException::SqlException(const _com_error & e) 
-			:
-			Exception(ExceptionId::Sql)
-		{
-			CString str = e.ErrorMessage();
-			this->m_msg = (char*)e.Description();
-		}
-		SqlException::SqlException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::Sql)
-		{
-		}
-		SqlException::~SqlException()
-		{
-		}
+		
 	}
 }

@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API SocketException final : public Exception
 		{
 		public:
-			SocketException();
-			SocketException(const std::string &msg);
-			virtual ~SocketException();
+			SocketException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

@@ -11,20 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		ArgumentNullException::ArgumentNullException()
-			:
-			Exception(ExceptionId::ArgumentNull)
-		{
-		}
-
-		ArgumentNullException::ArgumentNullException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::ArgumentNull)
-		{
-		}
-
-		ArgumentNullException::~ArgumentNullException()
-		{
-		}
+		
 	}
 }

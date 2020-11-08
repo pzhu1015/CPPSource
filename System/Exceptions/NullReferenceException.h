@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API NullReferenceException final : public Exception
 		{
 		public:
-			NullReferenceException();
-			NullReferenceException(const std::string &msg);
-			virtual ~NullReferenceException();
+			NullReferenceException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

@@ -175,9 +175,6 @@
     <ClInclude Include="Exceptions\Exception.h">
       <Filter>Exceptions</Filter>
     </ClInclude>
-    <ClInclude Include="Exceptions\ExceptionId.h">
-      <Filter>Exceptions</Filter>
-    </ClInclude>
     <ClInclude Include="Exceptions\InvalidOperationException.h">
       <Filter>Exceptions</Filter>
     </ClInclude>
@@ -343,6 +340,106 @@
     <ClInclude Include="Threading\ReadWriteLock.h">
       <Filter>Threading</Filter>
     </ClInclude>
+    <ClInclude Include="Kafka\Consumer.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Producer.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Ptrs.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Config.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\ConfigBase.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\ConfigOption.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Exceptions.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Error.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Message.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Header.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Buffer.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\HeaderList.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\ClonablePtr.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\HeaderIterator.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\MessageInternal.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\KafkaHandleBase.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\TopicPartition.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\TopicPartitionList.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Metadata.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Logging.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\CallbackInvoker.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Topic.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\TopicConfig.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\GroupInformation.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Endianness.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Queue.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Event.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\MessageBuilder.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\MessageTimestamp.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Base\optional.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\ConsumerDispatcher.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\BackoffPerformer.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\BufferedProducer.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\BackoffCommitter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -441,9 +538,6 @@
     <ClCompile Include="Exceptions\Exception.cpp">
       <Filter>Exceptions</Filter>
     </ClCompile>
-    <ClCompile Include="Exceptions\ExceptionId.cpp">
-      <Filter>Exceptions</Filter>
-    </ClCompile>
     <ClCompile Include="Exceptions\InvalidOperationException.cpp">
       <Filter>Exceptions</Filter>
     </ClCompile>
@@ -534,6 +628,66 @@
     <ClCompile Include="Threading\ReadWriteLock.cpp">
       <Filter>Threading</Filter>
     </ClCompile>
+    <ClCompile Include="Kafka\Consumer.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Producer.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Config.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\ConfigOption.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Error.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Exceptions.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Buffer.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Message.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\TopicPartition.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\TopicPartitionList.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Topic.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\TopicConfig.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\KafkaHandleBase.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\GroupInformation.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Queue.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Event.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\Metadata.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\MessageInternal.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\MessageTimestamp.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\BackoffPerformer.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
@@ -601,6 +755,9 @@
     </Filter>
     <Filter Include="Encodings">
       <UniqueIdentifier>{85db5ee5-0ad5-4c33-a681-1df813cc9779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Kafka">
+      <UniqueIdentifier>{e3e69126-07ad-4f36-9a54-ec4410863d95}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

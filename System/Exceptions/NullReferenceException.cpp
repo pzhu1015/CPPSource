@@ -11,20 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		NullReferenceException::NullReferenceException()
-			:
-			Exception(ExceptionId::NullReference)
-		{
-		}
-
-		NullReferenceException::NullReferenceException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::NullReference)
-		{
-		}
-
-		NullReferenceException::~NullReferenceException()
-		{
-		}
+		
 	}
 }

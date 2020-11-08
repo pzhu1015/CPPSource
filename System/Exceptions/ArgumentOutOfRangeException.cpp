@@ -11,18 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		ArgumentOutOfRangeException::ArgumentOutOfRangeException()
-			:
-			Exception(ExceptionId::ArgumentOutOfRange)
-		{
-		}
-		ArgumentOutOfRangeException::ArgumentOutOfRangeException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::ArgumentOutOfRange)
-		{
-		}
-		ArgumentOutOfRangeException::~ArgumentOutOfRangeException()
-		{
-		}
+		
 	}
 }

@@ -12,24 +12,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		Exception::Exception(ExceptionId id)
-		{
-			m_id = id;
-		}
-
-		Exception::Exception(const std::string & msg, ExceptionId id)
-		{
-			m_msg = msg;
-			m_id = id;
-		}
-
-		Exception::~Exception()
-		{
-		}
-
-		std::string Exception::what() const
-		{
-			return "throw " + GetExceptionName(m_id) + ": " + m_msg;
-		}
+		
 	}
 }

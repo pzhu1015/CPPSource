@@ -11,20 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		ArgumentException::ArgumentException()
-			:
-			Exception(ExceptionId::Argument)
-		{
-		}
-
-		ArgumentException::ArgumentException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::Argument)
-		{
-		}
-
-		ArgumentException::~ArgumentException()
-		{
-		}
+		
 	}
 }

@@ -11,18 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		RedisException::RedisException()
-			:
-			Exception(ExceptionId::Redis)
-		{
-		}
-		RedisException::RedisException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::Redis)
-		{
-		}
-		RedisException::~RedisException()
-		{
-		}
+		
 	}
 }

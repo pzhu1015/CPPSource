@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API IndexOutOfRangeException final : public Exception
 		{
 		public:
-			IndexOutOfRangeException();
-			IndexOutOfRangeException(const std::string &msg);
-			virtual ~IndexOutOfRangeException();
+			IndexOutOfRangeException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

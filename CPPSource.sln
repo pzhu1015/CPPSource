@@ -503,6 +503,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerializeTester", "Serializ
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReflectionTester", "ReflectionTester\ReflectionTester.vcxproj", "{1657C038-2B63-4C7A-A9D2-61983E2F8570}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExceptionTester", "ExceptionTester\ExceptionTester.vcxproj", "{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -639,6 +644,14 @@ Global
 		{1657C038-2B63-4C7A-A9D2-61983E2F8570}.Release|x64.Build.0 = Release|x64
 		{1657C038-2B63-4C7A-A9D2-61983E2F8570}.Release|x86.ActiveCfg = Release|Win32
 		{1657C038-2B63-4C7A-A9D2-61983E2F8570}.Release|x86.Build.0 = Release|Win32
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Debug|x64.ActiveCfg = Debug|x64
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Debug|x64.Build.0 = Debug|x64
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Debug|x86.ActiveCfg = Debug|Win32
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Debug|x86.Build.0 = Debug|Win32
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Release|x64.ActiveCfg = Release|x64
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Release|x64.Build.0 = Release|x64
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Release|x86.ActiveCfg = Release|Win32
+		{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

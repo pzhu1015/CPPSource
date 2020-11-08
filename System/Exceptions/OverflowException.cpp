@@ -11,20 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		OverflowException::OverflowException()
-			:
-			Exception(ExceptionId::Overflow)
-		{
-		}
-
-		OverflowException::OverflowException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::Overflow)
-		{
-		}
-
-		OverflowException::~OverflowException()
-		{
-		}
+		
 	}
 }

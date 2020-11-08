@@ -11,20 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		IndexOutOfRangeException::IndexOutOfRangeException()
-			:
-			Exception(ExceptionId::IndexOutOfRange)
-		{
-		}
-
-		IndexOutOfRangeException::IndexOutOfRangeException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::IndexOutOfRange)
-		{
-		}
-
-		IndexOutOfRangeException::~IndexOutOfRangeException()
-		{
-		}
+		
 	}
 }

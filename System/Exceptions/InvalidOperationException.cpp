@@ -11,18 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		InvalidOperationException::InvalidOperationException()
-			:
-			Exception(ExceptionId::InvalidOperation)
-		{
-		}
-		InvalidOperationException::InvalidOperationException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::InvalidOperation)
-		{
-		}
-		InvalidOperationException::~InvalidOperationException()
-		{
-		}
+		
 	}
 }

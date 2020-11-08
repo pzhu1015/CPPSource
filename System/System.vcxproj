@@ -132,7 +132,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;librdkafka.lib;librdkafkacpp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -182,7 +182,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>tacopie.lib;cpp_redis.lib;librdkafka.lib;librdkafkacpp.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
@@ -195,6 +195,7 @@
     <ClInclude Include="Base\IDisposable.h" />
     <ClInclude Include="Base\NoCopy.h" />
     <ClInclude Include="Base\Object.h" />
+    <ClInclude Include="Base\optional.hpp" />
     <ClInclude Include="Base\Ptrs.h" />
     <ClInclude Include="Configurations\Configuration.h" />
     <ClInclude Include="Configurations\Ptrs.h" />
@@ -223,7 +224,6 @@
     <ClInclude Include="Exceptions\ArgumentOutOfRangeException.h" />
     <ClInclude Include="Exceptions\ArrayTypeMismatchException.h" />
     <ClInclude Include="Exceptions\Exception.h" />
-    <ClInclude Include="Exceptions\ExceptionId.h" />
     <ClInclude Include="Exceptions\IndexOutOfRangeException.h" />
     <ClInclude Include="Exceptions\InvalidOperationException.h" />
     <ClInclude Include="Exceptions\IOException.h" />
@@ -268,6 +268,39 @@
     <ClInclude Include="IO\Stream.h" />
     <ClInclude Include="Jsons\cJSON.h" />
     <ClInclude Include="Jsons\CJsonObject.hpp" />
+    <ClInclude Include="Kafka\BackoffCommitter.h" />
+    <ClInclude Include="Kafka\BackoffPerformer.h" />
+    <ClInclude Include="Kafka\Buffer.h" />
+    <ClInclude Include="Kafka\BufferedProducer.h" />
+    <ClInclude Include="Kafka\CallbackInvoker.h" />
+    <ClInclude Include="Kafka\ClonablePtr.h" />
+    <ClInclude Include="Kafka\Config.h" />
+    <ClInclude Include="Kafka\ConfigBase.h" />
+    <ClInclude Include="Kafka\ConfigOption.h" />
+    <ClInclude Include="Kafka\Consumer.h" />
+    <ClInclude Include="Kafka\ConsumerDispatcher.h" />
+    <ClInclude Include="Kafka\Endianness.h" />
+    <ClInclude Include="Kafka\Error.h" />
+    <ClInclude Include="Kafka\Event.h" />
+    <ClInclude Include="Kafka\Exceptions.h" />
+    <ClInclude Include="Kafka\GroupInformation.h" />
+    <ClInclude Include="Kafka\Header.h" />
+    <ClInclude Include="Kafka\HeaderIterator.h" />
+    <ClInclude Include="Kafka\HeaderList.h" />
+    <ClInclude Include="Kafka\KafkaHandleBase.h" />
+    <ClInclude Include="Kafka\Logging.h" />
+    <ClInclude Include="Kafka\Message.h" />
+    <ClInclude Include="Kafka\MessageBuilder.h" />
+    <ClInclude Include="Kafka\MessageInternal.h" />
+    <ClInclude Include="Kafka\MessageTimestamp.h" />
+    <ClInclude Include="Kafka\Metadata.h" />
+    <ClInclude Include="Kafka\Producer.h" />
+    <ClInclude Include="Kafka\Ptrs.h" />
+    <ClInclude Include="Kafka\Queue.h" />
+    <ClInclude Include="Kafka\Topic.h" />
+    <ClInclude Include="Kafka\TopicConfig.h" />
+    <ClInclude Include="Kafka\TopicPartition.h" />
+    <ClInclude Include="Kafka\TopicPartitionList.h" />
     <ClInclude Include="Logger\CLogger.h" />
     <ClInclude Include="Memory\MemoryPool.h" />
     <ClInclude Include="Memory\ObjectPool.h" />
@@ -320,7 +353,6 @@
     <ClCompile Include="Exceptions\ArgumentOutOfRangeException.cpp" />
     <ClCompile Include="Exceptions\ArrayTypeMismatchException.cpp" />
     <ClCompile Include="Exceptions\Exception.cpp" />
-    <ClCompile Include="Exceptions\ExceptionId.cpp" />
     <ClCompile Include="Exceptions\IndexOutOfRangeException.cpp" />
     <ClCompile Include="Exceptions\InvalidOperationException.cpp" />
     <ClCompile Include="Exceptions\IOException.cpp" />
@@ -351,6 +383,26 @@
     <ClCompile Include="IO\Stream.cpp" />
     <ClCompile Include="Jsons\cJSON.c" />
     <ClCompile Include="Jsons\CJsonObject.cpp" />
+    <ClCompile Include="Kafka\BackoffPerformer.cpp" />
+    <ClCompile Include="Kafka\Buffer.cpp" />
+    <ClCompile Include="Kafka\Config.cpp" />
+    <ClCompile Include="Kafka\ConfigOption.cpp" />
+    <ClCompile Include="Kafka\Consumer.cpp" />
+    <ClCompile Include="Kafka\Error.cpp" />
+    <ClCompile Include="Kafka\Event.cpp" />
+    <ClCompile Include="Kafka\Exceptions.cpp" />
+    <ClCompile Include="Kafka\GroupInformation.cpp" />
+    <ClCompile Include="Kafka\KafkaHandleBase.cpp" />
+    <ClCompile Include="Kafka\Message.cpp" />
+    <ClCompile Include="Kafka\MessageInternal.cpp" />
+    <ClCompile Include="Kafka\MessageTimestamp.cpp" />
+    <ClCompile Include="Kafka\Metadata.cpp" />
+    <ClCompile Include="Kafka\Producer.cpp" />
+    <ClCompile Include="Kafka\Queue.cpp" />
+    <ClCompile Include="Kafka\Topic.cpp" />
+    <ClCompile Include="Kafka\TopicConfig.cpp" />
+    <ClCompile Include="Kafka\TopicPartition.cpp" />
+    <ClCompile Include="Kafka\TopicPartitionList.cpp" />
     <ClCompile Include="Logger\CLogger.cpp" />
     <ClCompile Include="Net\IPAddress.cpp" />
     <ClCompile Include="Net\IPEndPoint.cpp" />

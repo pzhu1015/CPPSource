@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API InvalidOperationException final : public Exception
 		{
 		public:
-			InvalidOperationException();
-			InvalidOperationException(const std::string &msg);
-			virtual ~InvalidOperationException();
+			InvalidOperationException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

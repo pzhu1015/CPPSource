@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API RedisException : public Exception
 		{
 		public:
-			RedisException();
-			RedisException(const std::string &msg);
-			virtual ~RedisException();
+			RedisException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

@@ -11,20 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		SocketException::SocketException()
-			:
-			Exception(ExceptionId::Socket)
-		{
-		}
-
-		SocketException::SocketException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::Socket)
-		{
-		}
-
-		SocketException::~SocketException()
-		{
-		}
+		
 	}
 }

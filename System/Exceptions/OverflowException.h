@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API OverflowException final : public Exception
 		{
 		public:
-			OverflowException();
-			OverflowException(const std::string &msg);
-			virtual ~OverflowException();
+			OverflowException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

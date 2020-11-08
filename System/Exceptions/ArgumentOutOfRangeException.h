@@ -16,9 +16,12 @@ namespace System
 		class SYSTEM_API ArgumentOutOfRangeException final : public Exception
 		{
 		public:
-			ArgumentOutOfRangeException();
-			ArgumentOutOfRangeException(const std::string &msg);
-			virtual ~ArgumentOutOfRangeException();
+			ArgumentOutOfRangeException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
+
 		};
 	}
 }

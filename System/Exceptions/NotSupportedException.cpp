@@ -11,20 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		NotSupportedException::NotSupportedException()
-			:
-			Exception(ExceptionId::NotSupported)
-		{
-		}
-
-		NotSupportedException::NotSupportedException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::NotSupported)
-		{
-		}
-
-		NotSupportedException::~NotSupportedException()
-		{
-		}
+		
 	}
 }

@@ -16,9 +16,11 @@ namespace System
 		class SYSTEM_API ArgumentNullException final : public Exception
 		{
 		public:
-			ArgumentNullException();
-			ArgumentNullException(const std::string &msg);
-			~ArgumentNullException();
+			ArgumentNullException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

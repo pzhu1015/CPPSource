@@ -18,10 +18,17 @@ namespace System
 		class SYSTEM_API SqlException : public Exception
 		{
 		public:
-			SqlException();
-			SqlException(const _com_error &e);
-			SqlException(const std::string &msg);
-			virtual ~SqlException();
+			SqlException(const _com_error & e)
+				:
+				Exception(TYPE_NAME)
+			{
+				this->m_msg = (char*)e.Description();
+			}
+			SqlException(const std::string & msg)
+				:
+				Exception(msg, TYPE_NAME)
+			{
+			}
 		};
 	}
 }

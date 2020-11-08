@@ -11,18 +11,6 @@ namespace System
 {
 	namespace Exceptions
 	{
-		ArrayTypeMismatchException::ArrayTypeMismatchException()
-			:
-			Exception(ExceptionId::ArrayTypeMismatch)
-		{
-		}
-		ArrayTypeMismatchException::ArrayTypeMismatchException(const std::string & msg)
-			:
-			Exception(msg, ExceptionId::ArrayTypeMismatch)
-		{
-		}
-		ArrayTypeMismatchException::~ArrayTypeMismatchException()
-		{
-		}
+		
 	}
 }

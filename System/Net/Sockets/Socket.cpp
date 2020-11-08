@@ -317,7 +317,7 @@ namespace System
 				{
 					throw InvalidOperationException("socket is connected");
 				}
-				if (INVALID_SOCKET == m_sock);
+				if (INVALID_SOCKET == m_sock)
 				{
 					return false;
 				}
