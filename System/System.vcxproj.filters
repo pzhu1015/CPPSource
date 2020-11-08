@@ -440,6 +440,9 @@
       <Filter>Kafka</Filter>
     </ClInclude>
     <ClInclude Include="Kafka\BackoffCommitter.h" />
+    <ClInclude Include="Kafka\BackoffCommitter.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IO\Directory.cpp">
@@ -686,6 +689,9 @@
       <Filter>Kafka</Filter>
     </ClCompile>
     <ClCompile Include="Kafka\BackoffPerformer.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\BackoffCommitter.cpp">
       <Filter>Kafka</Filter>
     </ClCompile>
   </ItemGroup>

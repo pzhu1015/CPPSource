@@ -269,6 +269,7 @@
     <ClInclude Include="Jsons\cJSON.h" />
     <ClInclude Include="Jsons\CJsonObject.hpp" />
     <ClInclude Include="Kafka\BackoffCommitter.h" />
+    <ClInclude Include="Kafka\BackoffCommitter.h" />
     <ClInclude Include="Kafka\BackoffPerformer.h" />
     <ClInclude Include="Kafka\Buffer.h" />
     <ClInclude Include="Kafka\BufferedProducer.h" />
@@ -383,6 +384,7 @@
     <ClCompile Include="IO\Stream.cpp" />
     <ClCompile Include="Jsons\cJSON.c" />
     <ClCompile Include="Jsons\CJsonObject.cpp" />
+    <ClCompile Include="Kafka\BackoffCommitter.cpp" />
     <ClCompile Include="Kafka\BackoffPerformer.cpp" />
     <ClCompile Include="Kafka\Buffer.cpp" />
     <ClCompile Include="Kafka\Config.cpp" />
