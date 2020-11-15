@@ -122,13 +122,5 @@ namespace System
 			}
 			return nullptr;
 		}
-
-		void RedisClientPool::Monitor()
-		{
-			while (m_start)
-			{
-				Thread::Sleep(60000);
-			}
-		}
 	}
 }

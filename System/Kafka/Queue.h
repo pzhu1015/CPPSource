@@ -11,6 +11,7 @@
 #include "System/Base/DllExport.h"
 #include "System/Kafka/Message.h"
 #include "System/Kafka/Event.h"
+#include "System/Kafka/Macros.h"
 #include <vector>
 #include <memory>
 //#include <boost/optional.hpp>

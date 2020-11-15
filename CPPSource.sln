@@ -18,16 +18,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LoggerTester", "LoggerTeste
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Kafka", "Kafka\Kafka.vcxproj", "{86176DDE-DD4D-4433-8C39-F3937FBD2419}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "System", "System\System.vcxproj", "{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RedisTester", "RedisTester\RedisTester.vcxproj", "{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}"
-	ProjectSection(ProjectDependencies) = postProject
-		{70392FDA-01F9-4343-B244-B589BCA0CC40} = {70392FDA-01F9-4343-B244-B589BCA0CC40}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Redis", "Redis\Redis.vcxproj", "{70392FDA-01F9-4343-B244-B589BCA0CC40}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AlgorithmTester", "AlgorithmTester\AlgorithmTester.vcxproj", "{4AEEBCFB-70CC-4579-9EA8-FFE949077FFE}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -50,7 +41,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{485F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Debug", "x64.Debug", "{A6E99907-5B27-4C35-BC9E-2008D3F477E7}"
 	ProjectSection(SolutionItems) = preProject
-		Library\x64.Debug\hiredis.lib = Library\x64.Debug\hiredis.lib
 		Library\x64.Debug\libeay32.dll = Library\x64.Debug\libeay32.dll
 		Library\x64.Debug\libeay32.lib = Library\x64.Debug\libeay32.lib
 		Library\x64.Debug\libevent.lib = Library\x64.Debug\libevent.lib
@@ -66,16 +56,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Debug", "x64.Debug", "{
 		Library\x64.Debug\log4cplusSD.lib = Library\x64.Debug\log4cplusSD.lib
 		Library\x64.Debug\ssleay32.dll = Library\x64.Debug\ssleay32.dll
 		Library\x64.Debug\ssleay32.lib = Library\x64.Debug\ssleay32.lib
-		Library\x64.Debug\Win32_Interop.lib = Library\x64.Debug\Win32_Interop.lib
 		Library\x64.Debug\zlibd.dll = Library\x64.Debug\zlibd.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Release", "x64.Release", "{198FA059-ED73-46CA-A61C-1F449A914E87}"
 	ProjectSection(SolutionItems) = preProject
-		Library\x64.Release\hiredis.lib = Library\x64.Release\hiredis.lib
-		Library\x64.Release\jemalloc.lib = Library\x64.Release\jemalloc.lib
-		Library\x64.Release\jemallocso.dll = Library\x64.Release\jemallocso.dll
-		Library\x64.Release\jemallocso.lib = Library\x64.Release\jemallocso.lib
 		Library\x64.Release\lib_json.dll = Library\x64.Release\lib_json.dll
 		Library\x64.Release\lib_json.lib = Library\x64.Release\lib_json.lib
 		Library\x64.Release\libeay32.dll = Library\x64.Release\libeay32.dll
@@ -93,100 +78,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64.Release", "x64.Release"
 		Library\x64.Release\log4cplusS.lib = Library\x64.Release\log4cplusS.lib
 		Library\x64.Release\ssleay32.dll = Library\x64.Release\ssleay32.dll
 		Library\x64.Release\ssleay32.lib = Library\x64.Release\ssleay32.lib
-		Library\x64.Release\Win32_Interop.lib = Library\x64.Release\Win32_Interop.lib
 		Library\x64.Release\zlib.dll = Library\x64.Release\zlib.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Include", "Include", "{AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "hiredis", "hiredis", "{3BE81031-A4AC-4A50-9EA9-F5BEF6F4A043}"
-	ProjectSection(SolutionItems) = preProject
-		Include\hiredis\async.h = Include\hiredis\async.h
-		Include\hiredis\dict.h = Include\hiredis\dict.h
-		Include\hiredis\fmacros.h = Include\hiredis\fmacros.h
-		Include\hiredis\hiredis.h = Include\hiredis\hiredis.h
-		Include\hiredis\net.h = Include\hiredis\net.h
-		Include\hiredis\sds.h = Include\hiredis\sds.h
-		Include\hiredis\win32_hiredis.h = Include\hiredis\win32_hiredis.h
-		Include\hiredis\zmalloc.h = Include\hiredis\zmalloc.h
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "jemalloc", "jemalloc", "{E57465A4-6028-46F0-B8DD-070F856287C7}"
-	ProjectSection(SolutionItems) = preProject
-		Include\jemalloc\jemalloc.h = Include\jemalloc\jemalloc.h
-		Include\jemalloc\jemalloc.sh = Include\jemalloc\jemalloc.sh
-		Include\jemalloc\jemalloc_defs.h = Include\jemalloc\jemalloc_defs.h
-		Include\jemalloc\jemalloc_defs.h.in = Include\jemalloc\jemalloc_defs.h.in
-		Include\jemalloc\jemalloc_macros.h = Include\jemalloc\jemalloc_macros.h
-		Include\jemalloc\jemalloc_macros.h.in = Include\jemalloc\jemalloc_macros.h.in
-		Include\jemalloc\jemalloc_mangle.h = Include\jemalloc\jemalloc_mangle.h
-		Include\jemalloc\jemalloc_mangle.sh = Include\jemalloc\jemalloc_mangle.sh
-		Include\jemalloc\jemalloc_mangle_jet.h = Include\jemalloc\jemalloc_mangle_jet.h
-		Include\jemalloc\jemalloc_protos.h = Include\jemalloc\jemalloc_protos.h
-		Include\jemalloc\jemalloc_protos.h.in = Include\jemalloc\jemalloc_protos.h.in
-		Include\jemalloc\jemalloc_protos_jet.h = Include\jemalloc\jemalloc_protos_jet.h
-		Include\jemalloc\jemalloc_rename.h = Include\jemalloc\jemalloc_rename.h
-		Include\jemalloc\jemalloc_rename.sh = Include\jemalloc\jemalloc_rename.sh
-		Include\jemalloc\jemalloc_typedefs.h = Include\jemalloc\jemalloc_typedefs.h
-		Include\jemalloc\jemalloc_typedefs.h.in = Include\jemalloc\jemalloc_typedefs.h.in
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "internal", "internal", "{DCDA86A4-B208-4674-8933-AC267F1F302B}"
-	ProjectSection(SolutionItems) = preProject
-		Include\jemalloc\internal\arena.h = Include\jemalloc\internal\arena.h
-		Include\jemalloc\internal\assert.h = Include\jemalloc\internal\assert.h
-		Include\jemalloc\internal\atomic.h = Include\jemalloc\internal\atomic.h
-		Include\jemalloc\internal\base.h = Include\jemalloc\internal\base.h
-		Include\jemalloc\internal\bitmap.h = Include\jemalloc\internal\bitmap.h
-		Include\jemalloc\internal\chunk.h = Include\jemalloc\internal\chunk.h
-		Include\jemalloc\internal\chunk_dss.h = Include\jemalloc\internal\chunk_dss.h
-		Include\jemalloc\internal\chunk_mmap.h = Include\jemalloc\internal\chunk_mmap.h
-		Include\jemalloc\internal\ckh.h = Include\jemalloc\internal\ckh.h
-		Include\jemalloc\internal\ctl.h = Include\jemalloc\internal\ctl.h
-		Include\jemalloc\internal\extent.h = Include\jemalloc\internal\extent.h
-		Include\jemalloc\internal\hash.h = Include\jemalloc\internal\hash.h
-		Include\jemalloc\internal\huge.h = Include\jemalloc\internal\huge.h
-		Include\jemalloc\internal\jemalloc_internal.h = Include\jemalloc\internal\jemalloc_internal.h
-		Include\jemalloc\internal\jemalloc_internal.h.in = Include\jemalloc\internal\jemalloc_internal.h.in
-		Include\jemalloc\internal\jemalloc_internal_decls.h = Include\jemalloc\internal\jemalloc_internal_decls.h
-		Include\jemalloc\internal\jemalloc_internal_defs.h = Include\jemalloc\internal\jemalloc_internal_defs.h
-		Include\jemalloc\internal\jemalloc_internal_defs.h.in = Include\jemalloc\internal\jemalloc_internal_defs.h.in
-		Include\jemalloc\internal\jemalloc_internal_macros.h = Include\jemalloc\internal\jemalloc_internal_macros.h
-		Include\jemalloc\internal\mb.h = Include\jemalloc\internal\mb.h
-		Include\jemalloc\internal\mutex.h = Include\jemalloc\internal\mutex.h
-		Include\jemalloc\internal\nstime.h = Include\jemalloc\internal\nstime.h
-		Include\jemalloc\internal\pages.h = Include\jemalloc\internal\pages.h
-		Include\jemalloc\internal\ph.h = Include\jemalloc\internal\ph.h
-		Include\jemalloc\internal\private_namespace.h = Include\jemalloc\internal\private_namespace.h
-		Include\jemalloc\internal\private_namespace.sh = Include\jemalloc\internal\private_namespace.sh
-		Include\jemalloc\internal\private_symbols.txt = Include\jemalloc\internal\private_symbols.txt
-		Include\jemalloc\internal\private_unnamespace.h = Include\jemalloc\internal\private_unnamespace.h
-		Include\jemalloc\internal\private_unnamespace.sh = Include\jemalloc\internal\private_unnamespace.sh
-		Include\jemalloc\internal\prng.h = Include\jemalloc\internal\prng.h
-		Include\jemalloc\internal\prof.h = Include\jemalloc\internal\prof.h
-		Include\jemalloc\internal\public_namespace.h = Include\jemalloc\internal\public_namespace.h
-		Include\jemalloc\internal\public_namespace.sh = Include\jemalloc\internal\public_namespace.sh
-		Include\jemalloc\internal\public_symbols.txt = Include\jemalloc\internal\public_symbols.txt
-		Include\jemalloc\internal\public_unnamespace.h = Include\jemalloc\internal\public_unnamespace.h
-		Include\jemalloc\internal\public_unnamespace.sh = Include\jemalloc\internal\public_unnamespace.sh
-		Include\jemalloc\internal\ql.h = Include\jemalloc\internal\ql.h
-		Include\jemalloc\internal\qr.h = Include\jemalloc\internal\qr.h
-		Include\jemalloc\internal\quarantine.h = Include\jemalloc\internal\quarantine.h
-		Include\jemalloc\internal\rb.h = Include\jemalloc\internal\rb.h
-		Include\jemalloc\internal\rtree.h = Include\jemalloc\internal\rtree.h
-		Include\jemalloc\internal\size_classes.h = Include\jemalloc\internal\size_classes.h
-		Include\jemalloc\internal\size_classes.sh = Include\jemalloc\internal\size_classes.sh
-		Include\jemalloc\internal\smoothstep.h = Include\jemalloc\internal\smoothstep.h
-		Include\jemalloc\internal\smoothstep.sh = Include\jemalloc\internal\smoothstep.sh
-		Include\jemalloc\internal\spin.h = Include\jemalloc\internal\spin.h
-		Include\jemalloc\internal\stats.h = Include\jemalloc\internal\stats.h
-		Include\jemalloc\internal\tcache.h = Include\jemalloc\internal\tcache.h
-		Include\jemalloc\internal\ticker.h = Include\jemalloc\internal\ticker.h
-		Include\jemalloc\internal\tsd.h = Include\jemalloc\internal\tsd.h
-		Include\jemalloc\internal\util.h = Include\jemalloc\internal\util.h
-		Include\jemalloc\internal\valgrind.h = Include\jemalloc\internal\valgrind.h
-		Include\jemalloc\internal\witness.h = Include\jemalloc\internal\witness.h
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libevent", "libevent", "{557479E6-F59A-402A-B288-591FE88F647F}"
 	ProjectSection(SolutionItems) = preProject
@@ -442,53 +337,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "openssl", "openssl", "{658E
 		Include\openssl\x509v3.h = Include\openssl\x509v3.h
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "msvc_compat", "msvc_compat", "{33B04CE3-2872-41D3-BF0F-F80ADEB2B511}"
-	ProjectSection(SolutionItems) = preProject
-		Include\msvc_compat\strings.h = Include\msvc_compat\strings.h
-		Include\msvc_compat\windows_extra.h = Include\msvc_compat\windows_extra.h
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "C99", "C99", "{60750B0D-D779-48C2-B8B6-19111FBFEC15}"
-	ProjectSection(SolutionItems) = preProject
-		Include\msvc_compat\C99\stdbool.h = Include\msvc_compat\C99\stdbool.h
-		Include\msvc_compat\C99\stdint.h = Include\msvc_compat\C99\stdint.h
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Win32_interop", "Win32_interop", "{D412764E-6868-465B-BE2D-E4FB2C79A17B}"
-	ProjectSection(SolutionItems) = preProject
-		Include\Win32_interop\EventLog.h = Include\Win32_interop\EventLog.h
-		Include\Win32_interop\Win32_ANSI.h = Include\Win32_interop\Win32_ANSI.h
-		Include\Win32_interop\Win32_APIs.h = Include\Win32_interop\Win32_APIs.h
-		Include\Win32_interop\Win32_Assert.h = Include\Win32_interop\Win32_Assert.h
-		Include\Win32_interop\Win32_CommandLine.h = Include\Win32_interop\Win32_CommandLine.h
-		Include\Win32_interop\Win32_Common.h = Include\Win32_interop\Win32_Common.h
-		Include\Win32_interop\Win32_dlmalloc.h = Include\Win32_interop\Win32_dlmalloc.h
-		Include\Win32_interop\Win32_Error.h = Include\Win32_interop\Win32_Error.h
-		Include\Win32_interop\Win32_EventLog.h = Include\Win32_interop\Win32_EventLog.h
-		Include\Win32_interop\Win32_FDAPI.h = Include\Win32_interop\Win32_FDAPI.h
-		Include\Win32_interop\Win32_fdapi_crt.h = Include\Win32_interop\Win32_fdapi_crt.h
-		Include\Win32_interop\Win32_Portability.h = Include\Win32_interop\Win32_Portability.h
-		Include\Win32_interop\Win32_PThread.h = Include\Win32_interop\Win32_PThread.h
-		Include\Win32_interop\Win32_QFork.h = Include\Win32_interop\Win32_QFork.h
-		Include\Win32_interop\Win32_QFork_impl.h = Include\Win32_interop\Win32_QFork_impl.h
-		Include\Win32_interop\Win32_RedisLog.h = Include\Win32_interop\Win32_RedisLog.h
-		Include\Win32_interop\win32_rfdmap.h = Include\Win32_interop\win32_rfdmap.h
-		Include\Win32_interop\Win32_Service.h = Include\Win32_interop\Win32_Service.h
-		Include\Win32_interop\Win32_Signal_Process.h = Include\Win32_interop\Win32_Signal_Process.h
-		Include\Win32_interop\Win32_SmartHandle.h = Include\Win32_interop\Win32_SmartHandle.h
-		Include\Win32_interop\Win32_StackTrace.h = Include\Win32_interop\Win32_StackTrace.h
-		Include\Win32_interop\Win32_ThreadControl.h = Include\Win32_interop\Win32_ThreadControl.h
-		Include\Win32_interop\Win32_Time.h = Include\Win32_interop\Win32_Time.h
-		Include\Win32_interop\win32_types.h = Include\Win32_interop\win32_types.h
-		Include\Win32_interop\win32_types_hiredis.h = Include\Win32_interop\win32_types_hiredis.h
-		Include\Win32_interop\Win32_variadicFunctor.h = Include\Win32_interop\Win32_variadicFunctor.h
-		Include\Win32_interop\win32_winapifamily.h = Include\Win32_interop\win32_winapifamily.h
-		Include\Win32_interop\win32_wsiocp.h = Include\Win32_interop\win32_wsiocp.h
-		Include\Win32_interop\win32_wsiocp2.h = Include\Win32_interop\win32_wsiocp2.h
-		Include\Win32_interop\win32fixes.h = Include\Win32_interop\win32fixes.h
-		Include\Win32_interop\WS2tcpip.h = Include\Win32_interop\WS2tcpip.h
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DatabaseTester", "DatabaseTester\DatabaseTester.vcxproj", "{E8E9118A-6EC4-49EB-8B9A-2713889E3D8E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
@@ -500,12 +348,89 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RedisClientTester", "RedisC
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerializeTester", "SerializeTester\SerializeTester.vcxproj", "{6721B4BD-D647-4FC3-8B44-B0273F9B18DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReflectionTester", "ReflectionTester\ReflectionTester.vcxproj", "{1657C038-2B63-4C7A-A9D2-61983E2F8570}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExceptionTester", "ExceptionTester\ExceptionTester.vcxproj", "{5887E9EA-9AD9-4B4E-A11A-6A9063FB9221}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E} = {BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cpp_redis", "cpp_redis", "{F5083F82-7826-4633-B075-A7D078E8B1A9}"
+	ProjectSection(SolutionItems) = preProject
+		Include\cpp_redis\cpp_redis = Include\cpp_redis\cpp_redis
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "builders", "builders", "{F3547547-7839-43BE-A552-FDFC8C4A9ED3}"
+	ProjectSection(SolutionItems) = preProject
+		Include\cpp_redis\builders\array_builder.hpp = Include\cpp_redis\builders\array_builder.hpp
+		Include\cpp_redis\builders\builder_iface.hpp = Include\cpp_redis\builders\builder_iface.hpp
+		Include\cpp_redis\builders\builders_factory.hpp = Include\cpp_redis\builders\builders_factory.hpp
+		Include\cpp_redis\builders\bulk_string_builder.hpp = Include\cpp_redis\builders\bulk_string_builder.hpp
+		Include\cpp_redis\builders\error_builder.hpp = Include\cpp_redis\builders\error_builder.hpp
+		Include\cpp_redis\builders\integer_builder.hpp = Include\cpp_redis\builders\integer_builder.hpp
+		Include\cpp_redis\builders\reply_builder.hpp = Include\cpp_redis\builders\reply_builder.hpp
+		Include\cpp_redis\builders\simple_string_builder.hpp = Include\cpp_redis\builders\simple_string_builder.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{A5B455D2-36BC-43E0-A900-EBC4878F2AC2}"
+	ProjectSection(SolutionItems) = preProject
+		Include\cpp_redis\core\client.hpp = Include\cpp_redis\core\client.hpp
+		Include\cpp_redis\core\reply.hpp = Include\cpp_redis\core\reply.hpp
+		Include\cpp_redis\core\sentinel.hpp = Include\cpp_redis\core\sentinel.hpp
+		Include\cpp_redis\core\subscriber.hpp = Include\cpp_redis\core\subscriber.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "helpers", "helpers", "{39BEB30A-3053-41DA-A6D6-635AD3C33DFB}"
+	ProjectSection(SolutionItems) = preProject
+		Include\cpp_redis\helpers\variadic_template.hpp = Include\cpp_redis\helpers\variadic_template.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "impl", "impl", "{C0CBC4D4-531F-4473-A860-E2326A6332D3}"
+	ProjectSection(SolutionItems) = preProject
+		Include\cpp_redis\impl\client.ipp = Include\cpp_redis\impl\client.ipp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{735B5F1F-0589-4EDD-AE2F-F978755D8616}"
+	ProjectSection(SolutionItems) = preProject
+		Include\cpp_redis\misc\error.hpp = Include\cpp_redis\misc\error.hpp
+		Include\cpp_redis\misc\logger.hpp = Include\cpp_redis\misc\logger.hpp
+		Include\cpp_redis\misc\macro.hpp = Include\cpp_redis\misc\macro.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "network", "network", "{AD1B1CC2-520E-4A6F-8130-7CDB72907DDF}"
+	ProjectSection(SolutionItems) = preProject
+		Include\cpp_redis\network\redis_connection.hpp = Include\cpp_redis\network\redis_connection.hpp
+		Include\cpp_redis\network\tcp_client.hpp = Include\cpp_redis\network\tcp_client.hpp
+		Include\cpp_redis\network\tcp_client_iface.hpp = Include\cpp_redis\network\tcp_client_iface.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tacopie", "tacopie", "{313D1607-6431-4854-865F-964E359616EE}"
+	ProjectSection(SolutionItems) = preProject
+		Include\tacopie\tacopie = Include\tacopie\tacopie
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "network", "network", "{D4582F7E-D344-4A89-8B7F-ACD4E307BCAE}"
+	ProjectSection(SolutionItems) = preProject
+		Include\tacopie\network\io_service.hpp = Include\tacopie\network\io_service.hpp
+		Include\tacopie\network\self_pipe.hpp = Include\tacopie\network\self_pipe.hpp
+		Include\tacopie\network\tcp_client.hpp = Include\tacopie\network\tcp_client.hpp
+		Include\tacopie\network\tcp_server.hpp = Include\tacopie\network\tcp_server.hpp
+		Include\tacopie\network\tcp_socket.hpp = Include\tacopie\network\tcp_socket.hpp
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{E0790F03-18BC-4735-A6B1-227917989208}"
+	ProjectSection(SolutionItems) = preProject
+		Include\tacopie\utils\error.hpp = Include\tacopie\utils\error.hpp
+		Include\tacopie\utils\logger.hpp = Include\tacopie\utils\logger.hpp
+		Include\tacopie\utils\thread_pool.hpp = Include\tacopie\utils\thread_pool.hpp
+		Include\tacopie\utils\typedefs.hpp = Include\tacopie\utils\typedefs.hpp
 	EndProjectSection
 EndProject
 Global
@@ -548,14 +473,6 @@ Global
 		{2A1E3EBD-9131-41D6-9F03-EDC398E1E5CA}.Release|x64.Build.0 = Release|x64
 		{2A1E3EBD-9131-41D6-9F03-EDC398E1E5CA}.Release|x86.ActiveCfg = Release|Win32
 		{2A1E3EBD-9131-41D6-9F03-EDC398E1E5CA}.Release|x86.Build.0 = Release|Win32
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Debug|x64.ActiveCfg = Debug|x64
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Debug|x64.Build.0 = Debug|x64
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Debug|x86.ActiveCfg = Debug|Win32
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Debug|x86.Build.0 = Debug|Win32
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Release|x64.ActiveCfg = Release|x64
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Release|x64.Build.0 = Release|x64
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Release|x86.ActiveCfg = Release|Win32
-		{86176DDE-DD4D-4433-8C39-F3937FBD2419}.Release|x86.Build.0 = Release|Win32
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}.Debug|x64.ActiveCfg = Debug|x64
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}.Debug|x64.Build.0 = Debug|x64
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}.Debug|x86.ActiveCfg = Debug|Win32
@@ -564,22 +481,6 @@ Global
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}.Release|x64.Build.0 = Release|x64
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}.Release|x86.ActiveCfg = Release|Win32
 		{BFC76A55-9B6C-46F9-BBB7-DDF1F028466E}.Release|x86.Build.0 = Release|Win32
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Debug|x64.ActiveCfg = Debug|x64
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Debug|x64.Build.0 = Debug|x64
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Debug|x86.ActiveCfg = Debug|Win32
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Debug|x86.Build.0 = Debug|Win32
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Release|x64.ActiveCfg = Release|x64
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Release|x64.Build.0 = Release|x64
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Release|x86.ActiveCfg = Release|Win32
-		{E4EA0E88-6C2E-41E4-B397-4A8A6980B061}.Release|x86.Build.0 = Release|Win32
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Debug|x64.ActiveCfg = Debug|x64
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Debug|x64.Build.0 = Debug|x64
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Debug|x86.ActiveCfg = Debug|Win32
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Debug|x86.Build.0 = Debug|Win32
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Release|x64.ActiveCfg = Release|x64
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Release|x64.Build.0 = Release|x64
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Release|x86.ActiveCfg = Release|Win32
-		{70392FDA-01F9-4343-B244-B589BCA0CC40}.Release|x86.Build.0 = Release|Win32
 		{4AEEBCFB-70CC-4579-9EA8-FFE949077FFE}.Debug|x64.ActiveCfg = Debug|x64
 		{4AEEBCFB-70CC-4579-9EA8-FFE949077FFE}.Debug|x64.Build.0 = Debug|x64
 		{4AEEBCFB-70CC-4579-9EA8-FFE949077FFE}.Debug|x86.ActiveCfg = Debug|Win32
@@ -659,9 +560,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{A6E99907-5B27-4C35-BC9E-2008D3F477E7} = {485F6363-FE32-46DE-A1CD-536333869F60}
 		{198FA059-ED73-46CA-A61C-1F449A914E87} = {485F6363-FE32-46DE-A1CD-536333869F60}
-		{3BE81031-A4AC-4A50-9EA9-F5BEF6F4A043} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
-		{E57465A4-6028-46F0-B8DD-070F856287C7} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
-		{DCDA86A4-B208-4674-8933-AC267F1F302B} = {E57465A4-6028-46F0-B8DD-070F856287C7}
 		{557479E6-F59A-402A-B288-591FE88F647F} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
 		{57556F2C-BDB0-4CA0-856B-225401CCC896} = {557479E6-F59A-402A-B288-591FE88F647F}
 		{A5074F6C-1D06-460D-AB5A-951EB6214D32} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
@@ -674,8 +572,15 @@ Global
 		{255225F7-A3D7-44B2-8F07-1D500317D528} = {B1DAE9B5-31E5-45B4-B2BA-4493428B05D7}
 		{E500F3AA-FEA5-44E1-9499-97CB118D9138} = {255225F7-A3D7-44B2-8F07-1D500317D528}
 		{658EDA7D-F10D-478B-B3F6-8EBCCCBC5939} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
-		{33B04CE3-2872-41D3-BF0F-F80ADEB2B511} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
-		{60750B0D-D779-48C2-B8B6-19111FBFEC15} = {33B04CE3-2872-41D3-BF0F-F80ADEB2B511}
-		{D412764E-6868-465B-BE2D-E4FB2C79A17B} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{F5083F82-7826-4633-B075-A7D078E8B1A9} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{F3547547-7839-43BE-A552-FDFC8C4A9ED3} = {F5083F82-7826-4633-B075-A7D078E8B1A9}
+		{A5B455D2-36BC-43E0-A900-EBC4878F2AC2} = {F5083F82-7826-4633-B075-A7D078E8B1A9}
+		{39BEB30A-3053-41DA-A6D6-635AD3C33DFB} = {F5083F82-7826-4633-B075-A7D078E8B1A9}
+		{C0CBC4D4-531F-4473-A860-E2326A6332D3} = {F5083F82-7826-4633-B075-A7D078E8B1A9}
+		{735B5F1F-0589-4EDD-AE2F-F978755D8616} = {F5083F82-7826-4633-B075-A7D078E8B1A9}
+		{AD1B1CC2-520E-4A6F-8130-7CDB72907DDF} = {F5083F82-7826-4633-B075-A7D078E8B1A9}
+		{313D1607-6431-4854-865F-964E359616EE} = {AD7C5A58-DA3E-4E22-9F04-8B2C39D8537C}
+		{D4582F7E-D344-4A89-8B7F-ACD4E307BCAE} = {313D1607-6431-4854-865F-964E359616EE}
+		{E0790F03-18BC-4735-A6B1-227917989208} = {313D1607-6431-4854-865F-964E359616EE}
 	EndGlobalSection
 EndGlobal

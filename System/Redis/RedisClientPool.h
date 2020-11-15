@@ -40,7 +40,6 @@ namespace System
 
 		private:
 			RedisClientPtr CreateClient();
-			void Monitor();
 		private:
 			bool								m_start = true;
 			int									m_max_clients = 0;

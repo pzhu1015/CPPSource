@@ -7,6 +7,7 @@
 // Description:
 ///////////////////////////////////////////////////////////////////
 #include "System/Configurations/Configuration.h"
+#include "System/Kafka/ConfigOption.h"
 namespace System
 {
 	namespace Configurations
@@ -62,12 +63,21 @@ namespace System
 		double Configuration::GetValue(const std::string & section, const std::string & key, double dft_value)
 		{
 			if (!m_open) return dft_value;
-			const char* v = m_config_file->GetValue(section.data(), key.data(), "");
-			if (v == "")
+			return m_config_file->GetDoubleValue(section.data(), key.data(), dft_value);
+		}
+		std::vector<ConfigOption> Configuration::GetAllKeyValues(const std::string & section)
+		{
+			std::vector<ConfigOption> key_vals;
+			if (!m_open) return key_vals;
+			CSimpleIniA::TNamesDepend keys;
+			m_config_file->GetAllKeys(section.data(), keys);
+			for (auto itr : keys)
 			{
-				return dft_value;
+				std::string key = itr.pItem;
+				std::string value = GetValue(section, key, "");
+				key_vals.push_back({key, value});
 			}
-			return std::atof(v);
+			return std::move(key_vals);
 		}
 	}
 }

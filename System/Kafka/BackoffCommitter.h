@@ -8,18 +8,50 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_KAFKA_BACKOFFCOMMITTER_H
 #define SYSTEM_KAFKA_BACKOFFCOMMITTER_H
-#include "System/Base/DllExport.h"
 #include "System/Kafka/Consumer.h"
 #include "System/Kafka/BackoffPerformer.h"
 #include "System/Kafka/CallbackInvoker.h"
+#include "System/Kafka/Macros.h"
 #include <chrono>
 #include <functional>
 #include <thread>
 #include <string>
+
 namespace System
 {
 	namespace Kafka
 	{
+		/**
+		* \brief Allows performing synchronous commits that will backoff until successful
+		*
+		* This class serves as a simple wrapper around Consumer::commit, allowing to commit
+		* messages and topic/partition/offset tuples handling errors and performing a backoff
+		* whenever the commit fails.
+		*
+		* Both linear and exponential backoff policies are supported, the former one being
+		* the default.
+		*
+		* Example code on how to use this:
+		*
+		* \code
+		* // Create a consumer
+		* Consumer consumer(...);
+		*
+		* // Create a committer using this consumer
+		* BackoffCommitter committer(consumer);
+		*
+		* // Set an error callback. This is optional and allows having some feedback
+		* // when commits fail. If the callback returns false, then this message won't
+		* // be committer again.
+		* committer.set_error_callback([](Error error) {
+		*     cout << "Error committing: " << error << endl;
+		*     return true;
+		* });
+		*
+		* // Now commit. If there's an error, this will retry forever
+		* committer.commit(some_message);
+		* \endcode
+		*/
 		class SYSTEM_API BackoffCommitter : public BackoffPerformer {
 		public:
 			/**
@@ -112,7 +144,6 @@ namespace System
 			Consumer& consumer_;
 			ErrorCallback callback_;
 		};
-
 	}
 }
 #endif // !SYSTEM_KAFKA_BACKOFFCOMMITTER_H

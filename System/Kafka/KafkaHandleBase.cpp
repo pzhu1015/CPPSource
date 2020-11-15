@@ -30,12 +30,12 @@ namespace System
 
 		KafkaHandleBase::KafkaHandleBase(Config config)
 			: timeout_ms_(DEFAULT_TIMEOUT), config_(move(config)), handle_(nullptr, HandleDeleter(this)), destroy_flags_(0) {
-			/*auto& maybe_config = config_.get_default_topic_configuration();
+			auto& maybe_config = config_.get_default_topic_configuration();
 			if (maybe_config) {
 				maybe_config->set_as_opaque();
 				auto conf_handle = rd_kafka_topic_conf_dup(maybe_config->get_handle());
 				rd_kafka_conf_set_default_topic_conf(config_.get_handle(), conf_handle);
-			}*/
+			}
 		}
 
 		void KafkaHandleBase::pause_partitions(const TopicPartitionList& topic_partitions) {

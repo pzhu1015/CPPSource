@@ -11,8 +11,14 @@
 #include "System/Base/DllExport.h"
 #include "System/Configurations/SimpleIni.h"
 #include <memory>
+#include <vector>
 namespace System
 {
+	namespace Kafka
+	{
+		class ConfigOption;
+	}
+	using namespace System::Kafka;
 	namespace Configurations
 	{
 		class SYSTEM_API Configuration
@@ -26,6 +32,7 @@ namespace System
 			int GetValue(const std::string &section, const std::string &key, int dft_value);
 			int64_t GetValue(const std::string &section, const std::string &key, int64_t dft_value);
 			double GetValue(const std::string &section, const std::string &key, double dft_value);
+			std::vector<ConfigOption> GetAllKeyValues(const std::string &section);
 		private:
 			bool m_open = false;
 			std::shared_ptr<CSimpleIniA> m_config_file;

@@ -10,7 +10,7 @@
 #include "System/Kafka/Exceptions.h"
 #include "System/Kafka/MessageInternal.h"
 #include "System/Kafka/Message.h"
-#include "System/Base/optional.hpp"
+#include "System/nonstd/optional.hpp"
 #include <errno.h>
 #include <memory>
 

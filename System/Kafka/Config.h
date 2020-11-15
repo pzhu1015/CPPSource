@@ -14,7 +14,7 @@
 #include "System/Kafka/ClonablePtr.h"
 #include "System/Kafka/ConfigBase.h"
 #include "System/Kafka/Event.h"
-#include "System/Base/optional.hpp"
+#include "System/nonstd/optional.hpp"
 #include <memory>
 #include <string>
 #include <functional>

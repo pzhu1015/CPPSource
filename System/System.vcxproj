@@ -195,7 +195,6 @@
     <ClInclude Include="Base\IDisposable.h" />
     <ClInclude Include="Base\NoCopy.h" />
     <ClInclude Include="Base\Object.h" />
-    <ClInclude Include="Base\optional.hpp" />
     <ClInclude Include="Base\Ptrs.h" />
     <ClInclude Include="Configurations\Configuration.h" />
     <ClInclude Include="Configurations\Ptrs.h" />
@@ -269,7 +268,6 @@
     <ClInclude Include="Jsons\cJSON.h" />
     <ClInclude Include="Jsons\CJsonObject.hpp" />
     <ClInclude Include="Kafka\BackoffCommitter.h" />
-    <ClInclude Include="Kafka\BackoffCommitter.h" />
     <ClInclude Include="Kafka\BackoffPerformer.h" />
     <ClInclude Include="Kafka\Buffer.h" />
     <ClInclude Include="Kafka\BufferedProducer.h" />
@@ -290,14 +288,18 @@
     <ClInclude Include="Kafka\HeaderList.h" />
     <ClInclude Include="Kafka\KafkaHandleBase.h" />
     <ClInclude Include="Kafka\Logging.h" />
+    <ClInclude Include="Kafka\Macros.h" />
     <ClInclude Include="Kafka\Message.h" />
     <ClInclude Include="Kafka\MessageBuilder.h" />
     <ClInclude Include="Kafka\MessageInternal.h" />
     <ClInclude Include="Kafka\MessageTimestamp.h" />
     <ClInclude Include="Kafka\Metadata.h" />
+    <ClInclude Include="Kafka\PollInterface.h" />
+    <ClInclude Include="Kafka\PollStrategyBase.h" />
     <ClInclude Include="Kafka\Producer.h" />
     <ClInclude Include="Kafka\Ptrs.h" />
     <ClInclude Include="Kafka\Queue.h" />
+    <ClInclude Include="Kafka\RoundRobinPollStrategy.h" />
     <ClInclude Include="Kafka\Topic.h" />
     <ClInclude Include="Kafka\TopicConfig.h" />
     <ClInclude Include="Kafka\TopicPartition.h" />
@@ -324,6 +326,8 @@
     <ClInclude Include="Net\Sockets\SocketType.h" />
     <ClInclude Include="Net\TcpClient.h" />
     <ClInclude Include="Net\TcpListener.h" />
+    <ClInclude Include="nonstd\any.hpp" />
+    <ClInclude Include="nonstd\optional.hpp" />
     <ClInclude Include="Redis\RedisClientPool.h" />
     <ClInclude Include="Redis\RedisMgr.h" />
     <ClInclude Include="Reflections\MetaMacro.hpp" />
@@ -336,6 +340,7 @@
     <ClInclude Include="Threading\Semaphore.h" />
     <ClInclude Include="Threading\Thread.h" />
     <ClInclude Include="Threading\ThreadPool.h" />
+    <ClInclude Include="Threading\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Applications\Application.cpp" />
@@ -399,8 +404,10 @@
     <ClCompile Include="Kafka\MessageInternal.cpp" />
     <ClCompile Include="Kafka\MessageTimestamp.cpp" />
     <ClCompile Include="Kafka\Metadata.cpp" />
+    <ClCompile Include="Kafka\PollStrategyBase.cpp" />
     <ClCompile Include="Kafka\Producer.cpp" />
     <ClCompile Include="Kafka\Queue.cpp" />
+    <ClCompile Include="Kafka\RoundRobinPollStrategy.cpp" />
     <ClCompile Include="Kafka\Topic.cpp" />
     <ClCompile Include="Kafka\TopicConfig.cpp" />
     <ClCompile Include="Kafka\TopicPartition.cpp" />

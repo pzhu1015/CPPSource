@@ -13,7 +13,7 @@
 #include "System/Kafka/Buffer.h"
 #include "System/Kafka/HeaderList.h"
 #include "System/Kafka/MessageTimestamp.h"
-#include "System/Base/optional.hpp"
+#include "System/nonstd/optional.hpp"
 #include <assert.h>
 #include <memory>
 #include <chrono>

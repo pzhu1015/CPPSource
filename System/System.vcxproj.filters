@@ -427,9 +427,6 @@
     <ClInclude Include="Kafka\MessageTimestamp.h">
       <Filter>Kafka</Filter>
     </ClInclude>
-    <ClInclude Include="Base\optional.hpp">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="Kafka\ConsumerDispatcher.h">
       <Filter>Kafka</Filter>
     </ClInclude>
@@ -440,8 +437,29 @@
       <Filter>Kafka</Filter>
     </ClInclude>
     <ClInclude Include="Kafka\BackoffCommitter.h" />
+    <ClInclude Include="Threading\Timer.h">
+      <Filter>Threading</Filter>
+    </ClInclude>
     <ClInclude Include="Kafka\BackoffCommitter.h">
       <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\Macros.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\PollInterface.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\PollStrategyBase.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\RoundRobinPollStrategy.h">
+      <Filter>Kafka</Filter>
+    </ClInclude>
+    <ClInclude Include="nonstd\any.hpp">
+      <Filter>nonstd</Filter>
+    </ClInclude>
+    <ClInclude Include="nonstd\optional.hpp">
+      <Filter>nonstd</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -694,6 +712,12 @@
     <ClCompile Include="Kafka\BackoffCommitter.cpp">
       <Filter>Kafka</Filter>
     </ClCompile>
+    <ClCompile Include="Kafka\PollStrategyBase.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Kafka\RoundRobinPollStrategy.cpp">
+      <Filter>Kafka</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Threading">
@@ -764,6 +788,9 @@
     </Filter>
     <Filter Include="Kafka">
       <UniqueIdentifier>{e3e69126-07ad-4f36-9a54-ec4410863d95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nonstd">
+      <UniqueIdentifier>{0e8bb56a-5106-473f-8441-d2e0bbedf4ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
