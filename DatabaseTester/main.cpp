@@ -11,6 +11,7 @@
 #include "System/Data/SqlDataReader.h"
 #include "System/Data/SqlParameter.h"
 #include "System/Data/SqlTransaction.h"
+#include "System/Data/SqlParameterCollection.h"
 #include "System/Exceptions/SqlException.h"
 #include <ATLComTime.h>
 #include <iostream>
@@ -20,15 +21,15 @@ using namespace System::Exceptions;
 #define MYSQL_CONNECTION_STRING "Provider = MSDASQL.1; Persist Security Info = True; Extended Properties = 'Driver=MySQL ODBC 8.0 Unicode Driver;SERVER=192.168.1.10;UID=root;PWD=12345;DATABASE=bigdata;PORT=3306;OPTION=67108864'"
 #define SQLSERVER_CONNECTION_STRING "Provider = SQLOLEDB.1;Persist Security Info = true; User ID = sa; Password = 12345;initial Catalog = sqlserver_test;Data Source = 192.168.1.4"
 #define ORACLE_CONNECTION_STRING "Provider=MSDAORA.1;User ID=root;Password=123456;Data Source=192.168.1.5;Persist Security Info = False"
-
+#define MYSQL_CONNECTION_STRING_DSN "DSN=test;"
 //CString convert to string: CT2A()
 //string convert to CString: CA2T()
 void TestSQLServer()
 {
-	DbConnectionPtr connection = nullptr;
-	DbCommandPtr command = nullptr;
-	DbDataReaderPtr reader = nullptr;
-	DbTransactionPtr trans = nullptr;
+	SqlConnectionPtr connection = nullptr;
+	SqlCommandPtr command = nullptr;
+	SqlDataReaderPtr reader = nullptr;
+	SqlTransactionPtr trans = nullptr;
 	try
 	{
 		
@@ -99,7 +100,7 @@ void TestSQLServer()
 
 		command = connection->CreateCommand();
 		command->SetCommandText("select * from tb_test where f3=?");
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f3", DataTypeEnum::adWChar, "ccc"));
+		command->GetParameters()->Add("f3", DataTypeEnum::adWChar, _bstr_t("ccc"));
 		reader = command->ExecuteReader();
 		while (reader->Read())
 		{
@@ -132,18 +133,18 @@ void TestSQLServer()
 		reader->Close();
 		command = connection->CreateCommand();
 		command->SetCommandText("insert into tb_primary_key(f1,f2,f3,f4) values(?,?,?,?)");
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f1", DataTypeEnum::adVarChar, "c111"));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f2", DataTypeEnum::adVarChar, "c222"));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f3", DataTypeEnum::adVarChar, "c333"));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f4", DataTypeEnum::adVarChar, "c444"));
+		command->GetParameters()->Add("@f1", DataTypeEnum::adVarChar, "c111");
+		command->GetParameters()->Add("@f2", DataTypeEnum::adVarChar, "c222");
+		command->GetParameters()->Add("@f3", DataTypeEnum::adVarChar, "c333");
+		command->GetParameters()->Add("@f4", DataTypeEnum::adVarChar, "c444");
 		rows = command->ExecuteNoQuery();
 		trans = connection->BeginTransaction();
 		command = connection->CreateCommand();
 		command->SetCommandText("insert into tb_primary_key(f1,f2,f3,f4) values(?,?,?,?)");
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f1", DataTypeEnum::adVarChar, "c1111"));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f2", DataTypeEnum::adVarChar, "c2222"));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f3", DataTypeEnum::adVarChar, "c3333"));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("@f4", DataTypeEnum::adVarChar, "c4444"));
+		command->GetParameters()->Add("@f1", DataTypeEnum::adVarChar, "c1111");
+		command->GetParameters()->Add("@f2", DataTypeEnum::adVarChar, "c2222");
+		command->GetParameters()->Add("@f3", DataTypeEnum::adVarChar, "c3333");
+		command->GetParameters()->Add("@f4", DataTypeEnum::adVarChar, "c4444");
 		rows = command->ExecuteNoQuery();
 		rows = command->ExecuteNoQuery();
 		trans->Commit();
@@ -162,19 +163,19 @@ void TestSQLServer()
 
 void TestMySql()
 {
-	DbConnectionPtr connection = nullptr;
-	DbCommandPtr command = nullptr;
-	DbDataReaderPtr reader = nullptr;
-	DbTransactionPtr trans = nullptr;
+	SqlConnectionPtr connection = nullptr;
+	SqlCommandPtr command = nullptr;
+	SqlDataReaderPtr reader = nullptr;
+	SqlTransactionPtr trans = nullptr;
 	SqlDataReaderPtr sql_reader = nullptr;
 	SqlCommandPtr sql_command = nullptr;
 	SqlConnectionPtr sql_connection = nullptr;
 	try
 	{	
 		//通过ODBC数据源形式的连接字符串
-		//SqlConnectionPtr connection = std::make_shared<SqlConnection>("DSN=test");	
+		connection = std::make_shared<SqlConnection>("DSN=test");	
 		//通过源始连接配置
-		connection = std::make_shared<SqlConnection>(MYSQL_CONNECTION_STRING);
+		//connection = std::make_shared<SqlConnection>(MYSQL_CONNECTION_STRING);
 		connection->Open();
 		std::string connection_string = connection->GetConnectionString();
 		std::cout << "connection string: " << connection_string << std::endl;
@@ -242,37 +243,37 @@ void TestMySql()
 		//update
 		command = connection->CreateCommand();
 		command->SetCommandText("update tb_test set f2=?,f3=?,f4=?,f5=?,f6=?,f7=?,f8=?,f9=?,f10=? where f0=?");
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f2", DataTypeEnum::adTinyInt, 125));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f3", DataTypeEnum::adSmallInt, 32767));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f4", DataTypeEnum::adBoolean, 0));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f5", DataTypeEnum::adBigInt, 28000000000));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f6", DataTypeEnum::adDouble, 125.0));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f7", DataTypeEnum::adDouble, 125.0));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f8", DataTypeEnum::adDouble, 125.0));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f9", DataTypeEnum::adVarChar, COleDateTime::GetCurrentTime().Format(_T("%Y-%m-%d %H:%M:%S"))));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f9", DataTypeEnum::adVarChar, "2020-10-01"));
-		command->GetParameters().push_back(std::make_shared<SqlParameter>("f0", DataTypeEnum::adInteger, 11));
+		command->GetParameters()->Add("f2", DataTypeEnum::adTinyInt, 125);
+		command->GetParameters()->Add("f3", DataTypeEnum::adSmallInt, 32767);
+		command->GetParameters()->Add("f4", DataTypeEnum::adBoolean, 0);
+		command->GetParameters()->Add("f5", DataTypeEnum::adBigInt, 28000000000);
+		command->GetParameters()->Add("f6", DataTypeEnum::adDouble, 125.0);
+		command->GetParameters()->Add("f7", DataTypeEnum::adDouble, 125.0);
+		command->GetParameters()->Add("f8", DataTypeEnum::adDouble, 125.0);
+		command->GetParameters()->Add("f9", DataTypeEnum::adVarChar, COleDateTime::GetCurrentTime().Format(_T("%Y-%m-%d %H:%M:%S")).GetString());
+		command->GetParameters()->Add("f9", DataTypeEnum::adVarChar, "2020-10-01");
+		command->GetParameters()->Add("f0", DataTypeEnum::adInteger, 11);
 		rows = command->ExecuteNoQuery();
 
 		//select
 		sql_connection = std::dynamic_pointer_cast<SqlConnection>(connection);
-		sql_command = sql_connection->CreateCommand<SqlCommandPtr>();
+		sql_command = sql_connection->CreateCommand();
 		sql_command->SetCommandText("select * from tb_test");
-		sql_reader = sql_command->ExecuteReader<SqlDataReaderPtr>();
+		sql_reader = sql_command->ExecuteReader();
 		while (sql_reader->Read())
 		{
-			auto f0 = sql_reader->GetValue<__int32>("f0");
-			auto f1 = sql_reader->GetValue<std::string>("f1");
-			auto f2 = sql_reader->GetValue<__int8>("f2");
-			auto f3 = sql_reader->GetValue<__int16>("f3");
-			auto f4 = sql_reader->GetValue<bool>("f4");
-			auto f5 = sql_reader->GetValue<__int64>("f5");
-			auto f6 = sql_reader->GetValue<float>("f6");
-			auto f7 = sql_reader->GetValue<double>("f7");
-			auto f8 = sql_reader->GetValue<DECIMAL>("f8");
-			auto f9 = sql_reader->GetValue<COleDateTime>("f9");
-			auto f10 = sql_reader->GetValue<COleDateTime>("f10");
-			auto f11 = sql_reader->GetValue<COleDateTime>("f11");
+			__int32 f0 = sql_reader->GetValue("f0");
+			CString f1 = sql_reader->GetValue("f1");
+			__int8 f2 = sql_reader->GetValue("f2");
+			__int16 f3 = sql_reader->GetValue("f3");
+			bool f4 = sql_reader->GetValue("f4");
+			__int64 f5 = sql_reader->GetValue("f5");
+			float f6 = sql_reader->GetValue("f6");
+			double f7 = sql_reader->GetValue("f7");
+			DECIMAL f8 = sql_reader->GetValue("f8");
+			COleDateTime f9 = sql_reader->GetValue("f9");
+			COleDateTime f10 = sql_reader->GetValue("f10");
+			COleDateTime f11 = sql_reader->GetValue("f11");
 			std::cout
 				<< f0 << "\t"
 				<< f1 << "\t"

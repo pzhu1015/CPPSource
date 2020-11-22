@@ -126,6 +126,12 @@
       <AdditionalLibraryDirectories>$(SolutionDir)..\bin\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>System.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafka.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafkacpp.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\libzstd.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\zlibd.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -168,6 +174,12 @@
       <AdditionalLibraryDirectories>$(SolutionDir)..\bin\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>System.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafka.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafkacpp.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\libzstd.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\zlib.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

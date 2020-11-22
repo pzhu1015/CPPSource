@@ -18,7 +18,7 @@ namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API DbConnection : public std::enable_shared_from_this<DbConnection>
+		class SYSTEM_API DbConnection
 		{
 		public:
 			virtual std::string GetConnectionString() = 0;
@@ -29,9 +29,20 @@ namespace System
 			virtual ObjectStateEnum GetState() = 0;
 			virtual bool Close() = 0;
 			virtual bool Open() = 0;
-			virtual DbTransactionPtr BeginTransaction() = 0;
-			virtual DbTransactionPtr BeginTransaction(IsolationLevelEnum level) = 0;
-			virtual DbCommandPtr CreateCommand() = 0;
+			virtual DbTransactionPtr BeginDbTransaction(IsolationLevelEnum level) = 0;
+			virtual DbCommandPtr CreateDbCommand() = 0;
+			DbTransactionPtr BeginTransaction()
+			{
+				return BeginDbTransaction(IsolationLevelEnum::adXactReadCommitted);
+			}
+			DbTransactionPtr BeginTransaction(IsolationLevelEnum level)
+			{
+				return BeginDbTransaction(level);
+			}
+			DbCommandPtr CreateCommand()
+			{
+				return CreateDbCommand();
+			}
 		public:
 			StateChangeEventHandler StateChange;
 		protected:

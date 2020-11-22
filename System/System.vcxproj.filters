@@ -280,9 +280,6 @@
     <ClInclude Include="Data\StateChangeEventArgs.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="Data\DbDataParameter.h">
-      <Filter>Data</Filter>
-    </ClInclude>
     <ClInclude Include="Data\DbDataReader.h">
       <Filter>Data</Filter>
     </ClInclude>
@@ -460,6 +457,15 @@
     </ClInclude>
     <ClInclude Include="nonstd\optional.hpp">
       <Filter>nonstd</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DbParameterCollection.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\SqlParameterCollection.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Data\DbParameter.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -717,6 +723,9 @@
     </ClCompile>
     <ClCompile Include="Kafka\RoundRobinPollStrategy.cpp">
       <Filter>Kafka</Filter>
+    </ClCompile>
+    <ClCompile Include="Data\SqlParameterCollection.cpp">
+      <Filter>Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

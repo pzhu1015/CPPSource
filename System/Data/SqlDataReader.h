@@ -48,6 +48,7 @@ namespace System
 			virtual std::string GetString(const _variant_t &ordinal) override;
 			virtual COleDateTime GetDateTime(const _variant_t &ordinal) override;
 			virtual bool IsDBNull(const _variant_t &ordinal) override;
+			virtual _variant_t GetValue(const _variant_t &ordinal) override;
 
 			template <class T>
 			typename std::enable_if<

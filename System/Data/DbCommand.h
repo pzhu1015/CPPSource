@@ -34,10 +34,17 @@ namespace System
 			virtual bool Cancel() = 0;
 			virtual int ExecuteNoQuery() = 0;
 			virtual _variant_t ExecuteScalar() = 0;
-			virtual DbDataReaderPtr ExecuteReader() = 0;
-			virtual DbDataParameterPtr CreateParameter() = 0;
-			virtual std::vector<DbDataParameterPtr>& GetParameters() = 0;
-			virtual void SetParameters(const std::vector<DbDataParameterPtr> &params) = 0;
+			virtual DbDataReaderPtr ExecuteDbDataReader() = 0;
+			virtual DbParameterPtr CreateParameter() = 0;
+			virtual DbParameterCollectionPtr GetDbParameterCollection() = 0;
+			DbDataReaderPtr ExecuteReader()
+			{
+				return ExecuteDbDataReader();
+			}
+			DbParameterCollectionPtr GetParameters()
+			{
+				return GetDbParameterCollection();
+			}
 		};
 	}
 }

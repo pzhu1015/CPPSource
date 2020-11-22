@@ -9,6 +9,8 @@
 #include "System/Data/SqlCommand.h"
 #include "System/Data/DbConnection.h"
 #include "System/Data/DbTransaction.h"
+#include "System/Data/DbParameterCollection.h"
+#include "System/Data/SqlParameterCollection.h"
 #include "System/Data/SqlConnection.h"
 #include "System/Data/SqlTransaction.h"
 #include "System/Data/SqlDataReader.h"
@@ -23,6 +25,7 @@ namespace System
 	{
 		SqlCommand::SqlCommand()
 		{
+			m_parameters = std::make_shared<SqlParameterCollection>();
 			m_command.CreateInstance(__uuidof(Command));
 			if (m_command == nullptr)
 			{
@@ -33,6 +36,7 @@ namespace System
 
 		SqlCommand::SqlCommand(const SqlConnectionPtr & connection)
 		{
+			m_parameters = std::make_shared<SqlParameterCollection>();
 			m_command.CreateInstance(__uuidof(Command));
 			if (m_command == nullptr)
 			{
@@ -240,7 +244,13 @@ namespace System
 			return _variant_t();
 		}
 
-		DbDataReaderPtr SqlCommand::ExecuteReader()
+		DbDataReaderPtr SqlCommand::ExecuteDbDataReader()
+		{
+			auto reader = ExecuteReader();
+			return std::dynamic_pointer_cast<SqlDataReader>(reader);
+		}
+
+		SqlDataReaderPtr SqlCommand::ExecuteReader()
 		{
 			try
 			{
@@ -269,27 +279,27 @@ namespace System
 			return nullptr;
 		}
 
-		DbDataParameterPtr SqlCommand::CreateParameter()
+		DbParameterPtr SqlCommand::CreateParameter()
 		{
 			return std::make_shared<SqlParameter>();
 		}
 
-		std::vector<DbDataParameterPtr>& SqlCommand::GetParameters()
+		DbParameterCollectionPtr SqlCommand::GetDbParameterCollection()
+		{
+			auto params = GetParameters();
+			return std::dynamic_pointer_cast<DbParameterCollection>(params);
+		}
+
+		SqlParameterCollectionPtr& SqlCommand::GetParameters()
 		{
 			return m_parameters;
 		}
 
-		void SqlCommand::SetParameters(const std::vector<DbDataParameterPtr>& params)
-		{
-			m_parameters = params;	
-		}
-
 		void SqlCommand::AppendParameters()
 		{
-			for (auto &item : m_parameters)
+			for (auto &item : *(m_parameters.get()))
 			{
-				auto param = std::dynamic_pointer_cast<SqlParameter>(item);
-				m_command->Parameters->Append(param->GetParameter());
+				m_command->Parameters->Append(item->GetParameter());
 			}
 		}
 	}

@@ -17,20 +17,26 @@ namespace System
 		class DbCommand;
 		class DbTransaction;
 		class DbDataReader;
-		class DbDataParameter;
+		class DbParameter;
+		class DbParameterCollection;
 		class SqlConnection;
 		class SqlTransaction;
 		class SqlCommand;
 		class SqlDataReader;
+		class SqlParameter;
+		class SqlParameterCollection;
 		typedef std::shared_ptr<DbConnection> DbConnectionPtr;
 		typedef std::shared_ptr<DbCommand> DbCommandPtr;
 		typedef std::shared_ptr<DbTransaction> DbTransactionPtr;
 		typedef std::shared_ptr<DbDataReader> DbDataReaderPtr;
-		typedef std::shared_ptr<DbDataParameter> DbDataParameterPtr;
+		typedef std::shared_ptr<DbParameter> DbParameterPtr;
 		typedef std::shared_ptr<SqlConnection> SqlConnectionPtr;
 		typedef std::shared_ptr<SqlTransaction> SqlTransactionPtr;
 		typedef std::shared_ptr<SqlCommand> SqlCommandPtr;
 		typedef std::shared_ptr<SqlDataReader> SqlDataReaderPtr;
+		typedef std::shared_ptr<SqlParameter> SqlParameterPtr;
+		typedef std::shared_ptr<SqlParameterCollection> SqlParameterCollectionPtr;
+		typedef std::shared_ptr<DbParameterCollection> DbParameterCollectionPtr;
 	}
 }
 #endif // !SYSTEM_DATA_PTRS_H

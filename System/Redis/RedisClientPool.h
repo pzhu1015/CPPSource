@@ -50,9 +50,8 @@ namespace System
 			std::string							m_password;
 			std::mutex							m_mutex;
 			std::condition_variable				m_cond;
-			ThreadPtr							m_monitor_thrd;
-			std::deque<RedisClientPtr>			m_waits;
-			std::unordered_set<RedisClientPtr>	m_idles;
+			std::deque<RedisClientPtr>			m_idles;
+			std::unordered_set<RedisClientPtr>	m_in_used;
 		};
 
 		class RedisClientGuard

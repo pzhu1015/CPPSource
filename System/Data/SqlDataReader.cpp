@@ -901,5 +901,36 @@ namespace System
 			}
 			return false;
 		}
+		_variant_t SqlDataReader::GetValue(const _variant_t &ordinal)
+		{
+			try
+			{
+				if (m_record == nullptr)
+				{
+					throw NullReferenceException("m_record is nullptr");
+				}
+				if (IsDigital(ordinal.vt))
+				{
+					if ((long)ordinal < 0)
+					{
+						throw IndexOutOfRangeException("index is " + (long)ordinal);
+					}
+					return m_record->GetCollect((long)ordinal);
+				}
+				else if (ordinal.vt == VARENUM::VT_BSTR)
+				{
+					return m_record->GetCollect(ordinal);
+				}
+				else
+				{
+					throw NotSupportedException("not support type");
+				}
+			}
+			catch (_com_error &e)
+			{
+				throw SqlException(e);
+			}
+			return _variant_t();
+		}
 	}
 }

@@ -36,14 +36,13 @@ namespace System
 				auto client = CreateClient();
 				if (client)
 				{
-					m_waits.push_back(client);
+					m_idles.push_back(client);
 				}
 				else
 				{
 					return false;
 				}
 			}
-			m_monitor_thrd = std::make_shared<Thread>();
 			return true;
 		}
 
@@ -56,7 +55,7 @@ namespace System
 		RedisClientPtr RedisClientPool::Allocate(int timeout)
 		{
 			std::unique_lock<std::mutex> lock(m_mutex);
-			while (m_waits.empty() && m_waits.size() + m_idles.size() >= m_max_clients)
+			while (m_idles.empty() && m_idles.size() + m_in_used.size() >= m_max_clients)
 			{
 				auto status = m_cond.wait_for(lock, std::chrono::microseconds(timeout));
 				if (status == std::cv_status::timeout)
@@ -66,52 +65,59 @@ namespace System
 				continue;
 			}
 			RedisClientPtr client = nullptr;
-			if (m_waits.empty())
+			if (m_idles.empty())
 			{
 				client = CreateClient();
 				if (client == nullptr) return nullptr;
 			}
 			else
 			{
-				client = m_waits.front();
-				m_waits.pop_front();
+				client = m_idles.front();
+				m_idles.pop_front();
 			}
-			m_idles.insert(client);
+			m_in_used.insert(client);
 			return client;
 		}
 
 		void RedisClientPool::Release(const RedisClientPtr & client)
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
-			auto itr = m_idles.find(client);
-			if (itr == m_idles.end())
+			auto itr = m_in_used.find(client);
+			if (itr == m_in_used.end())
 			{
 				throw InvalidOperationException("ReleaseClient faild");
 			}
-			m_idles.erase(itr);
-			m_waits.push_back(client);
+			m_in_used.erase(itr);
+			m_idles.push_back(client);
 		}
 
 		RedisClientPtr RedisClientPool::CreateClient()
 		{
 			try
 			{
-				if (m_waits.size() + m_idles.size() < m_max_clients)
+				if (m_idles.size() + m_in_used.size() < m_max_clients)
 				{
 					RedisClientPtr client = std::make_shared<cpp_redis::client>();
 					client->connect(m_host, m_port);
 					if (client->is_connected())
 					{
-						auto future = client->auth(m_password);
-						client->sync_commit();
-						if (future.get().ok())
+						if (!m_password.empty())
 						{
-							future = client->select(m_database);
+							auto future = client->auth(m_password);
 							client->sync_commit();
 							if (future.get().ok())
 							{
-								return client;
+								future = client->select(m_database);
+								client->sync_commit();
+								if (future.get().ok())
+								{
+									return client;
+								}
 							}
+						}
+						else
+						{
+							return client;
 						}
 					}
 				}

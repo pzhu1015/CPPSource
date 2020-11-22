@@ -17,7 +17,7 @@ namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API SqlConnection : public DbConnection
+		class SYSTEM_API SqlConnection : public DbConnection, public std::enable_shared_from_this<SqlConnection>
 		{
 		public:
 			SqlConnection(const std::string &connection_str);
@@ -30,16 +30,11 @@ namespace System
 			virtual ObjectStateEnum GetState() override;
 			virtual bool Close() override;
 			virtual bool Open() override;
-			virtual DbTransactionPtr BeginTransaction() override;
-			virtual DbTransactionPtr BeginTransaction(IsolationLevelEnum level) override;
-			virtual DbCommandPtr CreateCommand() override;
-
-			template <class T>
-			typename std::enable_if<std::is_same<T, SqlCommandPtr>::value, T>::type CreateCommand()
-			{
-				return std::make_shared<SqlCommand>(std::dynamic_pointer_cast<SqlConnection>(shared_from_this()));
-			}
-
+			virtual DbTransactionPtr BeginDbTransaction(IsolationLevelEnum level) override;
+			virtual DbCommandPtr CreateDbCommand() override;
+			SqlTransactionPtr BeginTransaction();
+			SqlTransactionPtr BeginTransaction(IsolationLevelEnum level);
+			SqlCommandPtr CreateCommand();
 			const _ConnectionPtr& GetConnection() const;
 		private:
 			_ConnectionPtr m_connection;

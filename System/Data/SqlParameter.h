@@ -8,37 +8,18 @@
 ///////////////////////////////////////////////////////////////////
 #ifndef SYSTEM_DATA_SQLPARAMETER_H
 #define SYSTEM_DATA_SQLPARAMETER_H
-#include "System/Data/DbDataParameter.h"
+#include "System/Data/DbParameter.h"
 #include "System/Data/Ptrs.h"
 #include <string>
 namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API SqlParameter : public DbDataParameter
+		class SYSTEM_API SqlParameter : public DbParameter
 		{
 		public:
 			SqlParameter();
-			template <class T, class = typename std::enable_if<
-				std::is_same<T, bool>::value
-				|| std::is_same<T, __int8>::value
-				|| std::is_same<T, __int16>::value
-				|| std::is_same<T, __int32>::value
-				|| std::is_same<T, __int64>::value
-				|| std::is_same<T, unsigned __int8>::value
-				|| std::is_same<T, unsigned __int16>::value
-				|| std::is_same<T, unsigned __int32>::value
-				|| std::is_same<T, unsigned __int64>::value
-				|| std::is_same<T, float>::value
-				|| std::is_same<T, double>::value
-				|| std::is_same<T, const char*>::value
-				|| std::is_same<T, CString>::value>::type>
-				SqlParameter(const std::string & name, DataTypeEnum type, T value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput)
-			{
-				_variant_t var(value);
-				m_parameter = CreateParameter(name, type, var, direction);
-			}
-			SqlParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput);
+			SqlParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction = ParameterDirectionEnum::adParamInput);
 			SqlParameter(const _ParameterPtr &param);
 			virtual ~SqlParameter();
 			virtual DataTypeEnum GetDbType() override;
@@ -57,7 +38,7 @@ namespace System
 			virtual ParameterDirectionEnum GetDirection() override;
 			virtual void SetDirection(ParameterDirectionEnum direction) override;
 			const _ParameterPtr &GetParameter() const;
-			static _ParameterPtr CreateParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction);
+			static _ParameterPtr CreateParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction);
 
 		private:
 			SqlCommandPtr m_command;

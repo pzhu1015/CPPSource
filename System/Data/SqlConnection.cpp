@@ -136,12 +136,13 @@ namespace System
 			return false;
 		}
 
-		DbTransactionPtr SqlConnection::BeginTransaction()
+		DbTransactionPtr SqlConnection::BeginDbTransaction(IsolationLevelEnum level)
 		{
-			return BeginTransaction(IsolationLevelEnum::adXactReadCommitted);
+			auto trans = BeginTransaction(level);
+			return std::dynamic_pointer_cast<DbTransaction>(trans);
 		}
 
-		DbTransactionPtr SqlConnection::BeginTransaction(IsolationLevelEnum level)
+		SqlTransactionPtr SqlConnection::BeginTransaction(IsolationLevelEnum level)
 		{
 			try
 			{
@@ -154,7 +155,7 @@ namespace System
 					throw InvalidOperationException("m_connection is not open");
 				}
 				m_connection->PutIsolationLevel(level);
-				DbTransactionPtr trans = std::make_shared<SqlTransaction>(std::dynamic_pointer_cast<SqlConnection>(shared_from_this()));
+				auto trans = std::make_shared<SqlTransaction>(shared_from_this());
 				HRESULT hr = m_connection->BeginTrans();
 				if (FAILED(hr)) return nullptr;
 				return trans;
@@ -166,9 +167,20 @@ namespace System
 			return nullptr;
 		}
 
-		DbCommandPtr SqlConnection::CreateCommand()
+		DbCommandPtr SqlConnection::CreateDbCommand()
 		{
-			return std::make_shared<SqlCommand>(std::dynamic_pointer_cast<SqlConnection>(shared_from_this()));
+			auto command = CreateCommand();
+			return std::dynamic_pointer_cast<DbCommand>(command);
+		}
+
+		SqlTransactionPtr SqlConnection::BeginTransaction()
+		{
+			return BeginTransaction(IsolationLevelEnum::adXactReadCommitted);
+		}
+
+		SqlCommandPtr SqlConnection::CreateCommand()
+		{
+			return std::make_shared<SqlCommand>(shared_from_this());
 		}
 
 		const _ConnectionPtr & SqlConnection::GetConnection() const

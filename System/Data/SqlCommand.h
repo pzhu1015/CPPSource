@@ -37,23 +37,17 @@ namespace System
 			virtual bool Cancel() override;
 			virtual int ExecuteNoQuery() override;
 			virtual _variant_t ExecuteScalar() override;
-			virtual DbDataReaderPtr ExecuteReader() override;
-			virtual DbDataParameterPtr CreateParameter() override;
-			virtual std::vector<DbDataParameterPtr>& GetParameters() override;
-			virtual void SetParameters(const std::vector<DbDataParameterPtr> &params) override;
-
-			template <class T>
-			typename std::enable_if<std::is_same<T, SqlDataReaderPtr>::value, T>::type ExecuteReader()
-			{
-				DbDataReaderPtr reader = ExecuteReader();
-				return std::dynamic_pointer_cast<SqlDataReader>(reader);
-			}
+			virtual DbDataReaderPtr ExecuteDbDataReader() override;
+			virtual DbParameterPtr CreateParameter() override;
+			virtual DbParameterCollectionPtr GetDbParameterCollection() override;
+			SqlDataReaderPtr ExecuteReader();
+			SqlParameterCollectionPtr& GetParameters();
 		private:
 			void AppendParameters();
 		private:
 			SqlConnectionPtr m_connection;
 			SqlTransactionPtr m_transaction;
-			std::vector<DbDataParameterPtr> m_parameters;
+			SqlParameterCollectionPtr m_parameters;
 			_CommandPtr m_command;
 		};
 	}

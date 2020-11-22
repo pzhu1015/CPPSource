@@ -24,7 +24,7 @@ namespace System
 			}
 		}
 
-		SqlParameter::SqlParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction)
+		SqlParameter::SqlParameter(const std::string & name, DataTypeEnum type, const _variant_t & value, ParameterDirectionEnum direction)
 		{
 			m_parameter = CreateParameter(name, type, value, direction);
 			if (m_parameter == nullptr)
@@ -171,8 +171,9 @@ namespace System
 			return m_parameter;
 		}
 
-		_ParameterPtr SqlParameter::CreateParameter(const std::string & name, DataTypeEnum type, _variant_t & value, ParameterDirectionEnum direction)
+		_ParameterPtr SqlParameter::CreateParameter(const std::string & name, DataTypeEnum type, const _variant_t & val, ParameterDirectionEnum direction)
 		{
+			_variant_t value = val;
 			long size = 0;
 			_CommandPtr command;
 			command.CreateInstance(__uuidof(Command));

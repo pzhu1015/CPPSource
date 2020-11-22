@@ -202,13 +202,15 @@
     <ClInclude Include="Data\ADO.h" />
     <ClInclude Include="Data\DbCommand.h" />
     <ClInclude Include="Data\DbConnection.h" />
+    <ClInclude Include="Data\DbParameterCollection.h" />
     <ClInclude Include="Data\DbTransaction.h" />
     <ClInclude Include="Data\DbDataReader.h" />
-    <ClInclude Include="Data\DbDataParameter.h" />
+    <ClInclude Include="Data\DbParameter.h" />
     <ClInclude Include="Data\SqlCommand.h" />
     <ClInclude Include="Data\SqlConnection.h" />
     <ClInclude Include="Data\SqlDataReader.h" />
     <ClInclude Include="Data\SqlParameter.h" />
+    <ClInclude Include="Data\SqlParameterCollection.h" />
     <ClInclude Include="Data\SqlTransaction.h" />
     <ClInclude Include="Data\Ptrs.h" />
     <ClInclude Include="Data\StateChangeEventArgs.h" />
@@ -349,6 +351,7 @@
     <ClCompile Include="Data\SqlConnection.cpp" />
     <ClCompile Include="Data\SqlDataReader.cpp" />
     <ClCompile Include="Data\SqlParameter.cpp" />
+    <ClCompile Include="Data\SqlParameterCollection.cpp" />
     <ClCompile Include="Data\SqlTransaction.cpp" />
     <ClCompile Include="Data\StateChangeEventArgs.cpp" />
     <ClCompile Include="DateTimes\Date.cpp" />

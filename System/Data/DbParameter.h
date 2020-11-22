@@ -6,8 +6,8 @@
 // Version: 1.0
 // Description:
 ///////////////////////////////////////////////////////////////////
-#ifndef SYSTEM_DATA_DBDATAPARAMETER_H
-#define SYSTEM_DATA_DBDATAPARAMETER_H
+#ifndef SYSTEM_DATA_DBPARAMETER_H
+#define SYSTEM_DATA_DBPARAMETER_H
 #include "System/Data/ADO.h"
 #include "System/Base/DllExport.h"
 #include "System/Base/Ptrs.h"
@@ -16,7 +16,7 @@ namespace System
 {
 	namespace Data
 	{
-		class SYSTEM_API DbDataParameter
+		class SYSTEM_API DbParameter
 		{
 		public:
 			virtual DataTypeEnum GetDbType() = 0;
@@ -37,4 +37,4 @@ namespace System
 		};
 	}
 }
-#endif // !SYSTEM_DATA_DBDATAPARAMETER_H
+#endif // !SYSTEM_DATA_DBPARAMETER_H
