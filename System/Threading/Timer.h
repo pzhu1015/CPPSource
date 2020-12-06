@@ -173,6 +173,11 @@ class Timer
 	std::stack<System::timer_id> free_ids;
 
 public:
+	static Timer& GetInstance()
+	{
+		static Timer instance;
+		return instance;
+	}
 	Timer() : m{}, cond{}, worker{}, events{}, time_events{}, free_ids{}
 	{
 		scoped_m lock(m);

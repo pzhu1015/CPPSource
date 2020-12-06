@@ -69,9 +69,9 @@ namespace System
 			tm m_date;
 		};
 
-		int64_t SYSTEM_API GetTimestamp();
+		__int64 SYSTEM_API GetTimestamp();
 
-		int64_t SYSTEM_API GetSeconds();
+		__int64 SYSTEM_API GetSeconds();
 	}
 }
 

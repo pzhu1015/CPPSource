@@ -275,13 +275,13 @@ namespace System
 			return false;
 		}
 
-		int64_t SYSTEM_API GetTimestamp()
+		__int64 SYSTEM_API GetTimestamp()
 		{
 			std::chrono::system_clock::duration d = std::chrono::system_clock::now().time_since_epoch();
 			std::chrono::microseconds mic = std::chrono::duration_cast<std::chrono::microseconds>(d);
 			return mic.count();
 		}
-		int64_t SYSTEM_API GetSeconds()
+		__int64 SYSTEM_API GetSeconds()
 		{
 			std::chrono::system_clock::duration d = std::chrono::system_clock::now().time_since_epoch();
 			std::chrono::seconds sec = std::chrono::duration_cast<std::chrono::seconds>(d);

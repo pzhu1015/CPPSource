@@ -433,7 +433,6 @@
     <ClInclude Include="Kafka\BufferedProducer.h">
       <Filter>Kafka</Filter>
     </ClInclude>
-    <ClInclude Include="Kafka\BackoffCommitter.h" />
     <ClInclude Include="Threading\Timer.h">
       <Filter>Threading</Filter>
     </ClInclude>
@@ -466,6 +465,15 @@
     </ClInclude>
     <ClInclude Include="Data\DbParameter.h">
       <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Redis\RedisConnection.h">
+      <Filter>Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="Redis\Ptrs.h">
+      <Filter>Redis</Filter>
+    </ClInclude>
+    <ClInclude Include="Kafka\BackoffCommitter.h">
+      <Filter>Kafka</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -726,6 +734,9 @@
     </ClCompile>
     <ClCompile Include="Data\SqlParameterCollection.cpp">
       <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Redis\RedisConnection.cpp">
+      <Filter>Redis</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

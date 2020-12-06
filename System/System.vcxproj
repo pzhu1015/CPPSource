@@ -136,6 +136,12 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafka.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafkacpp.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\libzstd.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\zlibd.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -186,6 +192,12 @@
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <AdditionalLibraryDirectories>$(SolutionDir)Library\$(Platform).$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <PostBuildEvent>
+      <Command>copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafka.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\librdkafkacpp.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\libzstd.dll" "$(TargetDir)"
+copy "$(SolutionDir)Library\$(Platform).$(ConfigurationName)\zlib.dll" "$(TargetDir)"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Applications\Application.h" />
@@ -330,7 +342,9 @@
     <ClInclude Include="Net\TcpListener.h" />
     <ClInclude Include="nonstd\any.hpp" />
     <ClInclude Include="nonstd\optional.hpp" />
+    <ClInclude Include="Redis\Ptrs.h" />
     <ClInclude Include="Redis\RedisClientPool.h" />
+    <ClInclude Include="Redis\RedisConnection.h" />
     <ClInclude Include="Redis\RedisMgr.h" />
     <ClInclude Include="Reflections\MetaMacro.hpp" />
     <ClInclude Include="Reflections\Property.h" />
@@ -424,6 +438,7 @@
     <ClCompile Include="Net\TcpClient.cpp" />
     <ClCompile Include="Net\TcpListener.cpp" />
     <ClCompile Include="Redis\RedisClientPool.cpp" />
+    <ClCompile Include="Redis\RedisConnection.cpp" />
     <ClCompile Include="Redis\RedisMgr.cpp" />
     <ClCompile Include="Reflections\Reflection.cpp" />
     <ClCompile Include="Serializers\JsonSerialize.cpp" />
